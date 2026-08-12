@@ -102,6 +102,24 @@ export const ENLACES_PIE: { titulo: string; enlaces: EnlaceNav[] }[] = [
   },
 ];
 
+/**
+ * Imagen de las tarjetas sociales.
+ *
+ * Va aquí, en `construirMetadata`, y no como un `opengraph-image.tsx` por
+ * ruta: ese archivo sólo cubre el segmento donde vive, así que el de la raíz
+ * dejaba 138 de 140 páginas sin imagen. Compartir cualquiera de ellas en
+ * WhatsApp o LinkedIn producía una tarjeta desnuda, que es la que nadie abre.
+ *
+ * `opengraph-image.tsx` sigue existiendo y genera esta misma imagen; una ruta
+ * que quiera la suya propia sólo tiene que declararla y Next la prefiere.
+ */
+export const IMAGEN_SOCIAL = {
+  url: `${SITIO.url}/opengraph-image`,
+  width: 1200,
+  height: 630,
+  alt: 'LeyAntilavado.org — centro independiente de información sobre la LFPIORPI',
+} as const;
+
 /** Google recorta el título del resultado alrededor de aquí. */
 export const LARGO_TITULO = 60;
 /** Y la descripción alrededor de aquí. Lo verifica `sitio.test.ts`. */
@@ -183,6 +201,7 @@ export function construirMetadata({
       title: tituloCompleto,
       description: descripcionCorta,
       locale: SITIO.locale,
+      images: [IMAGEN_SOCIAL],
       ...(publicadoEn ? { publishedTime: publicadoEn } : {}),
       ...(actualizadoEn ? { modifiedTime: actualizadoEn } : {}),
     },
@@ -190,6 +209,7 @@ export function construirMetadata({
       card: 'summary_large_image',
       title: tituloCompleto,
       description: descripcionCorta,
+      images: [IMAGEN_SOCIAL.url],
     },
   };
 }

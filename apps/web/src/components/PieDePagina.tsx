@@ -37,12 +37,12 @@ export function PieDePagina() {
               <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-[var(--color-tinta-tenue)]">
                 {grupo.titulo}
               </p>
-              <ul className="flex flex-col gap-2">
+              <ul className="flex flex-col gap-0.5 sm:gap-2">
                 {grupo.enlaces.map((e) => (
                   <li key={e.href}>
                     <Link
                       href={e.href}
-                      className="text-sm text-[var(--color-tinta-suave)] transition-colors duration-150 hover:text-[var(--color-tinta)]"
+                      className="inline-flex min-h-11 items-center text-sm text-[var(--color-tinta-suave)] transition-colors duration-150 hover:text-[var(--color-tinta)] sm:min-h-0 sm:py-1"
                     >
                       {e.etiqueta}
                     </Link>
@@ -59,12 +59,12 @@ export function PieDePagina() {
               <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-[var(--color-tinta-tenue)]">
                 {grupo.titulo}
               </p>
-              <ul className="flex flex-wrap gap-x-5 gap-y-2">
+              <ul className="flex flex-wrap gap-x-5 gap-y-0.5 sm:gap-y-2">
                 {grupo.enlaces.map((e) => (
                   <li key={e.href}>
                     <Link
                       href={e.href}
-                      className="text-sm text-[var(--color-tinta-suave)] transition-colors duration-150 hover:text-[var(--color-tinta)]"
+                      className="inline-flex min-h-11 items-center text-sm text-[var(--color-tinta-suave)] transition-colors duration-150 hover:text-[var(--color-tinta)] sm:min-h-0 sm:py-1"
                     >
                       {e.etiqueta}
                     </Link>
