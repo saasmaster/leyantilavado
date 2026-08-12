@@ -25,14 +25,15 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const perfil = await repositorioDirectorio.perfilPorSlug(slug);
-  if (!perfil) {
-    return construirMetadata({
-      titulo: 'Perfil no encontrado',
-      descripcion: 'El perfil que buscas no está publicado en el directorio.',
-      ruta: `/directorio/profesional/${slug}`,
-      noindex: true,
-    });
-  }
+
+  // `notFound()` aquí, y no unos metadatos de "perfil no encontrado".
+  //
+  // Devolver metadatos válidos hacía que la ruta se resolviera con éxito: el
+  // cuerpo mostraba "no existe" pero la respuesta salía con HTTP 200. Eso es
+  // un soft 404, y un buscador lo trata como una página real —la indexa, la
+  // reporta como contenido de baja calidad y la conserva en su índice—. El
+  // `noindex` lo tapaba a medias; el código de estado es lo que manda.
+  if (!perfil) notFound();
 
   return construirMetadata({
     titulo: perfil.nombre,
