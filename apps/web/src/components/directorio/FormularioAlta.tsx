@@ -320,8 +320,22 @@ export function FormularioAlta({
         </Campo>
         <Campo
           id="alta-documentos"
-          etiqueta="Documentos que puedes presentar"
-          ayuda="No los subas aquí: describe cuáles tienes y te los pedimos por correo, cifrados y sólo para la revisión."
+          etiqueta="Sube tus documentos"
+          ayuda={`Cédula profesional, título, certificación de auditor. Hasta ${MAXIMO_ARCHIVOS} archivos de 8 MB (${EXTENSIONES_VISIBLES}). No se publican: sólo los ve moderación, y son lo único que permite subir tu nivel de verificación.`}
+        >
+          <input
+            type="file"
+            name="documentos"
+            multiple
+            accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+            className="block w-full cursor-pointer rounded-[var(--radius-control)] border border-[var(--color-borde-fuerte)] bg-[var(--color-superficie)] p-2.5 text-sm text-[var(--color-tinta)] file:mr-3 file:cursor-pointer file:rounded-[var(--radius-control)] file:border-0 file:bg-[var(--color-marfil-hondo)] file:px-4 file:py-2 file:text-sm file:font-medium file:text-[var(--color-tinta)] hover:file:bg-[var(--color-borde)]"
+          />
+        </Campo>
+
+        <Campo
+          id="alta-documentos-descritos"
+          etiqueta="Qué acredita cada documento (opcional)"
+          ayuda="Si los nombres de archivo no lo dejan claro, dinos aquí qué es cada uno."
         >
           <AreaTexto name="documentosDescritos" maxLength={1000} />
         </Campo>
