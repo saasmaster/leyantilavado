@@ -4,6 +4,7 @@ import * as React from 'react';
 import { Send } from 'lucide-react';
 import { Turnstile, reiniciarTurnstile } from '@/components/Turnstile';
 import { AreaTexto, Boton, Campo, Entrada, Nota, Selector } from '@leyantilavado/ui';
+import { EXTENSIONES_VISIBLES, MAXIMO_ARCHIVOS } from '@/lib/directorio/documentos-limites';
 
 /* ────────────────────────────────────────────────────────────────────────────
  * Alta de proveedor.
@@ -92,10 +93,7 @@ export function FormularioAlta({
     setEnviando(true);
     setErrores({});
     try {
-      const respuesta = await fetch('/api/directorio/alta', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({
+      const datosJson = JSON.stringify({
           'cf-turnstile-response': String(d.get('cf-turnstile-response') ?? ''),
           nombre: d.get('nombre'),
           correoContacto: d.get('correoContacto'),
@@ -116,8 +114,28 @@ export function FormularioAlta({
           credenciales: d.get('credenciales'),
           documentosDescritos: d.get('documentosDescritos') || undefined,
           consentimiento: d.get('consentimiento') === 'si',
-        }),
       });
+
+      // Con archivos va como multipart y el JSON viaja íntegro dentro del
+      // campo `datos`; el servidor lo valida con el mismo esquema en ambos
+      // casos, así que la puerta con archivos no es una puerta más floja.
+      const archivos = d.getAll('documentos').filter((v) => v instanceof File && v.size > 0);
+
+      let peticion: RequestInit;
+      if (archivos.length > 0) {
+        const cuerpo = new FormData();
+        cuerpo.set('datos', datosJson);
+        for (const a of archivos) cuerpo.append('documentos', a);
+        peticion = { method: 'POST', body: cuerpo };
+      } else {
+        peticion = {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: datosJson,
+        };
+      }
+
+      const respuesta = await fetch('/api/directorio/alta', peticion);
       const json = (await respuesta.json()) as {
         ok?: boolean;
         folio?: string;
@@ -136,7 +154,7 @@ export function FormularioAlta({
 
   if (folio) {
     return (
-      <Nota tono="exito" titulo="Alta registrada, pendiente de revisión">
+      <Nota tono="exito" titulo="Perfil publicado como «Sin verificar»">
         <p>
           Tu folio es <strong>{folio}</strong>. Tu perfil todavía no está publicado: entró a la
           fila de moderación.

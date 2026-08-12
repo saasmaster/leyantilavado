@@ -1,6 +1,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import type { PerfilProveedor, SolicitudContacto } from '@leyantilavado/types';
+import type { DocumentoGuardado } from './documentos';
 
 /* ────────────────────────────────────────────────────────────────────────────
  * Adaptador de persistencia del directorio.
@@ -37,6 +38,33 @@ async function agregar<T>(archivo: string, registro: T): Promise<void> {
   await writeFile(path.join(DIRECTORIO_DATOS, archivo), JSON.stringify(lista, null, 2), 'utf8');
 }
 
+/**
+ * Slug a partir del nombre comercial, sin colisiones.
+ *
+ * Dos despachos pueden llamarse igual, y el slug es la URL pública: si se
+ * repitiera, el segundo perfil sobrescribiría al primero en la búsqueda por
+ * slug y una empresa acabaría viendo la ficha de otra.
+ */
+async function slugLibre(nombre: string): Promise<string> {
+  const base =
+    nombre
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .slice(0, 60) || 'proveedor';
+
+  const existentes = new Set((await leerLista<PerfilProveedor>(ARCHIVO_PERFILES)).map((p) => p.slug));
+  if (!existentes.has(base)) return base;
+
+  for (let n = 2; n < 1000; n++) {
+    const intento = `${base}-${n}`;
+    if (!existentes.has(intento)) return intento;
+  }
+  return `${base}-${Date.now()}`;
+}
+
 /** Folio corto y legible para que la persona pueda referirlo por correo. */
 function folio(prefijo: string, semilla: string): string {
   let h = 0;
@@ -67,10 +95,26 @@ export interface AltaProveedor {
   biografia: string;
   credenciales: string;
   documentosDescritos?: string;
+  /** Archivos que subió. Se guardan fuera de `public/` y nunca se sirven. */
+  documentos?: DocumentoGuardado[];
   consentimiento: boolean;
-  /** Siempre false al entrar: nada se publica sin moderación. */
-  publicado: false;
-  estadoModeracion: 'pendiente';
+  /**
+   * El alta se publica, y se publica marcada.
+   *
+   * Antes era `false` fijo: nada aparecía hasta que moderación lo aprobara, y
+   * el resultado era un directorio vacío que no le servía a nadie —ni a quien
+   * busca, ni a quien se dio de alta y no volvió a verse—. El gate en la
+   * publicación tampoco compraba lo que parecía: la revisión sigue siendo la
+   * misma, sólo que ahora ocurre sobre un perfil visible que dice de sí mismo
+   * que no está verificado.
+   *
+   * Lo que NO cambió: moderación sigue revisando a mano, y sólo esa revisión
+   * puede subir el nivel de verificación por encima de `sin_verificar`.
+   */
+  publicado: boolean;
+  estadoModeracion: 'pendiente' | 'revisado' | 'rechazado';
+  /** Slug del perfil público que generó esta alta. */
+  perfilSlug?: string;
   creadoEn: string;
 }
 
@@ -149,15 +193,60 @@ export const repositorioDirectorio: RepositorioDirectorio = {
 
   async guardarAlta(alta) {
     const id = crypto.randomUUID();
+    const numeroFolio = folio('ALT', id);
+    const slug = await slugLibre(alta.nombre);
+
     const registro: AltaProveedor = {
       ...alta,
       id,
-      folio: folio('ALT', id),
-      publicado: false,
+      folio: numeroFolio,
+      publicado: true,
       estadoModeracion: 'pendiente',
+      perfilSlug: slug,
     };
     await agregar(ARCHIVO_ALTAS, registro);
-    return registro.folio;
+
+    // El perfil público que nace del alta. `sin_verificar` es el único nivel
+    // que puede asignarse solo: los demás exigen que una persona haya mirado
+    // un documento, y eso todavía no ha ocurrido.
+    const ahora = new Date().toISOString();
+    const perfil: PerfilProveedor = {
+      id,
+      slug,
+      nombre: alta.nombre,
+      categorias: alta.categorias as PerfilProveedor['categorias'],
+      actividadesAtendidas: alta.actividadesAtendidas as PerfilProveedor['actividadesAtendidas'],
+      biografia: alta.biografia,
+      servicios: alta.servicios,
+      industrias: [],
+      ubicaciones: [
+        {
+          estado: alta.estado,
+          ...(alta.ciudad ? { ciudad: alta.ciudad } : {}),
+          coberturaNacional: alta.coberturaNacional,
+          atencionRemota: alta.atencionRemota,
+          atencionPresencial: alta.atencionPresencial,
+        },
+      ],
+      idiomas: alta.idiomas,
+      ...(alta.aniosExperiencia !== undefined ? { aniosExperiencia: alta.aniosExperiencia } : {}),
+      tamanosCliente: alta.tamanosCliente as PerfilProveedor['tamanosCliente'],
+      ...(alta.sitioWeb ? { sitioWeb: alta.sitioWeb } : {}),
+      // Las credenciales llegan como texto libre y NO se publican como
+      // credenciales: publicarlas sería convertir en afirmación verificada lo
+      // que sólo es lo que alguien escribió de sí mismo.
+      credenciales: [],
+      verificacion: 'sin_verificar',
+      plan: 'gratuito',
+      patrocinado: false,
+      aceptaNuevosClientes: true,
+      publicado: true,
+      creadoEn: ahora,
+      actualizadoEn: ahora,
+    };
+    await agregar(ARCHIVO_PERFILES, perfil);
+
+    return numeroFolio;
   },
 
   async guardarReclamo(reclamo) {

@@ -86,7 +86,10 @@ export default function PaginaAlta() {
 
       <Nota tono="info" titulo="Antes de llenar nada, tres cosas claras">
         <p>
-          <strong>Nada se publica solo.</strong> Tu alta entra a una fila de moderación y la revisa
+          <strong>Tu perfil se publica de inmediato, marcado como «Sin verificar».</strong> Eso es
+          exactamente lo que verá quien lo encuentre: que existes y que todavía no hemos comprobado
+          nada de ti. Para subir de ahí hace falta que una persona revise tus documentos, y esa
+          revisión la hace
           una persona.
         </p>
         <p>
