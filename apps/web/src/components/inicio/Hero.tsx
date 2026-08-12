@@ -3,7 +3,6 @@ import { ArrowRight, Calculator, FileCheck2, ShieldQuestion } from 'lucide-react
 import { formatearMXN } from '@leyantilavado/types';
 import { VERSION_LEGAL, datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { Boton } from '@leyantilavado/ui';
-import { REVISION_VIGENTE } from './comun';
 
 /**
  * Portada — bloque 1.
@@ -37,10 +36,11 @@ export function Hero() {
 
       <div className="contenedor-app grid gap-12 py-16 md:py-24 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:items-center">
         <div>
-          <p className="inline-flex items-center gap-2 rounded-full border border-[var(--color-borde-fuerte)] bg-[var(--color-superficie)] px-3 py-1.5 text-xs font-medium text-[var(--color-tinta-suave)]">
-            Marco legal revisado al {formatearFechaLarga(REVISION_VIGENTE)}
-          </p>
-
+          {/* La pastilla con «Marco legal revisado al …» se quitó de la
+              portada: la fecha de revisión sigue viva donde sirve —en la
+              tarjeta de datos, junto a la versión del corpus, y en cada tabla
+              con su sello de procedencia—, pero arriba del titular sólo
+              retrasaba la lectura de lo único que la portada tiene que decir. */}
           <h1
             id="hero-titulo"
             className="mt-5 text-[2.1rem] font-semibold leading-[1.12] text-[var(--color-tinta)] md:text-[3.1rem]"
