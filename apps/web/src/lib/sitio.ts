@@ -7,8 +7,23 @@ export const SITIO = {
     'Calcula umbrales, acumulación de seis meses, límites de efectivo y fechas de aviso de la Ley Antilavado con la UMA vigente en la fecha de tu operación. Herramientas gratuitas con fuente oficial citada.',
   url: process.env['NEXT_PUBLIC_SITE_URL'] ?? 'https://leyantilavado.org',
   locale: 'es_MX',
-  /** Bandera para no indexar mientras el contenido no esté revisado. */
-  indexable: process.env['NEXT_PUBLIC_SITE_INDEXABLE'] === 'true',
+  /**
+   * Indexación por buscadores.
+   *
+   * El valor por omisión es INDEXABLE, y se apaga con
+   * `NEXT_PUBLIC_SITE_INDEXABLE=false`.
+   *
+   * Antes era al revés —cerrado salvo que alguien lo abriera— pero esa
+   * elección resultó frágil en la práctica: la variable se incrusta durante el
+   * build, y si el panel de despliegue compila antes de inyectarla, el sitio
+   * sale con `Disallow: /` sin que nada falle de forma visible. Ya pasó una vez.
+   *
+   * El interruptor sigue existiendo para cerrarlo a propósito (por ejemplo en
+   * un entorno de pruebas), pero un olvido ahora deja el sitio visible en lugar
+   * de invisible, que es el modo de fallar que corresponde a un sitio pensado
+   * para ser encontrado.
+   */
+  indexable: process.env['NEXT_PUBLIC_SITE_INDEXABLE'] !== 'false',
 } as const;
 
 export interface EnlaceNav {
