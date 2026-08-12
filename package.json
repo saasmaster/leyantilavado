@@ -1,0 +1,30 @@
+{
+  "name": "leyantilavado",
+  "private": true,
+  "version": "0.1.0",
+  "description": "LeyAntilavado.org — Centro independiente de información y herramientas sobre la LFPIORPI",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "test:engine": "npm run test -w @leyantilavado/rules-engine",
+    "dev:web": "npm run dev -w @leyantilavado/web",
+    "build:web": "npm run build -w @leyantilavado/web",
+    "start": "npm run start -w @leyantilavado/web",
+    "empaquetar": "node scripts/empaquetar.mjs"
+  },
+  "devDependencies": {
+    "turbo": "^2.5.4",
+    "typescript": "^5.7.3"
+  },
+  "packageManager": "npm@11.13.0",
+  "engines": {
+    "node": ">=20.11"
+  }
+}

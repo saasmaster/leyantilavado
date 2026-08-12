@@ -1,0 +1,18 @@
+# Finales de línea normalizados: el repo se clona en un VPS Linux desde macOS.
+* text=auto eol=lf
+
+# Los .sql de las migraciones no deben tocarse nunca: un CRLF en medio de una
+# política RLS es un error que sólo aparece al aplicarla en el servidor.
+*.sql text eol=lf
+
+*.png binary
+*.jpg binary
+*.webp binary
+*.avif binary
+*.ico binary
+*.woff2 binary
+*.zip binary
+
+# Diferencias más legibles en la revisión.
+*.md linguist-documentation
+research/** linguist-documentation

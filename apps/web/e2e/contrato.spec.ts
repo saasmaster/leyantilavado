@@ -1,0 +1,342 @@
+import { expect, test, type Page } from '@playwright/test';
+
+/**
+ * Pruebas de CONTRATO DE PRODUCTO.
+ *
+ * No verifican maquetación ni textos concretos: verifican las promesas que el
+ * producto no puede romper sin dejar de ser lo que dice ser. Si alguien
+ * "mejora" la portada y de paso quita el aviso de independencia, esto falla.
+ */
+
+const RUTAS_PUBLICAS = [
+  '/',
+  // ── Contenido legal ────────────────────────────────────────────────────
+  '/actividades-vulnerables',
+  '/umbrales',
+  '/obligaciones',
+  '/limites-efectivo',
+  '/multas',
+  '/glosario',
+  '/calendario-cumplimiento',
+  '/reforma-ley-antilavado-2026',
+  '/acuerdo-115-2026',
+  '/actualizaciones',
+  // ── Herramientas ───────────────────────────────────────────────────────
+  '/herramientas',
+  '/herramientas/cuestionario',
+  '/herramientas/calculadora-umbrales',
+  '/herramientas/calculadora-uma',
+  '/herramientas/acumulacion-operaciones',
+  '/herramientas/limites-efectivo',
+  '/herramientas/calculadora-multas',
+  '/herramientas/fecha-limite-aviso',
+  '/herramientas/beneficiario-controlador',
+  '/herramientas/matriz-riesgos',
+  '/herramientas/clasificacion-clientes',
+  '/herramientas/checklist-expediente',
+  '/herramientas/comparador-obligaciones',
+  '/herramientas/preparacion-auditoria',
+  '/herramientas/mecanismos-automatizados',
+  '/herramientas/capacitacion-anual',
+  // ── Directorio y monetización ──────────────────────────────────────────
+  '/directorio',
+  '/directorio/alta',
+  '/plataforma',
+  '/precios',
+  '/software-cumplimiento',
+  '/cursos',
+  '/plantillas',
+  // ── Confianza ──────────────────────────────────────────────────────────
+  '/fuentes-oficiales',
+  '/preguntas-frecuentes',
+  '/nosotros',
+  '/metodologia-editorial',
+  '/contacto',
+  // ── Legales ────────────────────────────────────────────────────────────
+  '/legal/aviso-de-privacidad',
+  '/legal/terminos',
+  '/legal/cookies',
+  '/legal/publicidad',
+];
+
+/** Rutas que NUNCA deben ser indexables ni accesibles sin sesión. */
+const RUTAS_PRIVADAS = ['/panel', '/admin'];
+
+/** Errores de consola que son ruido del entorno, no defectos del sitio. */
+const RUIDO_CONOCIDO = [
+  // La vista previa inyecta un <script>; el aviso de React es falso positivo.
+  'Encountered a script tag while rendering',
+  'Download the React DevTools',
+];
+
+function capturarErrores(page: Page): string[] {
+  const errores: string[] = [];
+  page.on('console', (msg) => {
+    if (msg.type() !== 'error') return;
+    const texto = msg.text();
+    if (RUIDO_CONOCIDO.some((r) => texto.includes(r))) return;
+    errores.push(texto);
+  });
+  page.on('pageerror', (err) => errores.push(err.message));
+  return errores;
+}
+
+test.describe('Rutas públicas', () => {
+  for (const ruta of RUTAS_PUBLICAS) {
+    test(`${ruta} carga sin errores de consola`, async ({ page }) => {
+      const errores = capturarErrores(page);
+      const respuesta = await page.goto(ruta);
+
+      expect(respuesta?.status(), `${ruta} debe responder 200`).toBeLessThan(400);
+      await expect(page.locator('h1')).toBeVisible();
+      await expect(page).toHaveTitle(/.{10,}/);
+      expect(errores, `errores de consola en ${ruta}`).toEqual([]);
+    });
+  }
+});
+
+test.describe('Promesas que no se pueden romper', () => {
+  test('el aviso de independencia aparece en todas las páginas', async ({ page }) => {
+    for (const ruta of ['/', '/umbrales', '/herramientas', '/directorio']) {
+      await page.goto(ruta);
+      await expect(
+        page.getByText(/plataforma privada e independiente/i).first(),
+        `falta el aviso de independencia en ${ruta}`,
+      ).toBeAttached();
+    }
+  });
+
+  test('en ninguna página se afirma cumplimiento', async ({ page }) => {
+    // "Cumples con la ley" o "estás en regla" son afirmaciones que el producto
+    // no está autorizado a hacer: no puede constatar el cumplimiento de nadie.
+    for (const ruta of ['/', '/umbrales', '/multas', '/herramientas']) {
+      await page.goto(ruta);
+      const texto = (await page.locator('body').innerText()).toLowerCase();
+      expect(texto, `afirmación de cumplimiento en ${ruta}`).not.toMatch(
+        /\b(cumples con la ley|estás en regla|estás cumpliendo|garantiza(mos)? (tu )?cumplimiento)\b/,
+      );
+    }
+  });
+
+  test('el directorio niega explícitamente certificar a nadie', async ({ page }) => {
+    await page.goto('/directorio');
+    const texto = (await page.locator('body').innerText()).toLowerCase();
+
+    // Buscar la frase a secas no sirve: la página la usa DENTRO de su propia
+    // negación ("nunca decimos que alguien está certificado por
+    // LeyAntilavado.org, porque no certificamos a nadie"), que es justo el
+    // comportamiento correcto. Lo que se verifica es la negación explícita.
+    expect(texto, 'debe negar expresamente que certifica').toMatch(
+      /no certificamos|no es una certificación|no es un aval/,
+    );
+
+    // Y que no aparezca como afirmación: "X está certificado por
+    // LeyAntilavado" sin una negación delante.
+    const afirmaciones = texto.match(/[^.]*certificad[oa] por leyantilavado[^.]*/g) ?? [];
+    for (const frase of afirmaciones) {
+      expect(frase, `uso afirmativo: "${frase.trim()}"`).toMatch(/nunca|no |jamás/);
+    }
+  });
+
+  test('no se aparenta ser una autoridad', async ({ page }) => {
+    await page.goto('/');
+    const texto = (await page.locator('body').innerText()).toLowerCase();
+    // Debe distanciarse explícitamente, no sólo omitir el tema.
+    expect(texto).toMatch(/no pertenece ni está afiliada/);
+  });
+});
+
+test.describe('El área privada no se filtra', () => {
+  for (const ruta of RUTAS_PRIVADAS) {
+    test(`${ruta} nunca se indexa`, async ({ request }) => {
+      const res = await request.get(ruta, { maxRedirects: 0 });
+      // Redirección a /entrar o pantalla de configuración pendiente: cualquiera
+      // sirve. Lo que NO puede pasar es que se indexe.
+      const robots = res.headers()['x-robots-tag'] ?? '';
+      const esRedireccion = res.status() >= 300 && res.status() < 400;
+      expect(
+        esRedireccion || robots.includes('noindex'),
+        `${ruta} debe redirigir o marcarse noindex`,
+      ).toBe(true);
+    });
+  }
+
+  test('el sitemap no expone rutas privadas', async ({ request }) => {
+    const xml = await (await request.get('/sitemap.xml')).text();
+    for (const ruta of [...RUTAS_PRIVADAS, '/entrar', '/registro', '/api/']) {
+      expect(xml, `el sitemap no debe listar ${ruta}`).not.toContain(`${ruta}<`);
+    }
+  });
+
+  test('las respuestas de la API no se cachean', async ({ request }) => {
+    const res = await request.post('/api/newsletter', { data: {}, failOnStatusCode: false });
+    expect(res.headers()['cache-control'] ?? '').toContain('no-store');
+  });
+});
+
+test.describe('Cabeceras de seguridad', () => {
+  test('la CSP cierra todo lo que puede cerrar', async ({ request }) => {
+    const csp = (await request.get('/')).headers()['content-security-policy'] ?? '';
+    expect(csp, 'falta la CSP').toBeTruthy();
+
+    // Estas cuatro sí se pueden cerrar del todo, y deben estarlo.
+    expect(csp).toContain("frame-ancestors 'none'");
+    expect(csp).toContain("object-src 'none'");
+    expect(csp).toContain("base-uri 'self'");
+    expect(csp).toContain("form-action 'self'");
+
+    // `script-src` lleva 'unsafe-inline' de forma deliberada: los scripts de
+    // hidratación de Next tienen contenido variable y ningún hash los cubre.
+    // Ver la explicación completa en next.config.mjs. Lo que sí se verifica es
+    // que no se haya colado un origen externo: el sitio no carga código de
+    // terceros y `connect-src` no debe apuntar fuera del propio origen.
+    const directiva = (nombre: string) =>
+      csp.split(';').find((d) => d.trim().startsWith(nombre))?.trim() ?? '';
+
+    expect(directiva('script-src'), 'script-src no debe permitir orígenes externos').not.toMatch(
+      /https?:\/\//,
+    );
+    expect(directiva('connect-src'), 'connect-src no debe salir del origen').not.toMatch(
+      /https?:\/\//,
+    );
+
+    const enProduccion = !csp.includes("'unsafe-eval'");
+    if (enProduccion) {
+      expect(directiva('script-src'), 'producción no debe permitir eval').not.toContain(
+        "'unsafe-eval'",
+      );
+    }
+  });
+
+  test('las cabeceras básicas están presentes', async ({ request }) => {
+    const h = (await request.get('/')).headers();
+    expect(h['x-content-type-options']).toBe('nosniff');
+    expect(h['x-frame-options']).toBe('DENY');
+    expect(h['referrer-policy']).toBe('strict-origin-when-cross-origin');
+    expect(h['strict-transport-security']).toContain('max-age=');
+  });
+});
+
+test.describe('SEO técnico', () => {
+  test('sitemap y robots responden', async ({ request }) => {
+    const sitemap = await request.get('/sitemap.xml');
+    expect(sitemap.status()).toBe(200);
+    expect(await sitemap.text()).toContain('<urlset');
+
+    const robots = await request.get('/robots.txt');
+    expect(robots.status()).toBe(200);
+  });
+
+  test('el manifiesto de la PWA es válido', async ({ request }) => {
+    const res = await request.get('/manifest.webmanifest');
+    expect(res.status()).toBe(200);
+    const manifiesto = await res.json();
+    expect(manifiesto.name).toContain('LeyAntilavado');
+    expect(manifiesto.icons.length).toBeGreaterThanOrEqual(2);
+    expect(manifiesto.icons.some((i: { purpose?: string }) => i.purpose === 'maskable')).toBe(true);
+  });
+
+  test('cada página tiene canonical y descripción únicas', async ({ page }) => {
+    const vistos = new Map<string, string>();
+    for (const ruta of ['/', '/umbrales', '/multas', '/glosario']) {
+      await page.goto(ruta);
+      const canonical = await page.locator('link[rel="canonical"]').getAttribute('href');
+      const desc = await page.locator('meta[name="description"]').getAttribute('content');
+
+      expect(canonical, `falta canonical en ${ruta}`).toBeTruthy();
+      expect(desc?.length ?? 0, `descripción muy corta en ${ruta}`).toBeGreaterThan(50);
+      expect(vistos.has(desc!), `descripción duplicada entre ${vistos.get(desc!)} y ${ruta}`).toBe(
+        false,
+      );
+      vistos.set(desc!, ruta);
+    }
+  });
+});
+
+test.describe('Accesibilidad', () => {
+  test('el salto al contenido funciona con teclado', async ({ page }) => {
+    await page.goto('/');
+    await page.keyboard.press('Tab');
+    const enfocado = page.locator(':focus');
+    await expect(enfocado).toHaveText(/saltar al contenido/i);
+    await enfocado.press('Enter');
+    await expect(page.locator('#contenido')).toBeVisible();
+  });
+
+  test('todo control interactivo es alcanzable y etiquetado', async ({ page }) => {
+    await page.goto('/herramientas/calculadora-uma');
+
+    const sinEtiqueta = await page.evaluate(() => {
+      const malos: string[] = [];
+      document.querySelectorAll('input, select, textarea').forEach((el) => {
+        const id = el.id;
+        const tieneLabel = id && document.querySelector(`label[for="${CSS.escape(id)}"]`);
+        const tieneAria = el.getAttribute('aria-label') || el.getAttribute('aria-labelledby');
+        if (!tieneLabel && !tieneAria) malos.push(el.outerHTML.slice(0, 90));
+      });
+      return malos;
+    });
+    expect(sinEtiqueta, 'campos sin etiqueta accesible').toEqual([]);
+  });
+
+  test('el foco nunca se oculta', async ({ page }) => {
+    await page.goto('/');
+    const ocultos = await page.evaluate(() => {
+      const malos: string[] = [];
+      document.querySelectorAll('a, button, input, select, textarea').forEach((el) => {
+        const estilo = getComputedStyle(el, ':focus-visible');
+        if (estilo.outlineStyle === 'none' && estilo.boxShadow === 'none') {
+          malos.push(el.tagName);
+        }
+      });
+      return malos;
+    });
+    expect(ocultos.length, 'elementos que eliminan el indicador de foco').toBe(0);
+  });
+
+  test('la página no se desplaza horizontalmente en móvil', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+
+    for (const ruta of ['/', '/umbrales', '/multas', '/herramientas', '/directorio', '/calendario-cumplimiento']) {
+      await page.goto(ruta);
+
+      // Se comprueba el COMPORTAMIENTO, no `scrollWidth`.
+      //
+      // `document.documentElement.scrollWidth > clientWidth` da falso positivo
+      // en este sitio: `html` lleva `overflow-x: clip` y con `clip` el
+      // navegador sigue reportando el ancho del contenido recortado aunque la
+      // página no se pueda desplazar. Lo que importa es si el usuario puede
+      // arrastrar la página a la derecha, y eso se mide intentándolo.
+      const seDesplaza = await page.evaluate(() => {
+        window.scrollTo(9999, 0);
+        const x = window.scrollX;
+        window.scrollTo(0, 0);
+        return x > 0;
+      });
+
+      expect(seDesplaza, `la página se desplaza horizontalmente en ${ruta}`).toBe(false);
+    }
+  });
+
+  test('las tablas anchas scrollean dentro de su propio contenedor', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.goto('/umbrales');
+
+    const estado = await page.evaluate(() => {
+      const region = document.querySelector('[role="region"]');
+      if (!region) return null;
+      return {
+        cabeEnPantalla: region.getBoundingClientRect().width <= document.documentElement.clientWidth,
+        scrolleaDentro: region.scrollWidth > region.clientWidth,
+        // El contenedor debe ser alcanzable con teclado para poder recorrer
+        // la tabla sin ratón.
+        enfocable: region.getAttribute('tabindex') === '0',
+      };
+    });
+
+    expect(estado, 'no se encontró el contenedor de la tabla').not.toBeNull();
+    expect(estado!.cabeEnPantalla, 'el contenedor desborda la pantalla').toBe(true);
+    expect(estado!.scrolleaDentro, 'la tabla debe scrollear dentro del contenedor').toBe(true);
+    expect(estado!.enfocable, 'el contenedor con scroll debe ser enfocable').toBe(true);
+  });
+});

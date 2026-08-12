@@ -1,0 +1,41 @@
+node_modules/
+.next/
+.turbo/
+dist/
+.output/
+out/
+build/
+coverage/
+*.tsbuildinfo
+
+.env
+.env.local
+.env*.local
+!.env.example
+
+# Persistencia temporal previa a Supabase (newsletter, leads, altas del
+# directorio). Contiene datos personales: nunca se versiona.
+.data/
+apps/web/.data/
+
+# Paquetes generados por scripts/empaquetar.mjs
+dist/
+
+.DS_Store
+*.log
+npm-debug.log*
+
+# Expo
+.expo/
+apps/mobile/android/
+apps/mobile/ios/
+
+# WXT / extension
+apps/extension/.wxt/
+apps/extension/.output/
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+.playwright/

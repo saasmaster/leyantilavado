@@ -1,0 +1,453 @@
+@import 'tailwindcss';
+
+/* Variante `oscuro:` para estilos específicos del modo oscuro.
+ *
+ * Existe para que el tema se resuelva SIEMPRE en CSS y nunca en estado de
+ * React. Ramificar el render con `tema === 'oscuro'` provoca desajuste de
+ * hidratación: el script anti-parpadeo del <head> ya cambió el DOM antes de
+ * que React hidrate, así que el servidor y el cliente discrepan.
+ */
+@custom-variant oscuro (&:where(.oscuro, .oscuro *));
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Sistema de diseño LeyAntilavado.org
+
+   Dirección: LegalTech contemporáneo. Referencia mental: Linear, Mercury,
+   Ramp — no despacho de abogados con columnas dóricas.
+
+   Tres decisiones que separan esto de un portal institucional:
+     · Tipografía display en sans apretada, no serif tradicional. El serif se
+       reserva para el cuerpo de artículos largos, donde sí ayuda a leer.
+     · Profundidad por capas: malla de gradiente de fondo, superficies de
+       vidrio con blur real y bordes de 1px con luz superior.
+     · Los números son protagonistas: escala grande, cifras tabulares.
+
+   Todos los pares de color están verificados a contraste WCAG AA.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@theme {
+  /* ── Superficies ─────────────────────────────────────────────────────── */
+  --color-marfil: #fcfcfa;
+  --color-marfil-hondo: #f2f1ec;
+  --color-superficie: #ffffff;
+  --color-superficie-alta: #ffffff;
+
+  /* ── Tinta ───────────────────────────────────────────────────────────── */
+  --color-tinta: #0a1626;        /* 17.4:1 sobre marfil */
+  --color-tinta-suave: #43566a;  /*  7.6:1 */
+  --color-tinta-tenue: #6a7b8c;  /*  4.6:1 */
+
+  /* ── Marca ───────────────────────────────────────────────────────────── */
+  --color-marino: #0a1f3c;       /* 15.6:1 */
+  --color-marino-claro: #14355e;
+  --color-marino-tenue: #eaeff6;
+
+  /* ── Acción ──────────────────────────────────────────────────────────── */
+  --color-petroleo: #0a6f75;     /*  5.2:1 — seguro para texto */
+  --color-petroleo-hondo: #06545a;
+  --color-petroleo-vivo: #0e9089; /* sólo para rellenos y acentos grandes */
+  --color-petroleo-tenue: #e0f2f1;
+
+  /* ── Semánticos de riesgo ────────────────────────────────────────────── */
+  --color-ambar: #93540a;
+  --color-ambar-tenue: #fdf2dd;
+  --color-rojo: #a4231d;
+  --color-rojo-tenue: #fdedec;
+  --color-verde: #1c6b3e;
+  --color-verde-tenue: #e5f4ea;
+
+  /* ── Estructura ──────────────────────────────────────────────────────── */
+  --color-borde: #e6e3db;
+  --color-borde-fuerte: #cfcabb;
+  --color-anillo: #0e9089;
+
+  /* ── Tipografía ──────────────────────────────────────────────────────── */
+  --font-display: var(--fuente-display), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--fuente-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-lectura: var(--fuente-lectura), Georgia, serif;
+
+  /* Escala fluida: crece con el viewport sin saltos de breakpoint. */
+  --text-display: clamp(2.5rem, 1.2rem + 5.2vw, 4.75rem);
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.038em;
+
+  --text-titulo: clamp(1.9rem, 1.2rem + 2.6vw, 3rem);
+  --text-titulo--line-height: 1.1;
+  --text-titulo--letter-spacing: -0.028em;
+
+  --text-seccion: clamp(1.45rem, 1.1rem + 1.3vw, 2rem);
+  --text-seccion--line-height: 1.2;
+  --text-seccion--letter-spacing: -0.02em;
+
+  /* ── Radios ──────────────────────────────────────────────────────────── */
+  --radius-card: 1.125rem;
+  --radius-control: 0.75rem;
+  --radius-pastilla: 999px;
+
+  /* ── Sombras por capas ───────────────────────────────────────────────────
+     Cada nivel combina un halo de contacto muy corto con una sombra larga y
+     difusa. Una sola sombra grande se ve barata; dos capas leen como
+     profundidad real.
+     ─────────────────────────────────────────────────────────────────────── */
+  --shadow-suave:
+    0 1px 2px rgb(10 22 38 / 0.05),
+    0 1px 1px rgb(10 22 38 / 0.03);
+  --shadow-media:
+    0 1px 2px rgb(10 22 38 / 0.05),
+    0 10px 24px -8px rgb(10 22 38 / 0.1);
+  --shadow-alta:
+    0 1px 2px rgb(10 22 38 / 0.06),
+    0 24px 48px -16px rgb(10 22 38 / 0.18);
+  --shadow-flotante:
+    0 1px 2px rgb(10 22 38 / 0.06),
+    0 36px 70px -24px rgb(10 22 38 / 0.26);
+
+  /* ── Movimiento ──────────────────────────────────────────────────────── */
+  --ease-suave: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-entrada: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  .oscuro {
+    color-scheme: dark;
+
+    --color-marfil: #080f19;
+    --color-marfil-hondo: #050a12;
+    --color-superficie: #0e1927;
+    --color-superficie-alta: #142334;
+
+    --color-tinta: #eaeef3;
+    --color-tinta-suave: #a5b5c4;
+    --color-tinta-tenue: #7e91a3;
+
+    --color-marino: #93bce0;
+    --color-marino-claro: #b6d5ef;
+    --color-marino-tenue: #142334;
+
+    --color-petroleo: #4ecdc6;
+    --color-petroleo-hondo: #85e0da;
+    --color-petroleo-vivo: #2fb8b0;
+    --color-petroleo-tenue: #0c2e2e;
+
+    --color-ambar: #edb05a;
+    --color-ambar-tenue: #2e2010;
+    --color-rojo: #f2938c;
+    --color-rojo-tenue: #2f1210;
+    --color-verde: #6ec996;
+    --color-verde-tenue: #0d2619;
+
+    --color-borde: #1d2f42;
+    --color-borde-fuerte: #2d475f;
+    --color-anillo: #4ecdc6;
+  }
+
+  * {
+    border-color: var(--color-borde);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* `clip`, no `hidden`: overflow-hidden congela las animaciones ligadas al
+       scroll en toda la página. */
+    overflow-x: clip;
+  }
+
+  body {
+    background-color: var(--color-marfil);
+    color: var(--color-tinta);
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv05', 'ss01';
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+
+    /* Malla de gradiente: dos manchas muy tenues que quitan la sensación de
+       fondo plano sin llamar la atención. Fijas al viewport para que no se
+       muevan con el scroll. */
+    background-image:
+      radial-gradient(56rem 34rem at 12% -8%, rgb(14 144 137 / 0.055), transparent 62%),
+      radial-gradient(48rem 30rem at 92% 2%, rgb(10 31 60 / 0.05), transparent 60%);
+    background-attachment: fixed;
+  }
+
+  .oscuro body {
+    background-image:
+      radial-gradient(56rem 34rem at 12% -8%, rgb(78 205 198 / 0.09), transparent 62%),
+      radial-gradient(48rem 30rem at 92% 2%, rgb(147 188 224 / 0.07), transparent 60%);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.028em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Foco grueso y visible. Requisito de accesibilidad, nunca decoración. */
+  :focus-visible {
+    outline: 2.5px solid var(--color-anillo);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-petroleo-vivo) 26%, transparent);
+  }
+
+  /* Cifras de dinero: deben alinearse en columna dentro de una tabla. */
+  .cifra {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum';
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* ── Vidrio ────────────────────────────────────────────────────────────
+     El borde superior más claro simula una luz cenital. Es el detalle que
+     separa "tarjeta con borde" de "superficie con volumen".
+     ──────────────────────────────────────────────────────────────────── */
+  .tarjeta {
+    position: relative;
+    background-color: color-mix(in srgb, var(--color-superficie) 78%, transparent);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-suave);
+    backdrop-filter: blur(14px) saturate(1.4);
+    -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  }
+
+  .tarjeta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding-top: 1px;
+    background: linear-gradient(180deg, rgb(255 255 255 / 0.9), transparent 42%);
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .oscuro .tarjeta::before {
+    background: linear-gradient(180deg, rgb(255 255 255 / 0.14), transparent 42%);
+  }
+
+  .tarjeta-elevada {
+    box-shadow: var(--shadow-media);
+  }
+
+  /* Elevación al pasar el cursor. `translateZ(0)` fuerza capa propia para que
+     la animación corra en GPU. */
+  .tarjeta-interactiva {
+    transition:
+      transform 0.28s var(--ease-suave),
+      box-shadow 0.28s var(--ease-suave),
+      border-color 0.28s var(--ease-suave);
+    transform: translateZ(0);
+  }
+
+  .tarjeta-interactiva:hover {
+    transform: translate3d(0, -3px, 0);
+    box-shadow: var(--shadow-alta);
+    border-color: var(--color-borde-fuerte);
+  }
+
+  /* ── Relleno degradado del botón de acción ─────────────────────────────
+     Va aquí y NO como clase arbitraria de Tailwind.
+
+     `bg-[linear-gradient(135deg,var(--a),var(--b))]` NO genera CSS en
+     Tailwind v4: las comas dentro del valor rompen el parseo y la utilidad se
+     descarta en silencio. El resultado fue un botón con texto blanco sobre
+     fondo transparente — invisible, y sin ningún error en consola.
+     ──────────────────────────────────────────────────────────────────── */
+  .relleno-accion {
+    background-image: linear-gradient(
+      135deg,
+      var(--color-petroleo-vivo) 0%,
+      var(--color-petroleo-hondo) 100%
+    );
+  }
+
+  .relleno-marca {
+    background-image: linear-gradient(
+      140deg,
+      var(--color-marino) 0%,
+      #123a52 55%,
+      var(--color-petroleo-hondo) 100%
+    );
+  }
+
+  .relleno-marino {
+    background-image: linear-gradient(
+      135deg,
+      var(--color-marino-claro) 0%,
+      var(--color-marino) 100%
+    );
+  }
+
+  /* ── Texto con degradado de marca ────────────────────────────────────── */
+  .texto-marca {
+    background: linear-gradient(
+      104deg,
+      var(--color-marino) 0%,
+      var(--color-petroleo) 62%,
+      var(--color-petroleo-vivo) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .oscuro .texto-marca {
+    background: linear-gradient(
+      104deg,
+      var(--color-marino-claro) 0%,
+      var(--color-petroleo) 58%,
+      var(--color-petroleo-hondo) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  /* ── Etiqueta de sección ─────────────────────────────────────────────── */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-petroleo-hondo);
+  }
+
+  /* ── Salto al contenido: sólo visible al tabular ─────────────────────── */
+  .salto-contenido {
+    position: absolute;
+    left: -9999px;
+    z-index: 999;
+  }
+  .salto-contenido:focus {
+    left: 1rem;
+    top: 1rem;
+    padding: 0.75rem 1.25rem;
+    background-color: var(--color-marino);
+    color: #fff;
+    border-radius: var(--radius-control);
+  }
+
+  /* ── Prosa editorial ───────────────────────────────────────────────────
+     Aquí SÍ va serif: en textos de 1,500 palabras el serif se lee mejor y
+     además señala "esto lo escribió alguien", no un generador.
+     ──────────────────────────────────────────────────────────────────── */
+  .prosa {
+    max-width: 42rem;
+    font-family: var(--font-lectura);
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--color-tinta-suave);
+  }
+  .prosa > * + * {
+    margin-top: 1.2em;
+  }
+  .prosa h2,
+  .prosa h3,
+  .prosa h4 {
+    font-family: var(--font-display);
+    color: var(--color-tinta);
+    scroll-margin-top: 6rem;
+  }
+  .prosa h2 {
+    font-size: 1.65rem;
+    margin-top: 2.5em;
+    margin-bottom: 0.55em;
+  }
+  .prosa h3 {
+    font-size: 1.25rem;
+    margin-top: 2em;
+    margin-bottom: 0.45em;
+  }
+  .prosa strong {
+    color: var(--color-tinta);
+    font-weight: 600;
+  }
+  .prosa a {
+    color: var(--color-petroleo-hondo);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition: opacity 0.15s;
+  }
+  .prosa a:hover {
+    opacity: 0.72;
+  }
+  .prosa ul,
+  .prosa ol {
+    padding-left: 1.4em;
+  }
+  .prosa li + li {
+    margin-top: 0.45em;
+  }
+  .prosa ul > li {
+    list-style: disc;
+  }
+  .prosa ol > li {
+    list-style: decimal;
+  }
+  .prosa code {
+    font-size: 0.9em;
+    padding: 0.15em 0.4em;
+    border-radius: 5px;
+    background-color: var(--color-marfil-hondo);
+    color: var(--color-tinta);
+  }
+
+  /* ── Cuadrícula de fondo, para secciones de datos ────────────────────── */
+  .rejilla-sutil {
+    background-image:
+      linear-gradient(var(--color-borde) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-borde) 1px, transparent 1px);
+    background-size: 3rem 3rem;
+    mask-image: radial-gradient(70% 60% at 50% 40%, #000, transparent 100%);
+  }
+}
+
+@layer utilities {
+  .contenedor-app {
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+    max-width: 82rem;
+  }
+  @media (min-width: 768px) {
+    .contenedor-app {
+      padding-inline: 2rem;
+    }
+  }
+
+  /* Ritmo vertical uniforme entre secciones de página. */
+  .seccion {
+    padding-block: clamp(3.5rem, 2rem + 6vw, 7rem);
+  }
+}
