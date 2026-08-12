@@ -101,7 +101,7 @@ export default function PaginaMultas() {
 
       <Seccion id="dos-articulos" titulo="Dos artículos que no son lo mismo">
         <div className="grid gap-4 md:grid-cols-2">
-          <div className="rounded-[var(--radius-card)] border border-[var(--color-borde)] border-l-4 border-l-[var(--color-marino)] p-5">
+          <div className="rounded-[var(--radius-card)] border-[color-mix(in_srgb,var(--color-marino)_32%,transparent)] p-5">
             <p className="text-sm font-semibold uppercase tracking-wide text-[var(--color-tinta-tenue)]">
               Artículo 53
             </p>
@@ -111,7 +111,7 @@ export default function PaginaMultas() {
               avisos o participar en operaciones prohibidas en efectivo.
             </p>
           </div>
-          <div className="rounded-[var(--radius-card)] border border-[var(--color-borde)] border-l-4 border-l-[var(--color-rojo)] p-5">
+          <div className="rounded-[var(--radius-card)] border-[color-mix(in_srgb,var(--color-rojo)_32%,transparent)] p-5">
             <p className="text-sm font-semibold uppercase tracking-wide text-[var(--color-tinta-tenue)]">
               Artículo 54
             </p>
@@ -275,7 +275,7 @@ export default function PaginaMultas() {
           {datos.ESCENARIOS_AUTOCORRECCION.map((e) => (
             <li
               key={e.clave}
-              className="rounded-[var(--radius-card)] border border-[var(--color-borde)] border-l-4 border-l-[var(--color-verde)] p-5"
+              className="rounded-[var(--radius-card)] border-[color-mix(in_srgb,var(--color-verde)_32%,transparent)] p-5"
             >
               <h3 className="text-lg font-semibold">{e.titulo}</h3>
               <p className="mt-2 text-sm leading-relaxed text-[var(--color-tinta-suave)]">
@@ -327,7 +327,7 @@ export default function PaginaMultas() {
           {datos.CONSECUENCIAS_PENALES.map((p) => (
             <li
               key={p.id}
-              className="rounded-[var(--radius-card)] border border-[var(--color-borde)] border-l-4 border-l-[var(--color-rojo)] p-5"
+              className="rounded-[var(--radius-card)] border-[color-mix(in_srgb,var(--color-rojo)_32%,transparent)] p-5"
             >
               <Insignia tono="rojo">Art. {p.articulo} LFPIORPI</Insignia>
               <p className="mt-2 leading-relaxed">{p.supuesto}</p>

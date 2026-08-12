@@ -146,11 +146,11 @@ export default async function PaginaActividad({
         descripcion="La pregunta que trae casi todo el que llega a esta página."
       >
         <div className="grid gap-6 md:grid-cols-2">
-          <div className="rounded-[var(--radius-card)] border border-[var(--color-borde)] border-l-4 border-l-[var(--color-rojo)] p-5">
+          <div className="rounded-[var(--radius-card)] border-[color-mix(in_srgb,var(--color-rojo)_32%,transparent)] p-5">
             <h3 className="mb-3 font-semibold text-[var(--color-tinta)]">Sí queda dentro</h3>
             <ListaConVinetas items={contenido.alcanza} tono="negativo" />
           </div>
-          <div className="rounded-[var(--radius-card)] border border-[var(--color-borde)] border-l-4 border-l-[var(--color-verde)] p-5">
+          <div className="rounded-[var(--radius-card)] border-[color-mix(in_srgb,var(--color-verde)_32%,transparent)] p-5">
             <h3 className="mb-3 font-semibold text-[var(--color-tinta)]">No queda dentro</h3>
             <ListaConVinetas items={contenido.noAlcanza} tono="positivo" />
           </div>

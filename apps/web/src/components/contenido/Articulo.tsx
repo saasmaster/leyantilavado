@@ -71,7 +71,7 @@ export function CabeceraArticulo({
         <p className="prosa mt-4 text-lg text-[var(--color-tinta-suave)]">{entradilla}</p>
       )}
 
-      <div className="mt-6 rounded-[var(--radius-card)] border border-[var(--color-borde)] border-l-4 border-l-[var(--color-petroleo)] bg-[var(--color-petroleo-tenue)] p-5">
+      <div className="mt-6 rounded-[var(--radius-card)] border border-[color-mix(in_srgb,var(--color-petroleo)_30%,transparent)] bg-[var(--color-petroleo-tenue)] p-5">
         <p className="mb-1 flex items-center gap-2 text-sm font-semibold text-[var(--color-petroleo-hondo)]">
           <Info aria-hidden className="size-4" />
           Respuesta directa

@@ -319,7 +319,7 @@ export default function Plataforma() {
             return (
               <li
                 key={l.titulo}
-                className="tarjeta border-l-4 border-l-[var(--color-ambar)] p-5"
+                className="tarjeta border border-[color-mix(in_srgb,var(--color-ambar)_32%,transparent)] p-5"
               >
                 <div className="flex items-start gap-3">
                   <Icono className="mt-0.5 size-5 shrink-0 text-[var(--color-ambar)]" />

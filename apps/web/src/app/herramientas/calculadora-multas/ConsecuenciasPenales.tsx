@@ -34,7 +34,7 @@ export function ConsecuenciasPenales() {
       </div>
 
       {datos.CONSECUENCIAS_PENALES.map((c) => (
-        <Tarjeta key={c.id} className="evitar-corte border-l-4 border-l-[var(--color-rojo)]">
+        <Tarjeta key={c.id} className="evitar-corte border border-[color-mix(in_srgb,var(--color-rojo)_32%,transparent)]">
           <TarjetaCuerpo className="flex flex-col gap-3">
             <h3 className="font-semibold text-[var(--color-tinta)]">Artículo {c.articulo}</h3>
             <p className="text-sm leading-relaxed text-[var(--color-tinta-suave)]">{c.supuesto}</p>

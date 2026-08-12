@@ -312,7 +312,7 @@ export default function PaginaLimitesEfectivo() {
 
       <Seccion id="sancion" titulo="Qué cuesta rebasarlo">
         {sancionEfectivo ? (
-          <div className="rounded-[var(--radius-card)] border border-[var(--color-borde)] border-l-4 border-l-[var(--color-rojo)] p-5">
+          <div className="rounded-[var(--radius-card)] border-[color-mix(in_srgb,var(--color-rojo)_32%,transparent)] p-5">
             <p className="font-medium">{sancionEfectivo.supuesto}</p>
             <p className="mt-3">
               <span className="cifra text-lg font-semibold">

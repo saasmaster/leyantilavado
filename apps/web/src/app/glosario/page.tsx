@@ -122,7 +122,7 @@ export default function PaginaGlosario() {
                     </p>
 
                     {t.matiz && (
-                      <p className="rounded-[var(--radius-card)] border-l-4 border-l-[var(--color-ambar)] bg-[var(--color-ambar-tenue)] p-4 text-sm leading-relaxed">
+                      <p className="rounded-[var(--radius-card)] border border-[color-mix(in_srgb,var(--color-ambar)_32%,transparent)] bg-[var(--color-ambar-tenue)] p-4 text-sm leading-relaxed">
                         <span className="font-semibold">Precisión: </span>
                         {t.matiz}
                       </p>

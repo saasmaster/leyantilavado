@@ -45,13 +45,28 @@ const TONO: Record<Conclusion, 'verde' | 'marino' | 'ambar' | 'rojo' | 'neutro'>
   informacion_insuficiente: 'neutro',
 };
 
+/**
+ * El tono de la conclusión se lee por el fondo y por un contorno completo del
+ * mismo color, no por una franja de 4px a la izquierda.
+ *
+ * Aquí importa más que en otros sitios: este componente es el que da el
+ * resultado de una calculadora, y una barra gruesa de color rojo o verde
+ * empuja a leer el color antes que el texto. La conclusión de esta
+ * herramienta nunca es un semáforo —siempre viene con matices y con la
+ * disposición aplicable— y el diseño no debería sugerir lo contrario.
+ */
 const FONDO: Record<Conclusion, string> = {
-  sin_obligacion_aparente: 'border-l-[var(--color-verde)] bg-[var(--color-verde-tenue)]',
-  requiere_identificacion: 'border-l-[var(--color-marino)] bg-[var(--color-marino-tenue)]',
-  proximo_al_aviso: 'border-l-[var(--color-ambar)] bg-[var(--color-ambar-tenue)]',
-  aviso_probable: 'border-l-[var(--color-rojo)] bg-[var(--color-rojo-tenue)]',
-  requiere_revision_profesional: 'border-l-[var(--color-ambar)] bg-[var(--color-ambar-tenue)]',
-  informacion_insuficiente: 'border-l-[var(--color-borde-fuerte)] bg-[var(--color-marfil-hondo)]',
+  sin_obligacion_aparente:
+    'border-[color-mix(in_srgb,var(--color-verde)_32%,transparent)] bg-[var(--color-verde-tenue)]',
+  requiere_identificacion:
+    'border-[color-mix(in_srgb,var(--color-marino)_30%,transparent)] bg-[var(--color-marino-tenue)]',
+  proximo_al_aviso:
+    'border-[color-mix(in_srgb,var(--color-ambar)_38%,transparent)] bg-[var(--color-ambar-tenue)]',
+  aviso_probable:
+    'border-[color-mix(in_srgb,var(--color-rojo)_32%,transparent)] bg-[var(--color-rojo-tenue)]',
+  requiere_revision_profesional:
+    'border-[color-mix(in_srgb,var(--color-ambar)_38%,transparent)] bg-[var(--color-ambar-tenue)]',
+  informacion_insuficiente: 'border-[var(--color-borde-fuerte)] bg-[var(--color-marfil-hondo)]',
 };
 
 export const ETIQUETA_CONFIANZA: Record<NivelConfianza, string> = {
@@ -74,7 +89,7 @@ export function IndicadorConclusion({
   return (
     <div
       className={cn(
-        'rounded-[var(--radius-card)] border border-[var(--color-borde)] border-l-4 p-5',
+        'rounded-[var(--radius-card)] border p-5',
         FONDO[conclusion],
         className,
       )}
