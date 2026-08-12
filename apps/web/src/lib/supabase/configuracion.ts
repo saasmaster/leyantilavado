@@ -7,8 +7,8 @@
  * muestra "configuración pendiente"; el sitio público ni se entera).
  */
 
-export const URL_SUPABASE = process.env['NEXT_PUBLIC_SUPABASE_URL'] ?? '';
-export const CLAVE_ANONIMA = process.env['NEXT_PUBLIC_SUPABASE_ANON_KEY'] ?? '';
+export const URL_SUPABASE = process.env.NEXT_PUBLIC_SUPABASE_URL ?? '';
+export const CLAVE_ANONIMA = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '';
 
 /** true sólo si hay URL y clave pública. No comprueba que sean válidas. */
 export const supabaseConfigurado: boolean = Boolean(URL_SUPABASE && CLAVE_ANONIMA);

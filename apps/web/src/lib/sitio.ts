@@ -5,7 +5,7 @@ export const SITIO = {
   subtitulo: 'Centro independiente de información y herramientas sobre la LFPIORPI',
   descripcion:
     'Calcula umbrales, acumulación de seis meses, límites de efectivo y fechas de aviso de la Ley Antilavado con la UMA vigente en la fecha de tu operación. Herramientas gratuitas con fuente oficial citada.',
-  url: process.env['NEXT_PUBLIC_SITE_URL'] ?? 'https://leyantilavado.org',
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://leyantilavado.org',
   locale: 'es_MX',
   /**
    * Indexación por buscadores.
@@ -23,7 +23,7 @@ export const SITIO = {
    * de invisible, que es el modo de fallar que corresponde a un sitio pensado
    * para ser encontrado.
    */
-  indexable: process.env['NEXT_PUBLIC_SITE_INDEXABLE'] !== 'false',
+  indexable: process.env.NEXT_PUBLIC_SITE_INDEXABLE !== 'false',
 } as const;
 
 export interface EnlaceNav {
@@ -102,6 +102,43 @@ export const ENLACES_PIE: { titulo: string; enlaces: EnlaceNav[] }[] = [
   },
 ];
 
+/** Google recorta el título del resultado alrededor de aquí. */
+const LARGO_TITULO = 60;
+/** Y la descripción alrededor de aquí. */
+const LARGO_DESCRIPCION = 155;
+
+/**
+ * Recorta en el último espacio antes del límite y añade puntos suspensivos.
+ *
+ * Cortar a mitad de palabra se ve peor en el resultado de búsqueda que una
+ * frase que termina antes, así que se retrocede al espacio anterior.
+ */
+function recortar(texto: string, maximo: number): string {
+  if (texto.length <= maximo) return texto;
+  const cortado = texto.slice(0, maximo - 1);
+  const ultimoEspacio = cortado.lastIndexOf(' ');
+  return `${(ultimoEspacio > maximo * 0.6 ? cortado.slice(0, ultimoEspacio) : cortado).trimEnd()}…`;
+}
+
+/**
+ * Título del resultado de búsqueda.
+ *
+ * La marca se añade sólo si cabe. Antes se concatenaba siempre, y con un
+ * nombre de 17 caracteres eso empujaba 15 de 16 títulos por encima del corte
+ * de Google —el más largo llegaba a 92—, de modo que el buscador cortaba
+ * justamente el final, que es donde estaba lo específico de la página.
+ *
+ * Perder la marca no cuesta nada: ya aparece en el dominio, que se muestra
+ * encima del título en el resultado.
+ */
+function componerTitulo(titulo: string, ruta: string): string {
+  if (ruta === '/') return `${SITIO.nombre} — Ley Antilavado y LFPIORPI en México`;
+
+  const conMarca = `${titulo} | ${SITIO.nombre}`;
+  if (conMarca.length <= LARGO_TITULO) return conMarca;
+  return recortar(titulo, LARGO_TITULO);
+}
+
 /**
  * Metadata por página.
  *
@@ -126,12 +163,13 @@ export function construirMetadata({
   tipo?: 'website' | 'article';
 }): Metadata {
   const url = `${SITIO.url}${ruta}`;
-  const tituloCompleto = ruta === '/' ? `${SITIO.nombre} — ${SITIO.subtitulo}` : `${titulo} | ${SITIO.nombre}`;
+  const tituloCompleto = componerTitulo(titulo, ruta);
+  const descripcionCorta = recortar(descripcion, LARGO_DESCRIPCION);
   const indexar = SITIO.indexable && !noindex;
 
   return {
     title: tituloCompleto,
-    description: descripcion,
+    description: descripcionCorta,
     alternates: { canonical: url },
     robots: indexar
       ? { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 }
@@ -141,7 +179,7 @@ export function construirMetadata({
       url,
       siteName: SITIO.nombre,
       title: tituloCompleto,
-      description: descripcion,
+      description: descripcionCorta,
       locale: SITIO.locale,
       ...(publicadoEn ? { publishedTime: publicadoEn } : {}),
       ...(actualizadoEn ? { modifiedTime: actualizadoEn } : {}),
@@ -149,22 +187,41 @@ export function construirMetadata({
     twitter: {
       card: 'summary_large_image',
       title: tituloCompleto,
-      description: descripcion,
+      description: descripcionCorta,
     },
   };
 }
 
 /** Datos estructurados. Sólo se emiten cuando el contenido visible los respalda. */
+/** Logotipo cuadrado del sitio. Google lo exige para `Organization.logo`. */
+export const LOGO = {
+  '@type': 'ImageObject' as const,
+  url: `${SITIO.url}/icons/icono-512.png`,
+  width: 512,
+  height: 512,
+};
+
 export function jsonLdOrganizacion() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
+    '@id': `${SITIO.url}/#organizacion`,
     name: SITIO.nombre,
     url: SITIO.url,
+    logo: LOGO,
+    image: LOGO,
     description: SITIO.subtitulo,
     // Declaración explícita: no somos gobierno.
     disambiguatingDescription:
       'Plataforma privada e independiente. No pertenece ni está afiliada al SAT, la UIF ni a ninguna autoridad gubernamental de México.',
+    areaServed: { '@type': 'Country', name: 'México' },
+    knowsAbout: [
+      'LFPIORPI',
+      'Prevención de lavado de dinero',
+      'Actividades vulnerables',
+      'Unidad de Medida y Actualización',
+      'Cumplimiento PLD/FT',
+    ],
   };
 }
 

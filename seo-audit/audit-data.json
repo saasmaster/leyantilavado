@@ -1,0 +1,415 @@
+{
+  "meta": {
+    "fecha": "2026-08-12",
+    "sitio_auditado": "http://leyantilavado.saavatar.top",
+    "dominio_real_futuro": "https://leyantilavado.org",
+    "idioma": "es-MX",
+    "mercado": "México",
+    "paginas_descargadas": 16,
+    "urls_en_sitemap": 93,
+    "urls_sitemap_verificadas_200": 93,
+    "datos_no_medidos": [
+      "volumen de búsqueda",
+      "dificultad de palabra clave",
+      "tráfico orgánico",
+      "posiciones en SERP",
+      "backlinks",
+      "Core Web Vitals de campo (CrUX)",
+      "citación real en asistentes de IA"
+    ],
+    "nota_metodologica": "Ningún número de tráfico, demanda o citación fue estimado ni inventado. Las mediciones de rendimiento son de laboratorio (curl desde una sola máquina), no de campo."
+  },
+  "summary": {
+    "health_score": 72,
+    "health_score_nota": "Puntuación estructural: lo que este código obtendría el día 1 de indexación. La visibilidad real hoy es 0 porque robots.txt responde Disallow: /.",
+    "business_type": "Publicación editorial especializada + herramientas SaaS (nicho legal/regulatorio, YMYL)",
+    "top_findings": [
+      "robots.txt responde Disallow:/ y las páginas prerenderizadas emiten noindex, mientras la única página dinámica (/directorio) emite index,follow — causa: process.env con corchetes en sitio.ts:26 derrota la sustitución estática de Next",
+      "La navegación principal es 'use client' y no se renderiza en servidor: /herramientas y /preguntas-frecuentes reciben 1 enlace entrante frente a 25-28 de las páginas de dinero",
+      "Ninguna página emitía og:image ni twitter:image pese a declarar twitter:card summary_large_image (resuelto en esta pasada)",
+      "Citabilidad GEO: 7 de 16 páginas sin bloque 'Respuesta directa', 39 bloques por debajo del largo útil y 5 pasajes que empiezan con un deíctico sin antecedente",
+      "15 de 16 títulos pasan de 60 caracteres (máx. 92) y 16 de 16 descripciones pasan del largo útil (máx. 266)"
+    ],
+    "quick_wins": [
+      "Notación de punto en sitio.ts:26 y variables de entorno presentes en tiempo de build — una línea, desbloquea el 100% de la indexación",
+      "llms.txt generado desde el motor de reglas (HECHO)",
+      "Imagen de Open Graph y Twitter heredada por las 93 rutas (HECHO)",
+      "Acortar el sufijo del título de ' | LeyAntilavado.org' a ' · LeyAntilavado': 5 caracteres recuperados en 16 páginas de un solo cambio",
+      "Renderizar los enlaces del mega-menú en el HTML y ocultarlos con CSS en vez de no montarlos"
+    ]
+  },
+  "categories": [
+    {
+      "name": "Technical SEO",
+      "score": 68,
+      "weight": 0.22,
+      "what_works": [
+        "93 de 93 URL del sitemap responden 200: cero rotas, cero redirecciones",
+        "404 real en rutas inexistentes; /umbrales/ redirige 308; /Umbrales devuelve 404 (sin duplicados por barra final ni capitalización)",
+        "Cabeceras de seguridad completas: CSP, HSTS con preload, X-Frame-Options DENY, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, COOP",
+        "X-Robots-Tag noindex verificado en /entrar, /registro, /panel, /admin y /api/*",
+        "Contenido y tablas presentes en el HTML del servidor, sin depender de JavaScript",
+        "Prerender estático con x-nextjs-cache HIT",
+        "html lang es-MX correcto y canónicas absolutas en las 16 páginas"
+      ],
+      "findings": [
+        {
+          "title": "El sitio se contradice sobre si quiere ser indexado",
+          "severity": "Critical",
+          "description": "robots.txt en vivo devuelve 'User-Agent: * / Disallow: /'. Las 15 páginas prerenderizadas emiten 'noindex, nofollow' pero /directorio, que es dinámica por usar searchParams, emite 'index, follow, max-image-preview:large'. Ambas llaman a la misma función construirMetadata. Causa raíz en apps/web/src/lib/sitio.ts:26: process.env['NEXT_PUBLIC_SITE_INDEXABLE'] con corchetes no es sustituido estáticamente por Next (sólo sustituye notación de punto), así que el valor se lee en tiempo de ejecución y difiere entre build y servidor. En un bundle de cliente sería undefined, y undefined !== 'false' da true.",
+          "recommendation": "Cambiar a process.env.NEXT_PUBLIC_SITE_INDEXABLE !== 'false' y garantizar que NEXT_PUBLIC_SITE_INDEXABLE y NEXT_PUBLIC_SITE_URL existan en el paso de build del panel de despliegue, no sólo al arrancar."
+        },
+        {
+          "title": "La navegación principal no existe para un rastreador sin JavaScript",
+          "severity": "High",
+          "description": "components/Encabezado.tsx es 'use client' y el mega-menú se monta desde estado (menuActivo). En el HTML servido sólo aparecen los enlaces siempre visibles. Conteo sobre las 16 páginas: /umbrales 28 enlaces entrantes, /multas 25, /calendario-cumplimiento 28, pero /herramientas 1 y /preguntas-frecuentes 1. Los rastreadores de modelos de lenguaje en general no ejecutan JavaScript. Atenuante: el sitemap lista las 93 URL y el cuerpo enlaza de forma cruzada, así que hay 0 páginas huérfanas.",
+          "recommendation": "Renderizar siempre el <ul> de cada grupo de NAVEGACION y que el estado controle sólo visibilidad (hidden/altura/aria-expanded). Alternativa más barata: bloque de mapa del sitio en PieDePagina.tsx, que sí se renderiza en servidor."
+        },
+        {
+          "title": "robots.txt no cubría el área privada real",
+          "severity": "Medium",
+          "description": "La lista anterior bloqueaba /app/ y /resultado/, que no existen (el área privada usa el grupo de rutas (app) y se sirve bajo /panel/*; los resultados de herramientas se calculan en el navegador sin URL). Mientras tanto /panel/* y /actualizar-contrasena quedaban abiertas. Riesgo acotado porque next.config.mjs ya emite X-Robots-Tag noindex sobre esas rutas, verificado por curl.",
+          "recommendation": "RESUELTO en esta pasada: lista corregida a /panel/, /admin/, /api/, /entrar, /registro, /recuperar, /actualizar-contrasena, /offline."
+        },
+        {
+          "title": "Sin reglas propias para rastreadores de IA",
+          "severity": "Medium",
+          "description": "robots.txt sólo tenía la regla comodín. Google-Extended y Applebot-Extended no son rastreadores sino interruptores de permiso de entrenamiento: sin entrada propia, el operador decide por omisión y esa omisión cambia con el tiempo.",
+          "recommendation": "RESUELTO en esta pasada: 14 agentes con entrada explícita (GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-SearchBot, Claude-User, PerplexityBot, Perplexity-User, Google-Extended, Applebot-Extended, meta-externalagent, cohere-ai, CCBot, MistralAI-User), más Bytespider bloqueado. Política documentada en lib/seo/rastreadores-ia.ts."
+        },
+        {
+          "title": "El sitemap declaraba las 93 URL modificadas hoy en cada despliegue",
+          "severity": "Medium",
+          "description": "sitemap.ts usaba new Date() como lastModified de todas las entradas. Cada despliegue anunciaba el sitio entero como modificado aunque no hubiera cambiado nada, lo que erosiona la credibilidad del campo justo para el día en que una reforma sí cambia una tabla.",
+          "recommendation": "RESUELTO en esta pasada: lastModified sale de procedencia.ultimaRevision del dato que sostiene cada página, y de REVISION_VIGENTE para el resto."
+        },
+        {
+          "title": "El middleware corre sobre rutas de máquina",
+          "severity": "Low",
+          "description": "apps/web/middleware.ts:15 excluye robots.txt, sitemap.xml, manifest.webmanifest y extensiones estáticas, pero no /llms.txt, /opengraph-image ni /twitter-image. Cada petición de un rastreador dispara una validación de sesión contra Supabase inútil. No rompe nada: las tres responden 200.",
+          "recommendation": "Añadir llms\\.txt|opengraph-image|twitter-image a la exclusión del matcher."
+        },
+        {
+          "title": ".env.example contiene dos comentarios contradictorios",
+          "severity": "Low",
+          "description": "Líneas 19-21 dicen que sin 'true' todas las páginas salen noindex; la línea 22, justo debajo, dice que es indexable por omisión. El comentario viejo quedó al invertir la lógica.",
+          "recommendation": "Borrar el bloque obsoleto: quien despliegue leyendo el primero configurará mal."
+        },
+        {
+          "title": "VERSION_LEGAL figura en el contrato pero no existe",
+          "severity": "Low",
+          "description": "CONTRATO.md:42 la lista como parte de la API pública del motor, pero no se exporta desde packages/rules-engine/src/index.ts ni existe en el paquete. Nada del sitio la usa.",
+          "recommendation": "Implementarla o quitarla del contrato."
+        }
+      ]
+    },
+    {
+      "name": "Content Quality",
+      "score": 74,
+      "weight": 0.23,
+      "what_works": [
+        "Un solo <h1> por página y cero saltos de nivel en las 16 páginas auditadas",
+        "Profundidad real: /herramientas/preparacion-auditoria 3577 palabras, /multas ~2700, /umbrales ~2500",
+        "Metodología editorial publicada con seis puntos verificables y siete fuentes primarias trazadas por regla",
+        "Autoría sin credenciales inventadas: credenciales vacío en vez de un título profesional ficticio",
+        "Aviso legal explícito en cada página de contenido y declaración de no afiliación con SAT, UIF y SHCP",
+        "Cero páginas huérfanas: 0 de 93 URL del sitemap sin enlace entrante"
+      ],
+      "findings": [
+        {
+          "title": "15 de 16 títulos se cortan en el resultado de búsqueda",
+          "severity": "High",
+          "description": "construirMetadata añade ' | LeyAntilavado.org' (21 caracteres) a cada título. Resultado: /umbrales 92 caracteres, /limites-efectivo 89, / 88, /actividades-vulnerables 85, /multas 82, /reforma-ley-antilavado-2026 82, /directorio 81, /obligaciones 78, /glosario 73, /acuerdo-115-2026 68, /preguntas-frecuentes 64. Los títulos en sí son buenos: tienen ángulo y no son listas de palabras clave. El problema es sólo de largo.",
+          "recommendation": "Acortar el sufijo a ' · LeyAntilavado' (16 caracteres) recupera 5 caracteres en las 16 páginas de un solo cambio y saca a tres del rojo. El resto necesita reescritura; hay propuesta por página en findings/content.md §1."
+        },
+        {
+          "title": "16 de 16 descripciones exceden el largo útil",
+          "severity": "Medium",
+          "description": "Máximo 266 caracteres en /obligaciones, seguido de /herramientas 250, /reforma 249, /calendario 234, /multas 222. Google corta alrededor de 155-160 en escritorio y menos en móvil: la última frase de cada una se pierde.",
+          "recommendation": "Poner el diferenciador ('con la UMA vigente en la fecha de tu operación', 'fuente oficial citada') en los primeros 120 caracteres y dejar el resto como cola prescindible."
+        },
+        {
+          "title": "E-E-A-T: no hay una persona identificable detrás del contenido",
+          "severity": "High",
+          "description": "content/autores.ts define un único autor, EQUIPO_EDITORIAL, con credenciales vacío, y FIRMA_POR_DEFECTO no trae revisor. El JSON-LD lo refleja fielmente: author siempre es Organization, nunca Person. En contenido YMYL legal la autoría por persona identificable es la señal que más pesa, y competir contra despachos que firman con nombre y cédula desde una firma colectiva anónima es una desventaja estructural. No es un bug: el comentario del archivo explica que se prefirió no inventar credenciales, y esa decisión es correcta.",
+          "recommendation": "Nombrar al responsable editorial real con trayectoria verificable aunque no sea abogado; sumar un revisor con cédula para /umbrales, /multas, /limites-efectivo y /obligaciones; exponerlo en JSON-LD como Person más reviewedBy. El tipo Autor y el campo revisor ya existen: es dato, no código."
+        },
+        {
+          "title": "Dos páginas en el sitemap sin contenido que ofrecer",
+          "severity": "Medium",
+          "description": "/cursos tiene 242 palabras dentro de <main> y /plantillas 259. Son estados vacíos honestos, exactamente como pide la regla 8 del contrato, y no merecen reproche editorial. Pero están en el sitemap con prioridad 0.6: se está pidiendo indexar dos páginas que no pueden satisfacer ninguna consulta. Ninguna otra página baja de 400 palabras útiles.",
+          "recommendation": "Dejarlas accesibles y enlazadas pero fuera del sitemap hasta que tengan catálogo. Es una decisión editorial, no un bug."
+        },
+        {
+          "title": "Oportunidades de contenido sin explotar",
+          "severity": "Low",
+          "description": "Huecos identificados leyendo el corpus, SIN datos de demanda medidos: página por umbral en pesos y por año (el motor ya hace la conversión, pero vive dentro de un selector sin URL propia); corte geográfico por estado en el directorio; página dedicada al aviso de 24 horas; comparativa actividad vulnerable frente a entidad financiera; casos resueltos por actividad usando el componente EjemploResuelto que ya existe.",
+          "recommendation": "Priorizar los casos resueltos por actividad: es el formato con más probabilidad de ser citado por un asistente de IA, y la cifra saldría del motor."
+        }
+      ]
+    },
+    {
+      "name": "On-Page SEO",
+      "score": 70,
+      "weight": 0.20,
+      "what_works": [
+        "Canónicas absolutas y correctas en las 16 páginas",
+        "Jerarquía de encabezados sin un solo salto de nivel en 16 de 16 páginas",
+        "Secciones con id y anclas, más índice de contenidos por página",
+        "Sin hreflang, que es lo correcto para un sitio monolingüe es-MX",
+        "Migas de pan visibles que coinciden con el BreadcrumbList marcado"
+      ],
+      "findings": [
+        {
+          "title": "Ninguna página emitía imagen de vista previa",
+          "severity": "High",
+          "description": "Cero og:image y cero twitter:image en las 16 páginas, mientras construirMetadata declaraba twitter.card = 'summary_large_image'. Una tarjeta grande sin imagen se degrada a tarjeta chica: cada vez que alguien compartía una página aparecía un enlace desnudo.",
+          "recommendation": "RESUELTO en esta pasada: app/opengraph-image.tsx y app/twitter-image.tsx, 1200x630 generadas en el build. Por convención de Next las heredan las 93 rutas. Verificado: 200 image/png, 113112 bytes."
+        },
+        {
+          "title": "Enlazado interno concentrado en el cuerpo, no en la navegación",
+          "severity": "High",
+          "description": "Ver el hallazgo de la navegación en Technical SEO. Las páginas de dinero están bien enlazadas desde el cuerpo (/umbrales 28, /calendario-cumplimiento 28, /multas 25, /actividades-vulnerables 23) gracias al componente EnlacesRelacionados, pero /herramientas y /preguntas-frecuentes reciben un solo enlace cada una.",
+          "recommendation": "Mismo arreglo que el hallazgo de navegación: montar siempre los enlaces del mega-menú."
+        }
+      ]
+    },
+    {
+      "name": "Schema / Structured Data",
+      "score": 78,
+      "weight": 0.10,
+      "what_works": [
+        "La regla de la casa 'sólo se marca lo visible' se cumple al 100%: las 4 páginas con FAQPage muestran todas sus preguntas",
+        "Ningún tipo obsoleto marcado (sin HowTo, SpecialAnnouncement, CourseInfo)",
+        "JSON-LD siempre, nunca Microdata ni RDFa, con @context https correcto",
+        "Dataset ya presente en /umbrales y /limites-efectivo",
+        "DefinedTermSet con 51 términos en /glosario",
+        "disambiguatingDescription en Organization declarando que el proyecto no es una autoridad",
+        "WebSite sin SearchAction, que es lo correcto porque no existe un buscador real en el sitio"
+      ],
+      "findings": [
+        {
+          "title": "Article sin image",
+          "severity": "Critical",
+          "description": "jsonLdArticulo no emite el campo image, que Google pide para resultados enriquecidos de Article. Afecta a las 9 páginas con Article.",
+          "recommendation": "Añadir image: [`${SITIO.url}/opengraph-image`] ahora que la imagen existe, más @id, isPartOf y logo en publisher. Snippet completo en findings/schema.md §3.4."
+        },
+        {
+          "title": "Organization sin logo",
+          "severity": "Warning",
+          "description": "jsonLdOrganizacion en lib/sitio.ts:158-169 no emite logo, que Google usa para el panel de conocimiento. El asset icon.png ya existe en apps/web/src/app/.",
+          "recommendation": "Añadir logo como ImageObject apuntando a /icon.png. NO añadir sameAs, contactPoint ni address hasta que existan de verdad: perfiles sociales inventados son una señal falsa fácil de detectar."
+        },
+        {
+          "title": "Dataset sin campos que lo harían citable como fuente de datos",
+          "severity": "Warning",
+          "description": "Los Dataset de /umbrales y /limites-efectivo tienen name, description, url, inLanguage, dateModified, creator e isAccessibleForFree, pero les falta variableMeasured, temporalCoverage, spatialCoverage (México) y keywords.",
+          "recommendation": "Enriquecerlos con esos cuatro campos. No inventar license ni distribution hasta que exista un CSV o JSON publicado de verdad. Snippet en findings/schema.md §6."
+        },
+        {
+          "title": "Las 17 páginas de /herramientas/* no tienen ningún JSON-LD",
+          "severity": "Warning",
+          "description": "Son calculadoras reales, gratuitas y funcionales, sin marcado de WebApplication.",
+          "recommendation": "Añadir WebApplication con applicationCategory, operatingSystem, offers a precio 0 e isAccessibleForFree."
+        },
+        {
+          "title": "HowTo: evaluado y descartado con criterio",
+          "severity": "Info",
+          "description": "Se revisaron los cuatro candidatos. /obligaciones/[slug] sí tiene secuencia real de pasos con evidencia y estructuralmente califica, pero Google retiró el resultado enriquecido de HowTo en septiembre de 2023. /herramientas/fecha-limite-aviso es una calculadora con explicación de método, /herramientas/checklist-expediente es un checklist interactivo y /calendario-cumplimiento es una línea de tiempo: ninguno es un procedimiento manual secuencial.",
+          "recommendation": "Que el sitio no use HowTo en ningún lado es correcto. No agregarlo."
+        },
+        {
+          "title": "Pregunta duplicada entre dos FAQPage",
+          "severity": "Info",
+          "description": "'¿Los umbrales se calculan con IVA o sin IVA?' aparece con texto idéntico en /preguntas-frecuentes y /umbrales, con respuestas casi idénticas.",
+          "recommendation": "Dejar la versión completa en /umbrales, que es más específica, y enlazar desde /preguntas-frecuentes en vez de repetir literal."
+        },
+        {
+          "title": "Formato mixto entre @graph y array de objetos",
+          "severity": "Info",
+          "description": "En 4 páginas (acuerdo-115-2026, calendario-cumplimiento, preguntas-frecuentes, reforma-ley-antilavado-2026) BreadcrumbList y Article van en un array JSON con dos objetos, cada uno con su propio @context, en vez de un único @graph. Es válido, pero no es lo idiomático y bloquea los @id cruzados entre entidades.",
+          "recommendation": "Unificar en un solo bloque @graph con @context compartido."
+        }
+      ]
+    },
+    {
+      "name": "Performance",
+      "score": 82,
+      "weight": 0.10,
+      "what_works": [
+        "TTFB entre 0.197 s y 0.284 s en las seis rutas medidas",
+        "HTML comprimido entre 21.8 KB y 47.9 KB",
+        "Prerender con x-nextjs-cache HIT y s-maxage de un año",
+        "Tres tipografías de next/font autoalojadas con display swap: sin petición a fonts.gstatic.com",
+        "next.config.mjs ya declara formatos avif y webp para el día que entren imágenes"
+      ],
+      "findings": [
+        {
+          "title": "Alrededor de 230 KB de JavaScript comprimido en la portada",
+          "severity": "Medium",
+          "description": "Los cuatro fragmentos mayores pesan 71.5, 44.5, 39.6 y 35.3 KB comprimidos, para una portada cuyo contenido es texto y tablas ya renderizados en servidor. Sospechosos por package.json: framer-motion 12.4.2, usado en components/inicio/Aparece.tsx sólo para animaciones de entrada, y recharts 2.15.1, que sólo hace falta donde hay gráficas. El contenido ya está pintado antes de que ese JavaScript corra, así que el costo real es INP y batería en teléfonos modestos, que es el perfil de buena parte del público objetivo.",
+          "recommendation": "Correr el analizador de bundle una sola vez antes de tocar nada. Después, evaluar sustituir las animaciones de entrada por CSS con animation-timeline: view() y confirmar que recharts se carga con next/dynamic desde la vista que lo usa."
+        },
+        {
+          "title": "Core Web Vitals de campo no medibles",
+          "severity": "Info",
+          "description": "Sin CrUX: el dominio de staging no tiene historial y el real todavía no existe. Los números de este informe son de laboratorio, desde una máquina y una red. No se estimaron LCP, INP ni CLS.",
+          "recommendation": "Volver a medir con datos de campo en cuanto haya tráfico real."
+        }
+      ]
+    },
+    {
+      "name": "AI Search Readiness (GEO)",
+      "score": 62,
+      "weight": 0.10,
+      "what_works": [
+        "SSR completo confirmado sobre el HTML crudo: tablas, bloques de Respuesta directa y todo el JSON-LD se leen sin ejecutar JavaScript",
+        "El diferenciador es real y trazable: cada cifra sale de un motor versionado con procedencia, artículo, nivel de verificación y fecha de revisión",
+        "Cuando un dato no está confirmado la página lo dice, en vez de rellenarlo con una cifra plausible",
+        "Cuando dos fuentes oficiales se contradicen se muestran las dos",
+        "Migas, índice de contenidos, secciones con ancla y FAQ visible dan estructura extraíble"
+      ],
+      "findings": [
+        {
+          "title": "No existía llms.txt",
+          "severity": "High",
+          "description": "GET /llms.txt devolvía 404. Sin él, un modelo que quiere entender el sitio tiene que rastrearlo entero para descubrir qué lo hace distinto.",
+          "recommendation": "RESUELTO en esta pasada: /llms.txt generado desde el motor de reglas, con la estructura de llmstxt.org, las rutas más citables, la sección 'Por qué citar esta fuente', 'Cómo citarnos', 'Qué NO vas a encontrar aquí' y las siete fuentes primarias. Ninguna cifra escrita a mano: los conteos se derivan de los datos en tiempo de construcción."
+        },
+        {
+          "title": "Citabilidad por pasaje: 7 de 16 páginas sin Respuesta directa",
+          "severity": "High",
+          "description": "home, herramientas, directorio, nosotros, metodologia-editorial, fuentes-oficiales y preguntas-frecuentes no usan CabeceraArticulo. Son justo las páginas que un asistente consultaría al preguntarse si la fuente es confiable, y no tienen una frase extraíble que lo responda.",
+          "recommendation": "Añadir respuestaDirecta empezando por /fuentes-oficiales y /metodologia-editorial."
+        },
+        {
+          "title": "Cinco pasajes empiezan con un deíctico sin antecedente",
+          "severity": "Medium",
+          "description": "actualizaciones/page.tsx:75 abre con 'Aquí queda registrado'; content/actividades.ts:1105 dice 'por eso esta página existe'; glosario/page.tsx:75 usa 'esta materia' y 'este glosario'; umbrales/page.tsx:123 'esta tabla'; obligaciones/page.tsx:72 'este catálogo'. Citados sin contexto no significan nada.",
+          "recommendation": "Reescribir para que cada pasaje nombre la ley, el artículo y el sujeto en su propia primera frase. Texto propuesto para los cinco en findings/geo.md §1.3."
+        },
+        {
+          "title": "Los 39 bloques de Respuesta directa quedan cortos",
+          "severity": "Medium",
+          "description": "Miden entre 37 y 67 palabras, por debajo del rango que se extrae bien como cita completa.",
+          "recommendation": "Alargarlos con dos o tres frases que añadan el sujeto obligado exacto, la excepción más común y la evidencia que prueba el cumplimiento, sin perder el tono directo actual. Es contenido, no código: el campo ya existe y ya se renderiza en servidor."
+        },
+        {
+          "title": "Rastreadores de IA sin entrada propia en robots.txt",
+          "severity": "Medium",
+          "description": "Sólo existía la regla comodín, que no es neutral para Google-Extended ni Applebot-Extended.",
+          "recommendation": "RESUELTO en esta pasada: 14 agentes nombrados con la misma lista de rutas privadas, más Bytespider bloqueado por costo de servidor."
+        },
+        {
+          "title": "E-E-A-T legible por máquina incompleto",
+          "severity": "Medium",
+          "description": "jsonLdArticulo siempre emite author como Organization y no existe campo reviewedBy, consistente con que tampoco hay revisor nombrado visible. La fecha de revisión y las fuentes sí son visibles en la firma editorial de cada página.",
+          "recommendation": "Cuando exista un revisor real, exponerlo como Person y añadir reviewedBy. El código ya anticipa el caso."
+        }
+      ]
+    },
+    {
+      "name": "Images",
+      "score": 75,
+      "weight": 0.05,
+      "what_works": [
+        "El sitio no usa imágenes de contenido: es texto, tablas e iconos SVG en línea de lucide-react, lo que explica el buen TTFB",
+        "manifest.webmanifest e icon.png responden 200",
+        "next.config.mjs declara formatos avif y webp"
+      ],
+      "findings": [
+        {
+          "title": "Faltaba imagen de vista previa social",
+          "severity": "High",
+          "description": "Ninguna de las 16 páginas emitía og:image ni twitter:image.",
+          "recommendation": "RESUELTO en esta pasada con opengraph-image.tsx y twitter-image.tsx."
+        },
+        {
+          "title": "Sin imágenes de contenido que puedan ser citadas o indexadas",
+          "severity": "Low",
+          "description": "Todo el corpus es texto y tablas. No hay diagramas ni esquemas que ilustren, por ejemplo, el flujo de un aviso o la estructura de un beneficiario controlador. No es un error, pero deja fuera la búsqueda por imágenes y una vía de cita multimodal.",
+          "recommendation": "Considerar diagramas SVG en línea (no imágenes de mapa de bits) para los conceptos que hoy se explican sólo en prosa. Al ser SVG en línea, el texto queda indexable y no añade peticiones."
+        }
+      ]
+    }
+  ],
+  "action_plan": {
+    "phases": [
+      {
+        "name": "Fase 1: Desbloquear",
+        "timeframe": "Semana 1",
+        "items": [
+          "Notación de punto en lib/sitio.ts:26 y variables NEXT_PUBLIC_* presentes en el paso de build",
+          "Desplegar y comprobar que robots.txt trae Allow: / y que una página cualquiera trae index, follow",
+          "Dar de alta el dominio real en Google Search Console y Bing Webmaster Tools y enviar el sitemap",
+          "Limpiar el comentario contradictorio de .env.example líneas 19-22"
+        ]
+      },
+      {
+        "name": "Fase 2: Recuperar lo que se está perdiendo",
+        "timeframe": "Semanas 2-3",
+        "items": [
+          "Renderizar los enlaces del mega-menú en el HTML del servidor, o añadir mapa del sitio al pie",
+          "Añadir image, @id, isPartOf y logo de publisher a jsonLdArticulo",
+          "Añadir logo a jsonLdOrganizacion",
+          "Acortar el sufijo del título a ' · LeyAntilavado' y reescribir los títulos que sigan pasando de 60 caracteres",
+          "Recortar las 16 descripciones al rango útil con el gancho en los primeros 120 caracteres"
+        ]
+      },
+      {
+        "name": "Fase 3: Autoridad y citabilidad",
+        "timeframe": "Mes 2",
+        "items": [
+          "Decidir la autoría: responsable editorial con nombre y trayectoria verificable, y revisor con cédula si es posible",
+          "Reescribir los cinco pasajes con deícticos sin antecedente",
+          "Añadir Respuesta directa a las 7 páginas que no la tienen, empezando por /fuentes-oficiales",
+          "Alargar los 39 bloques de actividades y obligaciones hasta que se sostengan como cita completa",
+          "Enriquecer los dos Dataset con variableMeasured, temporalCoverage, spatialCoverage y keywords",
+          "Añadir WebApplication a las 17 páginas de herramientas"
+        ]
+      },
+      {
+        "name": "Fase 4: Medir y ajustar",
+        "timeframe": "Continuo",
+        "items": [
+          "Search Console: cobertura de indexación de las 93 URL y consultas por página",
+          "Volver a medir Core Web Vitals con datos de campo en cuanto haya tráfico real",
+          "Analizar el bundle una sola vez antes de tocar framer-motion o recharts",
+          "Revisar registros del servidor para confirmar si GPTBot, ClaudeBot y PerplexityBot rastrean de verdad y si se pide /llms.txt"
+        ]
+      }
+    ]
+  },
+  "implementado_en_esta_pasada": {
+    "archivos_creados": [
+      "apps/web/src/app/llms.txt/route.ts",
+      "apps/web/src/app/opengraph-image.tsx",
+      "apps/web/src/app/twitter-image.tsx",
+      "apps/web/src/lib/seo/llms.ts",
+      "apps/web/src/lib/seo/llms.test.ts",
+      "apps/web/src/lib/seo/rastreadores-ia.ts"
+    ],
+    "archivos_mejorados": [
+      "apps/web/src/app/robots.ts",
+      "apps/web/src/app/sitemap.ts"
+    ],
+    "verificacion": {
+      "tsc_noEmit": "sin errores",
+      "eslint": "sin advertencias sobre los 7 archivos",
+      "vitest": "27 de 27 en verde (22 previas + 5 nuevas)",
+      "next_build": "NO ejecutado, por instrucción explícita",
+      "rutas_comprobadas_en_dev": {
+        "/llms.txt": "200 text/plain 11343 B",
+        "/opengraph-image": "200 image/png 113112 B",
+        "/twitter-image": "200 image/png 113112 B",
+        "/robots.txt": "16 reglas, con Allow: / cuando indexable",
+        "/sitemap.xml": "94 URL"
+      }
+    }
+  },
+  "artifacts": {
+    "findings_dir": "findings/",
+    "raw_html_dir": "raw/",
+    "screenshots_dir": null
+  }
+}

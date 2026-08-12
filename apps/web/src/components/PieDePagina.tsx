@@ -38,7 +38,7 @@ export function PieDePagina() {
                 {grupo.titulo}
               </p>
               <ul className="flex flex-col gap-2">
-                {grupo.enlaces.slice(0, 6).map((e) => (
+                {grupo.enlaces.map((e) => (
                   <li key={e.href}>
                     <Link
                       href={e.href}
