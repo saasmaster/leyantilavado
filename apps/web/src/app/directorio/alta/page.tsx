@@ -17,7 +17,7 @@ import { construirMetadata } from '@/lib/sitio';
 export const metadata: Metadata = construirMetadata({
   titulo: 'Dar de alta tu perfil en el directorio',
   descripcion:
-    'Regístrate como proveedor de servicios de cumplimiento LFPIORPI. El perfil básico es gratuito, se revisa a mano antes de publicarse y el pago nunca mejora tu posición en los resultados.',
+    'Regístrate como proveedor de servicios de cumplimiento LFPIORPI. El perfil básico es gratuito, se revisa a mano y el pago nunca mejora tu posición.',
   ruta: '/directorio/alta',
 });
 

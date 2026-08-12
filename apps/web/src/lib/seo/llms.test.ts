@@ -24,15 +24,20 @@ describe('llms.txt', () => {
   it('cuenta sobre el motor, no sobre texto escrito a mano', () => {
     // Si alguien agrega una fracción al art. 17, esta prueba lo obliga a
     // aparecer en llms.txt sin editar el texto.
-    for (const a of datos.ACTIVIDADES_PUBLICABLES) {
+    // TODAS las actividades, no sólo las que tienen umbral publicado.
+    //
+    // Antes esta prueba exigía lo contrario: que las dos actividades sin
+    // umbral publicable —fe pública de servidores públicos y personas
+    // facilitadoras— NO aparecieran. Esa regla estaba mal pensada. Sus
+    // páginas existen, se generan, se enlazan desde el catálogo y son
+    // indexables; ocultarlas de llms.txt y del sitemap no las hacía privadas,
+    // sólo las volvía invisibles para quien busca precisamente eso.
+    //
+    // Y lo que dicen es contenido de verdad, no un hueco: el supuesto está en
+    // la ley, la autoridad no ha publicado umbrales, y por eso aquí no hay
+    // cifra. Esa respuesta es útil y prácticamente nadie más la da.
+    for (const a of datos.ACTIVIDADES) {
       expect(texto).toContain(`${SITIO.url}/actividades-vulnerables/${a.slug}`);
-    }
-    // Y las no publicables NO deben asomarse.
-    const noPublicables = datos.ACTIVIDADES.filter(
-      (a) => !datos.ACTIVIDADES_PUBLICABLES.some((p) => p.slug === a.slug),
-    );
-    for (const a of noPublicables) {
-      expect(texto).not.toContain(`/actividades-vulnerables/${a.slug})`);
     }
     expect(texto).toContain(String(datos.UMBRALES_PUBLICADOS.length));
     expect(texto).toContain(String(datos.CALENDARIO.length));

@@ -17,7 +17,7 @@ import { construirMetadata } from '@/lib/sitio';
 export const metadata: Metadata = construirMetadata({
   titulo: 'Comparativo de software de cumplimiento LFPIORPI',
   descripcion:
-    'Comparativo independiente de plataformas de cumplimiento para actividades vulnerables: criterios objetivos, método de comprobación abierto y qué preguntarle a cada proveedor antes de firmar.',
+    'Comparativo independiente de plataformas de cumplimiento: criterios objetivos, método de comprobación abierto y qué preguntar antes de firmar.',
   ruta: '/software-cumplimiento',
 });
 

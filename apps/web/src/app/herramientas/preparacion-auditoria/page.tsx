@@ -8,7 +8,7 @@ import { seccionesAuditoria } from '@/lib/herramientas/checklists';
 export const metadata: Metadata = construirMetadata({
   titulo: 'Preparación para la auditoría de cumplimiento',
   descripcion:
-    'Autoevaluación contra el catálogo completo de obligaciones de la Ley Antilavado, con la evidencia esperada de cada paso, puntaje de preparación y brechas críticas destacadas.',
+    'Autoevaluación contra el catálogo completo de obligaciones, con la evidencia esperada de cada paso, puntaje de preparación y brechas destacadas.',
   ruta: '/herramientas/preparacion-auditoria',
 });
 

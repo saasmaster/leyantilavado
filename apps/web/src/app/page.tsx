@@ -58,6 +58,7 @@ const ACTIVIDADES_BOLETIN = datos.ACTIVIDADES_PUBLICABLES.map((a) => ({
 const JSON_LD = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
+  '@id': `${SITIO.url}/#sitio`,
   name: SITIO.nombre,
   alternateName: 'Ley Antilavado México',
   url: SITIO.url,

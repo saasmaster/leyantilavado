@@ -6,7 +6,7 @@ import { ChecklistExpediente } from './ChecklistExpediente';
 export const metadata: Metadata = construirMetadata({
   titulo: 'Checklist de expediente de identificación (KYC)',
   descripcion:
-    'Lista de verificación del expediente único de identificación para persona física, persona moral y fideicomiso, con la evidencia que un auditor espera y la sección de debida diligencia reforzada.',
+    'Verificación del expediente único de identificación para persona física, moral y fideicomiso, con la evidencia que un auditor espera de cada punto.',
   ruta: '/herramientas/checklist-expediente',
 });
 

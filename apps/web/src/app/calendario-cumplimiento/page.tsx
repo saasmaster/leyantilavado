@@ -19,7 +19,7 @@ import {
 const RUTA = '/calendario-cumplimiento';
 const TITULO = 'Calendario de cumplimiento 2026-2029';
 const DESCRIPCION =
-  'Cada fecha exigible del Acuerdo 115/2026 con su cuenta regresiva en vivo: entrada en vigor, metodología de riesgos, mecanismos automatizados, capacitación, auditoría y dictamen. Con las obligaciones que todavía no tienen fecha cierta.';
+  'Cada fecha exigible del Acuerdo 115/2026 con cuenta regresiva en vivo: metodología de riesgos, mecanismos automatizados, capacitación y auditoría.';
 
 export const metadata: Metadata = construirMetadata({
   titulo: TITULO,

@@ -24,7 +24,7 @@ import { EncabezadoPagina, Seccion } from '@/components/inicio/comun';
 export const metadata: Metadata = construirMetadata({
   titulo: 'Plataforma de cumplimiento PLD/FT',
   descripcion:
-    'Área privada para administrar el cumplimiento de la LFPIORPI: clientes, expedientes, beneficiario controlador, operaciones, acumulación de seis meses, alertas, riesgos, capacitación y auditoría. Con el mismo motor jurídico que las calculadoras públicas.',
+    'Área privada para administrar el cumplimiento de la LFPIORPI: clientes, expedientes, operaciones, alertas, riesgos, capacitación y auditoría.',
   ruta: '/plataforma',
 });
 

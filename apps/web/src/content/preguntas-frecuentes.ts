@@ -58,6 +58,20 @@ export const CATEGORIAS_FAQ: CategoriaFAQ[] = [
         ],
         fundamento: 'Art. 17 LFPIORPI',
         herramienta: { href: '/herramientas/cuestionario', etiqueta: 'Responder el cuestionario' },
+      },
+      {
+        id: 'vender-mi-propia-casa',
+        pregunta: '¿Vender mi propia casa me convierte en sujeto obligado?',
+        respuesta: [
+          'No. El artículo 17 exige que el acto se realice de forma habitual o profesional. Vender la casa en la que vives es un acto aislado de tu patrimonio, no una actividad, y no te obliga a darte de alta ni a presentar avisos.',
+          'Pero cuidado con la conclusión contraria, que es donde se equivoca casi todo el mundo: el límite de efectivo del artículo 32 no se dirige a los sujetos obligados, sino a la OPERACIÓN. Aunque tú no seas sujeto obligado, esa compraventa no puede liquidarse en efectivo por encima del límite, y el notario no puede autorizar la escritura si se rebasa, porque él sí es sujeto obligado y el artículo 32 también lo alcanza.',
+          'Distinto es si compras y vendes inmuebles de forma habitual, o si eres constructora, desarrollador o asesor inmobiliario: ahí sí realizas la actividad de la fracción V.',
+        ],
+        fundamento: 'Art. 17, fracción V, y art. 32, fracción I, LFPIORPI',
+        herramienta: {
+          href: '/herramientas/limites-efectivo',
+          etiqueta: 'Verificar el límite de efectivo',
+        },
         verMas: { href: '/actividades-vulnerables', etiqueta: 'Ver las 16 fracciones' },
       },
       {
@@ -169,6 +183,20 @@ export const CATEGORIAS_FAQ: CategoriaFAQ[] = [
     descripcion: 'Cuándo se presenta, qué pasa si se te pasa.',
     preguntas: [
       {
+        id: 'presentar-un-dia-tarde',
+        pregunta: 'Presenté el aviso el día 18. ¿Pasa algo si nadie me dice nada?',
+        respuesta: [
+          'Sí pasa: ya es extemporáneo. Aquí no funciona el reflejo que traen quienes vienen de materia fiscal, donde presentar antes de que la autoridad te requiera suele resolver el asunto. La ley antilavado no tiene esa figura de espontaneidad general.',
+          'Presentar fuera de plazo es en sí una infracción, y sigue siéndolo aunque nadie te haya requerido nada. El plazo simplemente venció.',
+          'Lo que sí existe es la autocorrección del artículo 55, y no es lo mismo: exige que cumplas ANTES de que inicien las facultades de verificación y que reconozcas expresamente la falta dentro del plazo aplicable. Puede llevar a que la autoridad se abstenga de sancionar por única ocasión, y después de ese beneficio, a una reducción de hasta el 50%. Ninguna de las dos es automática ni es un derecho.',
+        ],
+        fundamento: 'Art. 53, fracción IV, y art. 55 LFPIORPI',
+        herramienta: {
+          href: '/herramientas/fecha-limite-aviso',
+          etiqueta: 'Calcular mi fecha límite',
+        },
+      },
+      {
         id: 'cuando-se-presenta',
         pregunta: '¿Cuándo se presentan los avisos y qué pasa si el día 17 cae en fin de semana?',
         respuesta: [
@@ -255,6 +283,31 @@ export const CATEGORIAS_FAQ: CategoriaFAQ[] = [
         ],
         fundamento: 'Art. 32 y art. 53, fracción VII LFPIORPI',
       },
+      {
+        id: 'carcel-por-error-en-aviso',
+        pregunta: '¿Puedo ir a la cárcel por un error en un aviso?',
+        respuesta: [
+          'El riesgo dejó de ser teórico con la reforma de julio de 2025. Antes, el delito de alterar o modificar la información de un aviso exigía dolo: había que hacerlo a propósito. Ahora los delitos de la ley admiten también la comisión culposa, es decir, por descuido.',
+          'La propia reforma dejó la salida: cuando hay un error de tipo vencible y se corrige espontáneamente antes de que la autoridad lo detecte, no se sanciona. Eso convierte la revisión de lo ya presentado en una medida de protección personal, no en una tarea administrativa: un nombre mal capturado que nadie volvió a mirar es un riesgo distinto del que era antes de 2025.',
+          'Conviene no exagerar en sentido contrario: un error detectado y corregido por ti no es delito, y la vía penal no sustituye al régimen de multas, que sigue siendo el que se aplica en la inmensa mayoría de los casos.',
+        ],
+        fundamento: 'Título Cuarto, Capítulo II, LFPIORPI, reformado el 16 de julio de 2025',
+        verMas: { href: '/multas', etiqueta: 'Ver el régimen sancionador completo' },
+      },
+      {
+        id: 'una-multa-o-varias',
+        pregunta: '¿La multa es una por operación o una por cada incumplimiento?',
+        respuesta: [
+          'Una por cada incumplimiento. Es la diferencia entre una molestia y un problema serio, y casi nadie la tiene presente al estimar su exposición.',
+          'En una sola operación mal documentada pueden concurrir varias infracciones distintas: no integrar el expediente, no haber preguntado por el beneficiario controlador, no conservar el comprobante de domicilio y presentar el aviso fuera de plazo. Cada una tiene su propio fundamento en el artículo 53 y su propia multa en el artículo 54.',
+          'Por eso el rango mínimo engaña. La multa más baja de la ley parte de 200 UMA, pero lo que determina la cifra final no es el mínimo sino cuántos supuestos se acumulan sobre el mismo expediente.',
+        ],
+        fundamento: 'Arts. 53 y 54 LFPIORPI',
+        herramienta: {
+          href: '/herramientas/calculadora-multas',
+          etiqueta: 'Estimar el rango de multa',
+        },
+      },
     ],
   },
   {
@@ -271,6 +324,32 @@ export const CATEGORIAS_FAQ: CategoriaFAQ[] = [
         ],
         fundamento: 'DOF 16-07-2025, DOF 27-03-2026 y DOF 07-08-2026',
         verMas: { href: '/reforma-ley-antilavado-2026', etiqueta: 'Ver qué cambió, punto por punto' },
+      },
+      {
+        id: 'quien-es-beneficiario-controlador',
+        pregunta: '¿Quién cuenta como beneficiario controlador después de la reforma?',
+        respuesta: [
+          'La persona física que se beneficia de la operación o que ejerce el control. La reforma de julio de 2025 bajó el umbral de participación: antes se miraba a quien tuviera el 50% del capital social, ahora basta con MÁS DEL 25%.',
+          'Ese cambio de una sola cifra reabre estructuras que ya se consideraban resueltas. Una sociedad con cuatro socios al 25% no tenía beneficiario controlador por participación bajo la regla anterior y sigue sin tenerlo por ese camino —25% no es más de 25%—, pero una con tres socios al 33% ahora tiene tres, donde antes no tenía ninguno.',
+          'El porcentaje no es el único camino: quien ejerce el control por otros medios —acuerdos de voto, derecho a nombrar al administrador, control de hecho— es beneficiario controlador aunque no aparezca en el capital.',
+        ],
+        fundamento: 'Art. 3, fracción III, LFPIORPI, reformado el 16 de julio de 2025',
+        herramienta: {
+          href: '/herramientas/beneficiario-controlador',
+          etiqueta: 'Trazar la estructura corporativa',
+        },
+      },
+      {
+        id: 'registro-beneficiario-economia',
+        pregunta: '¿Tengo que registrar a mi beneficiario controlador ante la Secretaría de Economía?',
+        respuesta: [
+          'Sí, si eres sociedad mercantil, y aquí está lo que sorprende a la mayoría: esta obligación aplica AUNQUE NO REALICES NINGUNA ACTIVIDAD VULNERABLE. Es independiente del régimen del artículo 17.',
+          'La reforma incorporó la obligación de registrar la información del beneficiario controlador en una plataforma electrónica de la Secretaría de Economía, conservar el soporte documental y reportar cualquier modificación relevante.',
+          'No se puede cumplir todavía: la plataforma y sus lineamientos están pendientes de publicarse. Lo que sí conviene hacer desde ahora es tener identificado y documentado al beneficiario controlador, porque el día que abra el sistema el plazo correrá sobre información que hay que reunir, no sobre un formulario que se llena en una tarde.',
+          'Ojo con no confundirla con la obligación del Código Fiscal de la Federación, que existe desde 2022: ésa se conserva en tus propios registros y se entrega cuando el SAT la requiere. Son dos obligaciones distintas y cumplir una no cumple la otra.',
+        ],
+        fundamento: 'LFPIORPI reformada el 16 de julio de 2025; lineamientos pendientes de publicación',
+        verMas: { href: '/reforma-ley-antilavado-2026', etiqueta: 'Ver qué más cambió' },
       },
       {
         id: 'para-cuando-cada-cosa',

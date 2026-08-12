@@ -24,8 +24,8 @@ const ANIO_MAS_RECIENTE = ANIOS_UMA_DISPONIBLES[0] ?? 2026;
 const ANIO_MAS_ANTIGUO = ANIOS_UMA_DISPONIBLES[ANIOS_UMA_DISPONIBLES.length - 1] ?? 2016;
 
 export const metadata: Metadata = construirMetadata({
-  titulo: `Umbrales de la Ley Antilavado: tabla completa en UMA y pesos (${ANIO_MAS_ANTIGUO}-${ANIO_MAS_RECIENTE})`,
-  descripcion: `Las ${datos.UMBRALES.length} reglas de umbral del art. 17 de la LFPIORPI, con identificación y aviso por actividad, conversión a pesos con la UMA de cualquier año y el comparador exacto que usa la ley.`,
+  titulo: `Umbrales de la Ley Antilavado en UMA y pesos ${ANIO_MAS_RECIENTE}`,
+  descripcion: `Las ${datos.UMBRALES.length} reglas de umbral del art. 17, con identificación y aviso por actividad, conversión a pesos y el comparador exacto que usa la ley.`,
   ruta: RUTA,
   tipo: 'article',
   publicadoEn: REVISION_VIGENTE,

@@ -6,7 +6,7 @@ import { Importador } from './Importador';
 export const metadata: Metadata = construirMetadata({
   titulo: 'Importador de operaciones desde CSV',
   descripcion:
-    'Sube tus operaciones en CSV, valida cada fila con el número de línea del error y evalúa las válidas contra los umbrales del artículo 17 y el límite de efectivo del artículo 32.',
+    'Sube tus operaciones en CSV, valida cada fila con el número de línea del error y evalúa las válidas contra los umbrales del artículo 17.',
   ruta: '/herramientas/importar-operaciones',
 });
 

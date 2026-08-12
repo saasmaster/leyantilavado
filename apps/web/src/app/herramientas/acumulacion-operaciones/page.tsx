@@ -6,7 +6,7 @@ import { Acumulacion } from './Acumulacion';
 export const metadata: Metadata = construirMetadata({
   titulo: 'Acumulación de operaciones en seis meses',
   descripcion:
-    'Suma las operaciones de un mismo cliente dentro de la ventana móvil de seis meses del artículo 17 y marca en qué operación exacta se disparó el aviso. Importa y exporta CSV.',
+    'Suma las operaciones de un mismo cliente en la ventana móvil de seis meses del artículo 17 y marca en qué operación exacta se disparó el aviso.',
   ruta: '/herramientas/acumulacion-operaciones',
 });
 

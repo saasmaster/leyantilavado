@@ -6,7 +6,7 @@ import { construirMetadata } from '@/lib/sitio';
 export const metadata: Metadata = construirMetadata({
   titulo: 'Cursos y capacitación en prevención de lavado de dinero',
   descripcion:
-    'Catálogo de capacitación para el programa anual obligatorio. Todavía no hay inventario publicado: aquí explicamos qué va a haber y qué evidencia debe entregarte cualquier curso.',
+    'Capacitación para el programa anual obligatorio, y qué evidencia debe entregarte cualquier curso para que la formación sea demostrable en una revisión.',
   ruta: '/cursos',
 });
 

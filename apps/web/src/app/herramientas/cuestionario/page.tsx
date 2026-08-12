@@ -6,7 +6,7 @@ import { Cuestionario } from './Cuestionario';
 export const metadata: Metadata = construirMetadata({
   titulo: '¿Me aplica la Ley Antilavado? Cuestionario guiado',
   descripcion:
-    'Diagnóstico paso a paso: detecta si realizas una actividad vulnerable del artículo 17, evalúa tus umbrales con el motor y te dice qué obligaciones se activan y con qué fechas.',
+    'Diagnóstico paso a paso: detecta si realizas una actividad vulnerable del artículo 17 y te dice qué obligaciones se activan y con qué fechas.',
   ruta: '/herramientas/cuestionario',
 });
 

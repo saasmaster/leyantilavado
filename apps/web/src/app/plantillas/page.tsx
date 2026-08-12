@@ -6,7 +6,7 @@ import { construirMetadata } from '@/lib/sitio';
 export const metadata: Metadata = construirMetadata({
   titulo: 'Plantillas de cumplimiento LFPIORPI',
   descripcion:
-    'Manual de políticas, matriz de riesgos, expedientes de identificación y control de operaciones. Todavía no hay plantillas publicadas: aquí explicamos qué va a haber y por qué no publicamos una plantilla sin revisión.',
+    'Manual de políticas, matriz de riesgos, expedientes de identificación y control de operaciones, con lo que tienes que ajustar en cada uno.',
   ruta: '/plantillas',
 });
 

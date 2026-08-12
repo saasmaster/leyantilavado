@@ -9,7 +9,7 @@ import { CATEGORIAS_FAQ, TOTAL_PREGUNTAS } from '@/content/preguntas-frecuentes'
 export const metadata: Metadata = construirMetadata({
   titulo: 'Preguntas frecuentes sobre la Ley Antilavado',
   descripcion:
-    'Las dudas que más se repiten sobre la LFPIORPI: si te aplica, umbrales, UMA por fecha, acumulación de seis meses, avisos del día 17, multas y la reforma 2025-2026. Cada respuesta con su artículo aplicable.',
+    'Las dudas que más se repiten sobre la LFPIORPI: si te aplica, umbrales, UMA por fecha, acumulación, avisos del día 17, multas y la reforma 2026.',
   ruta: '/preguntas-frecuentes',
 });
 

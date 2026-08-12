@@ -6,7 +6,7 @@ import { Comparador } from './Comparador';
 export const metadata: Metadata = construirMetadata({
   titulo: 'Comparador de actividades vulnerables',
   descripcion:
-    'Pon dos o tres actividades del artículo 17 lado a lado: umbrales de identificación y aviso, periodicidad, acumulación de seis meses y límites de efectivo del artículo 32.',
+    'Pon dos o tres actividades del artículo 17 lado a lado: umbrales de identificación y aviso, acumulación de seis meses y límites de efectivo.',
   ruta: '/herramientas/comparador-obligaciones',
 });
 

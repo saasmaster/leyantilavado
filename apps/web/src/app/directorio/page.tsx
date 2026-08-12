@@ -11,7 +11,7 @@ import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
 export const metadata: Metadata = construirMetadata({
   titulo: 'Directorio de profesionales en prevención de lavado de dinero',
   descripcion:
-    'Encuentra contadores, abogados, consultores, auditores y software de cumplimiento LFPIORPI por estado, actividad vulnerable y tipo de servicio. Buscador con filtros y verificación explicada.',
+    'Encuentra contadores, abogados, consultores, auditores y software de cumplimiento LFPIORPI por estado, actividad vulnerable y tipo de servicio.',
   ruta: '/directorio',
 });
 

@@ -13,9 +13,9 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
   /* ── I. Juegos con apuesta, concursos y sorteos ──────────────────────────── */
   {
     slug: 'juegos-sorteos',
-    tituloSEO: 'Juegos con apuesta, concursos y sorteos: umbrales y obligaciones (art. 17-I)',
+    tituloSEO: 'Juegos con apuesta, concursos y sorteos (art. 17-I)',
     descripcionSEO:
-      'Cuándo un casino, una lotería o un sorteo promocional queda dentro de la Ley Antilavado, qué umbral aplica a la venta de boletos y al pago de premios, y cómo se acumulan las jugadas de un mismo cliente.',
+      'Cuándo un casino, una lotería o un sorteo promocional entra en la Ley Antilavado, qué umbral aplica a boletos y premios, y cómo se acumulan las jugadas.',
     respuestaDirecta:
       'Si vendes boletos, fichas o cualquier comprobante para participar en un juego con apuesta, concurso o sorteo, o si pagas premios, realizas la actividad vulnerable de la fracción I. La obligación se mide sobre cada operación y también sobre series de transacciones que en apariencia están vinculadas entre sí, de modo que un jugador que cambia fichas varias veces al día no queda fuera por partirlas.',
     alcanza: [
@@ -82,9 +82,9 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
   /* ── II a). Tarjetas de crédito y de servicios ───────────────────────────── */
   {
     slug: 'tarjetas-credito-servicios',
-    tituloSEO: 'Tarjetas de crédito y de servicios no bancarias: umbral mensual (art. 17-II a)',
+    tituloSEO: 'Tarjetas de crédito no bancarias (art. 17-II a)',
     descripcionSEO:
-      'Quién emite tarjetas de crédito o de servicios sin ser entidad financiera, por qué el umbral se mide sobre el gasto mensual acumulado y no por compra, y qué obligaciones genera.',
+      'Quién emite tarjetas de crédito o de servicios sin ser entidad financiera, y por qué el umbral se mide sobre el gasto mensual y no compra por compra.',
     respuestaDirecta:
       'Emitir o comercializar tarjetas de crédito o de servicios de forma habitual o profesional, sin ser entidad financiera, es actividad vulnerable. El dato que cambia todo en esta fracción es que el umbral no se mide por compra: se mide sobre el gasto mensual acumulado en la cuenta de la tarjeta.',
     alcanza: [
@@ -149,9 +149,9 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
   /* ── II b). Tarjetas prepagadas ──────────────────────────────────────────── */
   {
     slug: 'tarjetas-prepagadas',
-    tituloSEO: 'Tarjetas prepagadas: identificación y aviso con el mismo umbral (art. 17-II b)',
+    tituloSEO: 'Tarjetas prepagadas: un solo umbral (art. 17-II b)',
     descripcionSEO:
-      'Emisión, comercialización y abono de recursos en tarjetas prepagadas fuera del sistema financiero. Por qué aquí identificar y avisar se disparan con la misma cifra.',
+      'Emisión, venta y abono de recursos en tarjetas prepagadas fuera del sistema financiero: identificar y avisar se disparan con la misma cifra.',
     respuestaDirecta:
       'La emisión, comercialización o abono de recursos en tarjetas prepagadas por quien no es entidad financiera es actividad vulnerable, y se mide por operación. Su particularidad es que el umbral de identificación y el de aviso coinciden: en esta fracción, toda operación que te obliga a identificar te obliga también a reportar.',
     alcanza: [
@@ -216,9 +216,9 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
   /* ── II c). Vales, cupones y monederos ───────────────────────────────────── */
   {
     slug: 'vales-cupones-monederos',
-    tituloSEO: 'Vales, cupones y monederos electrónicos: cuándo generan aviso (art. 17-II c)',
+    tituloSEO: 'Vales, cupones y monederos electrónicos (art. 17-II c)',
     descripcionSEO:
-      'Los instrumentos de almacenamiento de valor monetario distintos de las tarjetas —vales de despensa, cupones y monederos electrónicos— también son actividad vulnerable. Qué se mide y con qué umbral.',
+      'Vales de despensa, cupones y monederos electrónicos también son actividad vulnerable: qué se mide exactamente y con qué umbral nace cada obligación.',
     respuestaDirecta:
       'Emitir, comercializar o abonar recursos en vales, cupones, monederos electrónicos o certificados —lo que la ley llama instrumentos de almacenamiento de valor monetario— es actividad vulnerable, se mide por operación y comparte umbral entre identificación y aviso.',
     alcanza: [
@@ -283,9 +283,9 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
   /* ── III. Cheques de viajero ─────────────────────────────────────────────── */
   {
     slug: 'cheques-viajero',
-    tituloSEO: 'Cheques de viajero: identificación desde el primer peso (art. 17-III)',
+    tituloSEO: 'Cheques de viajero: identificar sin umbral (art. 17-III)',
     descripcionSEO:
-      'Emisión y comercialización de cheques de viajero fuera del sistema financiero. Por qué la identificación no tiene umbral y qué conviene revisar en casas de cambio y agencias de viajes.',
+      'Cheques de viajero fuera del sistema financiero: por qué identificar no tiene umbral y qué conviene revisar en casas de cambio y agencias de viajes.',
     respuestaDirecta:
       'Emitir o comercializar cheques de viajero de forma habitual o profesional, sin ser entidad financiera, es actividad vulnerable. Aquí la identificación no tiene umbral: se identifica a quien los adquiere sin importar el monto, y el aviso nace sólo cuando la operación alcanza la cifra de la fracción.',
     alcanza: [
@@ -349,9 +349,9 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
   /* ── IV. Préstamos y créditos ────────────────────────────────────────────── */
   {
     slug: 'prestamos-creditos',
-    tituloSEO: 'Préstamos y créditos sin ser entidad financiera: umbrales y obligaciones (art. 17-IV)',
+    tituloSEO: 'Préstamos sin ser entidad financiera (art. 17-IV)',
     descripcionSEO:
-      'Prestamistas privados, casas de empeño, factoraje y crédito entre empresas. Qué significa "habitual o profesional", desde cuándo hay que identificar y cuándo nace el aviso.',
+      'Prestamistas privados, casas de empeño y factoraje: qué significa habitual o profesional, desde cuándo hay que identificar y cuándo nace el aviso.',
     respuestaDirecta:
       'Ofrecer de forma habitual o profesional operaciones de mutuo, garantía, préstamo o crédito, con o sin garantía, sin ser entidad financiera, es actividad vulnerable. La identificación procede siempre, sin umbral, y el aviso nace cuando la operación alcanza la cifra de la fracción.',
     alcanza: [
@@ -417,9 +417,9 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
   /* ── V. Inmobiliaria ─────────────────────────────────────────────────────── */
   {
     slug: 'inmuebles-construccion-intermediacion',
-    tituloSEO: 'Inmobiliarias y desarrollo de inmuebles: identificación siempre (art. 17-V)',
+    tituloSEO: 'Inmobiliarias: identificación siempre (art. 17-V)',
     descripcionSEO:
-      'Constructoras, inmobiliarias y brókers: por qué hay que identificar desde el primer peso, cuándo nace el aviso, quién reporta frente al notario y cuánto efectivo puede recibirse.',
+      'Constructoras, inmobiliarias y brókers: por qué se identifica desde el primer peso, cuándo nace el aviso y quién reporta frente al notario.',
     respuestaDirecta:
       'Prestar de forma habitual o profesional servicios de construcción o desarrollo de inmuebles, o intermediar en la transmisión de propiedad o en la constitución de derechos sobre ellos, es actividad vulnerable. La identificación procede siempre, sin umbral, y el aviso nace en la cifra más alta de toda la ley junto con el desarrollo inmobiliario.',
     alcanza: [
@@ -487,9 +487,9 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
   /* ── V Bis. Desarrollo inmobiliario ──────────────────────────────────────── */
   {
     slug: 'desarrollo-inmobiliario',
-    tituloSEO: 'Desarrollo inmobiliario: la fracción V Bis adicionada en 2025',
+    tituloSEO: 'Desarrollo inmobiliario: fracción V Bis (2025)',
     descripcionSEO:
-      'Qué es la recepción de recursos destinados a un desarrollo inmobiliario, en qué se distingue de la fracción V, a quién alcanza y qué obligaciones trae desde el 17 de julio de 2025.',
+      'Qué es recibir recursos para un desarrollo inmobiliario, en qué se distingue de la fracción V y qué obligaciones trae desde el 17 de julio de 2025.',
     respuestaDirecta:
       'La fracción V Bis es la más nueva del catálogo: se adicionó por la reforma publicada el 16 de julio de 2025 y alcanza la recepción de recursos destinados a un desarrollo inmobiliario cuya finalidad sea su venta o renta. Lo que se mide no es la venta de una unidad, sino la captación de recursos para el proyecto.',
     alcanza: [
@@ -554,9 +554,9 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
   /* ── VI. Metales y joyería ───────────────────────────────────────────────── */
   {
     slug: 'metales-joyeria',
-    tituloSEO: 'Joyerías, relojerías y compraventa de oro: umbrales (art. 17-VI)',
+    tituloSEO: 'Joyerías, relojerías y oro: umbrales (art. 17-VI)',
     descripcionSEO:
-      'Metales preciosos, piedras preciosas, joyas y relojes. Umbral de identificación y de aviso, por qué el aviso procede con cualquier forma de pago y cuánto efectivo puede recibirse.',
+      'Metales y piedras preciosas, joyas y relojes: umbral de identificación y de aviso, por qué el aviso procede con cualquier forma de pago y el tope de efectivo.',
     respuestaDirecta:
       'Comercializar o intermediar de forma habitual o profesional metales preciosos, piedras preciosas, joyas o relojes es actividad vulnerable. Su rasgo distintivo: la operación es objeto de aviso con independencia de la forma de pago, de modo que cobrar con transferencia o tarjeta no elimina la obligación.',
     alcanza: [
@@ -623,9 +623,9 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
   /* ── VII. Obras de arte ──────────────────────────────────────────────────── */
   {
     slug: 'obras-arte',
-    tituloSEO: 'Galerías, subastas y comercialización de obras de arte (art. 17-VII)',
+    tituloSEO: 'Galerías, subastas y obras de arte (art. 17-VII)',
     descripcionSEO:
-      'Cuándo una galería, una casa de subasta o un marchante queda dentro de la Ley Antilavado, cómo se valúa la obra, quién es el cliente en una consignación y qué pasa con el arte digital.',
+      'Cuándo una galería, una subasta o un marchante entra en la Ley Antilavado, cómo se valúa la obra, quién es el cliente en consignación y el arte digital.',
     respuestaDirecta:
       'Subastar o comercializar obras de arte de forma habitual o profesional es actividad vulnerable cuando la operación alcanza los montos de la fracción. Es un sector con precios poco estandarizados, y por eso el criterio de valuación que uses debe quedar documentado en el expediente.',
     alcanza: [
@@ -690,9 +690,9 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
   /* ── VIII. Vehículos ─────────────────────────────────────────────────────── */
   {
     slug: 'vehiculos',
-    tituloSEO: 'Agencias y lotes de autos: umbrales de la fracción VIII',
+    tituloSEO: 'Agencias y lotes de autos (art. 17-VIII)',
     descripcionSEO:
-      'Distribución y comercialización de vehículos terrestres, marítimos y aéreos, nuevos o usados. Umbral de identificación, umbral de aviso, permuta y límite de efectivo.',
+      'Venta de vehículos terrestres, marítimos y aéreos, nuevos o usados: umbral de identificación, umbral de aviso, permuta y límite de efectivo.',
     respuestaDirecta:
       'Distribuir o comercializar vehículos de cualquier tipo —terrestres, marítimos o aéreos, nuevos o usados— es actividad vulnerable sólo cuando se hace de forma habitual o profesional. Es la fracción donde más se confunden dos cifras parecidas: el umbral de identificación del art. 17 y el límite de efectivo del art. 32.',
     alcanza: [
@@ -759,7 +759,7 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
   /* ── IX. Blindaje ────────────────────────────────────────────────────────── */
   {
     slug: 'blindaje',
-    tituloSEO: 'Servicios de blindaje de vehículos e inmuebles (art. 17-IX)',
+    tituloSEO: 'Blindaje de vehículos e inmuebles (art. 17-IX)',
     descripcionSEO:
       'Talleres de blindaje automotriz y empresas de blindaje arquitectónico: umbrales, cruce con la fracción de vehículos y límite de efectivo aplicable.',
     respuestaDirecta:
@@ -826,9 +826,9 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
   /* ── X. Traslado y custodia de valores ───────────────────────────────────── */
   {
     slug: 'traslado-custodia-valores',
-    tituloSEO: 'Traslado y custodia de dinero o valores (art. 17-X)',
+    tituloSEO: 'Traslado y custodia de valores (art. 17-X)',
     descripcionSEO:
-      'Empresas de transporte de valores y servicios de custodia: identificación sin umbral, umbral de aviso y la regla que obliga a avisar siempre cuando el monto no puede determinarse.',
+      'Transporte de valores y custodia: identificación sin umbral, umbral de aviso y la regla que obliga a avisar cuando el monto no se puede determinar.',
     respuestaDirecta:
       'Prestar de forma habitual o profesional servicios de traslado o custodia de dinero o valores es actividad vulnerable, con identificación sin umbral. Tiene una regla propia que no existe en ninguna otra fracción: cuando no es posible determinar el monto trasladado o custodiado, el aviso procede en todos los casos.',
     alcanza: [
@@ -894,9 +894,9 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
   /* ── XI. Servicios profesionales ─────────────────────────────────────────── */
   {
     slug: 'servicios-profesionales',
-    tituloSEO: 'Contadores y abogados: cuándo son sujetos obligados (art. 17-XI)',
+    tituloSEO: 'Contadores y abogados: cuándo aplica (art. 17-XI)',
     descripcionSEO:
-      'Servicios profesionales independientes: los cinco incisos del catálogo, la diferencia entre asesorar y actuar en nombre del cliente, y por qué el secreto profesional no exime del aviso.',
+      'Los cinco incisos del catálogo, la diferencia entre asesorar y actuar en nombre del cliente, y por qué el secreto profesional no exime del aviso.',
     respuestaDirecta:
       'Un contador o un abogado independiente es sujeto obligado sólo cuando prepara o realiza para su cliente alguno de los cinco actos que enumera la fracción XI. La identificación procede siempre que participes en esos actos; el aviso no depende de un monto, sino de un hecho: que realices la operación financiera en nombre y representación del cliente.',
     alcanza: [
@@ -965,9 +965,9 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
   /* ── XII A. Notarios ─────────────────────────────────────────────────────── */
   {
     slug: 'fe-publica-notarios',
-    tituloSEO: 'Notarios públicos: umbral por inciso tras la reforma de 2025 (art. 17-XII A)',
+    tituloSEO: 'Notarios: umbral por inciso (art. 17-XII A)',
     descripcionSEO:
-      'Los cinco incisos del apartado A desglosados: inmuebles, poderes irrevocables, constitución de sociedades, fideicomisos y mutuos. Qué bajó de umbral y qué pasó a generar aviso siempre.',
+      'Los cinco incisos del apartado A: inmuebles, poderes irrevocables, sociedades, fideicomisos y mutuos. Qué bajó de umbral y qué pasó a avisarse siempre.',
     respuestaDirecta:
       'Un notario no tiene "un umbral": tiene cinco incisos con reglas distintas. Tres de ellos generan aviso sin importar el monto y dos tienen umbral en UMA. La reforma de julio de 2025 endureció el apartado: bajó el umbral de inmuebles y el de fideicomisos, y convirtió la constitución de personas morales en un supuesto de aviso permanente.',
     alcanza: [
@@ -1031,7 +1031,7 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
   /* ── XII B. Corredores ───────────────────────────────────────────────────── */
   {
     slug: 'fe-publica-corredores',
-    tituloSEO: 'Corredores públicos: avalúos, sociedades, fideicomisos y mutuos (art. 17-XII B)',
+    tituloSEO: 'Corredores públicos: apartado B (art. 17-XII B)',
     descripcionSEO:
       'El apartado B desglosado inciso por inciso: cuál tiene umbral en UMA y cuáles generan aviso sin importar el monto, con las excepciones que fija la ley.',
     respuestaDirecta:
@@ -1098,9 +1098,9 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
   /* ── XII C. Servidores públicos con fe pública ───────────────────────────── */
   {
     slug: 'fe-publica-servidores-publicos',
-    tituloSEO: 'Servidores públicos con fe pública: el apartado C sin umbrales publicados',
+    tituloSEO: 'Fe pública: apartado C sin umbrales (art. 17-XII C)',
     descripcionSEO:
-      'La ley enuncia el apartado C del art. 17 fracción XII, pero la autoridad no ha publicado umbrales para él. Qué sí se sabe, qué no, y por qué no publicamos cifras.',
+      'La ley enuncia el apartado C del art. 17 fracción XII, pero no hay umbrales publicados. Qué sí se sabe, qué no, y por qué no damos ninguna cifra.',
     respuestaDirecta:
       'El apartado C alcanza a los servidores públicos a quienes la ley confiere la facultad de dar fe pública. La ley enuncia el apartado, pero no fija umbrales propios y la tabla oficial de umbrales del SAT no lo desglosa. Por eso esta página existe y explica el supuesto, pero no publica ninguna cifra: inventarla sería peor que decir que falta.',
     alcanza: [
@@ -1153,9 +1153,9 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
   /* ── XII D. Personas facilitadoras ───────────────────────────────────────── */
   {
     slug: 'personas-facilitadoras',
-    tituloSEO: 'Personas facilitadoras públicas y privadas: el apartado D adicionado en 2025',
+    tituloSEO: 'Personas facilitadoras: apartado D (art. 17-XII D)',
     descripcionSEO:
-      'La reforma de julio de 2025 incorporó a las personas facilitadoras de la Ley General de Mecanismos Alternativos de Solución de Controversias. Qué dice la ley y qué falta por publicar.',
+      'La reforma de julio de 2025 incorporó a las personas facilitadoras de mecanismos alternativos. Qué dice la ley y qué falta todavía por publicar.',
     respuestaDirecta:
       'El apartado D se adicionó por la reforma publicada el 16 de julio de 2025 y alcanza a las personas facilitadoras públicas y privadas previstas en la Ley General de Mecanismos Alternativos de Solución de Controversias. La ley remite a los supuestos del apartado A "en los términos que se señalan", pero la tabla oficial de umbrales no desglosa este apartado, así que no publicamos cifras propias.',
     alcanza: [
@@ -1209,9 +1209,9 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
   /* ── XIII. Donativos ─────────────────────────────────────────────────────── */
   {
     slug: 'donativos',
-    tituloSEO: 'Donativos a asociaciones y sociedades sin fines de lucro (art. 17-XIII)',
+    tituloSEO: 'Donativos a asociaciones civiles (art. 17-XIII)',
     descripcionSEO:
-      'Asociaciones civiles, fundaciones e instituciones de asistencia privada: umbrales de identificación y aviso por donativo, donante anónimo, donativos en especie y del extranjero.',
+      'Asociaciones civiles, fundaciones e IAP: umbrales de identificación y aviso por donativo, donante anónimo, donativos en especie y del extranjero.',
     respuestaDirecta:
       'Recibir donativos siendo asociación o sociedad sin fines de lucro es actividad vulnerable cuando el donativo alcanza los montos de la fracción. El sujeto obligado es la organización que recibe, no el donante, y el monto que se mide es el del donativo.',
     alcanza: [
@@ -1276,9 +1276,9 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
   /* ── XIV. Comercio exterior ──────────────────────────────────────────────── */
   {
     slug: 'comercio-exterior',
-    tituloSEO: 'Agentes y agencias aduanales: catálogo de mercancías (art. 17-XIV)',
+    tituloSEO: 'Agentes y agencias aduanales (art. 17-XIV)',
     descripcionSEO:
-      'Comercio exterior como actividad vulnerable: qué mercancías detonan la obligación, cuáles generan aviso cualquiera que sea su valor y cuáles se miden por valor individual del bien.',
+      'Comercio exterior: qué mercancías detonan la obligación, cuáles generan aviso sea cual sea su valor y cuáles se miden por el valor de cada bien.',
     respuestaDirecta:
       'El comercio exterior no es actividad vulnerable en general: lo es respecto de un catálogo cerrado de seis tipos de mercancía. Cuatro de ellos generan aviso cualquiera que sea el valor de los bienes, y sólo dos —joyería y obras de arte— tienen umbral, que además se mide por el valor individual del bien y no por el pedimento completo.',
     alcanza: [
@@ -1343,9 +1343,9 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
   /* ── XV. Arrendamiento ───────────────────────────────────────────────────── */
   {
     slug: 'arrendamiento-inmuebles',
-    tituloSEO: 'Arrendamiento de inmuebles: el umbral es mensual (art. 17-XV)',
+    tituloSEO: 'Arrendamiento: el umbral es mensual (art. 17-XV)',
     descripcionSEO:
-      'Rentar locales, oficinas, bodegas o vivienda: por qué el umbral se mide sobre la renta mensual y no sobre el contrato, y el matiz de "superior a" frente a "igual o superior a".',
+      'Rentar locales, oficinas, bodegas o vivienda: por qué el umbral se mide sobre la renta mensual y no sobre el total del contrato, y el matiz que decide.',
     respuestaDirecta:
       'Constituir derechos personales de uso o goce sobre bienes inmuebles —rentar— es actividad vulnerable, y el umbral se mide sobre el valor mensual, no sobre el contrato completo. Tiene además un matiz que casi nadie implementa: la identificación aplica cuando la renta es superior a la cifra de la ley, mientras que el aviso aplica cuando es igual o superior a la suya.',
     alcanza: [
@@ -1410,9 +1410,9 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
   /* ── XVI. Activos virtuales ──────────────────────────────────────────────── */
   {
     slug: 'activos-virtuales',
-    tituloSEO: 'Activos virtuales: los umbrales más bajos de la ley (art. 17-XVI)',
+    tituloSEO: 'Activos virtuales: los umbrales más bajos (17-XVI)',
     descripcionSEO:
-      'Intercambio de activos virtuales fuera del sistema financiero: dos disparadores independientes —monto de la operación y contraprestación cobrada—, alcance extraterritorial y obligaciones reforzadas.',
+      'Intercambio de activos virtuales fuera del sistema financiero: dos disparadores independientes, alcance extraterritorial y obligaciones reforzadas.',
     respuestaDirecta:
       'Ofrecer de forma habitual y profesional el intercambio de activos virtuales, sin ser entidad financiera, es actividad vulnerable con los umbrales más bajos de toda la ley. Tiene dos disparadores independientes: el monto de la operación por cliente y la contraprestación cobrada por el servicio. Basta con que uno se alcance para que proceda el aviso.',
     alcanza: [

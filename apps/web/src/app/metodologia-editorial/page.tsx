@@ -13,7 +13,7 @@ const MIGA = [
 export const metadata: Metadata = construirMetadata({
   titulo: 'Metodología editorial',
   descripcion:
-    'Cómo verificamos cada dato de la LFPIORPI: los cuatro niveles de verificación, qué significa "Requiere revisión editorial", cómo versionamos las reglas y por qué no publicamos interpretaciones automáticas.',
+    'Cómo verificamos cada dato de la LFPIORPI: los cuatro niveles de verificación, cómo versionamos las reglas y por qué no publicamos interpretaciones.',
   ruta: '/metodologia-editorial',
 });
 

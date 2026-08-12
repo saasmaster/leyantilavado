@@ -20,7 +20,7 @@ import {
 const RUTA = '/acuerdo-115-2026';
 const TITULO = 'Acuerdo 115/2026: qué es y qué te obliga a hacer';
 const DESCRIPCION =
-  'El Acuerdo 115/2026 es un acuerdo de la SHCP que modifica las Reglas de Carácter General de la LFPIORPI. Publicado el 7 de agosto de 2026 y en vigor el 30 de noviembre. Qué añade, capítulo por capítulo, y para cuándo.';
+  'Acuerdo de la SHCP que modifica las Reglas de Carácter General de la LFPIORPI. Publicado el 7 de agosto de 2026 y en vigor el 30 de noviembre.';
 
 export const metadata: Metadata = construirMetadata({
   titulo: TITULO,
@@ -134,7 +134,7 @@ export default function Acuerdo115() {
           <a
             href={FUENTE.url}
             target="_blank"
-            rel="noopener noreferrer nofollow"
+            rel="noopener noreferrer"
             className="mt-5 inline-flex items-center gap-1.5 text-[0.9rem] font-medium text-[var(--color-petroleo-hondo)] underline underline-offset-4"
           >
             Leer la publicación completa en el Diario Oficial

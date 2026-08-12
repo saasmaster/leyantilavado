@@ -22,7 +22,7 @@ const RUTA = '/obligaciones';
 export const metadata: Metadata = construirMetadata({
   titulo: `Las ${datos.OBLIGACIONES.length} obligaciones de la Ley Antilavado, con su evidencia`,
   descripcion:
-    'Catálogo de obligaciones de quien realiza una actividad vulnerable: alta, identificación, expedientes, avisos, enfoque basado en riesgos, manual, capacitación, mecanismos automatizados y auditoría, cada una con pasos accionables y la evidencia que espera un auditor.',
+    'Catálogo de obligaciones de una actividad vulnerable: alta, identificación, expedientes, avisos, riesgos, manual, capacitación y auditoría.',
   ruta: RUTA,
   tipo: 'article',
   publicadoEn: REVISION_VIGENTE,

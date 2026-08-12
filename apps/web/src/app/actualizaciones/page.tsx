@@ -21,7 +21,7 @@ import {
 const RUTA = '/actualizaciones';
 const TITULO = 'Actualizaciones normativas';
 const DESCRIPCION =
-  'Bitácora de cambios en el marco de la Ley Antilavado: reformas a la ley, al reglamento y a las reglas de carácter general, valores de UMA y criterios. Cada entrada con su fecha, su impacto práctico y las páginas del sitio que modificó.';
+  'Bitácora de cambios del marco de la Ley Antilavado: reformas, reglas de carácter general y valores de UMA, cada una con su fecha e impacto práctico.';
 
 export const metadata: Metadata = construirMetadata({
   titulo: TITULO,
@@ -139,7 +139,7 @@ export default function Actualizaciones() {
                   <a
                     href={fuente.url}
                     target="_blank"
-                    rel="noopener noreferrer nofollow"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-[0.82rem] font-medium text-[var(--color-petroleo-hondo)] underline underline-offset-4"
                   >
                     {fuente.nombre}

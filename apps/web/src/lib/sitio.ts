@@ -4,7 +4,7 @@ export const SITIO = {
   nombre: 'LeyAntilavado.org',
   subtitulo: 'Centro independiente de información y herramientas sobre la LFPIORPI',
   descripcion:
-    'Calcula umbrales, acumulación de seis meses, límites de efectivo y fechas de aviso de la Ley Antilavado con la UMA vigente en la fecha de tu operación. Herramientas gratuitas con fuente oficial citada.',
+    'Calcula umbrales, acumulación de seis meses, límites de efectivo y fechas de aviso de la Ley Antilavado con la UMA vigente en tu fecha de operación.',
   url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://leyantilavado.org',
   locale: 'es_MX',
   /**
@@ -103,22 +103,25 @@ export const ENLACES_PIE: { titulo: string; enlaces: EnlaceNav[] }[] = [
 ];
 
 /** Google recorta el título del resultado alrededor de aquí. */
-const LARGO_TITULO = 60;
-/** Y la descripción alrededor de aquí. */
-const LARGO_DESCRIPCION = 155;
+export const LARGO_TITULO = 60;
+/** Y la descripción alrededor de aquí. Lo verifica `sitio.test.ts`. */
+export const LARGO_DESCRIPCION = 160;
 
 /**
- * Recorta en el último espacio antes del límite y añade puntos suspensivos.
+ * Aquí había un `recortar()` que cortaba en el último espacio y añadía «…».
  *
- * Cortar a mitad de palabra se ve peor en el resultado de búsqueda que una
- * frase que termina antes, así que se retrocede al espacio anterior.
+ * Se fue, y con él 31 títulos y 59 descripciones que terminaban en puntos
+ * suspensivos. El recorte automático parecía prudente y hacía justo lo
+ * contrario de lo que pretendía: un «…» al final delata texto generado, y la
+ * frase se cortaba donde estaba lo específico de la página. Google además
+ * recorta por su cuenta en el ancho que le convenga, así que recortar antes
+ * no evitaba nada: sólo garantizaba que el texto quedara mocho también en
+ * Bing, en las tarjetas sociales y en las citas de un asistente.
+ *
+ * Ahora los textos se escriben completos y de largo correcto en el origen, y
+ * `sitio.test.ts` falla el build si alguno se pasa. Un límite que se aplica
+ * escribiendo mejor es un límite; uno que se aplica cortando es un parche.
  */
-function recortar(texto: string, maximo: number): string {
-  if (texto.length <= maximo) return texto;
-  const cortado = texto.slice(0, maximo - 1);
-  const ultimoEspacio = cortado.lastIndexOf(' ');
-  return `${(ultimoEspacio > maximo * 0.6 ? cortado.slice(0, ultimoEspacio) : cortado).trimEnd()}…`;
-}
 
 /**
  * Título del resultado de búsqueda.
@@ -135,8 +138,7 @@ function componerTitulo(titulo: string, ruta: string): string {
   if (ruta === '/') return `${SITIO.nombre} — Ley Antilavado y LFPIORPI en México`;
 
   const conMarca = `${titulo} | ${SITIO.nombre}`;
-  if (conMarca.length <= LARGO_TITULO) return conMarca;
-  return recortar(titulo, LARGO_TITULO);
+  return conMarca.length <= LARGO_TITULO ? conMarca : titulo;
 }
 
 /**
@@ -164,7 +166,7 @@ export function construirMetadata({
 }): Metadata {
   const url = `${SITIO.url}${ruta}`;
   const tituloCompleto = componerTitulo(titulo, ruta);
-  const descripcionCorta = recortar(descripcion, LARGO_DESCRIPCION);
+  const descripcionCorta = descripcion;
   const indexar = SITIO.indexable && !noindex;
 
   return {

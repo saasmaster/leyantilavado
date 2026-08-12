@@ -23,7 +23,7 @@ import { RASTREADORES_IA } from './rastreadores-ia';
 export function construirLlmsTxt(): string {
   const u = (ruta: string) => `${SITIO.url}${ruta}`;
 
-  const actividades = datos.ACTIVIDADES_PUBLICABLES;
+  const actividades = datos.ACTIVIDADES;
   const obligaciones = datos.OBLIGACIONES.filter(
     (o) => o.estado === 'publicado' || o.estado === 'revisado',
   );

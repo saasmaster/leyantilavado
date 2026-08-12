@@ -7,7 +7,7 @@ import { TablaHistorica } from './TablaHistorica';
 export const metadata: Metadata = construirMetadata({
   titulo: 'Conversor de UMA a pesos, 2016 a 2026',
   descripcion:
-    'Convierte UMA a pesos y pesos a UMA con el valor vigente en la fecha exacta de tu operación. Tabla histórica completa 2016-2026 con valores diario, mensual y anual, y la regla del 1 de febrero.',
+    'Convierte UMA a pesos con el valor vigente en la fecha exacta de tu operación. Tabla histórica 2016-2026 y la regla del 1 de febrero de cada año.',
   ruta: '/herramientas/calculadora-uma',
 });
 

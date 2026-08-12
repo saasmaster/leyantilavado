@@ -26,8 +26,8 @@ const RUTA = '/actividades-vulnerables';
 const FRACCIONES_RAIZ = new Set(datos.ACTIVIDADES.map((a) => a.fraccion.split(' ')[0]));
 
 export const metadata: Metadata = construirMetadata({
-  titulo: `Actividades vulnerables del art. 17: las ${FRACCIONES_RAIZ.size} fracciones explicadas`,
-  descripcion: `Catálogo completo de actividades vulnerables de la Ley Antilavado: ${datos.ACTIVIDADES.length} supuestos con su umbral de identificación y de aviso, a quién alcanza cada uno y qué obligaciones genera.`,
+  titulo: `Actividades vulnerables: las ${FRACCIONES_RAIZ.size} fracciones del art. 17`,
+  descripcion: `Los ${datos.ACTIVIDADES.length} supuestos del art. 17 con su umbral de identificación y de aviso, a quién alcanza cada uno y qué obligaciones genera.`,
   ruta: RUTA,
   tipo: 'article',
   publicadoEn: REVISION_VIGENTE,

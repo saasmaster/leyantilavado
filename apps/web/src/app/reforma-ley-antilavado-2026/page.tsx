@@ -22,9 +22,9 @@ import {
 } from '@/components/contenido';
 
 const RUTA = '/reforma-ley-antilavado-2026';
-const TITULO = 'La reforma a la Ley Antilavado 2025-2026: qué cambió de verdad';
+const TITULO = 'Reforma a la Ley Antilavado 2025-2026: qué cambió';
 const DESCRIPCION =
-  'No salió una ley nueva. El marco vigente son tres instrumentos con fechas distintas: la reforma a la LFPIORPI de julio de 2025, la reforma al Reglamento de marzo de 2026 y el Acuerdo 115/2026. Tabla de antes y después con los umbrales que cambiaron.';
+  'No salió una ley nueva: son tres instrumentos con fechas distintas. La reforma de julio de 2025, la del Reglamento de marzo de 2026 y el Acuerdo 115.';
 
 export const metadata: Metadata = construirMetadata({
   titulo: TITULO,
@@ -160,7 +160,7 @@ export default function Reforma() {
                   <a
                     href={fuente.url}
                     target="_blank"
-                    rel="noopener noreferrer nofollow"
+                    rel="noopener noreferrer"
                     className="mt-3 inline-flex items-center gap-1 text-[0.8rem] font-medium text-[var(--color-petroleo-hondo)] underline underline-offset-4"
                   >
                     Ver la publicación oficial

@@ -30,9 +30,9 @@ import { construirMetadata, jsonLdFAQ, jsonLdMigaDePan } from '@/lib/sitio';
 const RUTA = '/multas';
 
 export const metadata: Metadata = construirMetadata({
-  titulo: 'Multas de la Ley Antilavado: art. 53 y art. 54 no son lo mismo',
+  titulo: 'Multas: el art. 53 y el art. 54 no son lo mismo',
   descripcion:
-    'Infracciones del art. 53 y rangos de multa del art. 54 de la LFPIORPI, la diferencia entre presentar tarde y no presentar, la autocorrección del art. 55 y el régimen del CFF de beneficiario controlador, que viene en pesos.',
+    'Infracciones del art. 53 y rangos de multa del art. 54, la diferencia entre presentar tarde y no presentar, y la autocorrección del art. 55.',
   ruta: RUTA,
   tipo: 'article',
   publicadoEn: REVISION_VIGENTE,

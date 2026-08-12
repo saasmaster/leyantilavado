@@ -6,7 +6,7 @@ import { PlanCumplimiento } from './PlanCumplimiento';
 export const metadata: Metadata = construirMetadata({
   titulo: 'Plan de cumplimiento con fechas',
   descripcion:
-    'Genera un plan fechado a partir de tu actividad y tu fecha de inicio: arranque, ciclo mensual de avisos, obligaciones recurrentes y calendario del Acuerdo 115/2026. Exporta en .ics y CSV.',
+    'Genera un plan fechado desde tu actividad y fecha de inicio: arranque, ciclo mensual de avisos y calendario del Acuerdo 115/2026. Exporta .ics y CSV.',
   ruta: '/herramientas/plan-cumplimiento',
 });
 

@@ -160,7 +160,7 @@ export default function FuentesOficialesPagina() {
                       <a
                         href={fuente.url}
                         target="_blank"
-                        rel="noopener noreferrer nofollow"
+                        rel="noopener noreferrer"
                         className="mt-2 inline-flex items-center gap-1.5 text-xs font-normal text-[var(--color-petroleo-hondo)] underline underline-offset-4"
                       >
                         Abrir documento

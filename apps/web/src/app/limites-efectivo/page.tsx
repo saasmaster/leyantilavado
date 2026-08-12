@@ -36,9 +36,9 @@ const RUTA = '/limites-efectivo';
 const ROMANOS = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'] as const;
 
 export const metadata: Metadata = construirMetadata({
-  titulo: 'Límites de efectivo del art. 32: los ocho supuestos, con IVA incluido',
+  titulo: 'Límites de efectivo del art. 32: los ocho supuestos',
   descripcion:
-    'Cuánto efectivo se puede recibir por un inmueble, un vehículo, joyería, obras de arte o una renta. La diferencia entre medir con IVA (art. 32) y sin IVA (art. 17), y la discrepancia oficial en la consignación de pago.',
+    'Cuánto efectivo se puede recibir por un inmueble, un vehículo, joyería, arte o una renta, y la diferencia entre medir con IVA (art. 32) y sin IVA.',
   ruta: RUTA,
   tipo: 'article',
   publicadoEn: REVISION_VIGENTE,

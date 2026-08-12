@@ -19,7 +19,7 @@ const RUTA = '/glosario';
 export const metadata: Metadata = construirMetadata({
   titulo: `Glosario de la Ley Antilavado: ${GLOSARIO_ORDENADO.length} términos explicados`,
   descripcion:
-    'PLD, EBR, PEP, beneficiario controlador, perfil transaccional, aviso de veinticuatro horas y el resto del vocabulario de la LFPIORPI, en español claro y con la disposición donde vive cada término.',
+    'PLD, EBR, PEP, beneficiario controlador, perfil transaccional y el resto del vocabulario de la LFPIORPI, en español claro y con su disposición.',
   ruta: RUTA,
   tipo: 'article',
   publicadoEn: REVISION_VIGENTE,

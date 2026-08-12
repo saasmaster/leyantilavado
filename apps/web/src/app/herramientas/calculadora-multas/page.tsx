@@ -7,7 +7,7 @@ import { ConsecuenciasPenales } from './ConsecuenciasPenales';
 export const metadata: Metadata = construirMetadata({
   titulo: 'Estimador de multas de la Ley Antilavado',
   descripcion:
-    'Calcula los rangos de multa del artículo 54 en pesos, con la regla de la cantidad mayor frente al porcentaje del valor del acto, y los escenarios de autocorrección del artículo 55.',
+    'Calcula los rangos de multa del artículo 54 en pesos, con la regla de la cantidad mayor, y los escenarios de autocorrección del artículo 55.',
   ruta: '/herramientas/calculadora-multas',
 });
 

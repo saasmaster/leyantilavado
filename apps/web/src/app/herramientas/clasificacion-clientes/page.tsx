@@ -6,7 +6,7 @@ import { ClasificacionClientes } from './ClasificacionClientes';
 export const metadata: Metadata = construirMetadata({
   titulo: 'Clasificación de clientes por nivel de riesgo',
   descripcion:
-    'Clasifica tu cartera en riesgo bajo, medio o alto con preguntas en lenguaje llano ponderadas por la metodología del enfoque basado en riesgos. Exporta la cartera clasificada.',
+    'Clasifica tu cartera en riesgo bajo, medio o alto con preguntas en lenguaje llano, ponderadas por la metodología del enfoque basado en riesgos.',
   ruta: '/herramientas/clasificacion-clientes',
 });
 

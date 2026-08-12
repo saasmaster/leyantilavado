@@ -6,7 +6,7 @@ import { FechaLimite } from './FechaLimite';
 export const metadata: Metadata = construirMetadata({
   titulo: 'Fecha límite para presentar el aviso',
   descripcion:
-    'Calcula el día 17 aplicable a tus operaciones, los días que te quedan y las próximas seis fechas límite. Exporta recordatorios en .ics y entiende el informe en ceros.',
+    'Calcula el día 17 aplicable a tus operaciones, los días que te quedan y las próximas seis fechas límite. Exporta recordatorios en .ics.',
   ruta: '/herramientas/fecha-limite-aviso',
 });
 

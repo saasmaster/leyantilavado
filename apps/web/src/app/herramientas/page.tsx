@@ -11,7 +11,7 @@ const ACTUALIZADO = '2026-08-11';
 export const metadata: Metadata = construirMetadata({
   titulo: 'Herramientas de la Ley Antilavado',
   descripcion:
-    'Calculadoras que sí calculan: umbrales por actividad y fecha, conversor histórico de UMA, acumulación de seis meses, límites de efectivo del art. 32, fechas límite de aviso, estimador de multas y matriz de riesgos. Gratis y con fuente oficial citada.',
+    'Calculadoras que sí calculan: umbrales por actividad y fecha, conversor de UMA, acumulación de seis meses, límites de efectivo y fechas de aviso.',
   ruta: '/herramientas',
 });
 

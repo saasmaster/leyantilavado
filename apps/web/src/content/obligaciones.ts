@@ -11,9 +11,9 @@ import type { ContenidoObligacion } from './tipos';
 const CONTENIDOS: readonly ContenidoObligacion[] = [
   {
     slug: 'alta-sppld',
-    tituloSEO: 'Alta y registro en el padrón de actividades vulnerables (SPPLD)',
+    tituloSEO: 'Alta en el padrón de actividades vulnerables (SPPLD)',
     descripcionSEO:
-      'Cómo darse de alta en el padrón del SAT antes de presentar el primer aviso, qué se necesita, qué pasa si te registras en la fracción equivocada y por qué la baja también es un trámite.',
+      'Cómo darse de alta en el padrón del SAT antes del primer aviso, qué pasa si te registras en la fracción equivocada y por qué la baja también es un trámite.',
     respuestaDirecta:
       'Quien realiza una actividad vulnerable debe darse de alta en el padrón del SAT a través del portal SPPLD, con RFC y e.firma vigente, antes de presentar su primer aviso. El alta se hace por cada actividad que realizas y con la fecha en que empezaste a realizarla, no con la fecha del trámite.',
     aQuienAplica: [
@@ -53,7 +53,7 @@ const CONTENIDOS: readonly ContenidoObligacion[] = [
   },
   {
     slug: 'representante-cumplimiento',
-    tituloSEO: 'Representante encargado del cumplimiento: designación y responsabilidades',
+    tituloSEO: 'Representante de cumplimiento: designación y deberes',
     descripcionSEO:
       'Quién debe designarlo, qué pasa mientras no hay designación aceptada, por qué necesita capacitación anual y cómo se documenta el nombramiento.',
     respuestaDirecta:
@@ -95,9 +95,9 @@ const CONTENIDOS: readonly ContenidoObligacion[] = [
   },
   {
     slug: 'identificacion-cliente',
-    tituloSEO: 'Identificar y conocer al cliente: la obligación que nace primero',
+    tituloSEO: 'Identificar al cliente: la obligación que nace primero',
     descripcionSEO:
-      'Cómo identificar de manera directa al cliente o usuario, verificar su identidad, preguntar por el beneficiario controlador y qué hacer si se niega a dar la información.',
+      'Cómo identificar al cliente, verificar su identidad, preguntar por el beneficiario controlador y qué hacer si se niega a dar la información.',
     respuestaDirecta:
       'Hay que identificar de manera directa al cliente o usuario y verificar su identidad con documentos o medios de identificación con reconocimiento oficial, recabando copia. Se hace antes o durante el acto, o al establecer la relación de negocios, y en varias fracciones procede sin importar el monto.',
     aQuienAplica: [
@@ -136,7 +136,7 @@ const CONTENIDOS: readonly ContenidoObligacion[] = [
   },
   {
     slug: 'expedientes',
-    tituloSEO: 'Expediente único de identificación: cómo se integra y se actualiza',
+    tituloSEO: 'Expediente único de identificación: cómo se integra',
     descripcionSEO:
       'Qué contiene el expediente único, cuándo se integra, con qué frecuencia se verifica y qué diferencia hay entre expediente simplificado y completo.',
     respuestaDirecta:
@@ -177,9 +177,9 @@ const CONTENIDOS: readonly ContenidoObligacion[] = [
   },
   {
     slug: 'beneficiario-controlador',
-    tituloSEO: 'Identificar al beneficiario controlador: orden de prelación y excepciones',
+    tituloSEO: 'Beneficiario controlador: prelación y excepciones',
     descripcionSEO:
-      'Cómo se identifica a la persona física que se beneficia o controla al cliente, el orden de prelación que fijan las reglas, los fideicomisos y la diferencia con el régimen fiscal.',
+      'Cómo se identifica a la persona física que controla al cliente, el orden de prelación de las reglas y la diferencia con el régimen fiscal.',
     respuestaDirecta:
       'Hay que identificar a la persona física que en última instancia se beneficia de la operación o controla al cliente. Cuando el cliente es persona moral, las reglas de 2026 fijan un orden de prelación: primero quien tiene una participación relevante en el capital, luego quien controla por otros medios y, si no hay nadie, el funcionario administrativo de mayor jerarquía.',
     aQuienAplica: [
@@ -467,7 +467,7 @@ const CONTENIDOS: readonly ContenidoObligacion[] = [
     slug: 'perfil-transaccional',
     tituloSEO: 'Perfil transaccional del cliente y detección de desviaciones',
     descripcionSEO:
-      'Cómo se construye el perfil transaccional, qué se usa durante los primeros meses de la relación, cada cuánto se reevalúa y cómo se conecta con el sistema de alertas.',
+      'Cómo se construye el perfil transaccional, qué se usa en los primeros meses, cada cuánto se reevalúa y cómo se conecta con el sistema de alertas.',
     respuestaDirecta:
       'El perfil transaccional es el comportamiento esperado del cliente en monto, número y frecuencia de operaciones, y en origen y destino de los recursos. Durante los primeros meses de la relación se arma con el monto máximo mensual que el propio cliente declara, y ese perfil inicial debe cargarse al sistema de alertas.',
     aQuienAplica: [
@@ -506,7 +506,7 @@ const CONTENIDOS: readonly ContenidoObligacion[] = [
   },
   {
     slug: 'personas-politicamente-expuestas',
-    tituloSEO: 'Personas políticamente expuestas: detección y medidas reforzadas',
+    tituloSEO: 'Personas políticamente expuestas: medidas reforzadas',
     descripcionSEO:
       'Quién es PEP, hasta dónde llega la asimilación a familiares y socios, cuánto dura la condición y qué medidas reforzadas exige la norma.',
     respuestaDirecta:
@@ -712,7 +712,7 @@ const CONTENIDOS: readonly ContenidoObligacion[] = [
   },
   {
     slug: 'auditoria-anual',
-    tituloSEO: 'Auditoría anual de cumplimiento: quién puede auditar y con qué alcance',
+    tituloSEO: 'Auditoría anual: quién puede auditar y con qué alcance',
     descripcionSEO:
       'Auditoría interna frente a auditor externo independiente, requisitos del auditor, alcance de la revisión y primer periodo auditable.',
     respuestaDirecta:

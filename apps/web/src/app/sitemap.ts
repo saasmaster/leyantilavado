@@ -110,7 +110,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ].map((h) => entrada(`/herramientas/${h}`, 0.85, 'monthly'));
 
   // Sólo las actividades cuya regla ya pasó verificación editorial.
-  const actividades = datos.ACTIVIDADES_PUBLICABLES.map((a) =>
+  const actividades = datos.ACTIVIDADES.map((a) =>
     entrada(`/actividades-vulnerables/${a.slug}`, 0.8, 'monthly', a.procedencia.ultimaRevision),
   );
 

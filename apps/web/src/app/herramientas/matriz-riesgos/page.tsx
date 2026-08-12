@@ -6,7 +6,7 @@ import { MatrizRiesgos } from './MatrizRiesgos';
 export const metadata: Metadata = construirMetadata({
   titulo: 'Matriz de riesgos con enfoque basado en riesgos',
   descripcion:
-    'Pondera los factores de riesgo de tu negocio, aplica mitigantes y obtén el nivel resultante con la fecha de la próxima revisión. Pesos editables y justificación documentada.',
+    'Pondera los factores de riesgo de tu negocio, aplica mitigantes y obtén el nivel resultante con la fecha de la próxima revisión. Pesos editables.',
   ruta: '/herramientas/matriz-riesgos',
 });
 

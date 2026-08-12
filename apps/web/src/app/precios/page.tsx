@@ -17,7 +17,7 @@ import { construirMetadata } from '@/lib/sitio';
 export const metadata: Metadata = construirMetadata({
   titulo: 'Precios',
   descripcion:
-    'Los siete planes de LeyAntilavado.org: contenido y calculadoras gratis para siempre, área privada para empresas y despachos, y perfiles de directorio para proveedores.',
+    'Los siete planes: contenido y calculadoras gratis para siempre, área privada para empresas y despachos, y perfiles de directorio para proveedores.',
   ruta: '/precios',
 });
 

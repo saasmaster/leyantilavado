@@ -6,7 +6,7 @@ import { EditorEstructura } from './EditorEstructura';
 export const metadata: Metadata = construirMetadata({
   titulo: 'Beneficiario controlador: editor de estructura corporativa',
   descripcion:
-    'Traza la cadena de propiedad, calcula la participación indirecta multiplicando porcentajes, detecta el control por otros medios y señala la información que falta. Exporta el reporte.',
+    'Traza la cadena de propiedad, calcula la participación indirecta multiplicando porcentajes, detecta el control por otros medios y señala lo que falta.',
   ruta: '/herramientas/beneficiario-controlador',
 });
 
@@ -59,6 +59,15 @@ export default function Pagina() {
             <strong>Cadenas múltiples.</strong> Si la misma persona llega por varias vías —10%
             directo más 20% a través de una holding— los porcentajes se suman: 30% efectivo. Cada
             cadena se muestra por separado para que se pueda auditar el cálculo.
+          </p>
+          <p>
+            <strong>Dónde está la línea.</strong> Es beneficiario controlador quien tiene{' '}
+            <strong>más del 25%</strong> del capital social. La reforma del 16 de julio de 2025 bajó
+            ese umbral desde el 50% anterior, y ese cambio de una cifra reabre estructuras que ya se
+            daban por resueltas: una sociedad con tres socios al 33% no tenía ningún beneficiario
+            controlador por participación bajo la regla vieja y ahora tiene tres. El límite es
+            estricto —25% exacto no lo alcanza— y por eso la herramienta muestra el porcentaje con
+            decimales en lugar de redondearlo.
           </p>
           <p>
             <strong>Control por otros medios.</strong> Una participación mínima puede dar control

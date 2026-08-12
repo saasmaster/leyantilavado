@@ -6,7 +6,7 @@ import { VerificadorEfectivo } from './VerificadorEfectivo';
 export const metadata: Metadata = construirMetadata({
   titulo: 'Verificador de límites de efectivo (artículo 32)',
   descripcion:
-    'Comprueba si una operación rebasa el límite de efectivo del artículo 32 de la Ley Antilavado. Distingue la base con IVA del artículo 32 de la base sin IVA de los umbrales de aviso.',
+    'Comprueba si una operación rebasa el límite de efectivo del artículo 32, y distingue su base con IVA de la base sin IVA de los umbrales de aviso.',
   ruta: '/herramientas/limites-efectivo',
 });
 
