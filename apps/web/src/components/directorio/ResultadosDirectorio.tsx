@@ -22,6 +22,11 @@ export function ResultadosDirectorio({
 }) {
   const { patrocinados, resultados, total, pagina, totalPaginas } = resultado;
 
+  // «Sin resultados» significa dos cosas distintas y el texto tiene que
+  // distinguirlas: filtraste demasiado, o la categoría está vacía. Ofrecer
+  // «quitar filtros» cuando no hay ninguno puesto es una salida a ninguna parte.
+  const hayFiltros = escribirFiltros({ ...filtros, pagina: 1 }) !== '';
+
   return (
     <div className="flex flex-col gap-8">
       {patrocinados.length > 0 && (
@@ -62,15 +67,30 @@ export function ResultadosDirectorio({
 
         {total === 0 ? (
           <EstadoVacio
-            titulo="Ningún perfil coincide con esos filtros"
-            descripcion="El directorio es nuevo y todavía tiene pocos perfiles. Prueba a quitar filtros, ampliar la cobertura a todo el país o buscar por una categoría cercana."
+            titulo={
+              hayFiltros ? 'Ningún perfil coincide con esos filtros' : 'Todavía no hay perfiles aquí'
+            }
+            descripcion={
+              hayFiltros
+                ? 'Prueba a quitar filtros, ampliar la cobertura a todo el país o buscar por una categoría cercana.'
+                : 'El directorio sólo publica perfiles reales, y cada alta se revisa a mano antes de aparecer. Todavía no hay ninguno aprobado.'
+            }
             accion={
+              hayFiltros ? (
               <Link
                 href={rutaBase}
                 className="text-sm font-medium text-[var(--color-petroleo-hondo)] underline underline-offset-4"
               >
                 Quitar todos los filtros
               </Link>
+              ) : (
+                <Link
+                  href="/directorio/alta"
+                  className="text-sm font-medium text-[var(--color-petroleo-hondo)] underline underline-offset-4"
+                >
+                  Dar de alta un perfil
+                </Link>
+              )
             }
           />
         ) : (

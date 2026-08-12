@@ -167,7 +167,7 @@ export default function PaginaPrecios() {
         <h2 id="comparativa" className="text-2xl font-semibold">
           Comparativa completa
         </h2>
-        <TablaEnvoltura aria-label="Comparativa de planes">
+        <TablaEnvoltura etiqueta="Comparativa de planes">
           <table className="w-full min-w-[52rem] border-collapse text-sm">
             <caption className="sr-only">
               Comparación de los siete planes de LeyAntilavado.org por criterio.

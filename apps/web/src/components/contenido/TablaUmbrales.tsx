@@ -178,7 +178,7 @@ export function TablaUmbrales({
         año anterior.
       </p>
 
-      <TablaEnvoltura aria-label="Tabla de umbrales de identificación y aviso">
+      <TablaEnvoltura etiqueta="Umbrales de identificación y aviso">
         <table className="w-full min-w-[52rem] border-collapse text-left text-sm">
           <caption className="sr-only">
             Umbrales de identificación y de aviso por actividad vulnerable, expresados en {unidad === 'uma' ? 'UMA' : 'pesos'} con el valor de {anio}.

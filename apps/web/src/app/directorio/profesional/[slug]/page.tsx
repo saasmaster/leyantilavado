@@ -7,10 +7,9 @@ import type { PerfilProveedor } from '@leyantilavado/types';
 import { datos } from '@leyantilavado/rules-engine';
 import { Insignia, Nota, Tarjeta } from '@leyantilavado/ui';
 import { AccionesPerfil } from '@/components/directorio/AccionesPerfil';
-import { EtiquetaDemo, EtiquetaPatrocinado, InsigniaVerificacion } from '@/components/directorio/Distintivos';
+import { EtiquetaPatrocinado, InsigniaVerificacion } from '@/components/directorio/Distintivos';
 import { FormularioContacto } from '@/components/directorio/FormularioContacto';
 import { ETIQUETA_CATEGORIA, ETIQUETA_PLAN_PERFIL, ETIQUETA_SERVICIO, ETIQUETA_TAMANO } from '@/lib/directorio/catalogo';
-import { esPerfilDemo } from '@/lib/directorio/perfiles-demo';
 import { repositorioDirectorio } from '@/lib/directorio/repositorio';
 import { construirMetadata, jsonLdMigaDePan, SITIO } from '@/lib/sitio';
 
@@ -39,14 +38,11 @@ export async function generateMetadata({
     titulo: perfil.nombre,
     descripcion: perfil.biografia.slice(0, 300),
     ruta: `/directorio/profesional/${perfil.slug}`,
-    // Un perfil de demostración no debe indexarse: sería contenido sobre una
-    // organización que no existe.
-    noindex: esPerfilDemo(perfil),
     actualizadoEn: perfil.actualizadoEn,
   });
 }
 
-/** Datos estructurados. No se emiten para perfiles de demostración. */
+/** Datos estructurados de la organización del perfil. */
 function jsonLdPerfil(perfil: PerfilProveedor) {
   const esHerramienta = perfil.categorias.includes('software-cumplimiento');
   const ubicacion = perfil.ubicaciones[0];
@@ -81,7 +77,6 @@ export default async function PaginaPerfil({ params }: { params: Promise<{ slug:
   const perfil = await repositorioDirectorio.perfilPorSlug(slug);
   if (!perfil) notFound();
 
-  const demo = esPerfilDemo(perfil);
   const actividades = datos.ACTIVIDADES.filter((a) => perfil.actividadesAtendidas.includes(a.slug));
   const catalogoActividades = datos.ACTIVIDADES.map((a) => ({
     slug: a.slug,
@@ -102,12 +97,10 @@ export default async function PaginaPerfil({ params }: { params: Promise<{ slug:
           ),
         }}
       />
-      {!demo && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdPerfil(perfil)) }}
-        />
-      )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdPerfil(perfil)) }}
+      />
 
       <header className="flex flex-col gap-5">
         <p className="text-sm text-[var(--color-tinta-tenue)]">
@@ -152,7 +145,6 @@ export default async function PaginaPerfil({ params }: { params: Promise<{ slug:
             <div className="mt-3 flex flex-wrap items-center gap-2">
               {perfil.patrocinado && <EtiquetaPatrocinado />}
               <InsigniaVerificacion nivel={perfil.verificacion} />
-              {demo && <EtiquetaDemo />}
               <Insignia tono="neutro">{ETIQUETA_PLAN_PERFIL[perfil.plan]}</Insignia>
               <Insignia tono={perfil.aceptaNuevosClientes ? 'verde' : 'neutro'}>
                 {perfil.aceptaNuevosClientes
@@ -163,14 +155,7 @@ export default async function PaginaPerfil({ params }: { params: Promise<{ slug:
           </div>
         </div>
 
-        {demo && (
-          <Nota tono="atencion" titulo="Perfil de demostración">
-            Esta ficha no corresponde a ningún despacho, empresa ni persona real. La creamos para
-            probar el directorio mientras se abre a registros reales. No intentes contratarla.
-          </Nota>
-        )}
-
-        <AccionesPerfil slug={perfil.slug} nombre={perfil.nombre} esDemo={demo} />
+        <AccionesPerfil slug={perfil.slug} nombre={perfil.nombre} />
       </header>
 
       <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_26rem]">
@@ -342,7 +327,6 @@ export default async function PaginaPerfil({ params }: { params: Promise<{ slug:
                 <FormularioContacto
                   proveedorSlug={perfil.slug}
                   proveedorNombre={perfil.nombre}
-                  esDemo={demo}
                   actividades={catalogoActividades}
                 />
               </div>

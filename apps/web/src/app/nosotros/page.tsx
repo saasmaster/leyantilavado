@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { VERSION_LEGAL, datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { AvisoIndependencia, Nota } from '@leyantilavado/ui';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
-import { EncabezadoPagina, FECHA_HOY } from '@/components/inicio/comun';
+import { EncabezadoPagina, REVISION_VIGENTE } from '@/components/inicio/comun';
 
 const MIGA = [
   { nombre: 'Inicio', ruta: '/' },
@@ -29,7 +29,7 @@ export default function Nosotros() {
         miga={MIGA}
         titulo="Un centro de información sobre la Ley Antilavado, no un despacho"
         entradilla="Existimos porque el nicho está lleno de artículos y vacío de herramientas, y porque las cifras que más importan se publican mal con demasiada frecuencia."
-        actualizado={formatearFechaLarga(FECHA_HOY)}
+        actualizado={formatearFechaLarga(REVISION_VIGENTE)}
       />
 
       <div className="contenedor-app py-12 md:py-16">

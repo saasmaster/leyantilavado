@@ -18,8 +18,7 @@ export function LineaTiempo() {
   return (
     <Seccion
       id="calendario"
-      etiqueta="Calendario de implementación"
-      titulo="De 2026 a 2029, fecha por fecha"
+      titulo="El calendario de 2026 a 2029, fecha por fecha"
       descripcion="El Acuerdo 115/2026 no entra de golpe: escalona la exigibilidad en varios tramos. Éste es el orden en que te van a alcanzar."
       accion={
         <Link

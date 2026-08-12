@@ -147,12 +147,6 @@ export default async function PaginaCategoria({
         </section>
       </div>
 
-      <Nota tono="atencion" titulo="Perfiles de demostración">
-        Mientras el directorio se abre a registros reales, los perfiles publicados son fichas de
-        ejemplo creadas por nosotros. Llevan la etiqueta “Perfil de demostración” y no corresponden
-        a ninguna empresa ni persona real.
-      </Nota>
-
       <FiltrosDirectorio filtros={filtros} />
 
       <ResultadosDirectorio

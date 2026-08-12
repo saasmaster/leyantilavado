@@ -3,8 +3,7 @@ import { Briefcase, Clock, Globe2, Languages, MapPin } from 'lucide-react';
 import type { PerfilProveedor } from '@leyantilavado/types';
 import { Insignia, Tarjeta } from '@leyantilavado/ui';
 import { ETIQUETA_CATEGORIA, ETIQUETA_SERVICIO } from '@/lib/directorio/catalogo';
-import { esPerfilDemo } from '@/lib/directorio/perfiles-demo';
-import { EtiquetaDemo, EtiquetaPatrocinado, InsigniaVerificacion } from './Distintivos';
+import { EtiquetaPatrocinado, InsigniaVerificacion } from './Distintivos';
 
 function resumenUbicacion(perfil: PerfilProveedor): string {
   const nacional = perfil.ubicaciones.some((u) => u.coberturaNacional);
@@ -24,8 +23,6 @@ function modalidades(perfil: PerfilProveedor): string {
 }
 
 export function TarjetaProveedor({ perfil }: { perfil: PerfilProveedor }) {
-  const demo = esPerfilDemo(perfil);
-
   return (
     <Tarjeta
       elevada={perfil.patrocinado}
@@ -57,7 +54,6 @@ export function TarjetaProveedor({ perfil }: { perfil: PerfilProveedor }) {
           {/* La etiqueta de patrocinio va primero y siempre visible. */}
           {perfil.patrocinado && <EtiquetaPatrocinado />}
           <InsigniaVerificacion nivel={perfil.verificacion} />
-          {demo && <EtiquetaDemo />}
         </div>
 
         <p className="text-sm leading-relaxed text-[var(--color-tinta-suave)]">

@@ -179,7 +179,7 @@ export default async function PaginaActividad({
           </Nota>
         )}
 
-        <TablaEnvoltura className="mt-5">
+        <TablaEnvoltura etiqueta="Umbrales de esta actividad vulnerable" className="mt-5">
           <table className="w-full min-w-[44rem] border-collapse text-left text-sm">
             <caption className="sr-only">
               Umbrales de identificación y de aviso de {actividad.nombre}.

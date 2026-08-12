@@ -47,11 +47,9 @@ type Panel = 'ninguno' | 'reportar' | 'reclamar';
 export function AccionesPerfil({
   slug,
   nombre,
-  esDemo,
 }: {
   slug: string;
   nombre: string;
-  esDemo: boolean;
 }) {
   const guardados = React.useSyncExternalStore(suscribirFavoritos, leerFavoritos, () => '');
   const esFavorito = guardados.split(',').includes(slug);
@@ -138,7 +136,6 @@ export function AccionesPerfil({
           titulo="Reclamar este perfil"
           descripcion={`Si trabajas en ${nombre} y quieres administrar este perfil, cuéntanos cómo podemos comprobarlo. Revisamos cada reclamo a mano antes de dar acceso.`}
           endpoint="/api/directorio/reclamar"
-          esDemo={esDemo}
           slug={slug}
           campos="reclamo"
         />
@@ -150,7 +147,6 @@ export function AccionesPerfil({
           titulo="Reportar este perfil"
           descripcion="Cuéntanos qué está mal. Puedes reportar sin dejar tu correo; si lo dejas, te avisamos qué resolvimos."
           endpoint="/api/directorio/reportar"
-          esDemo={esDemo}
           slug={slug}
           campos="reporte"
         />
@@ -169,14 +165,12 @@ function PanelEnvio({
   descripcion,
   endpoint,
   slug,
-  esDemo,
   campos,
 }: {
   titulo: string;
   descripcion: string;
   endpoint: string;
   slug: string;
-  esDemo: boolean;
   campos: 'reclamo' | 'reporte';
 }) {
   const [enviando, setEnviando] = React.useState(false);
@@ -246,13 +240,6 @@ function PanelEnvio({
         <h3 className="text-base font-semibold text-[var(--color-tinta)]">{titulo}</h3>
         <p className="mt-1 text-sm text-[var(--color-tinta-suave)]">{descripcion}</p>
       </div>
-
-      {esDemo && (
-        <Nota tono="atencion">
-          Este perfil es de demostración y no corresponde a nadie real, así que no hay nada que
-          reclamar ni que reportar. El formulario funciona para que puedas probarlo.
-        </Nota>
-      )}
 
       {campos === 'reclamo' ? (
         <>

@@ -1,5 +1,15 @@
 @import 'tailwindcss';
 
+/* Tailwind v4 detecta las fuentes a partir de la carpeta de ESTE archivo, así
+ * que por defecto sólo veía `apps/web`. `packages/ui` quedaba fuera del
+ * escaneo, y el fallo era engañoso: las clases del paquete que la app también
+ * usaba por su cuenta —`h-11`, `px-4`— sí se generaban y todo parecía bien;
+ * las que sólo existían dentro del paquete —`px-6`, `px-8`, `h-[3.25rem]`—
+ * no se generaban nunca y desaparecían en silencio. Por eso los botones
+ * grandes de la portada medían 26px de alto y no tenían relleno lateral: no
+ * era el CSS del botón, era que ese CSS nunca llegó a existir. */
+@source "../../../../packages/ui/src";
+
 /* Variante `oscuro:` para estilos específicos del modo oscuro.
  *
  * Existe para que el tema se resuelva SIEMPRE en CSS y nunca en estado de

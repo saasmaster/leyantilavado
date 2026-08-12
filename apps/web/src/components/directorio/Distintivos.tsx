@@ -1,4 +1,4 @@
-import { BadgeCheck, FlaskConical, Megaphone } from 'lucide-react';
+import { BadgeCheck, Megaphone } from 'lucide-react';
 import type { NivelVerificacionProveedor } from '@leyantilavado/types';
 import { ETIQUETA_VERIFICACION, EXPLICACION_VERIFICACION } from '@leyantilavado/types';
 import { TONO_VERIFICACION } from '@/lib/directorio/catalogo';
@@ -11,7 +11,6 @@ import { EtiquetaExplicada } from './EtiquetaExplicada';
  *  1. Nunca se dice "certificado por LeyAntilavado.org". El nivel más alto es
  *     "certificación externa revisada", y la certificación es del tercero.
  *  2. Todo perfil patrocinado lleva su etiqueta visible, en tarjeta y perfil.
- *  3. Un perfil de demostración se identifica como tal en todas partes.
  * ────────────────────────────────────────────────────────────────────────── */
 
 /** Qué NO significa cada nivel. Se muestra siempre bajo la explicación. */
@@ -62,16 +61,3 @@ export function EtiquetaPatrocinado({ className }: { className?: string }) {
   );
 }
 
-export function EtiquetaDemo({ className }: { className?: string }) {
-  return (
-    <EtiquetaExplicada
-      etiqueta="Perfil de demostración"
-      titulo="Este perfil no corresponde a nadie real"
-      explicacion="Es una ficha de ejemplo creada por nosotros para probar el directorio mientras se abre a registros reales. La empresa, la persona y los datos de contacto no existen."
-      nota="No intentes contratarlo. Si eres un proveedor real y quieres aparecer, date de alta en /directorio/alta."
-      tono="marino"
-      icono={<FlaskConical aria-hidden="true" className="size-3.5" />}
-      {...(className ? { className } : {})}
-    />
-  );
-}

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { AvisoIndependencia, Insignia, Nota } from '@leyantilavado/ui';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
-import { EncabezadoPagina, FECHA_HOY } from '@/components/inicio/comun';
+import { EncabezadoPagina, REVISION_VIGENTE } from '@/components/inicio/comun';
 
 const MIGA = [
   { nombre: 'Inicio', ruta: '/' },
@@ -29,7 +29,7 @@ export default function Publicidad() {
         miga={MIGA}
         titulo="Divulgación de publicidad y conflictos de interés"
         entradilla="Un sitio que compara proveedores y a la vez cobra por aparecer tiene un conflicto de interés evidente. La única respuesta decente es decir exactamente dónde está la línea."
-        actualizado={formatearFechaLarga(FECHA_HOY)}
+        actualizado={formatearFechaLarga(REVISION_VIGENTE)}
       />
 
       <div className="contenedor-app py-12 md:py-16">

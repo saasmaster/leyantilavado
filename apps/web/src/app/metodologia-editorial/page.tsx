@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { VERSION_LEGAL, datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { AvisoIndependencia, Insignia, Nota, TablaEnvoltura } from '@leyantilavado/ui';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
-import { EncabezadoPagina, FECHA_HOY, NIVELES_VERIFICACION } from '@/components/inicio/comun';
+import { EncabezadoPagina, REVISION_VIGENTE, NIVELES_VERIFICACION } from '@/components/inicio/comun';
 
 const MIGA = [
   { nombre: 'Inicio', ruta: '/' },
@@ -36,7 +36,7 @@ export default function MetodologiaEditorial() {
         miga={MIGA}
         titulo="Cómo verificamos cada dato antes de publicarlo"
         entradilla="Un umbral mal publicado no es un error de redacción: es una multa ajena. Éste es el proceso completo, incluido lo que hacemos cuando el proceso falla."
-        actualizado={formatearFechaLarga(FECHA_HOY)}
+        actualizado={formatearFechaLarga(REVISION_VIGENTE)}
       />
 
       <div className="contenedor-app py-12 md:py-16">

@@ -87,7 +87,7 @@ export function Encabezado() {
                   aria-haspopup="true"
                   onClick={() => setMenuActivo((a) => (a === grupo.titulo ? null : grupo.titulo))}
                   className={cn(
-                    'relative flex h-9 cursor-pointer items-center gap-1 rounded-[var(--radius-pastilla)] px-3.5',
+                    'relative flex h-11 cursor-pointer items-center gap-1 rounded-[var(--radius-pastilla)] px-4',
                     'text-[0.875rem] font-medium transition-colors duration-200',
                     activo
                       ? 'text-[var(--color-tinta)]'

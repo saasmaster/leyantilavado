@@ -4,7 +4,7 @@ import { AlertTriangle, BookOpenCheck, Mail, ShieldCheck, UserPlus } from 'lucid
 import { formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { AvisoIndependencia, Boton } from '@leyantilavado/ui';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
-import { EncabezadoPagina, FECHA_HOY } from '@/components/inicio/comun';
+import { EncabezadoPagina, REVISION_VIGENTE } from '@/components/inicio/comun';
 import { FormularioContacto } from '@/components/FormularioContacto';
 
 const MIGA = [
@@ -61,7 +61,7 @@ export default function Contacto() {
         miga={MIGA}
         titulo="Contacto"
         entradilla="No damos asesoría jurídica ni resolvemos casos concretos por correo: para eso está el directorio profesional. Sí atendemos correcciones, altas al directorio y derechos ARCO."
-        actualizado={formatearFechaLarga(FECHA_HOY)}
+        actualizado={formatearFechaLarga(REVISION_VIGENTE)}
       />
 
       <div className="contenedor-app py-12 md:py-16">

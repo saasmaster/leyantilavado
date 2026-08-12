@@ -15,7 +15,7 @@ export function TablaHistorica() {
 
   return (
     <div className="flex flex-col gap-4">
-      <TablaEnvoltura>
+      <TablaEnvoltura etiqueta="Valores históricos de la UMA por año">
         <table className="w-full min-w-[44rem] border-collapse text-sm">
           <caption className="sr-only">
             Valores diario, mensual y anual de la UMA por año, con su periodo de vigencia

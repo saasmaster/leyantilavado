@@ -48,19 +48,18 @@ export default async function PaginaDirectorio({
           puedes guardar o compartir una búsqueda tal cual la dejaste.
         </p>
 
-        <Nota tono="atencion" titulo="Los perfiles que ves hoy son de demostración">
+        <Nota tono="info" titulo="El directorio está abierto a registro">
           <p>
-            El directorio todavía no está abierto a registros reales. Las fichas publicadas fueron
-            creadas por nosotros para probar el buscador: los nombres son ficticios y no
-            corresponden a ningún despacho, empresa ni persona. Cada una lleva la etiqueta “Perfil
-            de demostración”.
+            Aquí sólo aparecen perfiles reales, y sólo después de que revisamos el alta a mano. No
+            publicamos fichas de ejemplo para que el buscador se vea lleno: si todavía no hay
+            perfiles en una categoría, la página lo dice.
           </p>
           <p>
-            Si ofreces servicios de cumplimiento y quieres aparecer cuando abramos,{' '}
+            Si ofreces servicios de cumplimiento,{' '}
             <Link href="/directorio/alta" className="underline underline-offset-4">
               deja tu alta
             </Link>
-            : la revisamos a mano antes de publicar nada.
+            .
           </p>
         </Nota>
 

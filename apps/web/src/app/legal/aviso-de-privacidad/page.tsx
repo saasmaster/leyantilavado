@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { AvisoIndependencia, Nota } from '@leyantilavado/ui';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
-import { EncabezadoPagina, FECHA_HOY } from '@/components/inicio/comun';
+import { EncabezadoPagina, REVISION_VIGENTE } from '@/components/inicio/comun';
 
 const MIGA = [
   { nombre: 'Inicio', ruta: '/' },
@@ -29,7 +29,7 @@ export default function AvisoDePrivacidad() {
         miga={MIGA}
         titulo="Aviso de privacidad integral"
         entradilla="Este aviso se emite conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares y su reglamento. Describe qué datos tratamos, con qué finalidad y cómo puedes ejercer tus derechos."
-        actualizado={formatearFechaLarga(FECHA_HOY)}
+        actualizado={formatearFechaLarga(REVISION_VIGENTE)}
       />
 
       <div className="contenedor-app py-12 md:py-16">

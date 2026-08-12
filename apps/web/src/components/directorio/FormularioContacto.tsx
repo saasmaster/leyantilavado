@@ -30,14 +30,12 @@ const AYUDA_MENSAJE: Record<Tipo, string> = {
 interface Props {
   proveedorSlug: string;
   proveedorNombre: string;
-  esDemo: boolean;
   actividades: readonly { slug: string; nombreCorto: string }[];
 }
 
 export function FormularioContacto({
   proveedorSlug,
   proveedorNombre,
-  esDemo,
   actividades,
 }: Props) {
   const [tipo, setTipo] = React.useState<Tipo>('contacto');
@@ -99,13 +97,6 @@ export function FormularioContacto({
 
   return (
     <form onSubmit={enviar} className="flex flex-col gap-4" noValidate>
-      {esDemo && (
-        <Nota tono="atencion" titulo="Este perfil es de demostración">
-          Puedes probar el formulario: la solicitud se registra para nuestras pruebas, pero no la
-          recibe nadie porque este proveedor no existe. No escribas datos reales de tus clientes.
-        </Nota>
-      )}
-
       <Campo id="tipo" etiqueta="¿Qué quieres hacer?">
         <Selector
           name="tipo"

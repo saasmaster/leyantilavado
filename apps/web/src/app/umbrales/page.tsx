@@ -188,7 +188,7 @@ export default function PaginaUmbrales() {
         titulo="Serie histórica de la UMA"
         descripcion="Valores diarios registrados en el motor, con el nivel de verificación de cada uno."
       >
-        <TablaEnvoltura>
+        <TablaEnvoltura etiqueta="Umbrales de identificación y aviso por actividad vulnerable">
           <table className="w-full min-w-[36rem] border-collapse text-left text-sm">
             <caption className="sr-only">
               Valor diario de la UMA por año y su vigencia.

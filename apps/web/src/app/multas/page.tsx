@@ -138,7 +138,7 @@ export default function PaginaMultas() {
         titulo="Artículo 53: las conductas infractoras"
         descripcion="Cada conducta enlaza con el rango que le corresponde en el art. 54."
       >
-        <TablaEnvoltura>
+        <TablaEnvoltura etiqueta="Sanciones del artículo 54 de la LFPIORPI">
           <table className="w-full min-w-[46rem] border-collapse text-left text-sm">
             <caption className="sr-only">
               Conductas infractoras del art. 53 y el rango de multa que les corresponde.
@@ -354,7 +354,7 @@ export default function PaginaMultas() {
       <Seccion id="cff" titulo={REGIMEN_CFF.titulo}>
         <p className="prosa text-[var(--color-tinta-suave)]">{REGIMEN_CFF.entrada}</p>
 
-        <TablaEnvoltura className="mt-5">
+        <TablaEnvoltura etiqueta="Sanciones por omisiones sobre beneficiario controlador" className="mt-5">
           <table className="w-full min-w-[42rem] border-collapse text-left text-sm">
             <caption className="sr-only">
               Diferencias entre el régimen de beneficiario controlador de la LFPIORPI y el del

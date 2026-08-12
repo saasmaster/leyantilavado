@@ -18,6 +18,7 @@ import { datos } from '@leyantilavado/rules-engine';
 import { CATEGORIAS_PROVEEDOR } from '@leyantilavado/types';
 import { cn } from '@leyantilavado/ui';
 import { Aparece } from './Aparece';
+import { NIVELES_VERIFICACION } from './comun';
 
 /**
  * Mapa del sitio de la portada.
@@ -153,6 +154,22 @@ const CONFIAR: Destino[] = [
     icono: BookOpen,
   },
   {
+    href: '/metodologia-editorial',
+    titulo: 'Cómo verificamos',
+    descripcion:
+      'Los cuatro niveles de verificación, qué publicamos con cada uno y qué hacemos cuando la fuente oficial no está disponible.',
+    dato: `${NIVELES_VERIFICACION.length} niveles`,
+    icono: ClipboardCheck,
+  },
+  {
+    href: '/nosotros',
+    titulo: 'Quién publica esto',
+    descripcion:
+      'Un centro independiente, sin relación con la UIF ni con el SAT. Quiénes somos, cómo nos financiamos y qué no hacemos.',
+    dato: 'Independiente',
+    icono: Users,
+  },
+  {
     href: '/preguntas-frecuentes',
     titulo: 'Preguntas frecuentes',
     descripcion:
@@ -165,20 +182,14 @@ const CONFIAR: Destino[] = [
 export function MapaDelSitio() {
   return (
     <div className="contenedor-app seccion">
+      <Grupo titulo="Entender qué te obliga la ley, artículo por artículo" destinos={ENTENDER} />
       <Grupo
-        etiqueta="Entender"
-        titulo="Qué te obliga la ley, artículo por artículo"
-        destinos={ENTENDER}
-      />
-      <Grupo
-        etiqueta="Actuar"
-        titulo="Calcula, organiza y encuentra ayuda"
+        titulo="Calcular, organizar y encontrar ayuda"
         destinos={ACTUAR}
         className="mt-16"
       />
       <Grupo
-        etiqueta="Verificar"
-        titulo="Comprueba de dónde sale cada dato"
+        titulo="Comprobar de dónde sale cada dato"
         destinos={CONFIAR}
         className="mt-16"
       />
@@ -187,12 +198,10 @@ export function MapaDelSitio() {
 }
 
 function Grupo({
-  etiqueta,
   titulo,
   destinos,
   className,
 }: {
-  etiqueta: string;
   titulo: string;
   destinos: Destino[];
   className?: string;
@@ -202,8 +211,7 @@ function Grupo({
       <section className={className}>
         <div className="flex flex-wrap items-baseline justify-between gap-3">
           <div>
-            <span className="eyebrow">{etiqueta}</span>
-            <h2 className="mt-2 text-(length:--text-seccion)">{titulo}</h2>
+            <h2 className="text-(length:--text-seccion)">{titulo}</h2>
           </div>
         </div>
 

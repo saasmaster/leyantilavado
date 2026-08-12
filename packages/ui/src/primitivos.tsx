@@ -53,13 +53,26 @@ export function Insignia({
 
 /* ── Nota / callout ──────────────────────────────────────────────────────── */
 
-const nota = cva('rounded-[var(--radius-card)] border-l-4 p-4 text-sm leading-relaxed', {
+/**
+ * El tono se lee por el fondo teñido y por un contorno completo de 1px del
+ * mismo color, no por una franja gruesa a la izquierda.
+ *
+ * La franja de 4px era ruido: sumada a las decenas de notas que hay en el
+ * sitio, llenaba las páginas de barras de colores compitiendo entre sí, y el
+ * peso visual del aviso no guardaba ninguna relación con su gravedad. Un
+ * contorno completo delimita el bloque igual de bien, se distingue igual por
+ * color, y deja que el texto sea lo que pesa.
+ */
+const nota = cva('rounded-[var(--radius-card)] border p-4 text-sm leading-relaxed', {
   variants: {
     tono: {
-      info: 'border-l-[var(--color-marino)] bg-[var(--color-marino-tenue)] text-[var(--color-tinta)]',
-      atencion: 'border-l-[var(--color-ambar)] bg-[var(--color-ambar-tenue)] text-[var(--color-tinta)]',
-      riesgo: 'border-l-[var(--color-rojo)] bg-[var(--color-rojo-tenue)] text-[var(--color-tinta)]',
-      exito: 'border-l-[var(--color-verde)] bg-[var(--color-verde-tenue)] text-[var(--color-tinta)]',
+      info: 'border-[color-mix(in_srgb,var(--color-marino)_28%,transparent)] bg-[var(--color-marino-tenue)] text-[var(--color-tinta)]',
+      atencion:
+        'border-[color-mix(in_srgb,var(--color-ambar)_38%,transparent)] bg-[var(--color-ambar-tenue)] text-[var(--color-tinta)]',
+      riesgo:
+        'border-[color-mix(in_srgb,var(--color-rojo)_32%,transparent)] bg-[var(--color-rojo-tenue)] text-[var(--color-tinta)]',
+      exito:
+        'border-[color-mix(in_srgb,var(--color-verde)_32%,transparent)] bg-[var(--color-verde-tenue)] text-[var(--color-tinta)]',
     },
   },
   defaultVariants: { tono: 'info' },
@@ -107,8 +120,14 @@ export function Campo({ id, etiqueta, ayuda, error, requerido, children, classNa
     <div className={cn('flex flex-col gap-1.5', className)}>
       <label htmlFor={id} className="text-sm font-medium text-[var(--color-tinta)]">
         {etiqueta}
+        {/* El asterisco es convención visual y nada más: `aria-label` sobre un
+            <span> sin rol no produce nombre accesible —lo ignoran casi todos
+            los lectores de pantalla—, así que antes esto no anunciaba nada.
+            Lo que sí funciona es marcar el control con `aria-required`, abajo:
+            así la obligatoriedad se oye al enfocar el campo, que es cuando
+            hace falta saberla. */}
         {requerido && (
-          <span className="ml-1 text-[var(--color-rojo)]" aria-label="obligatorio">
+          <span className="ml-1 text-[var(--color-rojo)]" aria-hidden="true">
             *
           </span>
         )}
@@ -123,6 +142,7 @@ export function Campo({ id, etiqueta, ayuda, error, requerido, children, classNa
             id,
             'aria-describedby': [idAyuda, idError].filter(Boolean).join(' ') || undefined,
             'aria-invalid': error ? true : undefined,
+            'aria-required': requerido ? true : undefined,
           })
         : children}
       {error && (
@@ -172,11 +192,27 @@ AreaTexto.displayName = 'AreaTexto';
    El contenedor scrollea, nunca el body de la página.
    ─────────────────────────────────────────────────────────────────────────── */
 
-export function TablaEnvoltura({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+/**
+ * Contenedor con desplazamiento horizontal para tablas anchas.
+ *
+ * `tabIndex={0}` es lo que permite recorrer una tabla ancha con el teclado:
+ * sin él, quien no usa ratón no puede ver las columnas que quedan fuera.
+ *
+ * `role="region"` sólo se aplica cuando hay nombre. Una región anónima es peor
+ * que ninguna: el lector de pantalla anuncia "región" y se calla, y además
+ * ensucia la lista de puntos de referencia de la página con entradas
+ * indistinguibles. Sin nombre queda como lo que es —un contenedor que se
+ * desplaza—, que sigue siendo enfocable y no miente sobre su estructura.
+ */
+export function TablaEnvoltura({
+  className,
+  etiqueta,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & { etiqueta?: string }) {
   return (
     <div
       tabIndex={0}
-      role="region"
+      {...(etiqueta ? { role: 'region', 'aria-label': etiqueta } : {})}
       className={cn(
         'overflow-x-auto rounded-[var(--radius-card)] border border-[var(--color-borde)]',
         className,

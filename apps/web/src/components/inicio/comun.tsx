@@ -6,18 +6,23 @@ import type {
   NivelVerificacion,
 } from '@leyantilavado/types';
 import { formatearMXN } from '@leyantilavado/types';
-import { convertirUMA, datos } from '@leyantilavado/rules-engine';
+import { convertirUMA, datos, VERSION_LEGAL } from '@leyantilavado/rules-engine';
 import { cn, Insignia } from '@leyantilavado/ui';
 
 /**
- * Fecha de referencia de la portada.
+ * Fecha de referencia del sitio: el día en que se revisó el corpus legal.
  *
- * Se resuelve UNA vez al importar el módulo, no durante el render: la regla
- * `react-hooks/purity` de eslint prohíbe `new Date()` dentro de un componente
- * y `tsc` no la detecta. El motor jurídico nunca llama a `Date.now()`; la
- * fecha "de hoy" entra siempre como parámetro, y éste es el parámetro.
+ * Antes esto era `new Date()` al importar el módulo, y en un sitio generado
+ * de forma estática eso no es "hoy": es el día en que corrió el build. La
+ * página quedaba afirmando "marco legal revisado al 12 de agosto" para
+ * siempre, y —peor— dos builds del mismo código convertían UMA con fechas
+ * distintas, así que las cifras cambiaban sin que cambiara una línea.
+ *
+ * `VERSION_LEGAL` sí es un hecho declarado: la fecha en que se revisó el
+ * corpus. Derivarla de ahí hace la afirmación cierta y el build reproducible.
+ * Cuando se revisa la ley se sube la versión, y esta fecha avanza con ella.
  */
-export const FECHA_HOY: string = new Date().toISOString().slice(0, 10);
+export const REVISION_VIGENTE: string = VERSION_LEGAL.replaceAll('.', '-');
 
 /** Mapa id → { nombre, url } que consume `SelloProcedencia` para enlazar. */
 export const MAPA_FUENTES: Record<string, { nombre: string; url: string }> =
@@ -200,7 +205,7 @@ export function EncabezadoPagina({
 
 export function EspecificacionCelda({
   especificacion,
-  fecha = FECHA_HOY,
+  fecha = REVISION_VIGENTE,
   compacto,
 }: {
   especificacion: EspecificacionUmbral;

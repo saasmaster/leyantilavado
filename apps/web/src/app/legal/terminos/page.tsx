@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { AvisoIndependencia, Nota } from '@leyantilavado/ui';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
-import { EncabezadoPagina, FECHA_HOY } from '@/components/inicio/comun';
+import { EncabezadoPagina, REVISION_VIGENTE } from '@/components/inicio/comun';
 
 const MIGA = [
   { nombre: 'Inicio', ruta: '/' },
@@ -29,7 +29,7 @@ export default function Terminos() {
         miga={MIGA}
         titulo="Términos de uso"
         entradilla="Lo importante en una línea: esto es información y son herramientas de cálculo. No es asesoría jurídica, no crea relación profesional y no sustituye tu criterio ni el de tu asesor."
-        actualizado={formatearFechaLarga(FECHA_HOY)}
+        actualizado={formatearFechaLarga(REVISION_VIGENTE)}
       />
 
       <div className="contenedor-app py-12 md:py-16">

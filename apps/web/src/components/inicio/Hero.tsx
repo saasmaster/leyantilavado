@@ -1,22 +1,21 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Calculator, FileCheck2, ShieldQuestion } from 'lucide-react';
 import { formatearMXN } from '@leyantilavado/types';
 import { VERSION_LEGAL, datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { Boton } from '@leyantilavado/ui';
-import { FECHA_HOY } from './comun';
-import fotoEscritorio from '../../../public/img/hero-escritorio.webp';
+import { REVISION_VIGENTE } from './comun';
 
 /**
  * Portada — bloque 1.
  *
- * La fotografía es decorativa (`alt=""`), así que un lector de pantalla la
- * salta: describirla sólo interrumpiría el camino al titular, que es lo que
- * de verdad comunica.
+ * Sin fotografía. Se probó una imagen editorial de escritorio y el encuadre
+ * nunca funcionó: con `object-cover` en una caja más apaisada que el original,
+ * el recorte se comía el motivo en unas medidas y lo descentraba en otras, y
+ * una foto de ambiente no dice nada que el titular no diga mejor.
  *
- * Se importa el archivo en lugar de pasar una ruta en texto para que Next
- * conozca su tamaño en tiempo de compilación y reserve el espacio: sin eso, la
- * imagen empuja el titular al cargar y se dispara el CLS.
+ * Lo que sí comunica es la tarjeta de datos: la UMA vigente, cuántas reglas
+ * hay cargadas y con qué versión del corpus se calcula. Eso es específico de
+ * este producto y ninguna fotografía de banco lo sustituye.
  */
 
 const UMA = datos.UMA_VIGENTE_MAS_RECIENTE;
@@ -39,7 +38,7 @@ export function Hero() {
       <div className="contenedor-app grid gap-12 py-16 md:py-24 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:items-center">
         <div>
           <p className="inline-flex items-center gap-2 rounded-full border border-[var(--color-borde-fuerte)] bg-[var(--color-superficie)] px-3 py-1.5 text-xs font-medium text-[var(--color-tinta-suave)]">
-            Marco legal revisado al {formatearFechaLarga(FECHA_HOY)}
+            Marco legal revisado al {formatearFechaLarga(REVISION_VIGENTE)}
           </p>
 
           <h1
@@ -78,38 +77,13 @@ export function Hero() {
           </p>
         </div>
 
-        {/* Columna derecha: fotografía editorial con la tarjeta de datos
-            montada encima en pantallas grandes.
-
-            La foto va DETRÁS y la tarjeta delante con su propio fondo opaco:
-            así el texto nunca se lee sobre la imagen y el contraste no depende
-            de qué zona de la fotografía quede debajo. */}
-        <div className="relative">
-          <div className="relative overflow-hidden rounded-[var(--radius-card)] border border-[var(--color-borde)] shadow-[var(--shadow-alta)]">
-            <Image
-              src={fotoEscritorio}
-              alt=""
-              aria-hidden="true"
-              priority
-              fetchPriority="high"
-              placeholder="blur"
-              sizes="(max-width: 1024px) 100vw, 46vw"
-              // El motivo (escritorio, carpeta, lentes) vive en la mitad
-              // inferior de la fotografía. Con `object-cover` en una caja más
-              // apaisada que el original, el recorte por omisión se queda en la
-              // pared: `object-bottom` ancla el encuadre donde está el tema.
-              className="aspect-[16/10] w-full object-cover object-bottom"
-            />
-            {/* Velo cálido que integra la foto con la paleta del sitio. */}
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 bg-[linear-gradient(200deg,transparent_35%,var(--color-marino)_140%)] opacity-30"
-            />
-          </div>
-
         {/* Tarjeta de datos duros. Ningún número está escrito aquí: todos
-            salen del motor jurídico. */}
-        <div className="tarjeta tarjeta-elevada relative mt-[-3.5rem] ml-0 bg-[var(--color-superficie)] p-6 md:ml-8 md:p-7">
+            salen del motor jurídico.
+
+            El margen superior negativo se fue con la fotografía: existía para
+            que la tarjeta cabalgara sobre la imagen. Sin ella sólo empujaba la
+            tarjeta fuera de la línea del titular. */}
+        <div className="tarjeta tarjeta-elevada relative bg-[var(--color-superficie)] p-6 md:p-7">
           <p className="flex items-center gap-2 text-sm font-semibold text-[var(--color-tinta)]">
             <FileCheck2 className="size-4 text-[var(--color-petroleo)]" aria-hidden="true" />
             Datos base del cálculo
@@ -152,7 +126,6 @@ export function Hero() {
             La UMA entra en vigor el 1 de febrero de cada año. Una operación de enero se mide con
             la UMA del año anterior: el motor lo resuelve por ti y te dice qué año aplicó.
           </p>
-        </div>
         </div>
       </div>
     </section>

@@ -196,11 +196,14 @@ export function CuentaRegresivaReglas({
   return (
     <section className={cn('contenedor-app seccion', className)} aria-labelledby="titulo-regresiva">
       <div className="max-w-2xl">
-        <span className="eyebrow">
-          <CalendarClock className="size-3.5" />
-          Calendario exigible
-        </span>
-        <h2 id="titulo-regresiva" className="mt-3 text-(length:--text-titulo)">
+        <h2
+          id="titulo-regresiva"
+          className="flex items-center gap-2.5 text-(length:--text-titulo)"
+        >
+          <CalendarClock
+            aria-hidden="true"
+            className="size-[0.8em] shrink-0 text-[var(--color-petroleo)]"
+          />
           {titulo}
         </h2>
         <p className="mt-3 text-[var(--color-tinta-suave)]">{descripcion}</p>

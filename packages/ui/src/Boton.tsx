@@ -13,7 +13,11 @@ const boton = cva(
     'transition-[background-color,border-color,color,box-shadow,transform,opacity] ' +
     'duration-200 ease-[var(--ease-suave)] ' +
     'hover:-translate-y-px active:translate-y-0 active:scale-[0.985] ' +
-    'disabled:pointer-events-none disabled:opacity-45 disabled:hover:translate-y-0 ' +
+    // El estado deshabilitado baja opacidad Y desatura, en vez de bajar sólo
+    // la opacidad: al 45% el texto del botón de contorno caía a ~2.4:1 sobre
+    // el fondo, por debajo del mínimo legible.
+    'disabled:pointer-events-none disabled:opacity-60 disabled:saturate-50 ' +
+    'disabled:hover:translate-y-0 ' +
     '[&_svg]:size-[1.05em] [&_svg]:shrink-0',
   {
     variants: {
@@ -43,11 +47,20 @@ const boton = cva(
         peligro: 'bg-[var(--color-rojo)] text-white hover:brightness-110',
       },
       tamano: {
-        // Todos ≥44px de alto salvo `sm`, que se usa sólo en barras densas de
-        // escritorio donde el objetivo táctil no aplica.
-        sm: 'h-9 px-3.5 text-[0.85rem]',
-        md: 'h-11 px-5 text-[0.925rem]',
-        lg: 'h-[3.25rem] px-7 text-[1rem]',
+        // Todos ≥44px de alto, sin excepción.
+        //
+        // `sm` medía 36px con el argumento de que sólo se usa en barras densas
+        // de escritorio. El argumento no se sostiene: una laptop con pantalla
+        // táctil, un convertible o un puntero motorizado usan ese mismo botón,
+        // y 36px falla el objetivo mínimo de WCAG 2.5.5. La densidad se
+        // consigue con el padding horizontal y el tamaño de letra, no
+        // encogiendo el área que hay que acertar.
+        //
+        // El padding horizontal subió en los tres: con un icono, el texto y el
+        // hueco entre ambos, 20px dejaban las letras pegadas al borde.
+        sm: 'h-11 px-4 text-[0.85rem]',
+        md: 'h-11 px-6 text-[0.925rem]',
+        lg: 'h-[3.25rem] px-8 text-[1rem]',
       },
       ancho: {
         auto: '',

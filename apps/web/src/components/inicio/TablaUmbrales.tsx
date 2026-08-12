@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { Periodicidad } from '@leyantilavado/types';
 import { datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { SelloProcedencia, TablaEnvoltura } from '@leyantilavado/ui';
-import { EspecificacionCelda, FECHA_HOY, MAPA_FUENTES, Seccion } from './comun';
+import { EspecificacionCelda, REVISION_VIGENTE, MAPA_FUENTES, Seccion } from './comun';
 
 /**
  * Portada — bloque 8. Ocho filas destacadas de la tabla de umbrales.
@@ -45,12 +45,11 @@ export function TablaUmbrales() {
   return (
     <Seccion
       id="umbrales"
-      etiqueta="Umbrales"
       titulo="Ocho umbrales que casi nadie tiene bien"
       descripcion={
         <>
           En UMA y en pesos, convertidos con la UMA vigente al{' '}
-          {formatearFechaLarga(FECHA_HOY)}. Ojo con el matiz que cambia el resultado justo en el
+          {formatearFechaLarga(REVISION_VIGENTE)}. Ojo con el matiz que cambia el resultado justo en el
           borde: unos umbrales dicen <em>“superior a”</em> y otros <em>“igual o superior a”</em>.
         </>
       }
@@ -65,7 +64,7 @@ export function TablaUmbrales() {
       fondo="hondo"
     >
       <TablaEnvoltura
-        aria-label="Umbrales destacados de identificación y aviso"
+        etiqueta="Umbrales destacados de identificación y aviso"
         className="bg-[var(--color-superficie)]"
       >
         <table className="w-full min-w-[52rem] border-collapse text-left text-sm">

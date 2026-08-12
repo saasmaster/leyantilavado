@@ -1,7 +1,6 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import type { PerfilProveedor, SolicitudContacto } from '@leyantilavado/types';
-import { PERFILES_DEMO } from './perfiles-demo';
 
 /* ────────────────────────────────────────────────────────────────────────────
  * Adaptador de persistencia del directorio.
@@ -126,10 +125,12 @@ const ARCHIVO_REPORTES = 'directorio-reportes.json';
 
 export const repositorioDirectorio: RepositorioDirectorio = {
   async listarPerfiles() {
-    // Los perfiles de demostración y los reales conviven; los reales sólo
-    // aparecen cuando moderación los marca `publicado`.
+    // Sólo perfiles reales, y sólo cuando moderación los marca `publicado`.
+    // Hasta que haya altas aprobadas esto devuelve una lista vacía, y el
+    // directorio lo dice con todas sus letras en vez de rellenarse con fichas
+    // inventadas.
     const guardados = await leerLista<PerfilProveedor>(ARCHIVO_PERFILES);
-    return [...PERFILES_DEMO, ...guardados.filter((p) => p.publicado)];
+    return guardados.filter((p) => p.publicado);
   },
 
   async perfilPorSlug(slug) {

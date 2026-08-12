@@ -4,7 +4,7 @@ import type { NivelVerificacion, Procedencia } from '@leyantilavado/types';
 import { datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { AvisoIndependencia, Insignia, Nota, TablaEnvoltura } from '@leyantilavado/ui';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
-import { EncabezadoPagina, FECHA_HOY, NIVELES_VERIFICACION } from '@/components/inicio/comun';
+import { EncabezadoPagina, REVISION_VIGENTE, NIVELES_VERIFICACION } from '@/components/inicio/comun';
 
 const MIGA = [
   { nombre: 'Inicio', ruta: '/' },
@@ -104,12 +104,12 @@ export default function FuentesOficialesPagina() {
         miga={MIGA}
         titulo={`Las ${datos.FUENTES.length} fuentes de las que sale todo`}
         entradilla="Cada regla del motor jurídico apunta por identificador a una de estas fuentes. Si una fuente cambia, cambia la regla; si una fuente no está aquí, ese dato no se publica."
-        actualizado={formatearFechaLarga(FECHA_HOY)}
+        actualizado={formatearFechaLarga(REVISION_VIGENTE)}
       />
 
       <div className="contenedor-app py-12 md:py-16">
         <TablaEnvoltura
-          aria-label="Fuentes oficiales, uso, última revisión y estado"
+          etiqueta="Fuentes oficiales, uso, última revisión y estado"
           className="bg-[var(--color-superficie)]"
         >
           <table className="w-full min-w-[60rem] border-collapse text-left text-sm">

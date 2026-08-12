@@ -6,7 +6,7 @@ import { formatearMXN } from '@leyantilavado/types';
 import { AvisoIndependencia, Insignia, Nota, TablaEnvoltura } from '@leyantilavado/ui';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
 import { CAMBIOS_ANTES_DESPUES, INSTRUMENTOS } from '@/content/reforma';
-import { FECHA_HOY } from '@/components/inicio/comun';
+import { REVISION_VIGENTE } from '@/components/inicio/comun';
 import {
   AvisoLegal,
   CabeceraArticulo,
@@ -55,14 +55,14 @@ function resolverDespues(cambio: (typeof CAMBIOS_ANTES_DESPUES)[number]): string
   // `describirUmbral` resuelve los seis casos de la unión discriminada
   // (siempre / nunca / uma / monto_o_comision / variable / requiere_revision)
   // y ya trae la conversión a pesos con la UMA de la fecha.
-  const vista = describirUmbral(regla[cambio.campo], FECHA_HOY);
+  const vista = describirUmbral(regla[cambio.campo], REVISION_VIGENTE);
   return textoPlanoUmbral(vista, 'uma');
 }
 
 function resolverAntes(cambio: (typeof CAMBIOS_ANTES_DESPUES)[number]): string {
   if (cambio.antesTexto) return cambio.antesTexto;
   if (cambio.antesUMA === undefined) return '—';
-  const enPesos = convertirUMA(cambio.antesUMA, FECHA_HOY).equivalentePesos;
+  const enPesos = convertirUMA(cambio.antesUMA, REVISION_VIGENTE).equivalentePesos;
   return `${cambio.antesUMA.toLocaleString('es-MX')} UMA · ${formatearMXN(enPesos)}`;
 }
 

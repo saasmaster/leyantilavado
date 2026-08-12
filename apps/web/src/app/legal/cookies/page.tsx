@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { AvisoIndependencia, Nota, TablaEnvoltura } from '@leyantilavado/ui';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
-import { EncabezadoPagina, FECHA_HOY } from '@/components/inicio/comun';
+import { EncabezadoPagina, REVISION_VIGENTE } from '@/components/inicio/comun';
 
 const MIGA = [
   { nombre: 'Inicio', ruta: '/' },
@@ -40,7 +40,7 @@ export default function Cookies() {
         miga={MIGA}
         titulo="Política de cookies y almacenamiento local"
         entradilla="Resumen honesto: hoy el sitio no instala cookies de publicidad, no te sigue entre sitios y no vende tu comportamiento. Lo único que guarda es tu preferencia de tema."
-        actualizado={formatearFechaLarga(FECHA_HOY)}
+        actualizado={formatearFechaLarga(REVISION_VIGENTE)}
       />
 
       <div className="contenedor-app py-12 md:py-16">
@@ -54,7 +54,7 @@ export default function Cookies() {
           </p>
         </div>
 
-        <TablaEnvoltura className="mt-6 bg-[var(--color-superficie)]">
+        <TablaEnvoltura etiqueta="Cookies que usa el sitio" className="mt-6 bg-[var(--color-superficie)]">
           <table className="w-full min-w-[46rem] border-collapse text-left text-sm">
             <caption className="sr-only">
               Elementos que el sitio guarda en tu navegador, su finalidad y su duración.

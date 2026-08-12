@@ -116,7 +116,7 @@ export default function PaginaLimitesEfectivo() {
       >
         <p className="prosa text-[var(--color-tinta-suave)]">{COMPARATIVA_IVA.entrada}</p>
 
-        <TablaEnvoltura className="mt-5">
+        <TablaEnvoltura etiqueta="Límites de uso de efectivo por operación" className="mt-5">
           <table className="w-full min-w-[40rem] border-collapse text-left text-sm">
             <caption className="sr-only">
               Comparación entre los umbrales del art. 17 y el límite de efectivo del art. 32.
@@ -158,7 +158,7 @@ export default function PaginaLimitesEfectivo() {
         titulo="Los ocho supuestos y sus límites"
         descripcion={`Convertidos a pesos con la UMA vigente al ${REVISION_VIGENTE}. Recuerda que el límite se compara contra el monto pagado en efectivo, no contra el valor total de la operación.`}
       >
-        <TablaEnvoltura>
+        <TablaEnvoltura etiqueta="Equivalencia en pesos de cada límite">
           <table className="w-full min-w-[48rem] border-collapse text-left text-sm">
             <caption className="sr-only">
               Supuestos del art. 32 con su límite en UMA y su equivalente en pesos.
