@@ -1,18 +1,22 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Calculator, FileCheck2, ShieldQuestion } from 'lucide-react';
 import { formatearMXN } from '@leyantilavado/types';
 import { VERSION_LEGAL, datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { Boton } from '@leyantilavado/ui';
 import { FECHA_HOY } from './comun';
+import fotoEscritorio from '../../../public/img/hero-escritorio.webp';
 
 /**
  * Portada — bloque 1.
  *
- * La imagen editorial del hero está pendiente: la generación con Higgsfield
- * falló por falta de créditos en el espacio de trabajo. Mientras tanto el
- * fondo es un degradado construido con los tokens del sistema, no una imagen
- * de banco genérica. Cuando exista la fotografía, entra aquí con `next/image`,
- * `priority`, `sizes` y `alt` descriptivo, sin tocar el resto del bloque.
+ * La fotografía es decorativa (`alt=""`), así que un lector de pantalla la
+ * salta: describirla sólo interrumpiría el camino al titular, que es lo que
+ * de verdad comunica.
+ *
+ * Se importa el archivo en lugar de pasar una ruta en texto para que Next
+ * conozca su tamaño en tiempo de compilación y reserve el espacio: sin eso, la
+ * imagen empuja el titular al cargar y se dispara el CLS.
  */
 
 const UMA = datos.UMA_VIGENTE_MAS_RECIENTE;
@@ -23,7 +27,6 @@ export function Hero() {
       aria-labelledby="hero-titulo"
       className="relative isolate overflow-clip border-b border-[var(--color-borde)]"
     >
-      {/* Fondo: degradado sobrio de marfil a marino tenue. Decorativo. */}
       <div
         aria-hidden="true"
         className="absolute inset-0 -z-10 bg-[linear-gradient(160deg,var(--color-marfil-hondo)_0%,var(--color-marfil)_45%,var(--color-marino-tenue)_100%)]"
@@ -75,9 +78,38 @@ export function Hero() {
           </p>
         </div>
 
+        {/* Columna derecha: fotografía editorial con la tarjeta de datos
+            montada encima en pantallas grandes.
+
+            La foto va DETRÁS y la tarjeta delante con su propio fondo opaco:
+            así el texto nunca se lee sobre la imagen y el contraste no depende
+            de qué zona de la fotografía quede debajo. */}
+        <div className="relative">
+          <div className="relative overflow-hidden rounded-[var(--radius-card)] border border-[var(--color-borde)] shadow-[var(--shadow-alta)]">
+            <Image
+              src={fotoEscritorio}
+              alt=""
+              aria-hidden="true"
+              priority
+              fetchPriority="high"
+              placeholder="blur"
+              sizes="(max-width: 1024px) 100vw, 46vw"
+              // El motivo (escritorio, carpeta, lentes) vive en la mitad
+              // inferior de la fotografía. Con `object-cover` en una caja más
+              // apaisada que el original, el recorte por omisión se queda en la
+              // pared: `object-bottom` ancla el encuadre donde está el tema.
+              className="aspect-[16/10] w-full object-cover object-bottom"
+            />
+            {/* Velo cálido que integra la foto con la paleta del sitio. */}
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-[linear-gradient(200deg,transparent_35%,var(--color-marino)_140%)] opacity-30"
+            />
+          </div>
+
         {/* Tarjeta de datos duros. Ningún número está escrito aquí: todos
             salen del motor jurídico. */}
-        <div className="tarjeta tarjeta-elevada p-6 md:p-7">
+        <div className="tarjeta tarjeta-elevada relative mt-[-3.5rem] ml-0 bg-[var(--color-superficie)] p-6 md:ml-8 md:p-7">
           <p className="flex items-center gap-2 text-sm font-semibold text-[var(--color-tinta)]">
             <FileCheck2 className="size-4 text-[var(--color-petroleo)]" aria-hidden="true" />
             Datos base del cálculo
@@ -120,6 +152,7 @@ export function Hero() {
             La UMA entra en vigor el 1 de febrero de cada año. Una operación de enero se mide con
             la UMA del año anterior: el motor lo resuelve por ti y te dice qué año aplicó.
           </p>
+        </div>
         </div>
       </div>
     </section>

@@ -128,12 +128,11 @@ export default function Publicidad() {
           </p>
         </div>
 
-        <Nota tono="atencion" titulo="Pendientes de esta política" className="mt-10">
+        <Nota tono="info" titulo="Hoy no hay publicidad activa" className="mt-10">
           <p>
-            Falta publicar <strong>[PENDIENTE: tarifas públicas de los perfiles
-            destacados]</strong> y{' '}
-            <strong>[PENDIENTE: criterios de evaluación de las comparativas de software]</strong>.
-            Mientras no estén publicados, no hay perfiles patrocinados activos en el sitio.
+            No hay perfiles patrocinados ni acuerdos comerciales vigentes en el sitio. Cuando los
+            haya, esta política se actualizará con las tarifas y los criterios de las comparativas
+            antes de que aparezca el primer espacio pagado, no después.
           </p>
         </Nota>
 

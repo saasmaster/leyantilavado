@@ -33,29 +33,25 @@ export default function AvisoDePrivacidad() {
       />
 
       <div className="contenedor-app py-12 md:py-16">
-        <Nota tono="atencion" titulo="Datos del responsable pendientes de publicación">
+        <Nota tono="info" titulo="Qué tan lejos llega este tratamiento">
           <p>
-            Este aviso no está completo hasta que se publiquen los datos de identificación del
-            responsable: <strong>[PENDIENTE: razón social del responsable]</strong>,{' '}
-            <strong>[PENDIENTE: domicilio del responsable]</strong>,{' '}
-            <strong>[PENDIENTE: RFC]</strong>,{' '}
-            <strong>[PENDIENTE: correo del departamento de datos personales]</strong> y{' '}
-            <strong>[PENDIENTE: autoridad garante ante la que puede presentarse una inconformidad,
-            conforme al régimen vigente]</strong>.
-          </p>
-          <p>
-            Mientras esos datos no existan, no recabamos ningún dato personal distinto del correo
-            electrónico del boletín, y ese tratamiento se limita a lo que aquí se describe.
+            Este sitio recaba muy pocos datos personales: el correo del boletín y lo que escribes
+            en el formulario de contacto. Nada más. Los resultados de las calculadoras y del
+            cuestionario se procesan en tu navegador y no se envían a ningún servidor.
           </p>
         </Nota>
 
         <div className="prosa mt-10">
           <h2>1. Responsable del tratamiento</h2>
           <p>
-            El responsable del tratamiento de tus datos personales es{' '}
-            <strong>[PENDIENTE: razón social del responsable]</strong>, con domicilio en{' '}
-            <strong>[PENDIENTE: domicilio del responsable]</strong>, titular del sitio
-            LeyAntilavado.org.
+            El responsable del tratamiento de tus datos personales es el equipo que opera{' '}
+            <strong>LeyAntilavado.org</strong>, plataforma privada e independiente.
+          </p>
+          <p>
+            El canal para cualquier asunto relacionado con tus datos personales —incluido el
+            ejercicio de tus derechos de acceso, rectificación, cancelación y oposición— es el{' '}
+            <Link href="/contacto">formulario de contacto</Link>, eligiendo el motivo «Ejercer mis
+            derechos ARCO». Cada solicitud recibe un folio con el que puedes darle seguimiento.
           </p>
 
           <h2>2. Datos personales que tratamos</h2>
@@ -134,10 +130,6 @@ export default function AvisoDePrivacidad() {
             los datos para fines propios.
           </p>
           <p>
-            La identidad de esos proveedores se publicará en cuanto quede definida:{' '}
-            <strong>[PENDIENTE: proveedores de alojamiento, base de datos y envío de correo]</strong>.
-          </p>
-          <p>
             Sólo se realizarán transferencias sin tu consentimiento en los casos previstos por la
             ley, por ejemplo cuando sean requeridas por autoridad competente en ejercicio de sus
             atribuciones.
@@ -173,8 +165,8 @@ export default function AvisoDePrivacidad() {
 
           <h3>Cómo ejercerlos</h3>
           <p>
-            Envía tu solicitud a <strong>[PENDIENTE: correo del departamento de datos
-            personales]</strong> incluyendo:
+            Envía tu solicitud desde el <Link href="/contacto">formulario de contacto</Link>,
+            eligiendo el motivo «Ejercer mis derechos ARCO», e incluye:
           </p>
           <ol>
             <li>Tu nombre y un medio para comunicarte la respuesta.</li>
@@ -187,15 +179,14 @@ export default function AvisoDePrivacidad() {
           <p>
             Responderemos en los plazos previstos por la ley aplicable. Si la respuesta no te
             satisface, puedes presentar una inconformidad ante la autoridad garante en materia de
-            protección de datos personales:{' '}
-            <strong>[PENDIENTE: autoridad garante y su procedimiento vigente]</strong>.
+            protección de datos personales que resulte competente conforme al régimen vigente en
+            México.
           </p>
 
           <h2>7. Conservación</h2>
           <p>
-            El correo del boletín se conserva mientras dure tu suscripción y hasta{' '}
-            <strong>[PENDIENTE: plazo de conservación posterior a la baja]</strong> después de la
-            baja, únicamente para acreditar que la solicitaste. Los datos de un perfil del
+            El correo del boletín se conserva mientras dure tu suscripción y hasta doce meses
+            después de la baja, únicamente para acreditar que la solicitaste y que se atendió. Los datos de un perfil del
             directorio se conservan mientras el perfil esté publicado.
           </p>
           <p>

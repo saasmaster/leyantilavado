@@ -1,6 +1,8 @@
 'use client';
 
 import * as React from 'react';
+import Image from 'next/image';
+import fotoDocumentos from '../../../public/img/documentos.webp';
 import Link from 'next/link';
 import { CheckCircle2, Mail } from 'lucide-react';
 import { Boton, Campo, Entrada, Nota, Selector } from '@leyantilavado/ui';
@@ -73,8 +75,20 @@ export function Newsletter({ actividades }: { actividades: readonly OpcionActivi
   return (
     <section
       aria-labelledby="boletin-titulo"
-      className="border-y border-[var(--color-borde)] bg-[var(--color-marino)] py-14 text-white md:py-20"
+      className="relative isolate overflow-clip border-y border-[var(--color-borde)] bg-[var(--color-marino)] py-14 text-white md:py-20"
     >
+      {/* Fotografía decorativa muy atenuada sobre el marino: da profundidad a
+          la franja sin comprometer el contraste del texto blanco, que sigue
+          apoyándose en el color sólido de fondo. */}
+      <Image
+        src={fotoDocumentos}
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        sizes="100vw"
+        className="absolute inset-0 -z-10 size-full object-cover opacity-[0.14] mix-blend-luminosity"
+      />
+
       <div className="contenedor-app grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-center">
         <div>
           <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-[color-mix(in_srgb,white_72%,transparent)]">

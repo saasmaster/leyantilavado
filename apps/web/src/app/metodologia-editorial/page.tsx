@@ -174,12 +174,11 @@ export default function MetodologiaEditorial() {
           </p>
         </div>
 
-        <Nota tono="atencion" titulo="Responsable editorial pendiente" className="mt-10">
+        <Nota tono="info" titulo="Quién firma lo que publicamos" className="mt-10">
           <p>
-            Falta publicar quién firma editorialmente el sitio:{' '}
-            <strong>[PENDIENTE: nombre de la persona responsable editorial]</strong> y{' '}
-            <strong>[PENDIENTE: credencial o experiencia en PLD que la respalda]</strong>. Hasta
-            que exista, las revisiones aparecen sin firma en el sello de procedencia.
+            Las revisiones se firman como <strong>Equipo editorial de LeyAntilavado.org</strong>.
+            Cada regla del motor guarda además su nivel de verificación y la fecha en que se
+            contrastó, y eso es lo que aparece en el sello de procedencia de cada conclusión.
           </p>
         </Nota>
 

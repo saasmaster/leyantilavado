@@ -2,9 +2,10 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { AlertTriangle, BookOpenCheck, Mail, ShieldCheck, UserPlus } from 'lucide-react';
 import { formatearFechaLarga } from '@leyantilavado/rules-engine';
-import { AvisoIndependencia, Boton, Nota } from '@leyantilavado/ui';
+import { AvisoIndependencia, Boton } from '@leyantilavado/ui';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
 import { EncabezadoPagina, FECHA_HOY } from '@/components/inicio/comun';
+import { FormularioContacto } from '@/components/FormularioContacto';
 
 const MIGA = [
   { nombre: 'Inicio', ruta: '/' },
@@ -64,18 +65,21 @@ export default function Contacto() {
       />
 
       <div className="contenedor-app py-12 md:py-16">
-        <Nota tono="atencion" titulo="Canal de contacto pendiente de publicación">
-          <p>
-            Todavía no publicamos la dirección de correo de atención:{' '}
-            <strong>[PENDIENTE: correo de contacto del responsable]</strong>. Faltan también{' '}
-            <strong>[PENDIENTE: domicilio para oír y recibir notificaciones]</strong> y{' '}
-            <strong>[PENDIENTE: teléfono de atención, si se habilita]</strong>.
+        <section aria-labelledby="formulario-contacto" className="tarjeta p-6 md:p-8">
+          <h2
+            id="formulario-contacto"
+            className="text-xl font-semibold text-[var(--color-tinta)]"
+          >
+            Escríbenos
+          </h2>
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[var(--color-tinta-suave)]">
+            Cada mensaje recibe un folio para que puedas darle seguimiento. Lo que escribas no se
+            publica ni se indexa.
           </p>
-          <p>
-            Preferimos decirlo así antes que publicar un formulario que no llega a ningún lado.
-            Mientras tanto, el único canal activo es la suscripción al boletín, que sí funciona.
-          </p>
-        </Nota>
+          <div className="mt-6 max-w-2xl">
+            <FormularioContacto />
+          </div>
+        </section>
 
         <div className="mt-8 grid gap-5 md:grid-cols-2">
           {MOTIVOS.map(({ icono: Icono, titulo, texto, ...resto }) => (

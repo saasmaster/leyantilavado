@@ -16,7 +16,7 @@ import { SITIO, construirMetadata, jsonLdOrganizacion } from '@/lib/sitio';
  * módulo perdió su razón de ser y el texto vuelve aquí.
  */
 const SCRIPT_TEMA =
-  "(function(){try{var t=localStorage.getItem('tema');var o=window.matchMedia('(prefers-color-scheme: dark)').matches;if(t==='oscuro'||(!t&&o))document.documentElement.classList.add('oscuro');}catch(e){}})();";
+  "(function(){try{if(localStorage.getItem('tema')==='oscuro')document.documentElement.classList.add('oscuro');}catch(e){}})();";
 import './globals.css';
 
 /**
@@ -63,10 +63,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#FBFAF7' },
-    { media: '(prefers-color-scheme: dark)', color: '#0A1420' },
-  ],
+  // Un solo color, no dos por `prefers-color-scheme`: el sitio arranca en claro
+  // siempre, así que anunciar un tema oscuro haría que el navegador pintara la
+  // barra de estado en oscuro sobre una página clara.
+  themeColor: '#FBFAF7',
   // No se bloquea el zoom: es requisito de accesibilidad.
   width: 'device-width',
   initialScale: 1,
@@ -81,8 +81,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
     >
       <head>
-        {/* El tema se aplica ANTES del primer pintado, para que no haya un
-            destello blanco al cargar en modo oscuro.
+        {/* El modo claro es el predeterminado: sólo se aplica el oscuro si la
+            persona lo eligió explícitamente y quedó guardado.
+            Deliberadamente NO se consulta `prefers-color-scheme`: quien entra
+            desde un teléfono con el sistema en oscuro vería el sitio oscuro sin
+            haberlo pedido, y este contenido —tablas de umbrales, cifras, texto
+            legal largo— se lee mejor sobre marfil.
+
+            El script corre antes del primer pintado para que no haya destello.
 
             El texto viene de un módulo compartido porque `next.config.mjs`
             calcula su hash SHA-256 y lo permite explícitamente en la CSP. Si

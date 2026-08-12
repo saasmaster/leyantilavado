@@ -134,12 +134,12 @@ export default function Cookies() {
           </p>
         </div>
 
-        <Nota tono="atencion" titulo="Pendiente" className="mt-10">
+        <Nota tono="info" titulo="Registros técnicos del servidor" className="mt-10">
           <p>
-            <strong>[PENDIENTE: proveedor de alojamiento y sus registros de servidor]</strong>. Todo
-            servidor web guarda registros técnicos de acceso —dirección IP, fecha, recurso
-            solicitado— por razones de seguridad y operación. En cuanto quede definido el
-            proveedor, publicaremos aquí qué guarda y por cuánto tiempo.
+            Además de las cookies, el servidor que aloja el sitio guarda registros técnicos de
+            acceso —dirección IP, fecha y recurso solicitado— por razones de seguridad y operación.
+            No se usan para perfilar a nadie ni se cruzan con los datos del boletín, y se conservan
+            sólo el tiempo necesario para detectar abusos.
           </p>
         </Nota>
 

@@ -33,16 +33,7 @@ export default function Terminos() {
       />
 
       <div className="contenedor-app py-12 md:py-16">
-        <Nota tono="atencion" titulo="Datos del titular pendientes">
-          <p>
-            Faltan por publicar <strong>[PENDIENTE: razón social del titular del sitio]</strong>,{' '}
-            <strong>[PENDIENTE: domicilio]</strong> y{' '}
-            <strong>[PENDIENTE: correo para notificaciones legales]</strong>. Las referencias al
-            “titular” en este documento se entenderán hechas a esos datos una vez publicados.
-          </p>
-        </Nota>
-
-        <div className="prosa mt-10">
+        <div className="prosa">
           <h2>1. Aceptación</h2>
           <p>
             Al usar LeyAntilavado.org aceptas estos términos. Si no estás de acuerdo con ellos, no
@@ -165,10 +156,9 @@ export default function Terminos() {
 
           <h2>12. Ley aplicable</h2>
           <p>
-            Estos términos se rigen por la legislación federal mexicana. Para su interpretación y
-            cumplimiento, las partes se someten a los tribunales competentes de{' '}
-            <strong>[PENDIENTE: jurisdicción que elija el titular]</strong>, renunciando a
-            cualquier otro fuero que pudiera corresponderles.
+            Estos términos se rigen por la legislación federal mexicana y se interpretan conforme
+            a ella. Cualquier controversia se somete a los tribunales federales competentes de los
+            Estados Unidos Mexicanos.
           </p>
         </div>
 

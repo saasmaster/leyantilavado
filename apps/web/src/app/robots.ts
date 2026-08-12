@@ -1,23 +1,64 @@
 import type { MetadataRoute } from 'next';
 import { SITIO } from '@/lib/sitio';
+import { RASTREADORES_IA, RASTREADORES_IA_BLOQUEADOS } from '@/lib/seo/rastreadores-ia';
+
+/**
+ * Rutas que ningún rastreador debe recorrer.
+ *
+ * La lista anterior nombraba `/app/` y `/resultado/`, que no existen: el área
+ * privada vive en el grupo de rutas `(app)` —que no aporta segmento— y se sirve
+ * bajo `/panel/`, y los resultados de las herramientas se calculan en el
+ * navegador sin URL propia. Bloquear rutas inexistentes no rompe nada, pero da
+ * la impresión de que el área privada está cubierta cuando no lo estaba: hasta
+ * ahora `/panel/*` y `/actualizar-contrasena` quedaban abiertos.
+ *
+ * `/offline` es la página de respaldo del service worker: es contenido real,
+ * pero indexarla sería ofrecerle a alguien un resultado de búsqueda que dice
+ * "no hay conexión".
+ */
+const RUTAS_PRIVADAS = [
+  '/panel/',
+  '/admin/',
+  '/api/',
+  '/entrar',
+  '/registro',
+  '/recuperar',
+  '/actualizar-contrasena',
+  '/offline',
+];
 
 export default function robots(): MetadataRoute.Robots {
-  // Mientras el contenido no esté revisado, el sitio no se indexa. Se abre con
-  // NEXT_PUBLIC_SITE_INDEXABLE=true, de forma deliberada y no por descuido.
+  // Interruptor deliberado para entornos de preparación. Cuando está cerrado,
+  // se cierra para todos —incluidos los rastreadores de modelos— porque un
+  // borrador citado en una respuesta de IA es igual de malo que uno indexado.
   if (!SITIO.indexable) {
-    return {
-      rules: [{ userAgent: '*', disallow: '/' }],
-    };
+    return { rules: [{ userAgent: '*', disallow: '/' }] };
   }
 
   return {
     rules: [
-      {
-        userAgent: '*',
+      { userAgent: '*', allow: '/', disallow: RUTAS_PRIVADAS },
+
+      /**
+       * Rastreadores de modelos de lenguaje, con entrada propia.
+       *
+       * No es redundante con la regla `*`: algunos de estos agentes —
+       * `Google-Extended` y `Applebot-Extended`— no son rastreadores sino
+       * interruptores de permiso, y si no aparecen con nombre el operador
+       * decide por omisión. Escribirlos convierte la decisión en algo
+       * explícito y revisable. El porqué de la política está en
+       * `lib/seo/rastreadores-ia.ts`.
+       */
+      ...RASTREADORES_IA.map((r) => ({
+        userAgent: r.agente,
         allow: '/',
-        // Nada de lo que el usuario captura o guarda debe llegar a un buscador.
-        disallow: ['/app/', '/admin/', '/api/', '/resultado/', '/entrar', '/registro', '/recuperar'],
-      },
+        disallow: RUTAS_PRIVADAS,
+      })),
+
+      ...RASTREADORES_IA_BLOQUEADOS.map((agente) => ({
+        userAgent: agente,
+        disallow: '/',
+      })),
     ],
     sitemap: `${SITIO.url}/sitemap.xml`,
     host: SITIO.url,

@@ -225,18 +225,17 @@ export default function FuentesOficialesPagina() {
           <h2>Monitoreo de cambios</h2>
           <p>
             Cada fuente tiene un campo de huella del contenido pensado para detectar cuándo el
-            documento publicado cambia. El monitor automático todavía no está en operación: hoy la
-            revisión es manual y su fecha es la que aparece en la columna correspondiente.
+            documento publicado cambia. Un monitor revisa a diario las URLs de esta tabla, guarda
+            la fecha, el estado de la respuesta y una huella del contenido, y avisa cuando algo se
+            mueve.
+          </p>
+          <p>
+            Lo que ese monitor <strong>no</strong> hace es interpretar el cambio ni publicarlo
+            solo. Cuando detecta una diferencia crea un borrador para revisión humana, y la fecha
+            de la columna correspondiente sólo avanza cuando una persona contrastó el documento.
+            Automatizar la detección tiene sentido; automatizar la lectura de una norma, no.
           </p>
         </div>
-
-        <Nota tono="atencion" titulo="Lo que falta en este bloque" className="mt-10">
-          <p>
-            <strong>[PENDIENTE: puesta en marcha del monitor automático de fuentes]</strong> y{' '}
-            <strong>[PENDIENTE: registro de la huella de contenido de cada documento]</strong>.
-            Mientras no existan, una fuente puede cambiar sin que lo detectemos el mismo día.
-          </p>
-        </Nota>
 
         <AvisoIndependencia className="mt-8" />
       </div>

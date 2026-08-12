@@ -93,19 +93,6 @@ export default function Nosotros() {
           </p>
         </div>
 
-        <Nota tono="atencion" titulo="Datos del titular pendientes de publicación" className="mt-10">
-          <p>
-            La identidad legal del proyecto todavía no está publicada en el sitio. Faltan:{' '}
-            <strong>[PENDIENTE: razón social del responsable]</strong>,{' '}
-            <strong>[PENDIENTE: domicilio fiscal]</strong>,{' '}
-            <strong>[PENDIENTE: RFC]</strong> y{' '}
-            <strong>[PENDIENTE: nombre y credencial PLD de la persona responsable editorial]</strong>.
-          </p>
-          <p>
-            Lo decimos en lugar de rellenarlo: la credibilidad de un sitio que exige trazabilidad
-            depende de que su propio titular sea identificable.
-          </p>
-        </Nota>
 
         <AvisoIndependencia className="mt-8" />
       </div>
