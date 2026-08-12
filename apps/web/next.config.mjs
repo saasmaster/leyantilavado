@@ -34,15 +34,28 @@ const enDesarrollo = process.env.NODE_ENV !== 'production';
  * estilos en línea para las animaciones de Framer Motion y para las variables
  * de `next/font`.
  */
+/**
+ * Turnstile es el ÚNICO origen externo que la CSP permite, y sólo cuando está
+ * configurado. Se abre lo mínimo que exige: el script del widget, el iframe
+ * donde corre el reto y la llamada de verificación. Nada más, y en particular
+ * ningún `connect-src` abierto para analítica de terceros.
+ *
+ * Si no hay llave, las directivas no se agregan y la CSP queda tan cerrada
+ * como estaba: no se abre un agujero para una función que no está en uso.
+ */
+const conTurnstile = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
+const CF = 'https://challenges.cloudflare.com';
+
 const CSP = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${enDesarrollo ? " 'unsafe-eval'" : ''}`,
+  `script-src 'self' 'unsafe-inline'${enDesarrollo ? " 'unsafe-eval'" : ''}${conTurnstile ? ` ${CF}` : ''}`,
   "style-src 'self' 'unsafe-inline'",
   // next/font descarga las tipografías en build y las sirve desde el origen.
   "font-src 'self' data:",
   "img-src 'self' data: blob:",
   // Sin destinos externos: el sitio no envía datos a terceros.
-  `connect-src 'self'${enDesarrollo ? ' ws: wss:' : ''}`,
+  `connect-src 'self'${enDesarrollo ? ' ws: wss:' : ''}${conTurnstile ? ` ${CF}` : ''}`,
+  ...(conTurnstile ? [`frame-src ${CF}`] : ["frame-src 'none'"]),
   "form-action 'self'",
   "frame-ancestors 'none'",
   "base-uri 'self'",

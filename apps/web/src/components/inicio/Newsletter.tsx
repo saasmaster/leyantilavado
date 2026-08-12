@@ -5,6 +5,7 @@ import Image from 'next/image';
 import fotoDocumentos from '../../../public/img/documentos.webp';
 import Link from 'next/link';
 import { CheckCircle2, Mail } from 'lucide-react';
+import { Turnstile, reiniciarTurnstile } from '@/components/Turnstile';
 import { Boton, Campo, Entrada, Nota, Selector } from '@leyantilavado/ui';
 
 /**
@@ -47,6 +48,7 @@ export function Newsletter({ actividades }: { actividades: readonly OpcionActivi
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          'cf-turnstile-response': String(datosFormulario.get('cf-turnstile-response') ?? ''),
           correo: String(datosFormulario.get('correo') ?? ''),
           consentimiento: datosFormulario.get('consentimiento') === 'on',
           actividad: datosFormulario.get('actividad') || undefined,
@@ -69,6 +71,7 @@ export function Newsletter({ actividades }: { actividades: readonly OpcionActivi
       );
     } finally {
       setEnviando(false);
+      reiniciarTurnstile();
     }
   }
 
@@ -215,6 +218,7 @@ export function Newsletter({ actividades }: { actividades: readonly OpcionActivi
                 </Nota>
               )}
 
+              <Turnstile className="my-1" />
               <Boton type="submit" variante="accion" ancho="completo" disabled={enviando}>
                 {enviando ? 'Registrando…' : 'Quiero recibir los avisos'}
               </Boton>

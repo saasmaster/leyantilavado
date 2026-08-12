@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { Send } from 'lucide-react';
+import { Turnstile, reiniciarTurnstile } from '@/components/Turnstile';
 import { AreaTexto, Boton, Campo, Entrada, Nota, Selector } from '@leyantilavado/ui';
 
 /* ────────────────────────────────────────────────────────────────────────────
@@ -95,6 +96,7 @@ export function FormularioAlta({
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
+          'cf-turnstile-response': String(d.get('cf-turnstile-response') ?? ''),
           nombre: d.get('nombre'),
           correoContacto: d.get('correoContacto'),
           telefono: d.get('telefono') || undefined,
@@ -128,6 +130,7 @@ export function FormularioAlta({
       setErrores({ formulario: 'No hay conexión con el servidor. Vuelve a intentarlo.' });
     } finally {
       setEnviando(false);
+      reiniciarTurnstile();
     }
   }
 
@@ -335,6 +338,7 @@ export function FormularioAlta({
       )}
 
       <div>
+        <Turnstile className="my-1" />
         <Boton type="submit" variante="accion" tamano="lg" disabled={enviando}>
           <Send aria-hidden="true" />
           {enviando ? 'Enviando…' : 'Enviar mi alta a revisión'}

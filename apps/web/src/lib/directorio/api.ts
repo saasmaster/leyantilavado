@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import type { z } from 'zod';
 import { erroresPorCampo } from './esquemas';
 import { ipDeSolicitud, limitarPorIP } from './limite-tasa';
+import { tokenDe, verificarTurnstile } from '@/lib/turnstile';
 
 /* ────────────────────────────────────────────────────────────────────────────
  * Plomería común de las rutas del directorio.
@@ -59,6 +60,21 @@ export async function procesarSolicitud<T>(
         { ok: false, error: 'El cuerpo de la solicitud no es JSON válido.' },
         { status: 400 },
       ),
+    };
+  }
+
+  // Antibot entre el límite de tasa y la validación del esquema. Antes del
+  // límite sería regalar una llamada a Cloudflare por cada intento de
+  // inundación; después de validar sería hacer el trabajo de parseo antes de
+  // saber si hay alguien del otro lado.
+  const turnstile = await verificarTurnstile(
+    tokenDe(cuerpo),
+    ipDeSolicitud(peticion.headers),
+  );
+  if (!turnstile.ok) {
+    return {
+      ok: false,
+      respuesta: NextResponse.json({ ok: false, error: turnstile.error }, { status: 403 }),
     };
   }
 

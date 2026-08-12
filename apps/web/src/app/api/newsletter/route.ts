@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { tokenDe, verificarTurnstile } from '@/lib/turnstile';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { z } from 'zod';
@@ -152,6 +153,13 @@ export async function POST(request: Request) {
       { ok: false, error: 'No pudimos leer el formulario. Vuelve a enviarlo.' },
       { status: 400 },
     );
+  }
+
+  // Misma posición que en el resto de formularios: después del límite de tasa
+  // y antes de validar el esquema.
+  const turnstile = await verificarTurnstile(tokenDe(cuerpo), ipDe(request));
+  if (!turnstile.ok) {
+    return NextResponse.json({ ok: false, error: turnstile.error }, { status: 403 });
   }
 
   const analizado = Esquema.safeParse(cuerpo);

@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { BookmarkCheck, BookmarkPlus, Flag, KeyRound, Share2 } from 'lucide-react';
+import { Turnstile, reiniciarTurnstile } from '@/components/Turnstile';
 import { AreaTexto, Boton, Campo, Entrada, Nota, Selector } from '@leyantilavado/ui';
 
 /* ────────────────────────────────────────────────────────────────────────────
@@ -204,7 +205,10 @@ function PanelEnvio({
       const respuesta = await fetch(endpoint, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify(cuerpo),
+        body: JSON.stringify({
+          ...cuerpo,
+          'cf-turnstile-response': String(datos.get('cf-turnstile-response') ?? ''),
+        }),
       });
       const json = (await respuesta.json()) as {
         ok?: boolean;
@@ -218,6 +222,7 @@ function PanelEnvio({
       setErrores({ formulario: 'No hay conexión con el servidor. Vuelve a intentarlo.' });
     } finally {
       setEnviando(false);
+      reiniciarTurnstile();
     }
   }
 
@@ -319,6 +324,7 @@ function PanelEnvio({
       {errores['formulario'] && <Nota tono="riesgo">{errores['formulario']}</Nota>}
 
       <div>
+        <Turnstile className="my-1" />
         <Boton type="submit" variante="primario" disabled={enviando}>
           {enviando ? 'Enviando…' : 'Enviar'}
         </Boton>

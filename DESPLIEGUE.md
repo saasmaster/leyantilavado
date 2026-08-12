@@ -106,7 +106,26 @@ NEXT_PUBLIC_SITE_INDEXABLE=true
 
 # openssl rand -hex 32
 CRON_SECRET=
+
+# Cloudflare Turnstile (opcional). Sin estas dos, los formularios funcionan
+# igual pero SIN verificación antibot: sólo queda el límite de tasa por IP.
+# Se sacan de https://dash.cloudflare.com → Turnstile → Add site.
+NEXT_PUBLIC_TURNSTILE_SITE_KEY=
+TURNSTILE_SECRET_KEY=
 ```
+
+**Turnstile.** `NEXT_PUBLIC_TURNSTILE_SITE_KEY` también se incrusta en el build, y además
+decide la CSP: sólo cuando está presente se abre `challenges.cloudflare.com` en `script-src`,
+`connect-src` y `frame-src`. Si la agregas después de compilar, el widget no aparecerá y, si
+apareciera, la CSP lo bloquearía. **Hay que recompilar.**
+
+Verificar que quedó activo, una vez desplegado:
+
+```bash
+curl -sI https://leyantilavado.org/ | grep -i content-security-policy | grep -o 'challenges.cloudflare.com' | head -1
+```
+
+Si no imprime nada, el build no vio la llave.
 
 **`NEXT_PUBLIC_SITE_URL` y `NEXT_PUBLIC_SITE_INDEXABLE` se incrustan en el bundle durante el
 build.** Cambiarlas después y reiniciar no sirve de nada: hay que volver a compilar. Si el sitio

@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { AreaTexto, Boton, Campo, Entrada, Nota, Selector } from '@leyantilavado/ui';
+import { Turnstile, reiniciarTurnstile } from '@/components/Turnstile';
 
 /**
  * Formulario de contacto general.
@@ -51,6 +52,7 @@ export function FormularioContacto({ motivoInicial }: { motivoInicial?: string }
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          'cf-turnstile-response': String(datos.get('cf-turnstile-response') ?? ''),
           motivo: String(datos.get('motivo') ?? ''),
           nombre: String(datos.get('nombre') ?? ''),
           correo: String(datos.get('correo') ?? ''),
@@ -76,6 +78,7 @@ export function FormularioContacto({ motivoInicial }: { motivoInicial?: string }
       setErrorGeneral('No hubo conexión con el servidor. Revisa tu red e inténtalo de nuevo.');
     } finally {
       setEnviando(false);
+      reiniciarTurnstile();
     }
   }
 
@@ -170,6 +173,7 @@ export function FormularioContacto({ motivoInicial }: { motivoInicial?: string }
         )}
       </div>
 
+      <Turnstile className="my-1" />
       <Boton type="submit" variante="accion" tamano="lg" disabled={enviando} className="self-start">
         {enviando ? 'Enviando…' : 'Enviar mensaje'}
       </Boton>
