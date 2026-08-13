@@ -5,7 +5,7 @@ import { Boton, Nota, TITULO_CONCLUSION } from '@leyantilavado/ui';
 import { EncabezadoSeccion, Seccion } from '@/components/app/Contenedor';
 import { TablaRecurso, type ColumnaTabla } from '@/components/app/TablaRecurso';
 import { AvisoNoEsCumplimiento } from '@/components/app/Avisos';
-import { requerirContexto } from '@/lib/auth/sesion';
+import { requerirPermiso } from '@/lib/auth/sesion';
 
 const COLUMNAS: readonly ColumnaTabla[] = [
   { clave: 'operation_date', titulo: 'Fecha', formato: 'fecha' },
@@ -21,7 +21,7 @@ const COLUMNAS: readonly ColumnaTabla[] = [
 const CONCLUSIONES = Object.entries(TITULO_CONCLUSION) as [Conclusion, string][];
 
 export default async function PaginaOperaciones() {
-  const contexto = await requerirContexto('/panel/operaciones');
+  const contexto = await requerirPermiso('operaciones.ver', '/panel/operaciones');
 
   return (
     <>

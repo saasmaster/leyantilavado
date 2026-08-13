@@ -15,7 +15,7 @@ import {
 import { EncabezadoSeccion, Seccion } from '@/components/app/Contenedor';
 import { EstadoConsulta } from '@/components/app/TablaRecurso';
 import { AvisoAdaptadorLocal, AvisoNoEsCumplimiento } from '@/components/app/Avisos';
-import { requerirContexto } from '@/lib/auth/sesion';
+import { requerirPermiso } from '@/lib/auth/sesion';
 import { ETIQUETA_ORIGEN_PEP, proveedorPEPLocal } from '@/lib/app/pep';
 
 export default async function PaginaListas({
@@ -23,7 +23,7 @@ export default async function PaginaListas({
 }: {
   searchParams: Promise<{ q?: string }>;
 }) {
-  const contexto = await requerirContexto('/panel/listas');
+  const contexto = await requerirPermiso('riesgos.ver', '/panel/listas');
   const { q } = await searchParams;
   const consulta = (q ?? '').trim();
 

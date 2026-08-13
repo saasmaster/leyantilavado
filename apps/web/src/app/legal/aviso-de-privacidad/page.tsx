@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { formatearFechaLarga } from '@leyantilavado/rules-engine';
-import { AvisoIndependencia, Nota } from '@leyantilavado/ui';
+import { Nota } from '@leyantilavado/ui';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
 import { EncabezadoPagina, REVISION_VIGENTE } from '@/components/inicio/comun';
 
@@ -218,8 +218,6 @@ export default function AvisoDePrivacidad() {
             medio de contacto que nos hayas proporcionado.
           </p>
         </div>
-
-        <AvisoIndependencia className="mt-10" />
       </div>
     </>
   );

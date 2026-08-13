@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ArrowRight, TrendingUp } from 'lucide-react';
 import { convertirUMA, datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { formatearMXN } from '@leyantilavado/types';
-import { AvisoIndependencia, Insignia, Nota, TablaEnvoltura } from '@leyantilavado/ui';
+import { Insignia, Nota, TablaEnvoltura } from '@leyantilavado/ui';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
 import { CAMBIOS_ANTES_DESPUES, INSTRUMENTOS } from '@/content/reforma';
 import { REVISION_VIGENTE } from '@/components/inicio/comun';
@@ -333,7 +333,6 @@ export default function Reforma() {
 
       <FirmaEditorial />
       <AvisoLegal />
-      <AvisoIndependencia className="mt-6" />
     </div>
   );
 }

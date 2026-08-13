@@ -3,13 +3,13 @@ import { datos } from '@leyantilavado/rules-engine';
 import { Boton, Nota, TablaEnvoltura } from '@leyantilavado/ui';
 import { EncabezadoSeccion, Seccion } from '@/components/app/Contenedor';
 import { AvisoNoEsCumplimiento } from '@/components/app/Avisos';
-import { requerirContexto } from '@/lib/auth/sesion';
+import { requerirPermiso } from '@/lib/auth/sesion';
 import { fechaDeHoy } from '@/lib/app/fecha';
 import { COLUMNAS_OPERACION } from '@/lib/app/csv';
 import { FormularioImportacion } from './FormularioImportacion';
 
 export default async function PaginaImportar() {
-  const contexto = await requerirContexto('/panel/operaciones/importar');
+  const contexto = await requerirPermiso('operaciones.importar', '/panel/operaciones/importar');
   const hoy = await fechaDeHoy();
 
   if (!contexto.puede('operaciones.importar')) {

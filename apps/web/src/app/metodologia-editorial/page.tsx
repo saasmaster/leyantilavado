@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { VERSION_LEGAL, datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
-import { AvisoIndependencia, Insignia, Nota, TablaEnvoltura } from '@leyantilavado/ui';
+import { Insignia, Nota, TablaEnvoltura } from '@leyantilavado/ui';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
 import { EncabezadoPagina, REVISION_VIGENTE, NIVELES_VERIFICACION } from '@/components/inicio/comun';
 
@@ -181,8 +181,6 @@ export default function MetodologiaEditorial() {
             contrastó, y eso es lo que aparece en el sello de procedencia de cada conclusión.
           </p>
         </Nota>
-
-        <AvisoIndependencia className="mt-8" />
       </div>
     </>
   );

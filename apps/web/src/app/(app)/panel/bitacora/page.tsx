@@ -2,7 +2,7 @@ import { Lock } from 'lucide-react';
 import { Nota } from '@leyantilavado/ui';
 import { EncabezadoSeccion, Seccion } from '@/components/app/Contenedor';
 import { TablaRecurso, type ColumnaTabla } from '@/components/app/TablaRecurso';
-import { requerirContexto } from '@/lib/auth/sesion';
+import { requerirPermiso } from '@/lib/auth/sesion';
 
 const COLUMNAS = [
   { clave: 'created_at', titulo: 'Cuándo', formato: 'fecha_hora' },
@@ -14,7 +14,7 @@ const COLUMNAS = [
 ] satisfies readonly ColumnaTabla[];
 
 export default async function PaginaBitacora() {
-  const contexto = await requerirContexto('/panel/bitacora');
+  const contexto = await requerirPermiso('bitacora.ver', '/panel/bitacora');
   const org = contexto.organizacion?.organizacionId ?? null;
 
   return (

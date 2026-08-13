@@ -3,7 +3,7 @@ import { EncabezadoSeccion, Seccion } from '@/components/app/Contenedor';
 import { EstadoConsulta } from '@/components/app/TablaRecurso';
 import { AvisoEnvioManual, AvisoFormatoOficial } from '@/components/app/Avisos';
 import { listar, type Resultado } from '@/lib/app/consultas';
-import { requerirContexto } from '@/lib/auth/sesion';
+import { requerirPermiso } from '@/lib/auth/sesion';
 import { fechaDeHoy } from '@/lib/app/fecha';
 import { BotonExportar, type FilaExportable } from './BotonExportar';
 
@@ -75,7 +75,7 @@ const CATALOGO: readonly Catalogo[] = [
 ];
 
 export default async function PaginaExportaciones() {
-  const contexto = await requerirContexto('/panel/exportaciones');
+  const contexto = await requerirPermiso('documentos.descargar', '/panel/exportaciones');
   const org = contexto.organizacion?.organizacionId ?? null;
   const hoy = await fechaDeHoy();
 

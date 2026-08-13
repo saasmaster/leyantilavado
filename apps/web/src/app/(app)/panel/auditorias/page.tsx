@@ -2,7 +2,7 @@ import { Nota } from '@leyantilavado/ui';
 import { EncabezadoSeccion, Seccion } from '@/components/app/Contenedor';
 import { TablaRecurso, type ColumnaTabla } from '@/components/app/TablaRecurso';
 import { AvisoNoEsCumplimiento } from '@/components/app/Avisos';
-import { requerirContexto } from '@/lib/auth/sesion';
+import { requerirPermiso } from '@/lib/auth/sesion';
 
 const COLUMNAS_AUDITORIAS = [
   { clave: 'title', titulo: 'Auditoría' },
@@ -37,7 +37,7 @@ const COLUMNAS_ACCIONES = [
 ] satisfies readonly ColumnaTabla[];
 
 export default async function PaginaAuditorias() {
-  const contexto = await requerirContexto('/panel/auditorias');
+  const contexto = await requerirPermiso('auditoria.ver', '/panel/auditorias');
   const org = contexto.organizacion?.organizacionId ?? null;
 
   return (

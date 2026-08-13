@@ -3,7 +3,7 @@ import { Nota, SelloProcedencia, Tarjeta, TarjetaCuerpo, TarjetaTitulo } from '@
 import { EncabezadoSeccion, Seccion } from '@/components/app/Contenedor';
 import { TablaRecurso, type ColumnaTabla } from '@/components/app/TablaRecurso';
 import { AvisoNoEsCumplimiento } from '@/components/app/Avisos';
-import { requerirContexto } from '@/lib/auth/sesion';
+import { requerirPermiso } from '@/lib/auth/sesion';
 import { fechaDeHoy } from '@/lib/app/fecha';
 
 const COLUMNAS: readonly ColumnaTabla[] = [
@@ -17,7 +17,7 @@ const COLUMNAS: readonly ColumnaTabla[] = [
 ];
 
 export default async function PaginaExpedientes() {
-  const contexto = await requerirContexto('/panel/expedientes');
+  const contexto = await requerirPermiso('clientes.ver', '/panel/expedientes');
   const org = contexto.organizacion?.organizacionId ?? null;
   const hoy = await fechaDeHoy();
   const conservacion = datos.OBLIGACIONES.find((o) => o.categoria === 'conservacion');

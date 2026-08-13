@@ -14,7 +14,7 @@ import { EncabezadoSeccion, Seccion } from '@/components/app/Contenedor';
 import { EstadoConsulta } from '@/components/app/TablaRecurso';
 import { AvisoNoEsCumplimiento } from '@/components/app/Avisos';
 import { listar } from '@/lib/app/consultas';
-import { requerirContexto } from '@/lib/auth/sesion';
+import { requerirPermiso } from '@/lib/auth/sesion';
 import { fechaDeHoy } from '@/lib/app/fecha';
 
 interface FilaRegla {
@@ -80,7 +80,7 @@ function construirEjemplo(hoy: string) {
 }
 
 export default async function PaginaAcumulacion() {
-  const contexto = await requerirContexto('/panel/acumulacion');
+  const contexto = await requerirPermiso('operaciones.ver', '/panel/acumulacion');
   const hoy = await fechaDeHoy();
   const ejemplo = construirEjemplo(hoy);
 

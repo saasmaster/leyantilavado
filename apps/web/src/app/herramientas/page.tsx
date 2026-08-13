@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { AvisoIndependencia, Nota, Tarjeta, TarjetaCuerpo } from '@leyantilavado/ui';
+import { Nota, Tarjeta, TarjetaCuerpo } from '@leyantilavado/ui';
 import { VERSION_LEGAL, datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
 import { GRUPOS, HERRAMIENTAS, rutaHerramienta } from '@/lib/herramientas/catalogo';
@@ -138,8 +138,6 @@ export default function IndiceHerramientas() {
           calculadora te pide el inciso en lugar de promediarlos.
         </p>
       </section>
-
-      <AvisoIndependencia className="mt-12" />
     </div>
   );
 }

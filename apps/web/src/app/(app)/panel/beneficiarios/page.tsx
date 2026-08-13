@@ -4,7 +4,7 @@ import { Nota, SelloProcedencia, Tarjeta, TarjetaCuerpo, TarjetaTitulo } from '@
 import { EncabezadoSeccion, Seccion } from '@/components/app/Contenedor';
 import { TablaRecurso, type ColumnaTabla } from '@/components/app/TablaRecurso';
 import { AvisoNoEsCumplimiento } from '@/components/app/Avisos';
-import { requerirContexto } from '@/lib/auth/sesion';
+import { requerirPermiso } from '@/lib/auth/sesion';
 
 const COLUMNAS: readonly ColumnaTabla[] = [
   { clave: 'full_name', titulo: 'Beneficiario' },
@@ -17,7 +17,7 @@ const COLUMNAS: readonly ColumnaTabla[] = [
 ];
 
 export default async function PaginaBeneficiarios() {
-  const contexto = await requerirContexto('/panel/beneficiarios');
+  const contexto = await requerirPermiso('clientes.ver', '/panel/beneficiarios');
   const obligacion = datos.OBLIGACIONES.find((o) => o.slug === 'beneficiario-controlador');
 
   return (

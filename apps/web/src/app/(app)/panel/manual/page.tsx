@@ -2,7 +2,7 @@ import { Nota } from '@leyantilavado/ui';
 import { EncabezadoSeccion, Seccion } from '@/components/app/Contenedor';
 import { TablaRecurso, type ColumnaTabla } from '@/components/app/TablaRecurso';
 import { AvisoNoEsCumplimiento } from '@/components/app/Avisos';
-import { requerirContexto } from '@/lib/auth/sesion';
+import { requerirPermiso } from '@/lib/auth/sesion';
 
 const COLUMNAS = [
   { clave: 'version', titulo: 'Versión' },
@@ -39,7 +39,7 @@ const ESTADOS: readonly { clave: string; texto: string }[] = [
 ];
 
 export default async function PaginaManual() {
-  const contexto = await requerirContexto('/panel/manual');
+  const contexto = await requerirPermiso('auditoria.ver', '/panel/manual');
   const org = contexto.organizacion?.organizacionId ?? null;
 
   return (

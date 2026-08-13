@@ -11,7 +11,7 @@ import { EncabezadoSeccion, Seccion } from '@/components/app/Contenedor';
 import { EstadoConsulta } from '@/components/app/TablaRecurso';
 import { AvisoNoEsCumplimiento } from '@/components/app/Avisos';
 import { listar } from '@/lib/app/consultas';
-import { requerirContexto } from '@/lib/auth/sesion';
+import { requerirPermiso } from '@/lib/auth/sesion';
 import { fechaDeHoy } from '@/lib/app/fecha';
 
 interface FilaOperacion {
@@ -58,7 +58,7 @@ const VENTANA_MESES: number | null =
   ].sort((a, b) => a - b)[0] ?? null;
 
 export default async function PaginaPerfilTransaccional() {
-  const contexto = await requerirContexto('/panel/perfil-transaccional');
+  const contexto = await requerirPermiso('riesgos.ver', '/panel/perfil-transaccional');
   const org = contexto.organizacion?.organizacionId ?? null;
   const hoy = await fechaDeHoy();
   const desde = VENTANA_MESES === null ? null : restarMeses(hoy, VENTANA_MESES);

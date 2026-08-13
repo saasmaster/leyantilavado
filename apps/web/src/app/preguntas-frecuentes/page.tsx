@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowUpRight, Wrench } from 'lucide-react';
-import { AvisoIndependencia, Insignia } from '@leyantilavado/ui';
+import { Insignia } from '@leyantilavado/ui';
 import { construirMetadata, jsonLdFAQ, jsonLdMigaDePan } from '@/lib/sitio';
 import { EncabezadoPagina } from '@/components/inicio/comun';
 import { CATEGORIAS_FAQ, TOTAL_PREGUNTAS } from '@/content/preguntas-frecuentes';
@@ -137,8 +137,6 @@ export default function PreguntasFrecuentes() {
                 </div>
               </section>
             ))}
-
-            <AvisoIndependencia />
           </div>
         </div>
       </div>

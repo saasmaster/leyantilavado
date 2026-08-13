@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
-import { AvisoIndependencia, Insignia, Nota } from '@leyantilavado/ui';
+import { Insignia, Nota } from '@leyantilavado/ui';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
 import { ANEXOS_NUEVOS, BLOQUES_ACUERDO_115, INSTRUMENTOS } from '@/content/reforma';
 import {
@@ -268,7 +268,6 @@ export default function Acuerdo115() {
 
       <FirmaEditorial />
       <AvisoLegal />
-      <AvisoIndependencia className="mt-6" />
     </div>
   );
 }

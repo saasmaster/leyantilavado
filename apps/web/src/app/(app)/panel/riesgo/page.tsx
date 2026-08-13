@@ -3,7 +3,7 @@ import { Nota, TablaEnvoltura } from '@leyantilavado/ui';
 import { EncabezadoSeccion, Seccion } from '@/components/app/Contenedor';
 import { TablaRecurso, type ColumnaTabla } from '@/components/app/TablaRecurso';
 import { AvisoNoEsCumplimiento } from '@/components/app/Avisos';
-import { requerirContexto } from '@/lib/auth/sesion';
+import { requerirPermiso } from '@/lib/auth/sesion';
 import { fechaDeHoy } from '@/lib/app/fecha';
 import { CalculadoraRiesgo } from './CalculadoraRiesgo';
 
@@ -21,7 +21,7 @@ const COLUMNAS: readonly ColumnaTabla[] = [
 const FACTORES = Object.entries(PONDERACIONES_BASE) as [keyof typeof ETIQUETAS_FACTOR, number][];
 
 export default async function PaginaRiesgo() {
-  const contexto = await requerirContexto('/panel/riesgo');
+  const contexto = await requerirPermiso('riesgos.ver', '/panel/riesgo');
   const hoy = await fechaDeHoy();
 
   return (

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowUpRight, TriangleAlert } from 'lucide-react';
 import { datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
-import { AvisoIndependencia, Insignia, Nota } from '@leyantilavado/ui';
+import { Insignia, Nota } from '@leyantilavado/ui';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
 import {
   ACTUALIZACIONES,
@@ -163,7 +163,6 @@ export default function Actualizaciones() {
 
       <FirmaEditorial />
       <AvisoLegal />
-      <AvisoIndependencia className="mt-6" />
     </div>
   );
 }

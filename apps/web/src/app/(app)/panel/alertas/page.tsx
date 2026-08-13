@@ -2,7 +2,7 @@ import { Nota } from '@leyantilavado/ui';
 import { EncabezadoSeccion, Seccion } from '@/components/app/Contenedor';
 import { TablaRecurso, type ColumnaTabla } from '@/components/app/TablaRecurso';
 import { AvisoNoEsCumplimiento } from '@/components/app/Avisos';
-import { requerirContexto } from '@/lib/auth/sesion';
+import { requerirPermiso } from '@/lib/auth/sesion';
 
 const COLUMNAS = [
   { clave: 'created_at', titulo: 'Detectada', formato: 'fecha_hora' },
@@ -16,7 +16,7 @@ const COLUMNAS = [
 ] satisfies readonly ColumnaTabla[];
 
 export default async function PaginaAlertas() {
-  const contexto = await requerirContexto('/panel/alertas');
+  const contexto = await requerirPermiso('alertas.ver', '/panel/alertas');
   const org = contexto.organizacion?.organizacionId ?? null;
 
   return (

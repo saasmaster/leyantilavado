@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { ExternalLink } from 'lucide-react';
 import type { NivelVerificacion, Procedencia } from '@leyantilavado/types';
 import { datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
-import { AvisoIndependencia, Insignia, Nota, TablaEnvoltura } from '@leyantilavado/ui';
+import { Insignia, Nota, TablaEnvoltura } from '@leyantilavado/ui';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
 import { EncabezadoPagina, REVISION_VIGENTE, NIVELES_VERIFICACION } from '@/components/inicio/comun';
 
@@ -236,8 +236,6 @@ export default function FuentesOficialesPagina() {
             Automatizar la detección tiene sentido; automatizar la lectura de una norma, no.
           </p>
         </div>
-
-        <AvisoIndependencia className="mt-8" />
       </div>
     </>
   );

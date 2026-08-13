@@ -2,7 +2,7 @@ import { Nota } from '@leyantilavado/ui';
 import { EncabezadoSeccion, Seccion } from '@/components/app/Contenedor';
 import { TablaRecurso, type ColumnaTabla } from '@/components/app/TablaRecurso';
 import { AvisoNoEsCumplimiento } from '@/components/app/Avisos';
-import { requerirContexto } from '@/lib/auth/sesion';
+import { requerirPermiso } from '@/lib/auth/sesion';
 
 const COLUMNAS = [
   { clave: 'code', titulo: 'Clave' },
@@ -38,7 +38,7 @@ const ESTADOS: readonly { clave: string; texto: string }[] = [
 ];
 
 export default async function PaginaCasos() {
-  const contexto = await requerirContexto('/panel/casos');
+  const contexto = await requerirPermiso('alertas.ver', '/panel/casos');
   const org = contexto.organizacion?.organizacionId ?? null;
 
   return (

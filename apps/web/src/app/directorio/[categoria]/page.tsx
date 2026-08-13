@@ -11,6 +11,16 @@ import { buscarProveedores, leerFiltros } from '@/lib/directorio/filtros';
 import { repositorioDirectorio } from '@/lib/directorio/repositorio';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
 
+/**
+ * Perfiles reales que necesita una categoría para competir como directorio.
+ *
+ * Por debajo de esto la página se sirve igual —su contenido editorial es
+ * útil— pero con `noindex, follow`: aparecer en resultados como directorio y
+ * enseñar «Sin resultados» le enseña al buscador que esta URL no cumple lo que
+ * promete.
+ */
+const MINIMO_PARA_INDEXAR = 3;
+
 export function generateStaticParams() {
   return CATEGORIAS_PROVEEDOR.map((categoria) => ({ categoria }));
 }
@@ -24,10 +34,23 @@ export async function generateMetadata({
   if (!esCategoria(categoria)) return construirMetadata({ titulo: 'Categoría no encontrada', descripcion: '', ruta: `/directorio/${categoria}`, noindex: true });
 
   const ficha = FICHAS_CATEGORIA[categoria];
+
+  // Una categoría sin perfiles se indexa como «directorio de proveedores» y
+  // entrega «Sin resultados»: la peor coincidencia posible con esa intención,
+  // y la clase de página que Google aprende a no volver a mostrar.
+  //
+  // El contenido editorial de la ficha sí vale —qué hace este tipo de
+  // proveedor, qué preguntarle— pero no compite como directorio hasta que haya
+  // oferta real. `follow` se mantiene: los enlaces internos siguen valiendo.
+  const perfiles = (await repositorioDirectorio.listarPerfiles()).filter((p) =>
+    p.categorias.includes(categoria),
+  );
+
   return construirMetadata({
     titulo: `${ficha.plural} en prevención de lavado de dinero`,
     descripcion: ficha.resumen,
     ruta: `/directorio/${categoria}`,
+    ...(perfiles.length < MINIMO_PARA_INDEXAR ? { noindex: true } : {}),
   });
 }
 

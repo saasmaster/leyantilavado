@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
-import { AvisoIndependencia } from '@leyantilavado/ui';
 import { SITIO, construirMetadata } from '@/lib/sitio';
 import {
   CuentaRegresivaReglas,
@@ -9,6 +8,7 @@ import {
 } from '@/components/CuentaRegresivaReglas';
 import { Hero } from '@/components/inicio/Hero';
 import { MapaDelSitio } from '@/components/inicio/MapaDelSitio';
+import { QueEs } from '@/components/inicio/QueEs';
 import { Newsletter } from '@/components/inicio/Newsletter';
 
 export const metadata: Metadata = construirMetadata({
@@ -79,6 +79,7 @@ export default function Inicio() {
       />
 
       <Hero />
+      <QueEs />
 
       <CuentaRegresivaReglas
         reglas={REGLAS}
@@ -95,7 +96,6 @@ export default function Inicio() {
       <Newsletter actividades={ACTIVIDADES_BOLETIN} />
 
       <div className="contenedor-app pb-20">
-        <AvisoIndependencia />
       </div>
     </>
   );

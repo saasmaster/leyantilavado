@@ -6,7 +6,7 @@ import { EncabezadoSeccion, Seccion } from '@/components/app/Contenedor';
 import { TablaRecurso, type ColumnaTabla } from '@/components/app/TablaRecurso';
 import { AvisoNoEsCumplimiento } from '@/components/app/Avisos';
 import { MAPA_FUENTES } from '@/components/inicio/comun';
-import { requerirContexto } from '@/lib/auth/sesion';
+import { requerirPermiso } from '@/lib/auth/sesion';
 
 const COLUMNAS = [
   { clave: 'completed_on', titulo: 'Fecha', formato: 'fecha' },
@@ -28,7 +28,7 @@ const ETIQUETA_RECURRENCIA: Record<NonNullable<Obligacion['recurrencia']>, strin
 };
 
 export default async function PaginaCapacitacion() {
-  const contexto = await requerirContexto('/panel/capacitacion');
+  const contexto = await requerirPermiso('auditoria.ver', '/panel/capacitacion');
   const org = contexto.organizacion?.organizacionId ?? null;
   const obligacion = datos.OBLIGACIONES_POR_SLUG['capacitacion'];
 

@@ -7,7 +7,7 @@ import {
   AvisoFormatoOficial,
   AvisoNoEsCumplimiento,
 } from '@/components/app/Avisos';
-import { requerirContexto } from '@/lib/auth/sesion';
+import { requerirPermiso } from '@/lib/auth/sesion';
 
 const COLUMNAS = [
   { clave: 'period', titulo: 'Periodo' },
@@ -65,7 +65,7 @@ const FLUJO: readonly { estado: string; titulo: string; texto: string }[] = [
 ];
 
 export default async function PaginaAvisos() {
-  const contexto = await requerirContexto('/panel/avisos');
+  const contexto = await requerirPermiso('avisos.ver', '/panel/avisos');
   const org = contexto.organizacion?.organizacionId ?? null;
 
   return (

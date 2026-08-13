@@ -1,4 +1,4 @@
-import { SITIO, LOGO } from '@/lib/sitio';
+import { IMAGEN_SOCIAL, LOGO, SITIO } from '@/lib/sitio';
 import { EQUIPO_EDITORIAL } from '@/content/autores';
 
 /**
@@ -44,16 +44,20 @@ export function jsonLdArticulo({
      * artículo. Sin él, la página no es elegible por mucho que el resto del
      * marcado esté impecable — y este sitio lo estuvo sin serlo.
      *
-     * Se apunta a la imagen Open Graph generada por ruta, que ya existe en
-     * `/opengraph-image` y hereda el título de cada página: así cada artículo
-     * declara una imagen propia y real, no un logotipo repetido 93 veces.
+     * Apunta a `IMAGEN_SOCIAL`, que es la del sitio y existe de verdad.
+     *
+     * Aquí había una imagen por ruta —`${ruta}/opengraph-image`— con la buena
+     * intención de que cada artículo tuviera la suya. El problema es que esa
+     * URL sólo existe donde hay un `opengraph-image.tsx`, y sólo lo hay en la
+     * raíz: `/umbrales/opengraph-image` devolvía 404 en producción. El JSON-LD
+     * afirmaba tener imagen y apuntaba a nada, en todas las páginas menos la
+     * portada.
+     *
+     * Una imagen del sitio que carga vale más que una imagen por página que no
+     * existe. Cuando alguna ruta quiera la suya, basta con añadir su
+     * `opengraph-image.tsx` y pasarla por parámetro.
      */
-    image: {
-      '@type': 'ImageObject',
-      url: `${SITIO.url}${ruta === '/' ? '' : ruta}/opengraph-image`,
-      width: 1200,
-      height: 630,
-    },
+    image: { '@type': 'ImageObject', ...IMAGEN_SOCIAL },
     mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITIO.url}${ruta}` },
     isPartOf: { '@type': 'WebSite', '@id': `${SITIO.url}/#sitio` },
     datePublished: publicadoEn,

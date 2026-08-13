@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
-import { AvisoIndependencia, Nota } from '@leyantilavado/ui';
+import { Nota } from '@leyantilavado/ui';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
 import {
   AvisoLegal,
@@ -208,7 +208,6 @@ export default function Calendario() {
 
       <FirmaEditorial />
       <AvisoLegal />
-      <AvisoIndependencia className="mt-6" />
     </div>
   );
 }

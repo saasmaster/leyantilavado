@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { formatearFechaLarga } from '@leyantilavado/rules-engine';
-import { AvisoIndependencia, Insignia, Nota } from '@leyantilavado/ui';
+import { Insignia, Nota } from '@leyantilavado/ui';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
 import { EncabezadoPagina, REVISION_VIGENTE } from '@/components/inicio/comun';
 
@@ -135,8 +135,6 @@ export default function Publicidad() {
             antes de que aparezca el primer espacio pagado, no después.
           </p>
         </Nota>
-
-        <AvisoIndependencia className="mt-8" />
       </div>
     </>
   );

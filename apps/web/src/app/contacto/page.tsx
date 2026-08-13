@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { AlertTriangle, BookOpenCheck, Mail, ShieldCheck, UserPlus } from 'lucide-react';
 import { formatearFechaLarga } from '@leyantilavado/rules-engine';
-import { AvisoIndependencia, Boton } from '@leyantilavado/ui';
+import { Boton } from '@leyantilavado/ui';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
 import { EncabezadoPagina, REVISION_VIGENTE } from '@/components/inicio/comun';
 import { FormularioContacto } from '@/components/FormularioContacto';
@@ -145,8 +145,6 @@ export default function Contacto() {
             </li>
           </ul>
         </div>
-
-        <AvisoIndependencia className="mt-8" />
       </div>
     </>
   );

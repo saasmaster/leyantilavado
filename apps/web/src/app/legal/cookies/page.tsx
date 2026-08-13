@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { formatearFechaLarga } from '@leyantilavado/rules-engine';
-import { AvisoIndependencia, Nota, TablaEnvoltura } from '@leyantilavado/ui';
+import { Nota, TablaEnvoltura } from '@leyantilavado/ui';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
 import { EncabezadoPagina, REVISION_VIGENTE } from '@/components/inicio/comun';
 
@@ -142,8 +142,6 @@ export default function Cookies() {
             sólo el tiempo necesario para detectar abusos.
           </p>
         </Nota>
-
-        <AvisoIndependencia className="mt-8" />
       </div>
     </>
   );

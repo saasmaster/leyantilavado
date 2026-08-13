@@ -142,6 +142,41 @@ export async function requerirContexto(destino = '/panel'): Promise<ContextoApp>
   };
 }
 
+/**
+ * Contexto del área privada EXIGIENDO un permiso concreto.
+ *
+ * `requerirContexto` sólo comprueba que haya sesión. El permiso vivía
+ * únicamente en `navegacion.ts`, y allí decide si se DIBUJA el enlace del
+ * menú: un menú es presentación, no una frontera. Cualquiera con sesión podía
+ * escribir `/panel/exportaciones` en la barra de direcciones y recibir la
+ * página completa, con su botón de descarga, aunque su rol no tuviera
+ * `documentos.descargar`.
+ *
+ * RLS seguía filtrando las filas, así que no era una fuga abierta de datos —
+ * pero «la base de datos lo tapa» no es una autorización, es una red debajo de
+ * una autorización que faltaba. Y en exportaciones la diferencia importa: la
+ * página existe para sacar los datos del sistema.
+ *
+ * ── Se evalúa `rolReal`, no `rolEfectivo` ──────────────────────────────────
+ * `rolEfectivo` incluye la simulación de «ver como», que sólo puede bajar de
+ * rol. Una frontera de autorización tiene que preguntar qué puede hacer la
+ * persona de verdad, no qué está fingiendo ser; si no, la respuesta depende de
+ * una cookie que el propio usuario controla.
+ */
+export async function requerirPermiso(
+  permiso: Permiso,
+  destino = '/panel',
+): Promise<ContextoApp> {
+  const contexto = await requerirContexto(destino);
+  const autorizado = contexto.rolReal ? puedeSegunMatriz(contexto.rolReal, permiso) : false;
+
+  if (!autorizado) {
+    redirect(`/panel?error=sin_permiso&modulo=${encodeURIComponent(permiso)}`);
+  }
+
+  return contexto;
+}
+
 /** Igual que `requerirContexto` pero además exige ser personal de la plataforma. */
 export async function requerirStaff(): Promise<ContextoApp> {
   const contexto = await requerirContexto('/admin');

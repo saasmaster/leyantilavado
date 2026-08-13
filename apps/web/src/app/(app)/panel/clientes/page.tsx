@@ -6,7 +6,7 @@ import { EncabezadoSeccion } from '@/components/app/Contenedor';
 import { EstadoConsulta } from '@/components/app/TablaRecurso';
 import { AvisoNoEsCumplimiento } from '@/components/app/Avisos';
 import { listar } from '@/lib/app/consultas';
-import { requerirContexto } from '@/lib/auth/sesion';
+import { requerirPermiso } from '@/lib/auth/sesion';
 
 interface FilaCliente {
   id: string;
@@ -57,7 +57,7 @@ export default async function PaginaClientes({
 }: {
   searchParams: Promise<{ tipo?: string }>;
 }) {
-  const contexto = await requerirContexto('/panel/clientes');
+  const contexto = await requerirPermiso('clientes.ver', '/panel/clientes');
   const { tipo } = await searchParams;
   const filtroTipo = TIPOS_PERSONA.some((t) => t.valor === tipo && t.valor !== '') ? tipo : undefined;
 

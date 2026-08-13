@@ -19,6 +19,17 @@ import { Boton } from '@leyantilavado/ui';
 
 const UMA = datos.UMA_VIGENTE_MAS_RECIENTE;
 
+/**
+ * Lo que falta, contado y explicado.
+ *
+ * «20 de 22» y «36 reglas» invitaban a leer una contradicción donde había un
+ * hecho: hay supuestos que la ley enuncia y para los que la autoridad todavía
+ * no ha publicado umbral. Decir «verificado» y «sin publicar» por separado
+ * cuenta lo mismo sin que parezca que el sitio se desmiente a sí mismo.
+ */
+const PENDIENTES_ACTIVIDADES = datos.ACTIVIDADES.length - datos.ACTIVIDADES_PUBLICABLES.length;
+const PENDIENTES_UMBRALES = datos.UMBRALES.length - datos.UMBRALES_PUBLICADOS.length;
+
 export function Hero() {
   return (
     <section
@@ -43,14 +54,19 @@ export function Hero() {
               retrasaba la lectura de lo único que la portada tiene que decir. */}
           <h1
             id="hero-titulo"
-            className="mt-5 text-[2.1rem] font-semibold leading-[1.12] text-[var(--color-tinta)] md:text-[3.1rem]"
+            className="text-[2.1rem] font-semibold leading-[1.12] text-[var(--color-tinta)] md:text-[3.1rem]"
           >
-            Averigua qué te obliga la Ley Antilavado,
-            <span className="text-[var(--color-petroleo-hondo)]"> con la cifra correcta</span> y la
-            fuente a la vista.
+            Ley Antilavado en México:{' '}
+            <span className="text-[var(--color-petroleo-hondo)]">
+              descubre qué te obliga y con qué umbrales
+            </span>
           </h1>
 
-          <p className="prosa mt-5 text-[1.05rem] text-[var(--color-tinta-suave)]">
+          <p className="prosa mt-4 text-[1.15rem] font-medium text-[var(--color-tinta)]">
+            Averigua qué te obliga la Ley Antilavado, con la cifra correcta y la fuente a la vista.
+          </p>
+
+          <p className="prosa mt-4 text-[1.05rem] text-[var(--color-tinta-suave)]">
             Umbrales por actividad, acumulación de seis meses, límites de efectivo y fechas de
             aviso, calculados con la UMA vigente en la fecha de tu operación —no con la de hoy—.
             Cada conclusión trae el artículo, la fuente oficial y la fecha en que la revisamos.
@@ -103,16 +119,26 @@ export function Hero() {
             </div>
             <div className="flex items-baseline justify-between gap-4 py-3">
               <dt className="text-sm text-[var(--color-tinta-suave)]">
-                Actividades vulnerables publicadas
+                Actividades con umbral verificado
               </dt>
               <dd className="cifra text-sm font-medium text-[var(--color-tinta)]">
-                {datos.ACTIVIDADES_PUBLICABLES.length} de {datos.ACTIVIDADES.length}
+                {datos.ACTIVIDADES_PUBLICABLES.length}
+                <span className="font-normal text-[var(--color-tinta-tenue)]">
+                  {' '}
+                  · {PENDIENTES_ACTIVIDADES} sin publicar
+                </span>
               </dd>
             </div>
             <div className="flex items-baseline justify-between gap-4 py-3">
-              <dt className="text-sm text-[var(--color-tinta-suave)]">Reglas de umbral vigentes</dt>
+              <dt className="text-sm text-[var(--color-tinta-suave)]">
+                Reglas de umbral verificadas
+              </dt>
               <dd className="cifra text-sm font-medium text-[var(--color-tinta)]">
                 {datos.UMBRALES_PUBLICADOS.length}
+                <span className="font-normal text-[var(--color-tinta-tenue)]">
+                  {' '}
+                  · {PENDIENTES_UMBRALES} pendientes
+                </span>
               </dd>
             </div>
             <div className="flex items-baseline justify-between gap-4 pt-3">
@@ -123,8 +149,9 @@ export function Hero() {
             </div>
           </dl>
           <p className="mt-5 text-xs leading-relaxed text-[var(--color-tinta-tenue)]">
-            La UMA entra en vigor el 1 de febrero de cada año. Una operación de enero se mide con
-            la UMA del año anterior: el motor lo resuelve por ti y te dice qué año aplicó.
+            Lo pendiente no es un hueco nuestro: son supuestos que la ley enuncia y para los que
+            la autoridad todavía no publica una cifra. Se listan igual, diciendo que no la tienen,
+            en lugar de rellenarlos con una estimación.
           </p>
         </div>
       </div>

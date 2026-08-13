@@ -8,7 +8,7 @@ import {
 import { Nota, TablaEnvoltura } from '@leyantilavado/ui';
 import { EncabezadoSeccion, Seccion } from '@/components/app/Contenedor';
 import { TablaRecurso, type ColumnaTabla } from '@/components/app/TablaRecurso';
-import { requerirContexto } from '@/lib/auth/sesion';
+import { requerirPermiso } from '@/lib/auth/sesion';
 
 const COLUMNAS = [
   { clave: 'role', titulo: 'Rol', formato: 'insignia' },
@@ -58,7 +58,7 @@ const ETIQUETA_PERMISO: Record<Permiso, string> = {
 const PERMISOS = Object.keys(ETIQUETA_PERMISO) as Permiso[];
 
 export default async function PaginaMiembros() {
-  const contexto = await requerirContexto('/panel/miembros');
+  const contexto = await requerirPermiso('org.miembros', '/panel/miembros');
   const org = contexto.organizacion?.organizacionId ?? null;
 
   return (

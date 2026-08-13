@@ -79,10 +79,24 @@ export function SelloProcedencia({
             if (!f) return null;
             return (
               <li key={id}>
+                {/* Sin `nofollow`, y aquí está la razón entera del sello.
+                    Este componente enlaza al DOF, al SAT, a la Cámara de
+                    Diputados y al INEGI: son las fuentes primarias de las que
+                    sale cada cifra del sitio, y enlazarlas es exactamente el
+                    respaldo editorial que este proyecto quiere dar. El
+                    `nofollow` decía lo contrario —«no respondo de esto»— sobre
+                    la ley misma.
+
+                    Estaba en un solo sitio y salía en 75 enlaces de 44
+                    páginas, que es lo que pasa cuando un valor por omisión se
+                    elige sin pensar en un componente compartido.
+
+                    `nofollow` se queda donde corresponde: sitios de
+                    proveedores y perfiles de pago del directorio. */}
                 <a
                   href={f.url}
                   target="_blank"
-                  rel="noopener noreferrer nofollow"
+                  rel="noopener noreferrer"
                   className="text-[var(--color-petroleo-hondo)] underline underline-offset-2"
                 >
                   {f.nombre}
