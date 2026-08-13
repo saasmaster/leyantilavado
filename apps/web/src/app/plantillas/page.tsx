@@ -6,6 +6,7 @@ import { Insignia, Nota, Tarjeta } from '@leyantilavado/ui';
 import { PLANTILLAS } from '@/content/plantillas';
 import { REVISION_VIGENTE } from '@/components/inicio/comun';
 import { construirMetadata } from '@/lib/sitio';
+import { JsonLd, jsonLdColeccion } from '@/components/contenido/JsonLd';
 
 export const metadata: Metadata = construirMetadata({
   titulo: 'Plantillas de cumplimiento LFPIORPI',
@@ -33,8 +34,23 @@ export const metadata: Metadata = construirMetadata({
 export default function PaginaPlantillas() {
   return (
     <div className="contenedor-app flex flex-col gap-10 py-10 md:py-14">
+      <JsonLd
+        datos={jsonLdColeccion({
+          nombre: 'Plantillas de cumplimiento LFPIORPI',
+          descripcion:
+            'Documentos base para el programa de cumplimiento, generados del corpus legal en el momento de la descarga.',
+          ruta: '/plantillas',
+          elementos: PLANTILLAS.map((p) => ({
+            nombre: p.titulo,
+            descripcion: p.descripcion,
+            url: `/plantillas/${p.archivo}`,
+            tipo: 'DigitalDocument',
+          })),
+        })}
+      />
+
       <header className="flex flex-col gap-4">
-        <h1 className="text-3xl font-semibold md:text-4xl">Plantillas</h1>
+        <h1 className="text-3xl font-semibold md:text-4xl">Plantillas de cumplimiento LFPIORPI</h1>
         <p className="prosa text-[var(--color-tinta-suave)]">
           Documentos base para armar tu programa de cumplimiento. No están guardados como archivos:
           se generan al momento a partir del corpus legal, así que traen los pasos y los artículos

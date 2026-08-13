@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ANIOS_UMA_DISPONIBLES, datos } from '@leyantilavado/rules-engine';
+import { CIFRAS, ETIQUETA_UMBRALES } from '@/content/cifras';
 import { formatearMXN } from '@leyantilavado/types';
 import { Nota, SelloProcedencia, TablaEnvoltura } from '@leyantilavado/ui';
 import {
@@ -17,6 +18,7 @@ import {
 } from '@/components/contenido';
 import { jsonLdArticulo, jsonLdConjuntoDatos } from '@/components/contenido/JsonLd';
 import { REVISION_VIGENTE } from '@/content/autores';
+import { VERSION_LEGAL } from '@leyantilavado/rules-engine';
 import { construirMetadata, jsonLdFAQ, jsonLdMigaDePan } from '@/lib/sitio';
 
 const RUTA = '/umbrales';
@@ -107,6 +109,21 @@ export default function PaginaUmbrales() {
           descripcion: `Conjunto de ${datos.UMBRALES.length} reglas de umbral por actividad vulnerable, con su comparador, periodicidad y regla de acumulación, convertibles a pesos con los valores de la UMA de ${ANIO_MAS_ANTIGUO} a ${ANIO_MAS_RECIENTE}.`,
           ruta: RUTA,
           actualizadoEn: REVISION_VIGENTE,
+          publicadoEn: REVISION_VIGENTE,
+          version: VERSION_LEGAL,
+          cobertura: `${ANIO_MAS_ANTIGUO}/${ANIO_MAS_RECIENTE}`,
+          variables: [
+            'Umbral de identificación en UMA por actividad vulnerable',
+            'Umbral de aviso en UMA por actividad vulnerable',
+            'Equivalente en pesos mexicanos según el año de la UMA',
+            'Comparador aplicable (superior a / igual o superior a)',
+            'Periodicidad y regla de acumulación',
+            'Disposición legal y nivel de verificación de cada regla',
+          ],
+          descargas: [
+            { url: '/datos/umbrales.csv', formato: 'text/csv' },
+            { url: '/datos/umbrales.json', formato: 'application/json' },
+          ],
         })}
       />
       <JsonLd datos={jsonLdFAQ(FAQ)} />
@@ -116,7 +133,7 @@ export default function PaginaUmbrales() {
       <CabeceraArticulo
         titulo="Umbrales de la Ley Antilavado, actividad por actividad"
         etiquetas={[
-          { texto: `${datos.UMBRALES.length} reglas`, tono: 'marino' },
+          { texto: ETIQUETA_UMBRALES, tono: 'marino' },
           { texto: `UMA ${ANIO_MAS_ANTIGUO}-${ANIO_MAS_RECIENTE}`, tono: 'petroleo' },
           { texto: `Vigente al ${REVISION_VIGENTE}`, tono: 'neutro' },
         ]}

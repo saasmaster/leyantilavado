@@ -155,11 +155,21 @@ export function Seccion({
 export function EncabezadoPagina({
   miga,
   titulo,
+  subtitulo,
   entradilla,
   actualizado,
 }: {
   miga: { nombre: string; ruta: string }[];
   titulo: string;
+  /**
+   * Frase con gancho, debajo del H1.
+   *
+   * Existe porque varios H1 estaban escritos para el lector que ya está en la
+   * página y no para quien la busca. «Las dudas que más se repiten» es mejor
+   * prosa que «Preguntas frecuentes sobre la Ley Antilavado», y es peor
+   * titular: no contiene la consulta. El gancho no se tira, baja aquí.
+   */
+  subtitulo?: string;
   entradilla: string;
   actualizado?: string;
 }) {
@@ -186,6 +196,9 @@ export function EncabezadoPagina({
         <h1 className="mt-4 text-3xl font-semibold text-[var(--color-tinta)] md:text-[2.6rem]">
           {titulo}
         </h1>
+        {subtitulo && (
+          <p className="mt-3 text-[1.15rem] font-medium text-[var(--color-tinta)]">{subtitulo}</p>
+        )}
         <p className="prosa mt-4 text-[1.03rem] text-[var(--color-tinta-suave)]">{entradilla}</p>
         {actualizado && (
           <p className="cifra mt-4 text-xs text-[var(--color-tinta-tenue)]">

@@ -13,6 +13,7 @@ import {
   type ValorCriterio,
 } from '@/lib/directorio/software';
 import { construirMetadata } from '@/lib/sitio';
+import { JsonLd, jsonLdColeccion } from '@/components/contenido/JsonLd';
 
 export const metadata: Metadata = construirMetadata({
   titulo: 'Comparativo de software de cumplimiento LFPIORPI',
@@ -36,6 +37,25 @@ const TONO_VALOR: Record<ValorCriterio, 'verde' | 'rojo' | 'ambar' | 'neutro'> =
 export default function PaginaSoftware() {
   return (
     <div className="contenedor-app flex flex-col gap-10 py-10 md:py-14">
+      <JsonLd
+        datos={jsonLdColeccion({
+          nombre: 'Comparativo de software de cumplimiento LFPIORPI',
+          descripcion:
+            'Comparativo independiente de plataformas de cumplimiento, con el método de comprobación de cada criterio a la vista.',
+          ruta: '/software-cumplimiento',
+          // `SoftwareApplication` con lo comprobado y nada más: nombre, sitio
+          // y la observación editorial. Sin `offers` —ningún proveedor publica
+          // precio— y sin `aggregateRating`, porque este comparativo no
+          // puntúa: verifica criterios y dice cuáles no pudo comprobar.
+          elementos: PROVEEDORES_SOFTWARE.map((p) => ({
+            nombre: p.nombre,
+            descripcion: p.observacion,
+            url: p.sitio,
+            tipo: 'SoftwareApplication',
+          })),
+        })}
+      />
+
       <header className="flex flex-col gap-4">
         <h1 className="text-3xl font-semibold md:text-4xl">
           Software de cumplimiento LFPIORPI: comparativo independiente

@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { VERSION_LEGAL, datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
-import { AvisoIndependencia, Nota } from '@leyantilavado/ui';
+import { FRASE_ACTIVIDADES, FRASE_UMBRALES } from '@/content/cifras';
+import { Nota } from '@leyantilavado/ui';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
 import { EncabezadoPagina, REVISION_VIGENTE } from '@/components/inicio/comun';
 
@@ -85,16 +86,12 @@ export default function Nosotros() {
           <h2>Qué hay detrás del sitio hoy</h2>
           <p>
             El corpus legal está en la versión <strong>{VERSION_LEGAL}</strong> e incluye{' '}
-            {datos.ACTIVIDADES.length} actividades del catálogo del artículo 17,{' '}
-            {datos.UMBRALES_PUBLICADOS.length} reglas de umbral publicadas,{' '}
+            {FRASE_ACTIVIDADES}, {FRASE_UMBRALES},{' '}
             {datos.OBLIGACIONES.length} obligaciones y {datos.CALENDARIO.length} hitos de
             calendario, todos apuntando a alguna de las {datos.FUENTES.length} fuentes oficiales
             que listamos.
           </p>
         </div>
-
-
-        <AvisoIndependencia className="mt-8" />
       </div>
     </>
   );

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { ArrowUpRight, Wrench } from 'lucide-react';
 import { Insignia } from '@leyantilavado/ui';
 import { construirMetadata, jsonLdFAQ, jsonLdMigaDePan } from '@/lib/sitio';
+import { FuentesPrincipales } from '@/components/contenido/FuentesPrincipales';
 import { EncabezadoPagina } from '@/components/inicio/comun';
 import { CATEGORIAS_FAQ, TOTAL_PREGUNTAS } from '@/content/preguntas-frecuentes';
 
@@ -41,7 +42,8 @@ export default function PreguntasFrecuentes() {
           { nombre: 'Inicio', ruta: '/' },
           { nombre: 'Preguntas frecuentes', ruta: '/preguntas-frecuentes' },
         ]}
-        titulo="Las dudas que más se repiten, con el artículo a la vista"
+        titulo="Preguntas frecuentes sobre la Ley Antilavado"
+        subtitulo="Las dudas que más se repiten, con el artículo a la vista"
         entradilla={`${TOTAL_PREGUNTAS} respuestas directas sobre la Ley Antilavado. Cada una cita la disposición aplicable para que puedas verificarla, y enlaza la herramienta que resuelve tu caso concreto en lugar de dejarte con la teoría.`}
       />
 
@@ -138,6 +140,8 @@ export default function PreguntasFrecuentes() {
               </section>
             ))}
           </div>
+
+          <FuentesPrincipales className="mt-14" />
         </div>
       </div>
     </>

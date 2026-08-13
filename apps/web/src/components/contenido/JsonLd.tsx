@@ -97,26 +97,120 @@ export function jsonLdConjuntoTerminos(
   };
 }
 
+/**
+ * `Dataset` completo.
+ *
+ * Antes declaraba nombre, descripción y fecha, que es el mínimo para validar y
+ * el máximo para no servir de nada: un buscador de datasets necesita saber
+ * qué mide, de cuándo a cuándo, de qué territorio, con qué licencia y —sobre
+ * todo— dónde está el archivo. Sin `distribution` el marcado dice «aquí hay
+ * datos» sin decir cómo obtenerlos.
+ */
 export function jsonLdConjuntoDatos({
   nombre,
   descripcion,
   ruta,
   actualizadoEn,
+  publicadoEn,
+  version,
+  variables,
+  cobertura,
+  descargas,
 }: {
   nombre: string;
   descripcion: string;
   ruta: string;
   actualizadoEn: string;
+  publicadoEn?: string;
+  version?: string;
+  /** Qué mide el conjunto. Lo que un buscador de datos usa para clasificarlo. */
+  variables?: readonly string[];
+  /** Periodo cubierto en formato ISO 8601, p. ej. `2016/2026`. */
+  cobertura?: string;
+  descargas?: readonly { url: string; formato: string }[];
 }) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Dataset',
+    '@id': `${SITIO.url}${ruta}#dataset`,
+    identifier: `${SITIO.url}${ruta}`,
     name: nombre,
     description: descripcion,
     url: `${SITIO.url}${ruta}`,
     inLanguage: 'es-MX',
     dateModified: actualizadoEn,
+    ...(publicadoEn ? { datePublished: publicadoEn } : {}),
+    ...(version ? { version } : {}),
+    ...(cobertura ? { temporalCoverage: cobertura } : {}),
+    spatialCoverage: { '@type': 'Country', name: 'México' },
+    ...(variables ? { variableMeasured: variables } : {}),
     creator: { '@type': 'Organization', name: SITIO.nombre, url: SITIO.url },
+    publisher: { '@type': 'Organization', name: SITIO.nombre, url: SITIO.url },
     isAccessibleForFree: true,
+    license: 'https://creativecommons.org/licenses/by/4.0/deed.es',
+    ...(descargas
+      ? {
+          distribution: descargas.map((d) => ({
+            '@type': 'DataDownload',
+            encodingFormat: d.formato,
+            contentUrl: `${SITIO.url}${d.url}`,
+          })),
+        }
+      : {}),
+  };
+}
+
+/**
+ * `CollectionPage` con su `ItemList`.
+ *
+ * Regla de la casa aplicada aquí: la lista sólo se emite si hay elementos
+ * reales. Un `ItemList` vacío es marcado que promete un catálogo inexistente,
+ * y es peor que no declarar nada — le enseña al buscador a desconfiar del
+ * resto del marcado del sitio.
+ *
+ * Nunca se emiten `aggregateRating`, `review` ni `offers` aquí. Este proyecto
+ * no puntúa proveedores ni conoce sus precios, y fabricar estrellas para
+ * ganar un fragmento enriquecido es exactamente el tipo de cosa que la página
+ * de metodología promete no hacer.
+ */
+export function jsonLdColeccion({
+  nombre,
+  descripcion,
+  ruta,
+  elementos,
+}: {
+  nombre: string;
+  descripcion: string;
+  ruta: string;
+  elementos?: readonly { nombre: string; url?: string; tipo?: string; descripcion?: string }[];
+}) {
+  const lista = elementos ?? [];
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': `${SITIO.url}${ruta}#coleccion`,
+    name: nombre,
+    description: descripcion,
+    url: `${SITIO.url}${ruta}`,
+    inLanguage: 'es-MX',
+    isPartOf: { '@type': 'WebSite', '@id': `${SITIO.url}/#sitio` },
+    ...(lista.length > 0
+      ? {
+          mainEntity: {
+            '@type': 'ItemList',
+            numberOfItems: lista.length,
+            itemListElement: lista.map((e, i) => ({
+              '@type': 'ListItem',
+              position: i + 1,
+              item: {
+                '@type': e.tipo ?? 'Thing',
+                name: e.nombre,
+                ...(e.descripcion ? { description: e.descripcion } : {}),
+                ...(e.url ? { url: e.url.startsWith('http') ? e.url : `${SITIO.url}${e.url}` } : {}),
+              },
+            })),
+          },
+        }
+      : {}),
   };
 }

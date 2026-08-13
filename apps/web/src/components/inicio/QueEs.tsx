@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { datos } from '@leyantilavado/rules-engine';
+
+import { CIFRAS } from '@/content/cifras';
 
 /**
  * «¿Qué es la Ley Antilavado en México?»
@@ -19,7 +20,7 @@ import { datos } from '@leyantilavado/rules-engine';
  * los vea como lo que son.
  */
 
-const TOTAL_ACTIVIDADES = datos.ACTIVIDADES.length;
+
 
 export function QueEs() {
   return (
@@ -44,9 +45,10 @@ export function QueEs() {
             </strong>
             , establece qué actividades económicas deben identificar a sus clientes, acumular
             operaciones, presentar avisos al SAT y respetar límites al uso de efectivo. Su artículo
-            17 define las {TOTAL_ACTIVIDADES} actividades vulnerables, el artículo 18 las
-            obligaciones de quien las realiza y el artículo 32 las restricciones al pago en
-            efectivo.
+            17 contiene {CIFRAS.fracciones} fracciones, que este sitio desglosa en{' '}
+            {CIFRAS.supuestos} supuestos operativos porque varias tienen incisos con umbrales
+            distintos. El artículo 18 fija las obligaciones de quien las realiza y el artículo 32
+            las restricciones al pago en efectivo.
           </p>
 
           <p className="prosa mt-4 text-[1.05rem] leading-relaxed text-[var(--color-tinta-suave)]">

@@ -5,6 +5,7 @@ import { formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { Insignia, Nota, Tarjeta } from '@leyantilavado/ui';
 import { CURSOS_DE_PAGO, EVIDENCIA_EXIGIBLE, RECURSOS_OFICIALES } from '@/content/capacitacion';
 import { construirMetadata } from '@/lib/sitio';
+import { JsonLd, jsonLdColeccion } from '@/components/contenido/JsonLd';
 
 export const metadata: Metadata = construirMetadata({
   titulo: 'Cursos y capacitación en prevención de lavado de dinero',
@@ -24,8 +25,36 @@ export const metadata: Metadata = construirMetadata({
 export default function PaginaCursos() {
   return (
     <div className="contenedor-app flex flex-col gap-10 py-10 md:py-14">
+      <JsonLd
+        datos={jsonLdColeccion({
+          nombre: 'Cursos de prevención de lavado de dinero y LFPIORPI',
+          descripcion:
+            'Capacitación oficial gratuita del SAT y la UIF, y cursos de paga con la evidencia que entrega cada uno.',
+          ruta: '/cursos',
+          elementos: [
+            ...RECURSOS_OFICIALES.map((r) => ({
+              nombre: r.titulo,
+              descripcion: r.descripcion,
+              url: r.url,
+              tipo: 'LearningResource',
+            })),
+            // `Course` sólo para programas reales con datos comprobados en la
+            // fuente. Los recursos oficiales no son cursos con temario y no se
+            // marcan como tales.
+            ...CURSOS_DE_PAGO.map((c) => ({
+              nombre: `${c.titulo} — ${c.institucion}`,
+              descripcion: c.modalidad,
+              url: c.url,
+              tipo: 'Course',
+            })),
+          ],
+        })}
+      />
+
       <header className="flex flex-col gap-4">
-        <h1 className="text-3xl font-semibold md:text-4xl">Cursos y capacitación</h1>
+        <h1 className="text-3xl font-semibold md:text-4xl">
+          Cursos de prevención de lavado de dinero y LFPIORPI
+        </h1>
         <p className="prosa text-[var(--color-tinta-suave)]">
           La capacitación del personal es una obligación con evidencia: no basta con que tu equipo
           sepa, tiene que poder demostrarse quién se capacitó, en qué, cuándo y con qué resultado.

@@ -14,6 +14,11 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
   resolve: {
     alias: {
+      // El alias `@/` lo resuelve Next, no vitest. Sin esto, cualquier módulo
+      // probado que importe con `@/` falla al cargar —y falla en el arranque
+      // del archivo, así que el suite entero desaparece del recuento sin que
+      // nada diga «falló»: sólo salen menos pruebas que antes.
+      '@': new URL('./src', import.meta.url).pathname,
       // `server-only` es un centinela que Next resuelve durante el build para
       // romper la compilación si un módulo de servidor acaba en un bundle de
       // cliente. Fuera de Next el paquete no existe, así que sin este alias

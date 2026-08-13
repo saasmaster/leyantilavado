@@ -4,7 +4,7 @@ export const SITIO = {
   nombre: 'LeyAntilavado.org',
   subtitulo: 'Centro independiente de información y herramientas sobre la LFPIORPI',
   descripcion:
-    'Calcula umbrales, acumulación de seis meses, límites de efectivo y fechas de aviso de la Ley Antilavado con la UMA vigente en tu fecha de operación.',
+    'Consulta la Ley Antilavado en México: actividades vulnerables, umbrales en UMA, obligaciones, límites de efectivo, multas y los cambios vigentes en 2026.',
   url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://leyantilavado.org',
   locale: 'es_MX',
   /**
@@ -193,7 +193,12 @@ export function construirMetadata({
     alternates: { canonical: url },
     robots: indexar
       ? { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 }
-      : { index: false, follow: false },
+      : // `follow: true` a propósito. `noindex` dice «no me muestres»;
+        // `nofollow` diría además «no sigas mis enlaces», y eso corta el
+        // descubrimiento de páginas que sí queremos indexadas. Una categoría
+        // de directorio vacía no debe aparecer en resultados y sus enlaces
+        // internos siguen valiendo.
+        { index: false, follow: true },
     openGraph: {
       type: tipo,
       url,

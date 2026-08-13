@@ -15,6 +15,7 @@ import {
   Wrench,
 } from 'lucide-react';
 import { datos } from '@leyantilavado/rules-engine';
+import { ETIQUETA_ACTIVIDADES, ETIQUETA_EFECTIVO, ETIQUETA_UMBRALES } from '@/content/cifras';
 import { CATEGORIAS_PROVEEDOR } from '@leyantilavado/types';
 import { cn } from '@leyantilavado/ui';
 import { Aparece } from './Aparece';
@@ -29,9 +30,13 @@ import { NIVELES_VERIFICACION } from './comun';
  * umbrales" no lo es.
  */
 
-const TOTAL_ACTIVIDADES = datos.ACTIVIDADES_PUBLICABLES.length;
-const TOTAL_UMBRALES = datos.UMBRALES_PUBLICADOS.length;
-const TOTAL_EFECTIVO = datos.REGLAS_EFECTIVO_PUBLICADAS.length;
+// Las etiquetas salen de `content/cifras.ts`, que es el único sitio donde se
+// decide cómo se nombran. Antes cada tarjeta contaba lo que le parecía —una
+// los verificados, otra el total— y el resultado era un sitio que aparentaba
+// contradecirse consigo mismo.
+const TOTAL_ACTIVIDADES = ETIQUETA_ACTIVIDADES;
+const TOTAL_UMBRALES = ETIQUETA_UMBRALES;
+const TOTAL_EFECTIVO = ETIQUETA_EFECTIVO;
 const TOTAL_OBLIGACIONES = datos.OBLIGACIONES.length;
 const TOTAL_HITOS = datos.CALENDARIO.length;
 const TOTAL_SANCIONES = datos.SANCIONES.length;

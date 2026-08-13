@@ -9,6 +9,7 @@ import {
 import { Hero } from '@/components/inicio/Hero';
 import { MapaDelSitio } from '@/components/inicio/MapaDelSitio';
 import { QueEs } from '@/components/inicio/QueEs';
+import { FuentesPrincipales } from '@/components/contenido/FuentesPrincipales';
 import { Newsletter } from '@/components/inicio/Newsletter';
 
 export const metadata: Metadata = construirMetadata({
@@ -90,6 +91,10 @@ export default function Inicio() {
         titulo="Lo siguiente que vence"
         descripcion="Las tres reglas más próximas del calendario 2026-2029. Las fechas son nominales: no las recorremos por días inhábiles sin una regla oficial que lo respalde."
       />
+
+      <div className="contenedor-app">
+        <FuentesPrincipales className="seccion border-t border-[var(--color-borde)] pt-12" />
+      </div>
 
       <MapaDelSitio />
 

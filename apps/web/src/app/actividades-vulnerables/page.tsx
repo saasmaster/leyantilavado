@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { datos } from '@leyantilavado/rules-engine';
+import { CIFRAS, ETIQUETA_ACTIVIDADES } from '@/content/cifras';
 import type { Actividad } from '@leyantilavado/types';
 import { Insignia, Nota, Tarjeta, TarjetaCuerpo } from '@leyantilavado/ui';
 import {
@@ -18,6 +19,7 @@ import {
 import { REVISION_VIGENTE } from '@/content/autores';
 import { CONTENIDO_ACTIVIDADES } from '@/content/actividades';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
+import { FuentesPrincipales } from '@/components/contenido/FuentesPrincipales';
 import { jsonLdArticulo } from '@/components/contenido/JsonLd';
 
 const RUTA = '/actividades-vulnerables';
@@ -117,10 +119,10 @@ export default function PaginaActividades() {
         titulo="Actividades vulnerables: el catálogo completo del artículo 17"
         etiquetas={[
           { texto: `${FRACCIONES_RAIZ.size} fracciones`, tono: 'marino' },
-          { texto: `${datos.ACTIVIDADES.length} supuestos con página propia`, tono: 'petroleo' },
+          { texto: ETIQUETA_ACTIVIDADES, tono: 'petroleo' },
           { texto: `Vigente al ${REVISION_VIGENTE}`, tono: 'neutro' },
         ]}
-        respuestaDirecta={`El artículo 17 de la Ley Antilavado lista ${FRACCIONES_RAIZ.size} fracciones de actividades vulnerables. Como varias se desdoblan en incisos y apartados con reglas propias, en la práctica hay ${datos.ACTIVIDADES.length} supuestos distintos: por eso cada uno tiene su propia página en lugar de una tabla que los aplane a un solo número.`}
+        respuestaDirecta={`El artículo 17 de la Ley Antilavado lista ${CIFRAS.fracciones} fracciones de actividades vulnerables. Como varias se desdoblan en incisos y apartados con reglas propias, en la práctica hay ${CIFRAS.supuestos} supuestos distintos, de los cuales ${CIFRAS.supuestosVerificados} tienen umbral verificado contra fuente oficial y ${CIFRAS.supuestosPendientes} existen en la ley sin cifra publicada por la autoridad. Por eso cada uno tiene su propia página en lugar de una tabla que los aplane a un solo número.`}
       />
 
       <IndiceContenidos entradas={INDICE} />
@@ -306,6 +308,8 @@ export default function PaginaActividades() {
 
       <FirmaEditorial />
       <AvisoLegal />
+      <FuentesPrincipales className="mt-4" />
+
     </div>
   );
 }
