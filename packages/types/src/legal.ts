@@ -204,6 +204,21 @@ export interface SupuestoVariable {
 
 export type Periodicidad = 'operacion' | 'mensual' | 'semestral' | 'anual';
 
+/**
+ * Cómo se nombra cada periodicidad de cara a una persona.
+ *
+ * Vive junto al enum a propósito. Tres vistas pintaban el valor crudo con
+ * `capitalize`, y como los identificadores de código no llevan tilde, en la
+ * tabla de umbrales aparecía «Operacion» en decenas de filas. Un `Record`
+ * exhaustivo obliga además a nombrar cualquier periodicidad que se añada.
+ */
+export const ETIQUETA_PERIODICIDAD: Record<Periodicidad, string> = {
+  operacion: 'Por operación',
+  mensual: 'Mensual',
+  semestral: 'Semestral',
+  anual: 'Anual',
+};
+
 /** Cómo se acumulan operaciones del mismo cliente para alcanzar el aviso. */
 export interface ReglaAcumulacion {
   aplica: boolean;

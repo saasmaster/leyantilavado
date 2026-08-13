@@ -58,7 +58,7 @@ const ENTENDER: Destino[] = [
     titulo: 'Actividades vulnerables',
     descripcion:
       'Las 16 fracciones del art. 17, quién cae en cada una y quién no. Con los incisos desglosados, no aplanados a un solo número.',
-    dato: `${TOTAL_ACTIVIDADES} actividades`,
+    dato: TOTAL_ACTIVIDADES,
     icono: Layers,
     destacado: true,
   },
@@ -67,7 +67,7 @@ const ENTENDER: Destino[] = [
     titulo: 'Umbrales de identificación y aviso',
     descripcion:
       'La tabla completa, convertible a pesos con la UMA de cualquier año desde 2016.',
-    dato: `${TOTAL_UMBRALES} reglas vigentes`,
+    dato: TOTAL_UMBRALES,
     icono: Scale,
     destacado: true,
   },
@@ -84,7 +84,7 @@ const ENTENDER: Destino[] = [
     titulo: 'Límites de efectivo',
     descripcion:
       'Las prohibiciones del art. 32. Ojo: se miden con IVA, mientras que los umbrales de aviso van sin IVA.',
-    dato: `${TOTAL_EFECTIVO} supuestos`,
+    dato: TOTAL_EFECTIVO,
     icono: Banknote,
   },
   {

@@ -9,7 +9,26 @@ export function Tarjeta({
   elevada,
   ...props
 }: React.HTMLAttributes<HTMLDivElement> & { elevada?: boolean }) {
-  return <div className={cn('tarjeta', elevada && 'tarjeta-elevada', className)} {...props} />;
+  // El anillo de foco lo lleva la tarjeta, no el enlace.
+  //
+  // El patrón de «enlace estirado» —un `<a>` con `after:absolute inset-0` que
+  // cubre toda la tarjeta— obliga a quitarle el `outline` al enlace, porque
+  // dibujaría el anillo alrededor de un elemento de 0×0. Quitarlo es correcto;
+  // lo que faltaba era devolvérselo al contenedor. Sin esto, 18 tarjetas de
+  // /herramientas se recorrían con el teclado sin que nada se moviera en
+  // pantalla.
+  return (
+    <div
+      className={cn(
+        'tarjeta',
+        'has-[a:focus-visible]:outline has-[a:focus-visible]:outline-[2.5px]',
+        'has-[a:focus-visible]:outline-[var(--color-anillo)] has-[a:focus-visible]:outline-offset-2',
+        elevada && 'tarjeta-elevada',
+        className,
+      )}
+      {...props}
+    />
+  );
 }
 
 export function TarjetaEncabezado({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
@@ -209,16 +228,31 @@ export function TablaEnvoltura({
   etiqueta,
   ...props
 }: React.HTMLAttributes<HTMLDivElement> & { etiqueta?: string }) {
+  // La máscara de degradado en el borde derecho es la señal de que hay más
+  // tabla. Sin ella, en móvil la tabla de umbrales se corta limpiamente en el
+  // borde y parece terminada: las columnas de identificación y aviso —el
+  // contenido entero de la página— quedan fuera de pantalla sin ningún indicio
+  // de que existan. El usuario concluye que el sitio no trae las cifras.
+  //
+  // Se hace con `mask-image` y no con un pseudoelemento porque la máscara
+  // desaparece sola al llegar al final del scroll, sin JavaScript que escuche
+  // el evento.
   return (
-    <div
-      tabIndex={0}
-      {...(etiqueta ? { role: 'region', 'aria-label': etiqueta } : {})}
-      className={cn(
-        'overflow-x-auto rounded-[var(--radius-card)] border border-[var(--color-borde)]',
-        className,
-      )}
-      {...props}
-    />
+    <div className="relative">
+      <div
+        tabIndex={0}
+        {...(etiqueta ? { role: 'region', 'aria-label': etiqueta } : {})}
+        className={cn(
+          'overflow-x-auto rounded-[var(--radius-card)] border border-[var(--color-borde)]',
+          'tabla-con-scroll',
+          className,
+        )}
+        {...props}
+      />
+      <p className="mt-2 text-sm text-[var(--color-tinta-tenue)] md:hidden" aria-hidden="true">
+        Desliza la tabla para ver todas las columnas →
+      </p>
+    </div>
   );
 }
 

@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { ANIOS_UMA_DISPONIBLES, convertirUMA } from '@leyantilavado/rules-engine';
-import { formatearMXN, type Actividad, type ReglaUmbral } from '@leyantilavado/types';
+import { ETIQUETA_PERIODICIDAD, formatearMXN, type Actividad, type ReglaUmbral } from '@leyantilavado/types';
 import { Campo, Entrada, Insignia, Selector, TablaEnvoltura } from '@leyantilavado/ui';
 import { describirUmbral, fechaDeAnioUMA, formatearUMA, tonoUmbral, type VistaUmbral } from './umbral';
 
@@ -232,7 +232,7 @@ export function TablaUmbrales({
                   <CeldaUmbral vista={f.aviso} unidad={unidad} />
                 </td>
                 <td className="px-4 py-4 text-xs text-[var(--color-tinta-suave)]">
-                  <p className="capitalize">{f.regla.periodicidad}</p>
+                  <p>{ETIQUETA_PERIODICIDAD[f.regla.periodicidad]}</p>
                   {f.regla.acumulacion.aplica && (
                     <p className="mt-1">
                       Se acumula en {f.regla.acumulacion.ventanaMeses} meses
