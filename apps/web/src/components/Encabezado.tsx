@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { ChevronDown, Menu, Moon, Sun, X } from 'lucide-react';
+import { ChevronDown, ChevronRight, Menu, Moon, Sun, X } from 'lucide-react';
 import { Boton, cn } from '@leyantilavado/ui';
 import { NAVEGACION } from '@/lib/sitio';
 import { useTema } from './ProveedorTema';
@@ -115,28 +115,44 @@ export function Encabezado() {
                 <AnimatePresence>
                   {activo && (
                     <motion.div
-                      initial={reducido ? { opacity: 0 } : { opacity: 0, y: -6, scale: 0.985 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={reducido ? { opacity: 0 } : { opacity: 0, y: -6, scale: 0.985 }}
-                      transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+                      /* La ENTRADA no anima opacidad: el menú aparece opaco
+                         desde el primer fotograma y sólo se desliza. Con un
+                         desvanecido, durante esos ~180 ms el panel es
+                         translúcido y el texto de la página se lee entre las
+                         letras del menú — que es justo el defecto que se
+                         reportó. La salida sí desvanece: ahí ya no hay nada
+                         que leer y el desvanecido evita el corte seco. */
+                      initial={reducido ? false : { y: -8, scale: 0.97 }}
+                      animate={{ y: 0, scale: 1, opacity: 1 }}
+                      exit={{ opacity: 0, y: -6, transition: { duration: 0.12 } }}
+                      transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
                       className="absolute left-0 top-full w-[21rem] origin-top pt-2"
                     >
-                      <ul className="tarjeta overflow-hidden p-1.5 shadow-[var(--shadow-flotante)]">
+                      <ul className="superficie-flotante overflow-hidden p-2">
                         {grupo.enlaces.map((enlace) => (
                           <li key={enlace.href}>
                             <Link
                               href={enlace.href}
                               onClick={() => setMenuActivo(null)}
-                              className="group/e flex flex-col gap-0.5 rounded-[var(--radius-control)] px-3 py-2.5 transition-colors duration-150 hover:bg-[var(--color-marfil-hondo)]"
+                              className="group/e flex items-start gap-3 rounded-[var(--radius-control)] px-3 py-2.5 transition-colors duration-150 hover:bg-[var(--color-marfil-hondo)]"
                             >
-                              <span className="text-[0.875rem] font-medium text-[var(--color-tinta)]">
-                                {enlace.etiqueta}
-                              </span>
-                              {enlace.descripcion && (
-                                <span className="text-[0.78rem] leading-snug text-[var(--color-tinta-tenue)]">
-                                  {enlace.descripcion}
+                              <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                                <span className="text-[0.9rem] font-medium text-[var(--color-tinta)]">
+                                  {enlace.etiqueta}
                                 </span>
-                              )}
+                                {enlace.descripcion && (
+                                  <span className="text-[0.8rem] leading-snug text-[var(--color-tinta-tenue)]">
+                                    {enlace.descripcion}
+                                  </span>
+                                )}
+                              </span>
+                              {/* La flecha aparece al apuntar y se desplaza un
+                                  pelo: indica destino sin ocupar sitio cuando
+                                  no hace falta. */}
+                              <ChevronRight
+                                aria-hidden="true"
+                                className="mt-0.5 size-4 shrink-0 -translate-x-1 text-[var(--color-tinta-tenue)] opacity-0 transition-[opacity,transform] duration-200 group-hover/e:translate-x-0 group-hover/e:opacity-100"
+                              />
                             </Link>
                           </li>
                         ))}

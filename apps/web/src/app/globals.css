@@ -244,6 +244,38 @@
     -webkit-backdrop-filter: blur(14px) saturate(1.4);
   }
 
+  /**
+   * Superficie flotante: menús, popovers, cualquier cosa que se dibuje ENCIMA
+   * de contenido impredecible.
+   *
+   * Es opaca, y ésa es toda la diferencia con `.tarjeta`. Una tarjeta vive
+   * dentro del flujo, sobre un fondo que conocemos, y ahí el 78% con blur se
+   * ve bien. Un menú desplegable cae sobre lo que haya debajo —un titular
+   * enorme, una tabla, una foto— y el texto de detrás se cuela entre las
+   * letras del de delante. `backdrop-filter` no lo salva: difumina, no tapa,
+   * y con dos textos de tamaño parecido el resultado es ilegible.
+   *
+   * La elevación la da la sombra, que para eso está.
+   */
+  .superficie-flotante {
+    background-color: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radius-card);
+    box-shadow:
+      0 1px 2px rgb(0 0 0 / 0.04),
+      0 12px 28px -8px rgb(0 0 0 / 0.14),
+      0 32px 64px -24px rgb(0 0 0 / 0.18);
+  }
+
+  :where(.oscuro) .superficie-flotante {
+    /* En oscuro la sombra casi no se ve, así que la separación del fondo la
+       tiene que dar el borde. */
+    border-color: var(--color-borde-fuerte);
+    box-shadow:
+      0 1px 2px rgb(0 0 0 / 0.3),
+      0 16px 40px -12px rgb(0 0 0 / 0.55);
+  }
+
   .tarjeta::before {
     content: '';
     position: absolute;
