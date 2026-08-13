@@ -50,6 +50,27 @@ export const CATEGORIAS_FAQ: CategoriaFAQ[] = [
     descripcion: 'Lo primero que hay que resolver, y donde más se equivoca la gente.',
     preguntas: [
       {
+        id: 'no-se-llama-lavado-de-dinero',
+        pregunta: '¿En México existe el delito de «lavado de dinero»?',
+        respuesta: [
+          'Con ese nombre, no. El tipo penal mexicano se llama «operaciones con recursos de procedencia ilícita», y la ley que estás leyendo se llama así por lo mismo: Ley Federal para la Prevención e Identificación de Operaciones con Recursos de Procedencia Ilícita.',
+          'No es un detalle de vocabulario. «Lavar dinero» describe un proceso de tres etapas —colocar el recurso, estratificarlo para perder su rastro y darle apariencia lícita— y probar las tres es difícil. El legislador mexicano tipificó algo más acotado y, sobre todo, movió la carga: en lugar de perseguir el proceso completo, obliga a quien realiza ciertas actividades a documentar de dónde viene el dinero con el que le pagan.',
+          'De ahí que esta ley sea preventiva y no penal. Tú no estás persiguiendo un delito: estás dejando constancia de que preguntaste, y esa constancia es lo que te protege.',
+        ],
+        fundamento: 'Denominación oficial de la LFPIORPI y Código Penal Federal',
+        verMas: { href: '/glosario', etiqueta: 'Ver el glosario completo' },
+      },
+      {
+        id: 'financieras-y-no-financieras',
+        pregunta: '¿Las actividades vulnerables son sólo las que no son bancos?',
+        respuesta: [
+          'No, y confundirlo hace que gente que sí está obligada crea que no lo está. Hay actividades vulnerables dentro del sistema financiero y fuera de él; lo que cambia es quién las supervisa.',
+          'A las entidades financieras —bancos, sofomes, casas de bolsa, casas de cambio— las regula la Comisión Nacional Bancaria y de Valores. A las actividades vulnerables NO financieras, que son las del artículo 17 y de las que trata este sitio, las supervisa la Unidad de Inteligencia Financiera a través del SAT.',
+          'Cuando alguien dice «actividades vulnerables» a secas casi siempre se refiere a las no financieras. Si tu negocio es una sofom o una casa de cambio, tu régimen es otro y tus obligaciones no son las que se calculan aquí.',
+        ],
+        fundamento: 'Art. 17 LFPIORPI y régimen de entidades financieras',
+      },
+      {
         id: 'como-se-si-aplica',
         pregunta: '¿Cómo sé si mi negocio realiza una actividad vulnerable?',
         respuesta: [
@@ -183,6 +204,33 @@ export const CATEGORIAS_FAQ: CategoriaFAQ[] = [
     descripcion: 'Cuándo se presenta, qué pasa si se te pasa.',
     preguntas: [
       {
+        id: 'devolver-en-la-misma-forma',
+        pregunta: 'Un cliente canceló y me pide que le devuelva el dinero. ¿Puedo transferírselo?',
+        respuesta: [
+          'Sólo si te pagó por transferencia. La devolución tiene que hacerse en la MISMA forma de pago y en la MISMA moneda en que recibiste el recurso, y esta regla entró en vigor el 30 de marzo de 2026 con la reforma al Reglamento.',
+          'El caso que la explica es el que más se repite: el cliente deposita en efectivo, cancela, y por comodidad o por seguridad se le devuelve por transferencia bancaria. En ese momento un dinero que llegó en efectivo salió del sistema formal convertido en saldo bancario a nombre de alguien —con tu empresa como puente—. Eso es literalmente una etapa de integración, y tu intención no cambia el resultado.',
+          'Vale también al revés: si te pagaron por transferencia, no devuelvas en efectivo. Y si te pagaron en dólares, la devolución va en dólares.',
+          'Guarda el comprobante de la devolución junto al de la operación original. Sin ese par, en una revisión sólo se ve una entrada de efectivo y una salida bancaria que no se explican entre sí.',
+        ],
+        fundamento: 'Reglamento de la LFPIORPI, reformado el 27 de marzo de 2026, en vigor el 30 de marzo de 2026',
+        verMas: { href: '/reforma-ley-antilavado-2026', etiqueta: 'Ver qué más cambió el Reglamento' },
+      },
+      {
+        id: 'operacion-inusual-sin-umbral',
+        pregunta: 'Un cliente opera cada semana por debajo del umbral. ¿Tengo que hacer algo?',
+        respuesta: [
+          'Sí, y aquí se rompe la idea más extendida sobre esta ley: que si no se rebasa el umbral, no hay nada que hacer. El umbral dispara el aviso por monto; no es lo único que dispara un aviso.',
+          'Un cliente que hace operaciones de veinte mil pesos cada ocho días nunca rebasa el umbral y aun así construye un patrón. Fraccionar deliberadamente para quedarse por debajo tiene nombre en el sector —pitufeo— y es exactamente lo que la regla de acumulación de seis meses persigue.',
+          'Lo que activa esto no es una cifra sino una comparación: la operación contra el perfil transaccional que le asignaste a ese cliente. Si se sale de su perfil, es inusual, aunque el monto sea pequeño.',
+          'Por eso los negocios chicos no están más seguros por ser chicos. Al contrario: en una empresa grande un movimiento raro destaca entre millones, y en una chica un patrón de cantidades modestas puede pasar años sin que nadie lo mire.',
+        ],
+        fundamento: 'Art. 17 LFPIORPI, regla de acumulación de seis meses, y perfil transaccional',
+        herramienta: {
+          href: '/herramientas/acumulacion-operaciones',
+          etiqueta: 'Revisar la acumulación de un cliente',
+        },
+      },
+      {
         id: 'presentar-un-dia-tarde',
         pregunta: 'Presenté el aviso el día 18. ¿Pasa algo si nadie me dice nada?',
         respuesta: [
@@ -282,6 +330,30 @@ export const CATEGORIAS_FAQ: CategoriaFAQ[] = [
           'Rebasar el límite de efectivo es una infracción independiente: se sanciona aunque hayas presentado todos los avisos en tiempo y forma.',
         ],
         fundamento: 'Art. 32 y art. 53, fracción VII LFPIORPI',
+      },
+      {
+        id: 'auditoria-interna-o-externa',
+        pregunta: '¿La auditoría anual tiene que hacerla un externo?',
+        respuesta: [
+          'Depende de tu propio nivel de riesgo, y ése es el matiz que casi nadie menciona al hablar de la obligación de auditoría.',
+          'Si tu evaluación de riesgo te sitúa en nivel medio o bajo, la auditoría puede ser interna o externa. Si te sitúa en nivel alto, tiene que hacerla un auditor externo.',
+          'La consecuencia es incómoda y conviene verla venir: la metodología de riesgos que tienes que tener lista en marzo de 2027 es la que determina, entre otras cosas, cuánto te va a costar cumplir a partir de 2028. Una clasificación de riesgo alto no es sólo una etiqueta, trae presupuesto detrás.',
+          'Eso no es un incentivo para clasificarte bajo. Una clasificación que no corresponde a tu operación es de lo primero que se cae en una revisión, y entonces el problema ya no es el costo de la auditoría.',
+        ],
+        fundamento: 'Obligación de auditoría anual del Acuerdo 115/2026',
+        verMas: { href: '/obligaciones', etiqueta: 'Ver la obligación completa' },
+      },
+      {
+        id: 'capacitacion-por-nivel',
+        pregunta: '¿Basta con un curso general para todo el personal?',
+        respuesta: [
+          'No. La capacitación se exige por nivel jerárquico, y una sesión igual para todos no cumple ese requisito por muchas constancias que genere.',
+          'La dirección necesita entender la exposición del negocio y aprobar políticas; el encargado de cumplimiento, el procedimiento completo; y el personal que atiende clientes, cómo se pregunta por el beneficiario controlador sin incomodar y qué hacer cuando alguien se niega a dar un dato.',
+          'El área de ventas es la que más importa y la que suele quedarse fuera. Es la primera línea de defensa —ve al cliente antes que nadie— y es también la que tiene más incentivos para saltarse el protocolo, porque su comisión depende de cerrar la operación, no de completar el expediente.',
+          'Ese conflicto no se resuelve con un curso: se resuelve reconociéndolo en el manual y midiendo el cumplimiento del expediente igual que se mide la venta.',
+        ],
+        fundamento: 'Obligación de capacitación por nivel jerárquico',
+        verMas: { href: '/cursos', etiqueta: 'Ver la capacitación oficial gratuita' },
       },
       {
         id: 'carcel-por-error-en-aviso',
@@ -404,7 +476,9 @@ export const CATEGORIAS_FAQ: CategoriaFAQ[] = [
           'Más gente de la que casi todo el mundo supone. No es sólo el funcionario: alcanza también a su cónyuge o concubina y a sus familiares hasta el segundo grado. Un cliente sin cargo público puede ser PEP por parentesco.',
           'Y no deja de serlo el día que deja el puesto: se maneja un periodo de enfriamiento de un año durante el cual el exfuncionario sigue tratándose como de riesgo alto.',
           'Aplica tanto a funcionarios nacionales como extranjeros, lo que importa en plazas con clientela internacional.',
+          'Dale la vuelta y verás por qué esto sorprende: si tu cónyuge es funcionario público, el PEP eres tú. Si uno de los socios de tu empresa lo es, la relación con esa empresa hereda el mismo tratamiento. Mucha gente descubre que es PEP cuando un proveedor se lo pregunta.',
           'Ser PEP no es una acusación ni impide operar con esa persona. Lo que activa es debida diligencia reforzada: más documentación, origen de los recursos y, en riesgo alto, aprobación explícita de la dirección antes de aceptar la relación.',
+          'Y no se resuelve preguntando de frente y creyendo la respuesta: existe una consulta a la autoridad para confirmarlo, y el sitio ya tiene en su calendario la fecha prevista de disponibilidad del padrón electrónico. Mientras tanto, lo que se documenta es la pregunta y lo que el cliente contestó.',
         ],
         fundamento: 'Acuerdo 115/2026, capítulo de personas políticamente expuestas',
         verMas: { href: '/obligaciones', etiqueta: 'Ver la obligación completa' },
