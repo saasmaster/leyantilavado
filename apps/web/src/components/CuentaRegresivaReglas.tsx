@@ -302,7 +302,7 @@ function TarjetaRegla({
 
         {!regla.confirmadoOficialmente && (
           <span
-            className="text-[0.68rem] font-medium text-[var(--color-tinta-tenue)]"
+            className="text-[0.75rem] font-medium text-[var(--color-tinta-tenue)]"
             title="El texto oficial fija un plazo en meses, no una fecha calendario. Esta fecha es un cálculo orientativo."
           >
             fecha estimada
@@ -331,13 +331,13 @@ function TarjetaRegla({
           {regla.obligaciones.slice(0, 3).map((o) => (
             <li
               key={o}
-              className="rounded-[var(--radius-pastilla)] bg-[var(--color-marfil-hondo)] px-2 py-0.5 text-[0.7rem] text-[var(--color-tinta-suave)]"
+              className="rounded-[var(--radius-pastilla)] bg-[var(--color-marfil-hondo)] px-2 py-0.5 text-[0.75rem] text-[var(--color-tinta-suave)]"
             >
               {o}
             </li>
           ))}
           {regla.obligaciones.length > 3 && (
-            <li className="px-1 py-0.5 text-[0.7rem] text-[var(--color-tinta-tenue)]">
+            <li className="px-1 py-0.5 text-[0.75rem] text-[var(--color-tinta-tenue)]">
               +{regla.obligaciones.length - 3}
             </li>
           )}
@@ -380,7 +380,7 @@ function Reloj({ restante, acento }: { restante: Restante; acento: string }) {
               >
                 {i === 0 ? s.valor : String(s.valor).padStart(2, '0')}
               </span>
-              <span className="text-[0.7rem] text-[var(--color-tinta-tenue)]">{s.etiqueta}</span>
+              <span className="text-[0.75rem] text-[var(--color-tinta-tenue)]">{s.etiqueta}</span>
             </div>
             {i < segmentos.length - 1 && (
               <span className="text-[var(--color-borde-fuerte)]">·</span>

@@ -99,9 +99,6 @@ export default function Inicio() {
       <MapaDelSitio />
 
       <Newsletter actividades={ACTIVIDADES_BOLETIN} />
-
-      <div className="contenedor-app pb-20">
-      </div>
     </>
   );
 }

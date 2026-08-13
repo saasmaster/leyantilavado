@@ -7,9 +7,21 @@ import { ENLACES_PIE, NAVEGACION, SITIO } from '@/lib/sitio';
 // sólo aparece en `next build`.
 const ANIO_ACTUAL = new Date().getFullYear();
 
+/**
+ * `mt-12` en móvil y `mt-24` a partir de tablet.
+ *
+ * La sección que precede al pie ya trae su propio relleno inferior, así que
+ * los dos márgenes se apilaban: 220px sin nada dibujado justo antes del pie.
+ * En escritorio eso es aire; en una pantalla de 839px es un cuarto de la vista
+ * en blanco después de una sección que ya parece un cierre, y se lee como que
+ * la página se acabó o falló algo.
+ *
+ * El borde superior ya separa el pie del contenido; el margen sólo tiene que
+ * dar respiro, no abrir un vacío.
+ */
 export function PieDePagina() {
   return (
-    <footer className="mt-24 border-t border-[var(--color-borde)] bg-[var(--color-marfil-hondo)]">
+    <footer className="mt-12 border-t border-[var(--color-borde)] bg-[var(--color-marfil-hondo)] md:mt-24">
       <div className="contenedor-app py-12">
         {/* El aviso de independencia va arriba del todo, no escondido en la
             letra chica: es la promesa central del proyecto. */}

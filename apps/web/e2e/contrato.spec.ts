@@ -340,3 +340,125 @@ test.describe('Accesibilidad', () => {
     expect(estado!.enfocable, 'el contenedor con scroll debe ser enfocable').toBe(true);
   });
 });
+
+/* ────────────────────────────────────────────────────────────────────────────
+ * Móvil: los dos fallos que se reportaron desde un teléfono real.
+ *
+ * Los dos son de la clase que no se ve en una revisión de código y no aparece
+ * si sólo se prueba la página desde arriba.
+ * ────────────────────────────────────────────────────────────────────────── */
+
+test.describe('Móvil', () => {
+  test('el menú se ve aunque la página esté desplazada', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.goto('/');
+    await page.waitForLoadState('load');
+
+    // Espera a la hidratación de verdad, no a un temporizador.
+    //
+    // El resto del contrato comprueba HTML servido, así que nunca la necesitó.
+    // Ésta sí pulsa un botón: sin hidratar el clic no dispara nada, y el fallo
+    // se lee como «el menú no existe» cuando lo que pasó es que React todavía
+    // no había enganchado el manejador.
+    const boton = page.locator('header button[aria-controls="menu-movil"]');
+    await expect
+      .poll(async () => {
+        await boton.click();
+        return boton.getAttribute('aria-expanded');
+      }, { timeout: 15_000, message: 'el botón del menú nunca respondió' })
+      .toBe('true');
+    await boton.click(); // cerrar, para abrirlo ya desplazado
+
+    // A media página. El fallo original NO se reproducía en scrollY = 0: el
+    // encabezado sólo aplica `backdrop-filter` cuando detecta desplazamiento,
+    // y ese filtro crea bloque contenedor, que convertía el menú `fixed` en
+    // algo que se comportaba como `absolute` y se iba con el scroll.
+    //
+    // `behavior: 'instant'` a propósito: el sitio lleva `scroll-behavior:
+    // smooth`, y con un desplazamiento animado el encabezado sigue moviéndose
+    // cuando Playwright evalúa si el botón está estable. La prueba caducaba
+    // esperando a un elemento que no estaba quieto, no por el fallo real.
+    await page.evaluate(() => window.scrollTo({ top: 3000, behavior: 'instant' }));
+    await page.waitForFunction(() => window.scrollY >= 2900);
+    await boton.click();
+    await page.locator('#menu-movil').waitFor({ state: 'visible' });
+    await page.waitForTimeout(400);
+
+    const m = await page.evaluate(() => {
+      const nav = document.querySelector('#menu-movil') as HTMLElement | null;
+      if (!nav) return null;
+      const b = nav.getBoundingClientRect();
+      const cta = nav.querySelector('a[href*="cuestionario"]')?.getBoundingClientRect();
+      return {
+        dentroDePantalla: b.top >= 0 && b.top < window.innerHeight,
+        // El portal saca el menú del <header> justamente para que ningún
+        // filtro de un ancestro pueda volver a romper el `fixed`.
+        fueraDelEncabezado: nav.parentElement?.tagName === 'BODY',
+        ctaVisibleSinDesplazar: !!cta && cta.top >= 0 && cta.bottom <= window.innerHeight,
+        // El encabezado tiene que seguir a la vista: ahí está la X de cerrar.
+        encabezadoVisible: (() => {
+          const h = document.querySelector('header')!.getBoundingClientRect();
+          return h.top >= 0 && h.top < window.innerHeight;
+        })(),
+      };
+    });
+
+    expect(m, 'el menú móvil debe existir al abrirlo').not.toBeNull();
+    expect(m!.dentroDePantalla, 'el menú debe verse sin subir al principio').toBe(true);
+    expect(m!.fueraDelEncabezado, 'el menú debe vivir fuera del <header>').toBe(true);
+    expect(m!.ctaVisibleSinDesplazar, 'el CTA debe verse sin desplazar el menú').toBe(true);
+    expect(m!.encabezadoVisible, 'el encabezado debe seguir visible: lleva la X').toBe(true);
+  });
+
+  test('la portada no tiene franjas en blanco', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.goto('/');
+    await page.waitForLoadState('load');
+
+    // Se revela todo primero: una animación de entrada pendiente no es un
+    // hueco, y confundirlas haría fallar la prueba por el motivo equivocado.
+    await page.evaluate(async () => {
+      for (let y = 0; y < document.body.scrollHeight; y += 400) {
+        window.scrollTo(0, y);
+        await new Promise((r) => setTimeout(r, 40));
+      }
+    });
+    await page.waitForTimeout(600);
+
+    const huecos = await page.evaluate(() => {
+      const total = document.body.scrollHeight;
+      const pintado = new Uint8Array(Math.ceil(total / 10));
+      for (const e of document.querySelectorAll('body *')) {
+        const el = e as HTMLElement;
+        const s = getComputedStyle(el);
+        if (s.display === 'none' || Number(s.opacity) === 0) continue;
+        const tieneTinta =
+          (el.innerText?.trim().length ?? 0) > 0 ||
+          el.tagName === 'IMG' ||
+          el.tagName === 'SVG' ||
+          (s.backgroundColor !== 'rgba(0, 0, 0, 0)' && s.backgroundColor !== 'transparent') ||
+          s.borderTopWidth !== '0px';
+        if (!tieneTinta) continue;
+        const b = el.getBoundingClientRect();
+        if (b.height <= 0 || b.height >= 2000) continue;
+        for (let i = Math.floor((b.top + scrollY) / 10); i <= Math.floor((b.bottom + scrollY) / 10); i++) {
+          if (i >= 0 && i < pintado.length) pintado[i] = 1;
+        }
+      }
+      const encontrados: string[] = [];
+      let inicio = -1;
+      for (let i = 0; i < pintado.length; i++) {
+        if (!pintado[i] && inicio < 0) inicio = i;
+        if (pintado[i] && inicio >= 0) {
+          // 150px es más de un sexto de pantalla: por debajo es respiro, por
+          // encima se lee como que la página se rompió.
+          if ((i - inicio) * 10 >= 150) encontrados.push(`y=${inicio * 10} (${(i - inicio) * 10}px)`);
+          inicio = -1;
+        }
+      }
+      return encontrados;
+    });
+
+    expect(huecos, `Franjas sin nada dibujado: ${huecos.join(', ')}`).toEqual([]);
+  });
+});

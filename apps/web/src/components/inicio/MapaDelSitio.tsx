@@ -243,7 +243,7 @@ function TarjetaDestino({ destino }: { destino: Destino }) {
         <span className="grid size-10 place-items-center rounded-[var(--radius-control)] bg-[var(--color-petroleo-tenue)] text-[var(--color-petroleo-hondo)]">
           <Icono className="size-5" />
         </span>
-        <span className="cifra rounded-[var(--radius-pastilla)] bg-[var(--color-marfil-hondo)] px-2.5 py-1 text-[0.7rem] font-medium text-[var(--color-tinta-suave)]">
+        <span className="cifra rounded-[var(--radius-pastilla)] bg-[var(--color-marfil-hondo)] px-2.5 py-1 text-[0.75rem] font-medium text-[var(--color-tinta-suave)]">
           {destino.dato}
         </span>
       </div>

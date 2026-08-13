@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { ChevronDown, ChevronRight, Menu, Moon, Sun, X } from 'lucide-react';
@@ -12,6 +13,11 @@ export function Encabezado() {
   const [abierto, setAbierto] = React.useState(false);
   const [menuActivo, setMenuActivo] = React.useState<string | null>(null);
   const [desplazado, setDesplazado] = React.useState(false);
+  // El portal necesita `document`, que no existe en el servidor. Se monta tras
+  // la hidratación; el menú sólo puede abrirse con un clic, así que nunca hay
+  // un instante en que haga falta antes.
+  const [montado, setMontado] = React.useState(false);
+  React.useEffect(() => setMontado(true), []);
   const { alternar } = useTema();
   const reducido = useReducedMotion();
 
@@ -45,7 +51,11 @@ export function Encabezado() {
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 transition-[background-color,border-color,box-shadow] duration-300',
+        'top-0 z-50 transition-[background-color,border-color,box-shadow] duration-300',
+        // Con el menú abierto se bloquea el scroll del cuerpo, y un `sticky`
+        // sin contexto de desplazamiento se va con la página: el encabezado
+        // desaparecía y con él la X de cerrar. `fixed` lo ancla mientras dura.
+        abierto ? 'fixed inset-x-0' : 'sticky',
         'border-b',
         desplazado
           ? 'border-[var(--color-borde)] bg-[color-mix(in_srgb,var(--color-marfil)_78%,transparent)] shadow-[var(--shadow-suave)] backdrop-blur-xl backdrop-saturate-150'
@@ -53,18 +63,22 @@ export function Encabezado() {
       )}
     >
       <div className="contenedor-app flex h-[4.25rem] items-center justify-between gap-4">
+        {/* `min-w-0` y no `shrink-0`: con el lema visible en móvil este bloque
+            se ensanchaba y empujaba los controles de la derecha hasta
+            solaparlos —el botón de tema quedaba encima del de menú y se
+            tocaba el equivocado—. La marca cede espacio; los controles no. */}
         <Link
           href="/"
-          className="group flex shrink-0 items-center gap-2.5"
+          className="group flex min-w-0 items-center gap-2.5"
           onClick={() => setAbierto(false)}
         >
           <LogoMarca />
-          <span className="flex flex-col leading-none">
+          <span className="flex min-w-0 flex-col leading-none">
             <span className="font-[family-name:var(--font-display)] text-[1.0625rem] font-semibold tracking-[-0.02em] text-[var(--color-tinta)]">
               LeyAntilavado
               <span className="text-[var(--color-petroleo)]">.org</span>
             </span>
-            <span className="mt-1 hidden text-[0.66rem] tracking-[0.01em] text-[var(--color-tinta-tenue)] sm:block">
+            <span className="mt-0.5 truncate text-[0.75rem] leading-tight tracking-[0.01em] text-[var(--color-tinta-suave)]">
               Centro independiente sobre la LFPIORPI
             </span>
           </span>
@@ -165,7 +179,7 @@ export function Encabezado() {
           })}
         </nav>
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex shrink-0 items-center gap-1.5">
           {/* El ícono lo decide CSS, no React: el script anti-parpadeo ya cambió
               el DOM antes de que React hidrate, así que ramificar el render con
               el tema rompería la hidratación. La etiqueta accesible describe la
@@ -197,46 +211,84 @@ export function Encabezado() {
         </div>
       </div>
 
-      {/* ── Navegación móvil ───────────────────────────────────────────── */}
-      <AnimatePresence>
-        {abierto && (
-          <motion.nav
-            id="menu-movil"
-            aria-label="Principal móvil"
-            initial={reducido ? { opacity: 0 } : { opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={reducido ? { opacity: 0 } : { opacity: 0, height: 0 }}
-            transition={{ duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden border-t border-[var(--color-borde)] bg-[var(--color-marfil)] lg:hidden"
-          >
-            <div className="contenedor-app flex max-h-[calc(100dvh-4.25rem)] flex-col gap-7 overflow-y-auto py-7">
-              {NAVEGACION.map((grupo) => (
-                <div key={grupo.titulo}>
-                  <p className="eyebrow mb-2.5">{grupo.titulo}</p>
-                  <ul className="flex flex-col">
-                    {grupo.enlaces.map((enlace) => (
-                      <li key={enlace.href}>
-                        <Link
-                          href={enlace.href}
-                          onClick={() => setAbierto(false)}
-                          className="flex min-h-11 items-center rounded-[var(--radius-control)] px-3 text-[0.95rem] text-[var(--color-tinta)] transition-colors duration-150 hover:bg-[var(--color-marfil-hondo)]"
-                        >
-                          {enlace.etiqueta}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-              <Boton comoHijo variante="accion" ancho="completo" tamano="lg">
-                <Link href="/herramientas/cuestionario" onClick={() => setAbierto(false)}>
-                  Descubre si te aplica
-                </Link>
-              </Boton>
-            </div>
-          </motion.nav>
+      {/* ── Navegación móvil ─────────────────────────────────────────────
+          Capa FIJA, no una expansión del encabezado.
+          
+          Antes el menú crecía dentro del `<header sticky>`. Con los cuatro
+          grupos abiertos el encabezado pasaba a medir 841px en una ventana de
+          839px, y un elemento `sticky` más alto que el viewport deja de
+          pegarse: es lo que dice la especificación, no un fallo del navegador.
+          Resultado: si abrías el menú a mitad de página, se iba hacia arriba
+          con el scroll y había que subir del todo para verlo.
+          
+          Con `fixed` el menú ocupa la pantalla desde debajo del encabezado y
+          se queda donde está, se haya desplazado la página o no. */}
+      {montado &&
+        createPortal(
+          <AnimatePresence>
+            {abierto && (
+              <>
+                {/* Telón: da a dónde tocar para cerrar sin buscar la X, que es lo
+                    que hace la mano en un teléfono. */}
+                <motion.button
+                  type="button"
+                  aria-label="Cerrar menú"
+                  onClick={() => setAbierto(false)}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="fixed inset-0 top-[4.25rem] z-40 bg-[color-mix(in_srgb,var(--color-tinta)_28%,transparent)] lg:hidden"
+                />
+                <motion.nav
+                  id="menu-movil"
+                  aria-label="Principal móvil"
+                  /* La entrada NO anima opacidad, igual que el desplegable
+                     de escritorio: durante el desvanecido el panel es
+                     translúcido y se lee la página entre las líneas del menú.
+                     Aparece opaco y sólo se desliza. La salida sí desvanece,
+                     que ahí ya no hay nada que leer. */
+                  initial={reducido ? false : { y: -10 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ opacity: 0, transition: { duration: 0.12 } }}
+                  transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+                  className="fixed inset-x-0 top-[4.25rem] z-50 max-h-[calc(100dvh-4.25rem)] overflow-y-auto overscroll-contain border-t border-[var(--color-borde)] bg-[var(--color-marfil)] shadow-[0_16px_40px_-12px_rgb(0_0_0/0.25)] lg:hidden"
+                >
+                  <div className="contenedor-app flex flex-col gap-7 py-6">
+                    {/* El CTA arriba, no al final.
+                        Estaba a 1.439px dentro del panel: había que recorrer los
+                        cuatro grupos de navegación para llegar a la acción
+                        principal del sitio. */}
+                    <Boton comoHijo variante="accion" ancho="completo" tamano="lg">
+                      <Link href="/herramientas/cuestionario" onClick={() => setAbierto(false)}>
+                        Descubre si te aplica
+                      </Link>
+                    </Boton>
+                  {NAVEGACION.map((grupo) => (
+                    <div key={grupo.titulo}>
+                      <p className="eyebrow mb-2.5">{grupo.titulo}</p>
+                      <ul className="flex flex-col">
+                        {grupo.enlaces.map((enlace) => (
+                          <li key={enlace.href}>
+                            <Link
+                              href={enlace.href}
+                              onClick={() => setAbierto(false)}
+                              className="flex min-h-11 items-center rounded-[var(--radius-control)] px-3 text-[0.95rem] text-[var(--color-tinta)] transition-colors duration-150 hover:bg-[var(--color-marfil-hondo)]"
+                            >
+                              {enlace.etiqueta}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                  </div>
+                </motion.nav>
+              </>
+            )}
+          </AnimatePresence>,
+          document.body,
         )}
-      </AnimatePresence>
     </header>
   );
 }
