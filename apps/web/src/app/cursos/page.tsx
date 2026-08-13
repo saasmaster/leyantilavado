@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ExternalLink } from 'lucide-react';
+import { formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { Insignia, Nota, Tarjeta } from '@leyantilavado/ui';
-import { EVIDENCIA_EXIGIBLE, RECURSOS_OFICIALES } from '@/content/capacitacion';
+import { CURSOS_DE_PAGO, EVIDENCIA_EXIGIBLE, RECURSOS_OFICIALES } from '@/content/capacitacion';
 import { construirMetadata } from '@/lib/sitio';
 
 export const metadata: Metadata = construirMetadata({
@@ -79,6 +80,100 @@ export default function PaginaCursos() {
                   className="inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-[var(--color-petroleo-hondo)] underline underline-offset-4"
                 >
                   Abrir en el sitio oficial
+                  <ExternalLink aria-hidden="true" className="size-3.5" />
+                </a>
+              </Tarjeta>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section aria-labelledby="de-pago" className="flex flex-col gap-5">
+        <div>
+          <h2 id="de-pago" className="text-2xl font-semibold">
+            Cursos de paga
+          </h2>
+          <p className="prosa mt-2 text-[var(--color-tinta-suave)]">
+            Nadie entra aquí por pagarnos: no vendemos posiciones ni aceptamos patrocinio en esta
+            sección. Entra lo que se puede describir con datos publicados por la propia
+            institución, y decimos qué <strong>no</strong> publica.
+          </p>
+        </div>
+
+        <ul className="flex flex-col gap-5">
+          {CURSOS_DE_PAGO.map((c) => (
+            <li key={c.id}>
+              <Tarjeta className="flex flex-col gap-4 p-5 md:p-6">
+                <div className="flex flex-wrap items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <h3 className="text-lg font-semibold text-[var(--color-tinta)]">{c.titulo}</h3>
+                    <p className="mt-1 text-sm text-[var(--color-tinta-suave)]">{c.institucion}</p>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <Insignia tono="neutro">{c.horas} horas</Insignia>
+                    <Insignia tono="marino">
+                      {c.precioMXN.toLocaleString('es-MX', {
+                        style: 'currency',
+                        currency: 'MXN',
+                        maximumFractionDigits: 0,
+                      })}
+                    </Insignia>
+                  </div>
+                </div>
+
+                <p className="text-sm text-[var(--color-tinta-suave)]">{c.modalidad}</p>
+
+                <div>
+                  <p className="text-sm font-semibold text-[var(--color-tinta)]">Temario</p>
+                  <ul className="mt-2 flex list-disc flex-col gap-1.5 pl-4 text-sm leading-relaxed text-[var(--color-tinta-suave)]">
+                    {c.temario.map((t) => (
+                      <li key={t}>{t}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                <Nota tono="atencion" titulo="Qué te deja como evidencia">
+                  <p>
+                    {c.evidencia ?? 'La institución no publica qué documento entrega.'}
+                    {c.notaEvidencia ? ` ${c.notaEvidencia}` : ''}
+                  </p>
+                </Nota>
+
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <p className="text-sm font-semibold text-[var(--color-tinta)]">Dirigido a</p>
+                    <p className="mt-1 text-sm leading-relaxed text-[var(--color-tinta-suave)]">
+                      {c.dirigidoA}
+                    </p>
+                    {c.requisitos && (
+                      <p className="mt-2 text-sm leading-relaxed text-[var(--color-tinta-tenue)]">
+                        {c.requisitos}
+                      </p>
+                    )}
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-[var(--color-tinta)]">
+                      Lo que no publica
+                    </p>
+                    <ul className="mt-1 flex list-disc flex-col gap-1 pl-4 text-sm leading-relaxed text-[var(--color-tinta-tenue)]">
+                      {c.sinPublicar.map((x) => (
+                        <li key={x}>{x}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                <p className="cifra text-sm text-[var(--color-tinta-suave)]">
+                  Próximas fechas: {c.proximasFechas.map((d) => formatearFechaLarga(d)).join(' · ')}
+                </p>
+
+                <a
+                  href={c.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-[var(--color-petroleo-hondo)] underline underline-offset-4"
+                >
+                  Ver el programa en el sitio de la institución
                   <ExternalLink aria-hidden="true" className="size-3.5" />
                 </a>
               </Tarjeta>

@@ -204,6 +204,37 @@ export const CATEGORIAS_FAQ: CategoriaFAQ[] = [
     descripcion: 'Cuándo se presenta, qué pasa si se te pasa.',
     preguntas: [
       {
+        id: 'sexto-digito-rfc',
+        pregunta: '¿El día 17 es igual para todos?',
+        respuesta: [
+          'No necesariamente, y esta es probablemente la facilidad menos conocida de la materia. La Secretaría de Hacienda publica cada año un calendario de presentación de avisos de actividades vulnerables que asigna días hábiles adicionales según el SEXTO DÍGITO NUMÉRICO de tu RFC.',
+          'Dos cosas que conviene no mezclar. Primera: cuando el día 17 cae en día inhábil, la fecha límite se recorre al día hábil inmediato posterior. Eso lo dice el propio calendario oficial y aplica a todos.',
+          'Segunda, la facilidad del sexto dígito: no es un plazo que se alarga, es un día que se te asigna. La diferencia importa, porque presentar en un día distinto al que te corresponde puede dejarte fuera del beneficio en lugar de dentro.',
+          'Aquí no calculamos tu día por el sexto dígito, y es deliberado: la tabla circula en blogs del sector con versiones que no siempre coinciden, y el calendario es anual. Un dato así no se publica de oído. Descarga el calendario del año en el portal de la Secretaría de Hacienda y confirma el tuyo antes de programar el envío.',
+          'Nuestra calculadora te da el día 17 nominal, que es la fecha conservadora: si presentas para entonces, estás dentro con cualquier sexto dígito.',
+        ],
+        fundamento: 'Art. 23 LFPIORPI y calendario anual de presentación de avisos de la SHCP',
+        herramienta: {
+          href: '/herramientas/fecha-limite-aviso',
+          etiqueta: 'Calcular el día 17 de mi operación',
+        },
+      },
+      {
+        id: 'aviso-modificatorio',
+        pregunta: 'Me equivoqué en un aviso ya presentado. ¿Lo puedo corregir?',
+        respuesta: [
+          'Sí, mediante aviso modificatorio, y con dos límites que sorprenden a casi todo el mundo: tienes 30 días naturales contados desde el acuse electrónico, y sólo puedes modificar una vez.',
+          'Que sea una sola corrección cambia cómo conviene trabajar. No sirve enviar una versión aproximada pensando en pulirla después: la única bala que tienes se gasta con el primer modificatorio, esté completo o no.',
+          'Y el reloj corre desde el acuse, no desde que descubres el error. Un aviso presentado el día 17 y revisado en la junta de cierre del trimestre ya suele estar fuera de plazo para modificarse.',
+          'Por eso la revisión útil es la que ocurre antes de enviar, no después. Y por eso conviene guardar el acuse en un sitio donde su fecha se vea, no dentro de un correo.',
+        ],
+        fundamento: 'Reglas de carácter general en materia de la LFPIORPI',
+        herramienta: {
+          href: '/herramientas/fecha-limite-aviso',
+          etiqueta: 'Ver mis próximas fechas límite',
+        },
+      },
+      {
         id: 'devolver-en-la-misma-forma',
         pregunta: 'Un cliente canceló y me pide que le devuelva el dinero. ¿Puedo transferírselo?',
         respuesta: [
@@ -354,6 +385,43 @@ export const CATEGORIAS_FAQ: CategoriaFAQ[] = [
         ],
         fundamento: 'Obligación de capacitación por nivel jerárquico',
         verMas: { href: '/cursos', etiqueta: 'Ver la capacitación oficial gratuita' },
+      },
+      {
+        id: 'plazos-visita-verificacion',
+        pregunta: 'Me llegó una visita de verificación. ¿Qué plazos tengo?',
+        respuesta: [
+          'Ésta es la información que más falta hace y que casi nadie publica, porque quien la busca ya tiene el oficio en la mano y necesita días, no teoría.',
+          'La verificación puede revisar los CINCO años inmediatos anteriores. Ése es el horizonte de tu conservación documental, y por eso conservar diez años no es exceso: es margen.',
+          'Los plazos que se manejan en el procedimiento: para responder un requerimiento, diez días hábiles, prorrogables cinco más. Tras el acta, la autoridad emite oficio de observaciones y se abre un plazo probatorio de cinco días hábiles para pruebas y alegatos. La resolución sancionadora tiene su propio plazo máximo.',
+          'Dos cosas prácticas que se deciden en las primeras horas. Primera: el alcance de lo que entregas es el de la actividad vulnerable, no el de toda tu contabilidad. Segunda: cinco días hábiles para armar pruebas es poquísimo si el expediente no estaba ordenado antes, y es de sobra si lo estaba. La visita no se prepara cuando llega.',
+          'Verifica los plazos exactos de tu caso en el oficio que te entregaron: es el documento que rige, y las prórrogas dependen de que se pidan en tiempo.',
+        ],
+        fundamento: 'Art. 34 LFPIORPI, reformado el 17 de julio de 2025, y Ley Federal de Procedimiento Administrativo',
+        verMas: { href: '/multas', etiqueta: 'Ver el régimen sancionador' },
+      },
+      {
+        id: 'que-significa-habitual',
+        pregunta: '¿Cuántas operaciones son «habituales»?',
+        respuesta: [
+          'La ley dice «habitual o profesional» y no pone un número, que es exactamente lo que vuelve angustiosa la pregunta para quien vende dos coches al año.',
+          'Para la venta de vehículos existe un criterio de la autoridad que se ha divulgado en el sector: más de dos ventas al año, o que la actividad sea preponderante. Con ese rasero, dar de baja activos vendiendo un par de unidades no convierte a una empresa en sujeto obligado por esa fracción.',
+          'Ahora la advertencia, que importa tanto como el dato: ese criterio se refiere a vehículos. Extrapolarlo a préstamos, construcción, arte, blindaje o custodia es un riesgo de interpretación, no una conclusión. Cada fracción tiene su lógica y la autoridad no ha publicado un número general.',
+          'Lo que sí conviene hacer si estás en el borde: documentar por qué consideras que no hay habitualidad, con fechas y volumen. Una decisión razonada y escrita se defiende; la misma decisión sin papel, no.',
+        ],
+        fundamento: 'Art. 17 LFPIORPI, encabezado, y criterio de la autoridad para la fracción de vehículos',
+        herramienta: { href: '/herramientas/cuestionario', etiqueta: 'Revisar si te aplica' },
+      },
+      {
+        id: 'operacion-intentada',
+        pregunta: 'Un cliente intentó una operación y se echó para atrás al pedirle datos. ¿Se avisa?',
+        respuesta: [
+          'Sí, y es de las cosas que más se pasan por alto: el aviso por sospecha en veinticuatro horas alcanza también a las operaciones INTENTADAS, no sólo a las que se concretaron.',
+          'El caso típico es justo ése. Pides identificación o preguntas por el beneficiario controlador, el cliente se incomoda y abandona la operación. Es tentador archivarlo como una venta perdida, pero desde la perspectiva de la ley acabas de observar exactamente la conducta que la norma quiere ver reportada.',
+          'Que la operación no se haya concretado no elimina el deber: lo que se reporta es el indicio, no el importe.',
+          'Práctica que lo hace posible: registra el intento en el momento, con fecha, lo que se pidió y cómo reaccionó. Veinticuatro horas después nadie recuerda el detalle, y sin detalle no hay aviso que redactar.',
+        ],
+        fundamento: 'Obligación de aviso en 24 horas por actos u operaciones intentados',
+        verMas: { href: '/obligaciones', etiqueta: 'Ver la obligación de aviso' },
       },
       {
         id: 'carcel-por-error-en-aviso',

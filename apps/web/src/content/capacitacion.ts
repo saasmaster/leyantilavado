@@ -108,3 +108,69 @@ export const EVIDENCIA_EXIGIBLE: readonly { punto: string; porque: string }[] = 
       'Sin evaluación puedes demostrar asistencia, pero no aprovechamiento, que es lo que da sentido a la obligación.',
   },
 ];
+
+/* ────────────────────────────────────────────────────────────────────────────
+ * Cursos de paga.
+ *
+ * Aquí no entra nadie por pagarnos: no vendemos posiciones ni aceptamos
+ * patrocinio en esta sección. Entra lo que podemos describir con datos
+ * publicados por la propia institución, y se dice qué NO publica.
+ *
+ * El campo que decide es `evidencia`. La obligación de capacitación se cumple
+ * pudiendo demostrar quién se formó, en qué y con qué resultado; un curso
+ * excelente que no deja documento nominativo no cierra esa obligación. Es el
+ * dato que menos se publica y el que más falta hace, así que cuando no está,
+ * se dice que no está en lugar de suponerlo.
+ * ────────────────────────────────────────────────────────────────────────── */
+
+export interface CursoDePago {
+  id: string;
+  titulo: string;
+  institucion: string;
+  modalidad: string;
+  horas: number;
+  precioMXN: number;
+  /** Qué documento entrega. `null` = la institución no lo publica. */
+  evidencia: string | null;
+  /** Advertencia sobre la evidencia, cuando hay algo que matizar. */
+  notaEvidencia?: string;
+  dirigidoA: string;
+  requisitos?: string;
+  proximasFechas: readonly string[];
+  temario: readonly string[];
+  url: string;
+  /** Lo que la institución no publica. Se muestra tal cual. */
+  sinPublicar: readonly string[];
+}
+
+export const CURSOS_DE_PAGO: readonly CursoDePago[] = [
+  {
+    id: 'tec-monterrey-antilavado',
+    titulo: 'Ley Anti Lavado de Dinero y Manejo de Efectivo',
+    institucion: 'Tecnológico de Monterrey — Educación Continua',
+    modalidad: 'Aula virtual en vivo, con horario fijo (17:00–21:00 o 09:00–13:00, hora de México)',
+    horas: 40,
+    precioMXN: 31200,
+    evidencia: 'Insignia digital verificable en Credly',
+    notaEvidencia:
+      'El criterio publicado para obtenerla es «concluir satisfactoriamente todos los módulos». La insignia es nominativa y verificable en línea, pero Credly no precisa que corresponda a esta edición virtual de 40 horas —el Tec ofrece también un taller y un seminario con el mismo nombre—. No hay ninguna fuente publicada que confirme constancia o diploma nominativo, ni el porcentaje de asistencia para acreditar. Si lo vas a usar como evidencia ante una revisión, confírmalo por escrito con la institución antes de inscribirte.',
+    dirigidoA:
+      'Servidores públicos y profesionales de derecho, administración, finanzas y contaduría; encargados de aplicar la ley dentro de la institución; contadores, notarios, corredores y agentes aduanales.',
+    requisitos: 'Licenciatura terminada (la propia institución la enuncia como requisito en su temario y como preferencia en el resumen).',
+    proximasFechas: ['2026-09-11', '2027-01-08'],
+    temario: [
+      'Antecedentes internacionales y marco legal en México: GAFI, Basilea, modelo FATCA, código penal, y la ley con su reglamento y reglas de carácter general.',
+      'Actividades vulnerables: umbrales para identificar y para avisar, reglas para determinarlos, y sectores de alto riesgo con casos prácticos.',
+      'Operaciones inusuales y tipologías: prestanombres, empresa fachada, dispersor, operatividad incongruente; clasificación de clientes y personas políticamente expuestas.',
+      'Reglas de carácter general y procedimientos: manuales, expedientes, visitas de verificación, alta y envío de avisos paso a paso, infracciones y delitos.',
+      'Controles de confianza del personal: el empleado como adversario interno, esquemas de verificación y fases desde el reclutamiento hasta el retiro.',
+    ],
+    url: 'https://educacioncontinua.tec.mx/programas/ley-anti-lavado-de-dinero-y-manejo-de-efectivo-virtual',
+    sinPublicar: [
+      'Constancia o diploma nominativo, y porcentaje de asistencia para acreditar',
+      'Número exacto de sesiones por módulo',
+      'Nombre de los instructores de cada módulo',
+      'Monto de los descuentos que anuncia',
+    ],
+  },
+];
