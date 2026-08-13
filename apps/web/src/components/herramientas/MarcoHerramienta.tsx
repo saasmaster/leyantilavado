@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ArrowRight, ChevronRight } from 'lucide-react';
 import { AvisoIndependencia, Nota, Tarjeta, TarjetaCuerpo } from '@leyantilavado/ui';
 import { formatearFechaLarga } from '@leyantilavado/rules-engine';
-import { jsonLdFAQ, jsonLdMigaDePan } from '@/lib/sitio';
+import { jsonLdFAQ, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
 import { relacionadas, rutaHerramienta } from '@/lib/herramientas/catalogo';
 import { EstilosImpresion } from './EstilosImpresion';
 
@@ -14,6 +14,8 @@ export interface PreguntaFrecuente {
 
 interface Props {
   slug: string;
+  /** Píxeles que reserva el esqueleto mientras la herramienta suspende. */
+  altoReservado?: number;
   titulo: string;
   /** Una o dos frases bajo el título. Se indexa: escríbela para humanos. */
   entradilla: string;
@@ -34,7 +36,21 @@ interface Props {
   children: React.ReactNode;
 }
 
+/**
+ * Altura reservada mientras la herramienta suspende, en píxeles.
+ *
+ * El `fallback` medía 256px fijos para todas, y las herramientas reales van de
+ * 463px (cuestionario) a 4307px (matriz de riesgos) en móvil. Cuando el
+ * contenido llegaba, todo lo que hay debajo saltaba: en la calculadora de
+ * umbrales eso producía un CLS de 0,0687, el único desplazamiento medible de
+ * todo el sitio.
+ *
+ * Los valores salen de medir cada herramienta en producción a 375px, no de
+ * estimarlos. Quedan cortos en escritorio, donde las columnas comprimen la
+ * altura, pero CLS se puntúa en móvil y ahí es donde el ajuste cuenta.
+ */
 export function MarcoHerramienta({
+  altoReservado = 700,
   slug,
   titulo,
   entradilla,
@@ -56,7 +72,7 @@ export function MarcoHerramienta({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
+          __html: jsonParaScript(
             jsonLdMigaDePan([
               { nombre: 'Inicio', ruta: '/' },
               { nombre: 'Herramientas', ruta: '/herramientas' },
@@ -68,7 +84,7 @@ export function MarcoHerramienta({
       {faq.length > 0 && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdFAQ(faq)) }}
+          dangerouslySetInnerHTML={{ __html: jsonParaScript(jsonLdFAQ(faq)) }}
         />
       )}
 
@@ -108,7 +124,8 @@ export function MarcoHerramienta({
         <React.Suspense
           fallback={
             <div
-              className="h-64 animate-pulse rounded-[var(--radius-card)] bg-[var(--color-marfil-hondo)]"
+              className="animate-pulse rounded-[var(--radius-card)] bg-[var(--color-marfil-hondo)]"
+              style={{ minHeight: `${altoReservado}px` }}
               aria-label="Cargando la herramienta"
             />
           }

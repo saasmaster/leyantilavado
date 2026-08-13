@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { ipDeSolicitud } from '@/lib/directorio/limite-tasa';
 import { tokenDe, verificarTurnstile } from '@/lib/turnstile';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -86,12 +87,6 @@ function excedeLimite(ip: string, ahora: number): boolean {
   return false;
 }
 
-function ipDe(request: Request): string {
-  const reenviada = request.headers.get('x-forwarded-for');
-  if (reenviada) return reenviada.split(',')[0]?.trim() || 'desconocida';
-  return request.headers.get('x-real-ip')?.trim() || 'desconocida';
-}
-
 /* ── Persistencia ─────────────────────────────────────────────────────────────
    TODO(supabase): sustituir el cuerpo de `guardarSuscriptor` por un insert en
    la tabla `newsletter_suscriptores` con RLS (sólo `service_role` escribe) y
@@ -135,7 +130,7 @@ async function guardarSuscriptor(suscriptor: Suscriptor): Promise<'creado' | 'ya
 export async function POST(request: Request) {
   const ahora = Date.now();
 
-  if (excedeLimite(ipDe(request), ahora)) {
+  if (excedeLimite(ipDeSolicitud(request.headers), ahora)) {
     return NextResponse.json(
       {
         ok: false,
@@ -157,7 +152,7 @@ export async function POST(request: Request) {
 
   // Misma posición que en el resto de formularios: después del límite de tasa
   // y antes de validar el esquema.
-  const turnstile = await verificarTurnstile(tokenDe(cuerpo), ipDe(request));
+  const turnstile = await verificarTurnstile(tokenDe(cuerpo), ipDeSolicitud(request.headers));
   if (!turnstile.ok) {
     return NextResponse.json({ ok: false, error: turnstile.error }, { status: 403 });
   }

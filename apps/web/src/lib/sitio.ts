@@ -120,6 +120,32 @@ export const IMAGEN_SOCIAL = {
   alt: 'LeyAntilavado.org — centro independiente de información sobre la LFPIORPI',
 } as const;
 
+/**
+ * JSON seguro para incrustar dentro de un `<script>`.
+ *
+ * `JSON.stringify` escapa comillas, pero NO escapa `<`. El analizador de HTML
+ * no entiende de JSON: cierra el `<script>` en el primer `</script` que
+ * encuentra en el texto, con comillas o sin ellas. Así que un dato que
+ * contenga esa secuencia sale del bloque de datos y lo que venga detrás se
+ * ejecuta como código.
+ *
+ * En este sitio eso no era teórico. El alta del directorio publica el perfil
+ * de inmediato y sin autenticar, y `nombre` y `biografia` sólo validaban
+ * longitud. Bastaba con darse de alta con una biografía que llevara
+ * `</script><script>…` para ejecutar código en cada visita a esa ficha. La CSP
+ * no lo detiene: `script-src` lleva `'unsafe-inline'` documentado, y el
+ * payload corre en el mismo origen que el área privada.
+ *
+ * También se escapan U+2028 y U+2029: son saltos de línea válidos en JSON e
+ * ilegales dentro de un literal de JavaScript.
+ */
+export function jsonParaScript(datos: unknown): string {
+  return JSON.stringify(datos)
+    .replace(/</g, '\\u003c')
+    .replace(/\u2028/g, '\\u2028')
+    .replace(/\u2029/g, '\\u2029');
+}
+
 /** Google recorta el título del resultado alrededor de aquí. */
 export const LARGO_TITULO = 60;
 /** Y la descripción alrededor de aquí. Lo verifica `sitio.test.ts`. */

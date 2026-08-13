@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { Nota, TablaEnvoltura } from '@leyantilavado/ui';
-import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
+import { construirMetadata, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
 import { EncabezadoPagina, REVISION_VIGENTE } from '@/components/inicio/comun';
 
 const MIGA = [
@@ -33,7 +33,7 @@ export default function Cookies() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdMigaDePan(MIGA)) }}
+        dangerouslySetInnerHTML={{ __html: jsonParaScript(jsonLdMigaDePan(MIGA)) }}
       />
 
       <EncabezadoPagina

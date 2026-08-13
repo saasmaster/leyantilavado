@@ -4,7 +4,7 @@ import { Encabezado } from '@/components/Encabezado';
 import { PieDePagina } from '@/components/PieDePagina';
 import { ProveedorTema } from '@/components/ProveedorTema';
 import { RegistroSW } from '@/components/RegistroSW';
-import { SITIO, construirMetadata, jsonLdOrganizacion } from '@/lib/sitio';
+import { SITIO, construirMetadata, jsonLdOrganizacion, jsonParaScript } from '@/lib/sitio';
 
 /**
  * Aplica el tema guardado ANTES del primer pintado, para que no haya un
@@ -97,7 +97,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: SCRIPT_TEMA }} />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdOrganizacion()) }}
+          dangerouslySetInnerHTML={{ __html: jsonParaScript(jsonLdOrganizacion()) }}
         />
       </head>
       <body className="flex min-h-dvh flex-col">

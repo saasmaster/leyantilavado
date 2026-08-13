@@ -9,7 +9,7 @@ import { ResultadosDirectorio } from '@/components/directorio/ResultadosDirector
 import { esCategoria, FICHAS_CATEGORIA } from '@/lib/directorio/catalogo';
 import { buscarProveedores, leerFiltros } from '@/lib/directorio/filtros';
 import { repositorioDirectorio } from '@/lib/directorio/repositorio';
-import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
+import { construirMetadata, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
 
 /**
  * Perfiles reales que necesita una categoría para competir como directorio.
@@ -20,6 +20,18 @@ import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
  * promete.
  */
 const MINIMO_PARA_INDEXAR = 3;
+
+/**
+ * Sin parámetros dinámicos: los slugs válidos son el catálogo fijo de categorías y no cambian entre
+ * despliegues.
+ *
+ * Sin esto Next acepta CUALQUIER slug, lo renderiza bajo demanda, obtiene la
+ * vista de «no encontrado» y la sirve con HTTP 200 — un soft 404. El `noindex`
+ * evitaba que se indexara, pero el rastreador gastaba presupuesto creyendo que
+ * la página existe. Con `false` el enrutador devuelve un 404 real sin llegar a
+ * renderizar.
+ */
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return CATEGORIAS_PROVEEDOR.map((categoria) => ({ categoria }));
@@ -76,7 +88,7 @@ export default async function PaginaCategoria({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
+          __html: jsonParaScript(
             jsonLdMigaDePan([
               { nombre: 'Inicio', ruta: '/' },
               { nombre: 'Directorio', ruta: '/directorio' },

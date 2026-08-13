@@ -15,7 +15,7 @@ import { EncabezadoSeccion, Seccion } from '@/components/app/Contenedor';
 import { EstadoConsulta } from '@/components/app/TablaRecurso';
 import { AvisoNoEsCumplimiento } from '@/components/app/Avisos';
 import { listar } from '@/lib/app/consultas';
-import { requerirContexto } from '@/lib/auth/sesion';
+import { requerirPermiso } from '@/lib/auth/sesion';
 
 interface FilaCliente {
   id: string;
@@ -129,7 +129,11 @@ function Dato({ etiqueta, valor }: { etiqueta: string; valor: string | null | un
 
 export default async function PaginaCliente({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const contexto = await requerirContexto(`/panel/clientes/${id}`);
+  // El listado exige `clientes.ver` y el detalle no lo hacía: bastaba con
+  // escribir el UUID en la barra de direcciones para leer el expediente
+  // completo —RFC, CURP, condición de PEP, beneficiarios—. RLS tampoco lo
+  // tapaba: da lectura a todo miembro activo sin distinguir rol.
+  const contexto = await requerirPermiso('clientes.ver', `/panel/clientes/${id}`);
   const org = contexto.organizacion?.organizacionId ?? null;
 
   const [clientes, beneficiarios, relaciones, documentos, riesgos] = await Promise.all([

@@ -26,6 +26,18 @@ import { construirMetadata, jsonLdFAQ, jsonLdMigaDePan } from '@/lib/sitio';
 
 const BASE = '/actividades-vulnerables';
 
+/**
+ * Sin parámetros dinámicos: los slugs válidos son las actividades del corpus legal y no cambian entre
+ * despliegues.
+ *
+ * Sin esto Next acepta CUALQUIER slug, lo renderiza bajo demanda, obtiene la
+ * vista de «no encontrado» y la sirve con HTTP 200 — un soft 404. El `noindex`
+ * evitaba que se indexara, pero el rastreador gastaba presupuesto creyendo que
+ * la página existe. Con `false` el enrutador devuelve un 404 real sin llegar a
+ * renderizar.
+ */
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return datos.ACTIVIDADES.map((a) => ({ slug: a.slug }));
 }

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { AlertTriangle, BookOpenCheck, Mail, ShieldCheck, UserPlus } from 'lucide-react';
 import { formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { Boton } from '@leyantilavado/ui';
-import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
+import { construirMetadata, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
 import { EncabezadoPagina, REVISION_VIGENTE } from '@/components/inicio/comun';
 import { FormularioContacto } from '@/components/FormularioContacto';
 
@@ -54,7 +54,7 @@ export default function Contacto() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdMigaDePan(MIGA)) }}
+        dangerouslySetInnerHTML={{ __html: jsonParaScript(jsonLdMigaDePan(MIGA)) }}
       />
 
       <EncabezadoPagina

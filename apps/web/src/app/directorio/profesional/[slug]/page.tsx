@@ -11,7 +11,20 @@ import { EtiquetaPatrocinado, InsigniaVerificacion } from '@/components/director
 import { FormularioContacto } from '@/components/directorio/FormularioContacto';
 import { ETIQUETA_CATEGORIA, ETIQUETA_PLAN_PERFIL, ETIQUETA_SERVICIO, ETIQUETA_TAMANO } from '@/lib/directorio/catalogo';
 import { repositorioDirectorio } from '@/lib/directorio/repositorio';
-import { construirMetadata, jsonLdMigaDePan, SITIO } from '@/lib/sitio';
+import { construirMetadata, jsonLdMigaDePan, SITIO, jsonParaScript } from '@/lib/sitio';
+
+/**
+ * Ruta dinámica de verdad, y aquí sí hace falta.
+ *
+ * Las demás rutas `[slug]` salen de un corpus fijo y se cierran con
+ * `dynamicParams = false`. Ésta no puede: un proveedor que se da de alta
+ * publica su perfil en ese momento, y con parámetros estáticos su propia ficha
+ * daría 404 hasta el siguiente despliegue.
+ *
+ * `force-dynamic` resuelve además el soft 404: sin caché estática de por
+ * medio, `notFound()` devuelve un 404 real en cada petición.
+ */
+export const dynamic = 'force-dynamic';
 
 export async function generateStaticParams() {
   const perfiles = await repositorioDirectorio.listarPerfiles();
@@ -89,7 +102,7 @@ export default async function PaginaPerfil({ params }: { params: Promise<{ slug:
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
+          __html: jsonParaScript(
             jsonLdMigaDePan([
               { nombre: 'Inicio', ruta: '/' },
               { nombre: 'Directorio', ruta: '/directorio' },
@@ -100,7 +113,7 @@ export default async function PaginaPerfil({ params }: { params: Promise<{ slug:
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdPerfil(perfil)) }}
+        dangerouslySetInnerHTML={{ __html: jsonParaScript(jsonLdPerfil(perfil)) }}
       />
 
       <header className="flex flex-col gap-5">

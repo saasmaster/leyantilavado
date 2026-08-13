@@ -6,7 +6,7 @@ import { ResultadosDirectorio } from '@/components/directorio/ResultadosDirector
 import { ETIQUETA_CATEGORIA, FICHAS_CATEGORIA, ORDEN_CATEGORIAS } from '@/lib/directorio/catalogo';
 import { buscarProveedores, leerFiltros } from '@/lib/directorio/filtros';
 import { repositorioDirectorio } from '@/lib/directorio/repositorio';
-import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
+import { construirMetadata, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
 
 export const metadata: Metadata = construirMetadata({
   titulo: 'Directorio de profesionales en prevención de lavado de dinero',
@@ -31,7 +31,7 @@ export default async function PaginaDirectorio({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
+          __html: jsonParaScript(
             jsonLdMigaDePan([
               { nombre: 'Inicio', ruta: '/' },
               { nombre: 'Directorio', ruta: '/directorio' },

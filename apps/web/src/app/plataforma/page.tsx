@@ -18,7 +18,7 @@ import {
 import { datos } from '@leyantilavado/rules-engine';
 import { MATRIZ_PERMISOS, ROLES_ORGANIZACION, type RolOrganizacion } from '@leyantilavado/types';
 import { AvisoIndependencia, Boton, Nota, TablaEnvoltura } from '@leyantilavado/ui';
-import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
+import { construirMetadata, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
 import { EncabezadoPagina, Seccion } from '@/components/inicio/comun';
 
 export const metadata: Metadata = construirMetadata({
@@ -188,7 +188,7 @@ export default function Plataforma() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(MIGA) }}
+        dangerouslySetInnerHTML={{ __html: jsonParaScript(MIGA) }}
       />
 
       <EncabezadoPagina

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowUpRight, Wrench } from 'lucide-react';
 import { Insignia } from '@leyantilavado/ui';
-import { construirMetadata, jsonLdFAQ, jsonLdMigaDePan } from '@/lib/sitio';
+import { construirMetadata, jsonLdFAQ, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
 import { FuentesPrincipales } from '@/components/contenido/FuentesPrincipales';
 import { EncabezadoPagina } from '@/components/inicio/comun';
 import { CATEGORIAS_FAQ, TOTAL_PREGUNTAS } from '@/content/preguntas-frecuentes';
@@ -34,7 +34,7 @@ export default function PreguntasFrecuentes() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
+        dangerouslySetInnerHTML={{ __html: jsonParaScript(JSON_LD) }}
       />
 
       <EncabezadoPagina

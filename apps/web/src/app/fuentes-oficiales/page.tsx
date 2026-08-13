@@ -3,7 +3,7 @@ import { ExternalLink } from 'lucide-react';
 import type { NivelVerificacion, Procedencia } from '@leyantilavado/types';
 import { datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { Insignia, Nota, TablaEnvoltura } from '@leyantilavado/ui';
-import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
+import { construirMetadata, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
 import { EncabezadoPagina, REVISION_VIGENTE, NIVELES_VERIFICACION } from '@/components/inicio/comun';
 
 const MIGA = [
@@ -97,7 +97,7 @@ export default function FuentesOficialesPagina() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdMigaDePan(MIGA)) }}
+        dangerouslySetInnerHTML={{ __html: jsonParaScript(jsonLdMigaDePan(MIGA)) }}
       />
 
       <EncabezadoPagina

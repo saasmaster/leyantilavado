@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { VERSION_LEGAL, datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { FRASE_ACTIVIDADES, FRASE_UMBRALES } from '@/content/cifras';
 import { Nota } from '@leyantilavado/ui';
-import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
+import { construirMetadata, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
 import { EncabezadoPagina, REVISION_VIGENTE } from '@/components/inicio/comun';
 
 const MIGA = [
@@ -23,7 +23,7 @@ export default function Nosotros() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdMigaDePan(MIGA)) }}
+        dangerouslySetInnerHTML={{ __html: jsonParaScript(jsonLdMigaDePan(MIGA)) }}
       />
 
       <EncabezadoPagina

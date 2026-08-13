@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { VERSION_LEGAL, datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { Insignia, Nota, TablaEnvoltura } from '@leyantilavado/ui';
-import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
+import { construirMetadata, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
 import { EncabezadoPagina, REVISION_VIGENTE, NIVELES_VERIFICACION } from '@/components/inicio/comun';
 
 const MIGA = [
@@ -29,7 +29,7 @@ export default function MetodologiaEditorial() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdMigaDePan(MIGA)) }}
+        dangerouslySetInnerHTML={{ __html: jsonParaScript(jsonLdMigaDePan(MIGA)) }}
       />
 
       <EncabezadoPagina

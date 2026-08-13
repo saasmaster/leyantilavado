@@ -52,8 +52,22 @@ export function limitarPorIP(
  * IP del solicitante. Detrás de proxy llega en `x-forwarded-for`; el primer
  * elemento es el cliente. Nunca se registra en logs ni se persiste.
  */
+/**
+ * IP del cliente para el límite de tasa.
+ *
+ * NO se toma el primer elemento de `X-Forwarded-For`. Los proxies AÑADEN la IP
+ * real al final de esa cabecera; el primer elemento es literalmente lo que
+ * mandó el cliente. Bastaba con enviar una IP distinta en cada petición para
+ * caer siempre en un cubo nuevo y no alcanzar nunca el límite —lo que dejaba
+ * la puerta pública que escribe en disco sin ningún techo efectivo—.
+ *
+ * `cf-connecting-ip` y `x-real-ip` las escribe el proxy y el cliente no las
+ * puede falsear. Si no hay ninguna, se agrupa todo bajo una clave común: es
+ * restrictivo de más, y ése es el lado correcto por el que equivocarse en un
+ * control antiabuso.
+ */
 export function ipDeSolicitud(cabeceras: Headers): string {
-  const reenviada = cabeceras.get('x-forwarded-for');
-  if (reenviada) return reenviada.split(',')[0]?.trim() || 'desconocida';
+  const deProxy = cabeceras.get('cf-connecting-ip') ?? cabeceras.get('x-real-ip');
+  if (deProxy?.trim()) return deProxy.trim();
   return cabeceras.get('x-real-ip')?.trim() || 'desconocida';
 }

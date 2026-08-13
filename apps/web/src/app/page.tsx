@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
-import { SITIO, construirMetadata } from '@/lib/sitio';
+import { SITIO, construirMetadata, jsonParaScript } from '@/lib/sitio';
 import {
   CuentaRegresivaReglas,
   type ReglaConFecha,
@@ -76,7 +76,7 @@ export default function Inicio() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
+        dangerouslySetInnerHTML={{ __html: jsonParaScript(JSON_LD) }}
       />
 
       <Hero />

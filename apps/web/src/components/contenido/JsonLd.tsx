@@ -1,4 +1,4 @@
-import { IMAGEN_SOCIAL, LOGO, SITIO } from '@/lib/sitio';
+import { IMAGEN_SOCIAL, LOGO, SITIO, jsonParaScript } from '@/lib/sitio';
 import { EQUIPO_EDITORIAL } from '@/content/autores';
 
 /**
@@ -12,7 +12,7 @@ export function JsonLd({ datos }: { datos: unknown }) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(datos) }}
+      dangerouslySetInnerHTML={{ __html: jsonParaScript(datos) }}
     />
   );
 }

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { Nota, Tarjeta, TarjetaCuerpo } from '@leyantilavado/ui';
 import { VERSION_LEGAL, datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
-import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
+import { construirMetadata, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
 import { GRUPOS, HERRAMIENTAS, rutaHerramienta } from '@/lib/herramientas/catalogo';
 
 const ACTUALIZADO = '2026-08-11';
@@ -24,7 +24,7 @@ export default function IndiceHerramientas() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
+          __html: jsonParaScript(
             jsonLdMigaDePan([
               { nombre: 'Inicio', ruta: '/' },
               { nombre: 'Herramientas', ruta: '/herramientas' },
