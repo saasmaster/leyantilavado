@@ -26,10 +26,10 @@ import { construirMetadata, jsonLdMigaDePan, SITIO, jsonParaScript } from '@/lib
  */
 export const dynamic = 'force-dynamic';
 
-export async function generateStaticParams() {
-  const perfiles = await repositorioDirectorio.listarPerfiles();
-  return perfiles.map((p) => ({ slug: p.slug }));
-}
+// Sin `generateStaticParams`: contradice a `force-dynamic` y ganaba él, así
+// que la ruta seguía siendo estática y devolvía 200 para cualquier slug. Los
+// perfiles se leen en cada petición, que es lo que quiere una ruta cuyo
+// contenido nace de un formulario público.
 
 export async function generateMetadata({
   params,

@@ -21,18 +21,6 @@ import { construirMetadata, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio'
  */
 const MINIMO_PARA_INDEXAR = 3;
 
-/**
- * Sin parámetros dinámicos: los slugs válidos son el catálogo fijo de categorías y no cambian entre
- * despliegues.
- *
- * Sin esto Next acepta CUALQUIER slug, lo renderiza bajo demanda, obtiene la
- * vista de «no encontrado» y la sirve con HTTP 200 — un soft 404. El `noindex`
- * evitaba que se indexara, pero el rastreador gastaba presupuesto creyendo que
- * la página existe. Con `false` el enrutador devuelve un 404 real sin llegar a
- * renderizar.
- */
-export const dynamicParams = false;
-
 export function generateStaticParams() {
   return CATEGORIAS_PROVEEDOR.map((categoria) => ({ categoria }));
 }
@@ -43,7 +31,12 @@ export async function generateMetadata({
   params: Promise<{ categoria: string }>;
 }): Promise<Metadata> {
   const { categoria } = await params;
-  if (!esCategoria(categoria)) return construirMetadata({ titulo: 'Categoría no encontrada', descripcion: '', ruta: `/directorio/${categoria}`, noindex: true });
+  // `notFound()`, no unos metadatos de «no encontrada». Devolver metadatos
+  // válidos hace que la ruta se resuelva con éxito y la respuesta salga con
+  // HTTP 200 aunque el cuerpo diga que no existe. Esta ruta es dinámica —lee
+  // filtros de la URL y perfiles de disco— así que `dynamicParams` no la
+  // ataja: el corte tiene que estar aquí.
+  if (!esCategoria(categoria)) notFound();
 
   const ficha = FICHAS_CATEGORIA[categoria];
 
