@@ -81,6 +81,47 @@ export const CATEGORIAS_FAQ: CategoriaFAQ[] = [
         herramienta: { href: '/herramientas/cuestionario', etiqueta: 'Responder el cuestionario' },
       },
       {
+        id: 'vulnerable-no-es-obligado',
+        pregunta: 'Hago una actividad del artículo 17. ¿Ya soy sujeto obligado?',
+        respuesta: [
+          'No necesariamente, y ésta es la distinción que más confusión causa en toda la materia: realizar una actividad vulnerable y ser sujeto obligado no son lo mismo.',
+          'La actividad te pone en el catálogo. Lo que te convierte en sujeto obligado es alcanzar el umbral de identificación de tu fracción. Un lote que vende autos de forma habitual y profesional, pero cuyas unidades nunca llegan al umbral, realiza una actividad vulnerable y no está obligado a inscribirse ni a presentar avisos.',
+          'Ahora el detalle que descoloca a todo el mundo: el umbral se mide POR OPERACIÓN, no por mes ni por año. Ese mismo lote que vendió doscientos coches baratos sin obligación alguna se convierte en sujeto obligado el día que vende un solo auto por encima del umbral. Una operación única voltea el estatus.',
+          'De ahí que revisar esto una vez y archivarlo no funcione. La pregunta no es «¿a qué me dedico?» sino «¿alguna operación cruzó la línea?», y sólo se responde mirando las operaciones.',
+        ],
+        fundamento: 'Art. 17 LFPIORPI y umbral de identificación de cada fracción',
+        herramienta: {
+          href: '/herramientas/calculadora-umbrales',
+          etiqueta: 'Ver el umbral de mi actividad',
+        },
+      },
+      {
+        id: 'contador-abogado-representacion',
+        pregunta: 'Soy contador. ¿Mi despacho es actividad vulnerable?',
+        respuesta: [
+          'Depende de si actúas EN REPRESENTACIÓN de tu cliente o sólo le prestas un servicio profesional. Ésa es la línea, y no la traza el giro sino el contrato.',
+          'No es actividad vulnerable el contador en nómina de la empresa. Tampoco el despacho externo que lleva contabilidad, presenta declaraciones y asesora. Ahí prestas un servicio y el cliente actúa por sí mismo.',
+          'Sí lo es cuando empiezas a actuar por él: manejar sus cuentas bancarias o de inversión, usar su token, presentarte en un banco o una casa de bolsa a su nombre, administrar activos suyos, o intervenir en fusiones, escisiones y armado de estructura societaria.',
+          'El riesgo real no es equivocarse al firmar el contrato: es el crecimiento del contrato. «Ya que eres nuestro contador, también manéjanos las cuentas» convierte un despacho en sujeto obligado sin que nadie firme nada nuevo ni lo note. Si el alcance de tus servicios cambió en los últimos meses, vuelve a revisar la fracción XI.',
+        ],
+        fundamento: 'Art. 17, fracción XI, LFPIORPI',
+        herramienta: { href: '/herramientas/cuestionario', etiqueta: 'Revisar mi caso' },
+      },
+      {
+        id: 'tengo-cripto-me-aplica',
+        pregunta: 'Tengo bitcoin. ¿Eso me hace sujeto obligado?',
+        respuesta: [
+          'No. Comprar, tener o vender activos virtuales para ti mismo no genera ninguna obligación bajo esta ley. Lo vulnerable es PRESTAR EL SERVICIO a terceros.',
+          'Es decir: entra quien ofrece intercambio, custodia o almacenamiento de activos virtuales, quien los comercializa por cuenta de otros, o quien opera la plataforma tecnológica que los mueve. Tu cartera personal no.',
+          'Y si prestas el servicio, ojo con esta fracción: sus umbrales son los más bajos de toda la ley, y hay un disparador adicional sobre la contraprestación que cobras, no sólo sobre el monto intercambiado.',
+        ],
+        fundamento: 'Art. 17, fracción XVI, LFPIORPI',
+        verMas: {
+          href: '/actividades-vulnerables/activos-virtuales',
+          etiqueta: 'Ver la fracción completa',
+        },
+      },
+      {
         id: 'vender-mi-propia-casa',
         pregunta: '¿Vender mi propia casa me convierte en sujeto obligado?',
         respuesta: [
@@ -233,6 +274,32 @@ export const CATEGORIAS_FAQ: CategoriaFAQ[] = [
           href: '/herramientas/fecha-limite-aviso',
           etiqueta: 'Ver mis próximas fechas límite',
         },
+      },
+      {
+        id: 'efectivo-por-operacion',
+        pregunta: 'Si el pago viene en parcialidades o entre varios copropietarios, ¿se multiplica el tope de efectivo?',
+        respuesta: [
+          'No. En los dos casos el límite se mide sobre la OPERACIÓN completa, y en los dos casos el error se comete de buena fe creyendo lo contrario.',
+          'Parcialidades: si el comprador paga en varias exhibiciones y la suma de lo entregado en efectivo rebasa el tope, ya hay infracción, aunque ninguna exhibición individual lo rebase. Partir el pago no parte el límite.',
+          'Copropiedad: si un inmueble tiene cuatro copropietarios, el tope no se multiplica por cuatro. La operación es una y su límite es uno.',
+          'Y una precisión que ahorra sustos: el cheque no cuenta como efectivo para esta ley, aunque en la conversación diaria se le llame así. Gira una instrucción a un banco y por tanto deja rastro, que es justo lo que la norma persigue. Transferencia, tarjeta y cheque son medios rastreables; efectivo, metales y billetes no.',
+        ],
+        fundamento: 'Art. 32 LFPIORPI',
+        herramienta: {
+          href: '/herramientas/limites-efectivo',
+          etiqueta: 'Verificar una operación',
+        },
+      },
+      {
+        id: 'legal-no-es-licito',
+        pregunta: 'Pago mis impuestos y todo está declarado. ¿Eso me protege?',
+        respuesta: [
+          'No, y la confusión entre las dos palabras es de las más caras de esta materia: una operación puede ser LEGAL y no ser LÍCITA.',
+          'Legal significa que cumpliste la forma: facturaste, declaraste, pagaste el impuesto. Lícito se refiere al origen del recurso. Declarar dinero de procedencia ilícita y pagar impuestos sobre él no lo limpia; lo que hace es dejar constancia fiscal de una operación cuyo origen sigue siendo el problema.',
+          'Por eso la obligación de esta ley no se satisface con la contabilidad. Lo que se documenta aquí no es cuánto entró, sino de dónde venía y a nombre de quién.',
+          'Dicho al revés, que es como conviene recordarlo: el SAT te pregunta si pagaste; esta ley te pregunta si preguntaste.',
+        ],
+        fundamento: 'Objeto de la LFPIORPI y art. 400 bis del Código Penal Federal',
       },
       {
         id: 'devolver-en-la-misma-forma',
