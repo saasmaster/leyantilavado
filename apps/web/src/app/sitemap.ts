@@ -127,6 +127,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/legal/terminos',
     '/legal/cookies',
     '/legal/publicidad',
+    // La política de la app Android no está en el menú ni en el pie, por
+    // decisión de producto. Va aquí de todos modos: Google Play exige una URL
+    // pública y estable, y una página sin un solo enlace entrante queda
+    // huérfana —imposible de encontrar y de comprobar por quien revisa la
+    // ficha—.
+    '/legal/privacidad-app',
   ].map((r) => entrada(r, 0.3, 'yearly'));
 
   return [
