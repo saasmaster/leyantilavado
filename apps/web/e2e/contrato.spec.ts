@@ -227,6 +227,39 @@ test.describe('SEO técnico', () => {
     expect(robots.status()).toBe(200);
   });
 
+  /**
+   * Una URL inventada tiene que responder 404 de verdad, no 200 con la página
+   * de «no encontrada» dentro.
+   *
+   * Esto ya se rompió una vez, y en silencio: un `loading.tsx` en la raíz
+   * envuelve toda la app en Suspense, así que Next manda la cabecera 200 con el
+   * esqueleto antes de ejecutar la página. Cuando después se lanza `notFound()`
+   * el estado ya viajó y no se puede cambiar. El cuerpo decía «Página no
+   * encontrada» y el servidor decía 200.
+   *
+   * No lo cazaba nada: la página se ve bien en el navegador, el `noindex` está
+   * puesto y el build pasa. Sólo se nota mirando el estado HTTP —que es
+   * justamente lo único que mira Google—, y el precio es que el directorio
+   * acepta como válida cualquier URL que alguien invente.
+   *
+   * Las rutas estáticas se salvaban solas (`dynamicParams` las corta antes de
+   * renderizar); las dinámicas, no. Por eso se prueban las dinámicas.
+   */
+  test('las rutas inexistentes responden 404 de verdad', async ({ request }) => {
+    const inventadas = [
+      '/ruta-completamente-inventada',
+      '/actividades-vulnerables/no-existe-xyz',
+      '/obligaciones/no-existe-xyz',
+      '/directorio/no-existe-xyz',
+      '/directorio/profesional/no-existe-xyz',
+    ];
+
+    for (const ruta of inventadas) {
+      const res = await request.get(ruta, { maxRedirects: 0 });
+      expect(res.status(), `${ruta} debe devolver 404, no ${res.status()}`).toBe(404);
+    }
+  });
+
   test('el manifiesto de la PWA es válido', async ({ request }) => {
     const res = await request.get('/manifest.webmanifest');
     expect(res.status()).toBe(200);
