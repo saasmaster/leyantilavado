@@ -61,13 +61,26 @@ export default function Pagina() {
             cadena se muestra por separado para que se pueda auditar el cálculo.
           </p>
           <p>
-            <strong>Dónde está la línea.</strong> Es beneficiario controlador quien tiene{' '}
-            <strong>más del 25%</strong> del capital social. La reforma del 16 de julio de 2025 bajó
-            ese umbral desde el 50% anterior, y ese cambio de una cifra reabre estructuras que ya se
-            daban por resueltas: una sociedad con tres socios al 33% no tenía ningún beneficiario
-            controlador por participación bajo la regla vieja y ahora tiene tres. El límite es
-            estricto —25% exacto no lo alcanza— y por eso la herramienta muestra el porcentaje con
-            decimales en lugar de redondearlo.
+            <strong>Dónde está la línea.</strong> El umbral de capital es el{' '}
+            <strong>25%</strong>. La reforma del 16 de julio de 2025 lo bajó desde el 50% anterior,
+            y ese cambio de una cifra reabre estructuras que ya se daban por resueltas: una sociedad
+            con tres socios al 33% no tenía ningún beneficiario controlador por participación bajo
+            la regla vieja y ahora tiene tres. La herramienta muestra el porcentaje con decimales,
+            sin redondear, porque en el borde la diferencia decide.
+          </p>
+          <p>
+            <strong>Y si nadie llega al 25%, no te quedas sin beneficiario controlador.</strong> El
+            Acuerdo 115/2026 fija un orden de prelación de tres escalones: primero el umbral de
+            capital; si nadie lo alcanza, quien ejerce el control por otros medios —dirigir la
+            estrategia, imponer decisiones en asamblea, nombrar o remover al administrador—; y si
+            ahí tampoco hay nadie, la persona con el cargo de mayor jerarquía administrativa. Por
+            eso «mi sociedad no tiene beneficiario controlador» casi nunca es una respuesta válida:
+            el tercer escalón existe para que siempre haya un nombre.
+          </p>
+          <p>
+            <strong>No lo confundas con el del SAT.</strong> El Código Fiscal usa 15% y se conserva
+            en tus registros; la Ley Antilavado usa 25% y va al expediente del cliente. Son dos
+            obligaciones distintas y cumplir una no cumple la otra.
           </p>
           <p>
             <strong>Control por otros medios.</strong> Una participación mínima puede dar control

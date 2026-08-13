@@ -330,13 +330,30 @@ export const CATEGORIAS_FAQ: CategoriaFAQ[] = [
         pregunta: '¿Quién cuenta como beneficiario controlador después de la reforma?',
         respuesta: [
           'La persona física que se beneficia de la operación o que ejerce el control. La reforma de julio de 2025 bajó el umbral de participación: antes se miraba a quien tuviera el 50% del capital social, ahora basta con MÁS DEL 25%.',
-          'Ese cambio de una sola cifra reabre estructuras que ya se consideraban resueltas. Una sociedad con cuatro socios al 25% no tenía beneficiario controlador por participación bajo la regla anterior y sigue sin tenerlo por ese camino —25% no es más de 25%—, pero una con tres socios al 33% ahora tiene tres, donde antes no tenía ninguno.',
-          'El porcentaje no es el único camino: quien ejerce el control por otros medios —acuerdos de voto, derecho a nombrar al administrador, control de hecho— es beneficiario controlador aunque no aparezca en el capital.',
+          'Ese cambio de una sola cifra reabre estructuras que ya se consideraban resueltas: una sociedad con tres socios al 33% no tenía ningún beneficiario controlador por participación bajo la regla anterior y ahora tiene tres.',
+          'Ojo con el borde exacto: hay fuentes profesionales que redactan el criterio como «más del 25%» y otras como «25% o más». No es lo mismo para una sociedad con cuatro socios al 25% clavado, que es un reparto muy común. Mientras no lo confirmemos contra el texto publicado, aquí no elegimos por ti: si tu estructura cae justo en 25,00%, trátala como si contara y consúltalo con tu asesor.',
+          'El porcentaje tampoco es el único camino, y esta es la parte que más se pasa por alto: el Acuerdo 115/2026 añadió un capítulo de beneficiario controlador con un ORDEN DE PRELACIÓN de tres escalones. Primero, quien alcanza el umbral de capital. Si nadie lo alcanza, quien ejerce el control por otros medios —dirigir la estrategia, imponer decisiones en asamblea, nombrar o remover al administrador—. Y si tampoco hay nadie ahí, la persona con el cargo de mayor jerarquía administrativa.',
+          'La consecuencia práctica desarma la respuesta más frecuente: «mi sociedad no tiene beneficiario controlador porque nadie llega al umbral» casi nunca es cierta. El tercer escalón existe justamente para que siempre haya un nombre.',
         ],
         fundamento: 'Art. 3, fracción III, LFPIORPI, reformado el 16 de julio de 2025',
         herramienta: {
           href: '/herramientas/beneficiario-controlador',
           etiqueta: 'Trazar la estructura corporativa',
+        },
+      },
+      {
+        id: 'bc-cff-vs-lfpiorpi',
+        pregunta: '¿El beneficiario controlador del SAT y el de la Ley Antilavado son el mismo?',
+        respuesta: [
+          'Es la misma figura conceptual pero son DOS regímenes distintos, y no comparten ni el umbral ni el trámite. Confundirlos es el error más caro de esta materia, porque quien cumple uno suele creer que ya cumplió el otro.',
+          'El Código Fiscal de la Federación fija su criterio de participación accionaria en 15% y existe desde 2022: la información se conserva en tus propios registros y se entrega cuando el SAT la requiere.',
+          'La Ley Antilavado lo fija en 25% y su obligación es otra: identificarlo para el expediente del cliente y —para las sociedades mercantiles— registrarlo en la plataforma de la Secretaría de Economía.',
+          'Un socio con el 18% puede ser beneficiario controlador para efectos fiscales y no alcanzar el umbral de la Ley Antilavado por participación. Eso no lo deja fuera: todavía puede entrar por control o por el escalón del administrador de mayor jerarquía.',
+        ],
+        fundamento: 'Art. 32-B Ter CFF y Acuerdo 115/2026, capítulo de beneficiario controlador',
+        herramienta: {
+          href: '/herramientas/beneficiario-controlador',
+          etiqueta: 'Trazar la estructura',
         },
       },
       {
@@ -350,6 +367,47 @@ export const CATEGORIAS_FAQ: CategoriaFAQ[] = [
         ],
         fundamento: 'LFPIORPI reformada el 16 de julio de 2025; lineamientos pendientes de publicación',
         verMas: { href: '/reforma-ley-antilavado-2026', etiqueta: 'Ver qué más cambió' },
+      },
+      {
+        id: 'metodologia-doce-meses',
+        pregunta: 'La metodología de riesgos es para marzo de 2027. ¿Puedo dejarla para después?',
+        respuesta: [
+          'No, y el motivo no está en la fecha sino en el dato: la metodología se construye sobre los DOCE MESES PREVIOS de operaciones. Eso significa que el material con el que la vas a armar son las operaciones que estás haciendo hoy.',
+          'Puesto al revés: para llegar al 1 de marzo de 2027 con una metodología sustentada, el periodo que tiene que estar registrado y ordenado empieza alrededor de marzo de 2026. El plazo de entrega es 2027; la ventana de datos ya se está consumiendo.',
+          'Quien empiece en enero de 2027 no llega tarde por unas semanas: llega sin historial sobre el que fundamentar los factores de riesgo, y una metodología sin datos detrás es exactamente lo que una auditoría detecta primero.',
+          'Lo accionable hoy no es redactar el documento. Es asegurarte de que estás registrando cada operación con lo que después vas a necesitar: cliente, monto, fecha, forma de pago, zona geográfica y canal.',
+        ],
+        fundamento: 'Artículos Transitorios del Acuerdo 115/2026',
+        herramienta: {
+          href: '/plantillas/control-de-operaciones.csv',
+          etiqueta: 'Descargar la bitácora de operaciones',
+        },
+      },
+      {
+        id: 'cada-cuanto-reevaluar-riesgo',
+        pregunta: '¿Cada cuánto hay que reevaluar el riesgo de un cliente?',
+        respuesta: [
+          'Cada seis meses. No es una recomendación de buenas prácticas: la clasificación de riesgo tiene fecha de caducidad, y un expediente con una evaluación de hace dos años equivale a no tener evaluación.',
+          'La metodología completa, en cambio, se revisa y actualiza cada doce meses. Son dos ciclos distintos que conviene no mezclar: uno mira al cliente, el otro mira a tu propio negocio y a cómo cambió su exposición.',
+          'De ahí que la clasificación tenga que vivir en algo consultable con fechas, no en una hoja suelta: lo que se revisa en una auditoría no es que hayas clasificado, sino cuándo y con qué criterio.',
+        ],
+        fundamento: 'Acuerdo 115/2026, capítulo de enfoque basado en riesgos',
+        herramienta: {
+          href: '/herramientas/clasificacion-clientes',
+          etiqueta: 'Clasificar la cartera',
+        },
+      },
+      {
+        id: 'quien-es-pep',
+        pregunta: '¿Quién cuenta como persona políticamente expuesta?',
+        respuesta: [
+          'Más gente de la que casi todo el mundo supone. No es sólo el funcionario: alcanza también a su cónyuge o concubina y a sus familiares hasta el segundo grado. Un cliente sin cargo público puede ser PEP por parentesco.',
+          'Y no deja de serlo el día que deja el puesto: se maneja un periodo de enfriamiento de un año durante el cual el exfuncionario sigue tratándose como de riesgo alto.',
+          'Aplica tanto a funcionarios nacionales como extranjeros, lo que importa en plazas con clientela internacional.',
+          'Ser PEP no es una acusación ni impide operar con esa persona. Lo que activa es debida diligencia reforzada: más documentación, origen de los recursos y, en riesgo alto, aprobación explícita de la dirección antes de aceptar la relación.',
+        ],
+        fundamento: 'Acuerdo 115/2026, capítulo de personas políticamente expuestas',
+        verMas: { href: '/obligaciones', etiqueta: 'Ver la obligación completa' },
       },
       {
         id: 'para-cuando-cada-cosa',
