@@ -147,6 +147,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // huérfana —imposible de encontrar y de comprobar por quien revisa la
     // ficha—.
     '/legal/privacidad-app',
+    // Misma razón para la extensión de Chrome: la Web Store exige una URL
+    // pública y estable, y sin un enlace entrante la página es incomprobable.
+    '/legal/privacidad-catalogos-sat',
   ].map((r) => entrada(r, 0.3, 'yearly'));
 
   return [
