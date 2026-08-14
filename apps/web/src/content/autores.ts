@@ -36,10 +36,34 @@ export const AUTORES_POR_ID: Record<string, Autor> = Object.fromEntries(
 );
 
 /**
- * Fecha de la pasada editorial vigente. Coincide con `ultimaRevision` de los
- * datos del motor: si una se mueve sin la otra, hay que explicar por qué.
+ * Fecha de la última pasada editorial: cuándo alguien miró las fuentes.
+ *
+ * **Ya no coincide con `ultimaRevision` de los datos del motor, y es a
+ * propósito.** Son dos preguntas distintas: ésta responde «¿cuándo se revisó?»
+ * y la del motor «¿cuándo cambió el dato?». El 14-ago-2026 se revisó y no
+ * cambió nada, así que sólo se mueve ésta.
+ *
+ * Mover también las diez del motor tendría un coste concreto: `ultimaRevision`
+ * alimenta el `lastModified` del sitemap, y subirlas anunciaría las 97 URL como
+ * modificadas hoy sin que se haya tocado una cifra. Es exactamente el problema
+ * que se arregló al dejar de usar `new Date()` ahí —un buscador que ve eso dos
+ * o tres veces deja de creerle al campo, y entonces deja de creerle también el
+ * día que una reforma sí cambia una tabla, que es justo el día que importa—.
+ *
+ * **No es sólo una etiqueta.** Se le pasa a `convertirUMA()` y a
+ * `describirUmbral()`, así que decide qué versión de regla y qué valor de UMA
+ * se aplican. Moverla puede cambiar cifras publicadas, y por eso no se sube
+ * «porque hoy es otro día»: se sube cuando alguien revisó las fuentes, y se
+ * comprueba que ninguna cifra se movió con el cambio.
+ *
+ * Revisión del 14-ago-2026: sin instrumento nuevo desde el Acuerdo 115/2026
+ * (DOF 7-ago-2026, en vigor el 30-nov-2026). El marco sigue siendo los mismos
+ * tres instrumentos, ninguna `vigencia.desde` cae entre el 11 y el 14 de
+ * agosto, y la UMA se actualiza en febrero. Las 430 cifras de /umbrales,
+ * /multas, /limites-efectivo, /reforma-ley-antilavado-2026 y la calculadora de
+ * UMA se compararon antes y después: idénticas.
  */
-export const REVISION_VIGENTE = '2026-08-11';
+export const REVISION_VIGENTE = '2026-08-14';
 
 export const FIRMA_POR_DEFECTO: FirmaContenido = {
   autor: EQUIPO_EDITORIAL,

@@ -147,8 +147,43 @@ existen en el código.
 
 ### 2.5 Actualizar
 
-Push a `main` y redespliega desde ServerAvatar. Cada despliegue recompila, así que un cambio en
-las variables `NEXT_PUBLIC_*` sí toma efecto.
+> **El panel NO compila.** «Git → Pull Latest Changes» hace `git pull` y nada más: no ejecuta el
+> *Build Command* ni reinicia PM2. Como Next sirve `.next/`, el servidor se queda con el código
+> nuevo y el sitio compilado viejo, y una ruta recién añadida devuelve **404 con su `page.tsx` en
+> disco**. Los síntomas engañan —parece caché del navegador, o DNS, o el proxy— y no es ninguno.
+
+Tras cada push, despliega por SSH:
+
+```bash
+ssh leyantilavado@209.54.100.69   # contraseña: system_user en la API de ServerAvatar
+cd ~/leyantilavado/public_html && git pull --ff-only && \
+  NODE_ENV=production NEXT_PUBLIC_SITE_URL=https://leyantilavado.org \
+  NEXT_PUBLIC_SITE_INDEXABLE=true NODE_OPTIONS=--max_old_space_size=4096 \
+  npm run build && pm2 restart leyantilavado --update-env
+```
+
+Las variables van a mano porque **no hay `.env` en el servidor** —sólo `.env.example`—: las
+inyecta PM2. Un `npm run build` pelado compilaría sin `NEXT_PUBLIC_SITE_URL` y dejaría canónicas
+y sitemap apuntando a `localhost`: un despliegue «exitoso» que rompe el SEO en silencio. Si
+cambian, sácalas del proceso vivo con `pm2 jlist`.
+
+Diagnóstico rápido cuando algo «no se refleja» — comparar dos fechas por SSH:
+
+```bash
+cd ~/leyantilavado/public_html && git log -1 --format=%h\ %ad && ls -ld apps/web/.next
+```
+
+Si el commit está al día y `.next` atrasado, falta compilar. No es caché.
+
+### 2.6 Verificar el despliegue
+
+Desde fuera, nunca desde el navegador: tu caché y el service worker mienten sobre lo que sirve
+el servidor.
+
+```bash
+curl -sI https://leyantilavado.org/<ruta-nueva> | head -1
+E2E_BASE=https://leyantilavado.org npx playwright test   # las 128 del contrato
+```
 
 ---
 
