@@ -5,6 +5,7 @@ import { datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { Insignia, Nota } from '@leyantilavado/ui';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
 import { ANEXOS_NUEVOS, BLOQUES_ACUERDO_115, INSTRUMENTOS } from '@/content/reforma';
+import { REVISION_VIGENTE } from '@/content/autores';
 import {
   AvisoLegal,
   CabeceraArticulo,
@@ -28,7 +29,7 @@ export const metadata: Metadata = construirMetadata({
   ruta: RUTA,
   tipo: 'article',
   publicadoEn: '2026-08-11',
-  actualizadoEn: '2026-08-11',
+  actualizadoEn: REVISION_VIGENTE,
 });
 
 const ACUERDO = INSTRUMENTOS.find((i) => i.clave.includes('acuerdo') || i.clave.includes('115'));
@@ -56,7 +57,7 @@ export default function Acuerdo115() {
             descripcion: DESCRIPCION,
             ruta: RUTA,
             publicadoEn: '2026-08-11',
-            actualizadoEn: '2026-08-11',
+            actualizadoEn: REVISION_VIGENTE,
             seccion: 'Marco normativo',
           }),
         ]}

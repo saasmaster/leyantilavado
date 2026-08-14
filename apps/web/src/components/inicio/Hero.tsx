@@ -142,7 +142,15 @@ export function Hero() {
               </dd>
             </div>
             <div className="flex items-baseline justify-between gap-4 pt-3">
-              <dt className="text-sm text-[var(--color-tinta-suave)]">Versión del corpus legal</dt>
+              {/* «Último cambio de dato» no es adorno: sin él, esta fecha
+                  convive con la de revisión —tres días posterior— y se lee como
+                  un descuido. Fue la primera pregunta de quien lo vio. */}
+              <dt className="text-sm text-[var(--color-tinta-suave)]">
+                Versión del corpus legal
+                <span className="block text-xs text-[var(--color-tinta-tenue)]">
+                  Numerada por el último cambio de dato
+                </span>
+              </dt>
               <dd className="cifra text-sm font-medium text-[var(--color-tinta)]">
                 {VERSION_LEGAL}
               </dd>

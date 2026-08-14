@@ -85,7 +85,13 @@ export default function Nosotros() {
 
           <h2>Qué hay detrás del sitio hoy</h2>
           <p>
-            El corpus legal está en la versión <strong>{VERSION_LEGAL}</strong> e incluye{' '}
+            {/* La versión lleva la fecha del último cambio de dato, no la de la
+                última revisión, así que va por detrás de la fecha que se
+                muestra en el pie. Sin decirlo, el desfase se lee como un
+                descuido: es la primera pregunta que hizo quien lo vio. */}
+            El corpus legal está en la versión <strong>{VERSION_LEGAL}</strong> —numerada por la
+            fecha del último cambio de dato, no por la de la última revisión, de modo que revisar
+            y no encontrar cambios no la mueve— e incluye{' '}
             {FRASE_ACTIVIDADES}, {FRASE_UMBRALES},{' '}
             {datos.OBLIGACIONES.length} obligaciones y {datos.CALENDARIO.length} hitos de
             calendario, todos apuntando a alguna de las {datos.FUENTES.length} fuentes oficiales

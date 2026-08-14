@@ -17,10 +17,31 @@ import { assertFechaISO, dentroDeVigencia } from './fechas';
 import { convertirUMA } from './uma';
 import { ACTIVIDADES_POR_SLUG } from './datos/actividades';
 import { UMBRALES } from './datos/umbrales';
+import { ULTIMA_MODIFICACION } from './datos/revision';
 import { evaluarAcumulacion } from './acumulacion';
 import { evaluarEfectivo } from './efectivo';
 
-export const VERSION_LEGAL = '2026.08.11';
+/**
+ * Versión del corpus legal: identifica el CONTENIDO de los datos, no la fecha
+ * en que se miraron.
+ *
+ * Por eso deriva de `ULTIMA_MODIFICACION` y no de `ULTIMA_REVISION`, y por eso
+ * puede ir «atrasada» respecto a la fecha de revisión que se muestra en las
+ * páginas. Es lo correcto: si el 14 de agosto se revisan las fuentes y no
+ * cambia ni una cifra, el corpus sigue siendo el mismo y su versión no debe
+ * moverse. Un número de versión que cambia sin que cambie el contenido no
+ * sirve para lo que existe —citar exactamente qué datos produjeron un
+ * resultado— porque dos versiones distintas dejarían de significar dos
+ * corpus distintos.
+ *
+ * Se imprime en cada resultado descargable y en `/datos/*.json`, así que quien
+ * archive un cálculo puede decir con qué corpus se hizo.
+ *
+ * Estaba escrita a mano como `'2026.08.11'`, sin explicación, junto a páginas
+ * que decían «revisado al 14 de agosto». La cifra era correcta y aun así se
+ * leía como un descuido; ahora no puede desincronizarse ni sorprender.
+ */
+export const VERSION_LEGAL = ULTIMA_MODIFICACION.replace(/-/g, '.');
 
 export class ReglaNoEncontradaError extends Error {
   constructor(actividad: string, subtipo: string | undefined, fecha: string) {

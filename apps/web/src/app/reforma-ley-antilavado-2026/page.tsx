@@ -32,7 +32,7 @@ export const metadata: Metadata = construirMetadata({
   ruta: RUTA,
   tipo: 'article',
   publicadoEn: '2026-08-11',
-  actualizadoEn: '2026-08-11',
+  actualizadoEn: REVISION_VIGENTE,
 });
 
 /**
@@ -88,7 +88,7 @@ export default function Reforma() {
             descripcion: DESCRIPCION,
             ruta: RUTA,
             publicadoEn: '2026-08-11',
-            actualizadoEn: '2026-08-11',
+            actualizadoEn: REVISION_VIGENTE,
             seccion: 'Marco normativo',
           }),
         ]}

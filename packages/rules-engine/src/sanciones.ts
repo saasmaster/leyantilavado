@@ -12,6 +12,7 @@ import {
 import { assertFechaISO, dentroDeVigencia } from './fechas';
 import { convertirUMA } from './uma';
 import { ESCENARIOS_AUTOCORRECCION, SANCIONES } from './datos/sanciones';
+import { ULTIMA_MODIFICACION, ULTIMA_REVISION } from './datos/revision';
 import { VERSION_LEGAL } from './motor';
 
 interface Args {
@@ -124,7 +125,8 @@ export function estimarSancion({
       fuentes: ['lfpiorpi-vigente'],
       disposicion: 'Arts. 53, 54 y 55 LFPIORPI',
       verificacion: 'oficial_verificado',
-      ultimaRevision: '2026-08-11',
+      ultimaRevision: ULTIMA_REVISION,
+      ultimaModificacion: ULTIMA_MODIFICACION,
     },
     versionLegal: VERSION_LEGAL,
   };

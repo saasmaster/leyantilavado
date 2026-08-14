@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { Nota } from '@leyantilavado/ui';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
+import { REVISION_VIGENTE } from '@/content/autores';
 import {
   AvisoLegal,
   CabeceraArticulo,
@@ -27,7 +28,7 @@ export const metadata: Metadata = construirMetadata({
   ruta: RUTA,
   tipo: 'article',
   publicadoEn: '2026-08-11',
-  actualizadoEn: '2026-08-11',
+  actualizadoEn: REVISION_VIGENTE,
 });
 
 /** Datos planos: nada de objetos del motor cruzando al cliente. */
@@ -85,7 +86,7 @@ export default function Calendario() {
             descripcion: DESCRIPCION,
             ruta: RUTA,
             publicadoEn: '2026-08-11',
-            actualizadoEn: '2026-08-11',
+            actualizadoEn: REVISION_VIGENTE,
             seccion: 'Cumplimiento',
           }),
         ]}

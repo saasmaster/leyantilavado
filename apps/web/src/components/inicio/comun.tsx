@@ -8,21 +8,30 @@ import type {
 import { formatearMXN } from '@leyantilavado/types';
 import { convertirUMA, datos, VERSION_LEGAL } from '@leyantilavado/rules-engine';
 import { cn, Insignia } from '@leyantilavado/ui';
+import { REVISION_VIGENTE } from '@/content/autores';
 
 /**
- * Fecha de referencia del sitio: el día en que se revisó el corpus legal.
+ * Se reexporta la de `@/content/autores`. NO se deriva de `VERSION_LEGAL`.
  *
- * Antes esto era `new Date()` al importar el módulo, y en un sitio generado
- * de forma estática eso no es "hoy": es el día en que corrió el build. La
- * página quedaba afirmando "marco legal revisado al 12 de agosto" para
- * siempre, y —peor— dos builds del mismo código convertían UMA con fechas
- * distintas, así que las cifras cambiaban sin que cambiara una línea.
+ * Sigue valiendo la razón por la que esto dejó de ser `new Date()`: en un sitio
+ * estático «hoy» es el día del build, así que la página afirmaba «revisado al
+ * 12 de agosto» para siempre y —peor— dos builds del mismo código convertían
+ * UMA con fechas distintas. La fecha tiene que ser un hecho declarado. Lo que
+ * cambia es de cuál se deriva.
  *
- * `VERSION_LEGAL` sí es un hecho declarado: la fecha en que se revisó el
- * corpus. Derivarla de ahí hace la afirmación cierta y el build reproducible.
- * Cuando se revisa la ley se sube la versión, y esta fecha avanza con ella.
+ * Aquí vivía `VERSION_LEGAL.replaceAll('.', '-')`, y eso creaba una segunda
+ * constante con el mismo nombre y otro significado: la versión del corpus dice
+ * cuándo CAMBIÓ un dato, y esto se muestra al lector como cuándo se REVISÓ.
+ * Diez páginas importaban ésta y el resto la de `autores`, así que el sitio
+ * enseñaba dos fechas distintas —11 y 14 de agosto— según por dónde entraras.
+ * Ninguna era falsa y el conjunto era incoherente, que en un sitio que vende
+ * trazabilidad es igual de caro.
+ *
+ * Dos constantes homónimas en módulos distintos es una trampa que no avisa:
+ * `tsc` está encantado, el build pasa y el fallo sólo se ve leyendo dos
+ * páginas a la vez.
  */
-export const REVISION_VIGENTE: string = VERSION_LEGAL.replaceAll('.', '-');
+export { REVISION_VIGENTE };
 
 /** Mapa id → { nombre, url } que consume `SelloProcedencia` para enlazar. */
 export const MAPA_FUENTES: Record<string, { nombre: string; url: string }> =
