@@ -117,12 +117,17 @@ Sin esa variable el cambio se registra igual, con el motivo
 
 ## Lo que falta para operar de verdad
 
-- **Storage.** `documents.storage_path` apunta a un bucket que todavía hay que
-  crear, con sus propias políticas por `organization_id`. Los metadatos ya están
-  protegidos; el archivo no.
+- ~~**Storage.**~~ Hecho en `0012_storage_expedientes.sql`: bucket privado
+  `expedientes`, políticas por `organization_id` leído del primer segmento de la
+  ruta, y sin política de borrado (la ley obliga a conservar diez años). La
+  aplicación DEBE construir la ruta como `<organization_id>/<document_id>/<archivo>`:
+  ese primer segmento es lo que aísla, no es decorativo.
 - **Correo transaccional.** Supabase Auth manda los correos de confirmación con
   su remitente por omisión y con límites de envío bajos. Para producción hay que
   configurar SMTP propio.
-- **Tarea programada.** `/api/cron/monitor-fuentes` no se ejecuta sola: hay que
-  apuntarle un cron (Vercel Cron, GitHub Actions o el programador del VPS) con
-  la cabecera `Authorization: Bearer $CRON_SECRET`.
+- ~~**Tarea programada.**~~ Hecha: `crontab` del usuario `leyantilavado` en el
+  VPS, diaria a las 14:00 UTC (08:00 CDMX), vía `~/cron/monitor-fuentes.sh`. El
+  script lee el secreto del proceso de PM2 en vez de guardarlo, así que rotarlo
+  en el panel basta. Hoy responde 503 —«el monitor no tiene dónde guardar el
+  resultado»— y empezará a funcionar solo en cuanto existan las variables de
+  Supabase. Registro en `~/cron/monitor-fuentes.log`.
