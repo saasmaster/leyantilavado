@@ -29,33 +29,37 @@ import { SITIO } from '@/lib/sitio';
  */
 export function SelloImpresion({ titulo }: { titulo: string }) {
   /*
-   * `useState` perezoso, no `new Date()` en el cuerpo del render: la regla
-   * `react-hooks/purity` de eslint prohíbe lo segundo y sólo lo caza
-   * `next build`, no `tsc`. Además el valor debe fijarse una vez y no cambiar
-   * entre renders, o la fecha del documento bailaría.
+   * Fecha y URL se calculan DESPUÉS de montar, nunca durante el render.
+   *
+   * El primer intento usaba `useState(() => new Date())`, que evita la regla
+   * `react-hooks/purity` pero no el problema de fondo: el servidor renderiza
+   * una hora y el cliente otra, y React lo reporta como desajuste de
+   * hidratación. Lo cazaron 30 pruebas de «carga sin errores de consola» a la
+   * vez, que es exactamente para lo que están.
+   *
+   * Dejarlo vacío en el servidor no cuesta nada: este bloque no se ve en
+   * pantalla, y para cuando alguien pulsa imprimir hace rato que hidrató.
    */
-  const [generado] = React.useState(() => new Date());
+  const [sello, setSello] = React.useState<{ fecha: string; url: string } | null>(null);
 
-  // La URL sólo existe en el cliente. En el servidor se queda vacía y se
-  // rellena al montar; da igual porque este bloque no se ve en pantalla.
-  const [url, setUrl] = React.useState('');
-  React.useEffect(() => setUrl(window.location.href), []);
-
-  const fecha = generado.toLocaleString('es-MX', {
-    dateStyle: 'long',
-    timeStyle: 'short',
-  });
+  React.useEffect(() => {
+    setSello({
+      fecha: new Date().toLocaleString('es-MX', { dateStyle: 'long', timeStyle: 'short' }),
+      url: window.location.href,
+    });
+  }, []);
 
   return (
     <div className="solo-imprimir" aria-hidden="true">
       <div style={{ borderBottom: '2px solid #000', paddingBottom: '0.5rem', marginBottom: '1rem' }}>
         <p style={{ fontSize: '13pt', fontWeight: 700, margin: 0 }}>{titulo}</p>
         <p style={{ fontSize: '10pt', margin: '0.15rem 0 0' }}>
-          {SITIO.nombre} · Documento generado el {fecha}
+          {SITIO.nombre}
+          {sello ? ` · Documento generado el ${sello.fecha}` : ''}
         </p>
-        {url && (
+        {sello && (
           <p style={{ fontSize: '8.5pt', margin: '0.15rem 0 0', wordBreak: 'break-all' }}>
-            Consulta reproducible en: {url}
+            Consulta reproducible en: {sello.url}
           </p>
         )}
       </div>
