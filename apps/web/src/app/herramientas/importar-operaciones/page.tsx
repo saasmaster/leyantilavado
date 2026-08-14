@@ -16,7 +16,6 @@ export default function Pagina() {
       slug="importar-operaciones"
       titulo="Importador de operaciones"
       entradilla="Pasa el mes completo de una sola vez. Cada fila se valida por separado, los errores se reportan con su número de línea y lo válido se evalúa con el mismo motor de las calculadoras."
-      actualizadoEn="2026-08-11"
       tambienVer={['acumulacion-operaciones', 'calculadora-umbrales']}
       lecturas={[
         { href: '/umbrales', etiqueta: 'Tabla de umbrales por actividad' },

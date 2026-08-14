@@ -17,7 +17,6 @@ export default function Pagina() {
       slug="calculadora-multas"
       titulo="Estimador de multas"
       entradilla="Los rangos que la ley contempla para cada infracción, convertidos a pesos con la UMA de la fecha, más los escenarios de autocorrección y sus requisitos reales."
-      actualizadoEn="2026-08-11"
       tambienVer={['fecha-limite-aviso', 'preparacion-auditoria']}
       lecturas={[
         { href: '/multas', etiqueta: 'Multas y sanciones explicadas' },

@@ -16,7 +16,6 @@ export default function Pagina() {
       slug="checklist-expediente"
       titulo="Checklist de expediente"
       entradilla="El expediente único de identificación, punto por punto y por tipo de cliente, con la evidencia que se espera de cada uno y el avance de lo que ya tienes."
-      actualizadoEn="2026-08-11"
       tambienVer={['beneficiario-controlador', 'clasificacion-clientes']}
       lecturas={[
         { href: '/obligaciones/expedientes', etiqueta: 'La obligación de integrar expedientes' },

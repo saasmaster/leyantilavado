@@ -21,7 +21,6 @@ export default function Pagina() {
       slug="capacitacion-anual"
       titulo="Capacitación anual"
       entradilla="La capacitación se acredita con evidencia, no con buena voluntad. Esta lista cubre el periodo completo: a quién alcanza, qué se impartió, quién asistió y quién entendió."
-      actualizadoEn="2026-08-11"
       tambienVer={['preparacion-auditoria', 'plan-cumplimiento']}
       lecturas={[
         { href: '/obligaciones/capacitacion', etiqueta: 'La obligación de capacitar' },

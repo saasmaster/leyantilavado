@@ -16,7 +16,6 @@ export default function Pagina() {
       slug="clasificacion-clientes"
       titulo="Clasificación de clientes"
       entradilla="Ocho preguntas por cliente, en español y sin jerga, que se convierten en un puntaje ponderado, un nivel de riesgo y una fecha de próxima revisión."
-      actualizadoEn="2026-08-11"
       tambienVer={['matriz-riesgos', 'checklist-expediente']}
       lecturas={[
         { href: '/obligaciones/clasificacion-clientes', etiqueta: 'La obligación de clasificar' },

@@ -18,7 +18,6 @@ export default function Pagina() {
       slug="preparacion-auditoria"
       titulo="Preparación para auditoría"
       entradilla="Recorre el catálogo completo de obligaciones con la evidencia que se espera de cada una y mide qué tan lejos estás de poder enseñarlo todo."
-      actualizadoEn="2026-08-11"
       tambienVer={['plan-cumplimiento', 'mecanismos-automatizados']}
       lecturas={[
         { href: '/obligaciones/auditoria-anual', etiqueta: 'La auditoría anual' },

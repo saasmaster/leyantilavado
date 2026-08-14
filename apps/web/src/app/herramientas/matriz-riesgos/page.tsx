@@ -16,7 +16,6 @@ export default function Pagina() {
       slug="matriz-riesgos"
       titulo="Matriz de riesgos"
       entradilla="El enfoque basado en riesgos deja de ser una frase cuando le pones pesos, puntajes y una justificación por factor. Aquí lo armas y te lo llevas documentado."
-      actualizadoEn="2026-08-11"
       tambienVer={['clasificacion-clientes', 'preparacion-auditoria']}
       lecturas={[
         { href: '/obligaciones/enfoque-basado-riesgos', etiqueta: 'La obligación de metodología' },

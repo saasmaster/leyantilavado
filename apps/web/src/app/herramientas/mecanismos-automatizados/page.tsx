@@ -22,7 +22,6 @@ export default function Pagina() {
       slug="mecanismos-automatizados"
       titulo="Mecanismos automatizados"
       entradilla="Las preguntas concretas que separan un sistema que detecta de una hoja de cálculo con fórmulas. Úsalas para evaluar el tuyo o para exigirle al proveedor."
-      actualizadoEn="2026-08-11"
       tambienVer={['preparacion-auditoria', 'importar-operaciones']}
       lecturas={[
         {

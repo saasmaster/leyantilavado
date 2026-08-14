@@ -16,7 +16,6 @@ export default function Pagina() {
       slug="comparador-obligaciones"
       titulo="Comparador de actividades"
       entradilla="Dos o tres actividades vulnerables frente a frente, con los umbrales ya convertidos a pesos con la UMA de la fecha que elijas."
-      actualizadoEn="2026-08-11"
       tambienVer={['calculadora-umbrales', 'cuestionario']}
       lecturas={[
         { href: '/actividades-vulnerables', etiqueta: 'Las actividades del artículo 17' },

@@ -16,7 +16,6 @@ export default function Pagina() {
       slug="calculadora-umbrales"
       titulo="Calculadora de umbrales"
       entradilla="Dime la actividad, el inciso, el monto y la fecha, y te digo si hay que identificar al cliente, si hay que presentar aviso, y con qué valor de UMA salió cada número."
-      actualizadoEn="2026-08-11"
       tambienVer={['acumulacion-operaciones', 'fecha-limite-aviso']}
       lecturas={[
         { href: '/umbrales', etiqueta: 'Tabla completa de umbrales por actividad' },

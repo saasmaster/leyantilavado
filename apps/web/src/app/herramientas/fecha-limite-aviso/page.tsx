@@ -16,7 +16,6 @@ export default function Pagina() {
       slug="fecha-limite-aviso"
       titulo="Fecha límite del aviso"
       entradilla="El día 17 del mes siguiente parece simple hasta que cae en domingo, hasta que la operación es de diciembre, o hasta que descubres que un mes sin operaciones también se reporta."
-      actualizadoEn="2026-08-11"
       tambienVer={['calculadora-multas', 'acumulacion-operaciones']}
       lecturas={[
         { href: '/obligaciones/avisos', etiqueta: 'La obligación de presentar avisos' },

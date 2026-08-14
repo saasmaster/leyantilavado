@@ -16,7 +16,6 @@ export default function Pagina() {
       slug="acumulacion-operaciones"
       titulo="Acumulación de seis meses"
       entradilla="La regla antifraccionamiento en la práctica: captura las operaciones de un mismo cliente y ve en cuál exactamente se cruzó el umbral de aviso."
-      actualizadoEn="2026-08-11"
       tambienVer={['calculadora-umbrales', 'importar-operaciones']}
       lecturas={[
         { href: '/umbrales', etiqueta: 'Umbrales por actividad' },

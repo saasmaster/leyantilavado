@@ -6,6 +6,8 @@ import { formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { jsonLdFAQ, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
 import { relacionadas, rutaHerramienta } from '@/lib/herramientas/catalogo';
 import { EstilosImpresion } from './EstilosImpresion';
+import { SelloImpresion } from './SelloImpresion';
+import { REVISION_VIGENTE } from '@/content/autores';
 
 export interface PreguntaFrecuente {
   pregunta: string;
@@ -20,7 +22,8 @@ interface Props {
   /** Una o dos frases bajo el título. Se indexa: escríbela para humanos. */
   entradilla: string;
   /** ISO date de la última revisión editorial del contenido de la página. */
-  actualizadoEn: string;
+  /** Se omite salvo excepción: por omisión, la revisión vigente del corpus. */
+  actualizadoEn?: string;
   /** Explicación original: qué resuelve y por qué importa. */
   introduccion: React.ReactNode;
   /** La lógica o fórmula, explicada en palabras. */
@@ -54,7 +57,7 @@ export function MarcoHerramienta({
   slug,
   titulo,
   entradilla,
-  actualizadoEn,
+  actualizadoEn = REVISION_VIGENTE,
   introduccion,
   comoCalcula,
   ejemplo,
@@ -68,6 +71,8 @@ export function MarcoHerramienta({
   return (
     <div className="contenedor-app py-10 md:py-14">
       <EstilosImpresion />
+      {/* Sólo aparece en el papel: identifica el documento y su consulta. */}
+      <SelloImpresion titulo={titulo} />
 
       <script
         type="application/ld+json"

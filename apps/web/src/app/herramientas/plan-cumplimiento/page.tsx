@@ -16,7 +16,6 @@ export default function Pagina() {
       slug="plan-cumplimiento"
       titulo="Plan de cumplimiento"
       entradilla="Convierte el catálogo de obligaciones en una lista con fechas, separando con claridad las que publica la norma de las que proponemos nosotros."
-      actualizadoEn="2026-08-11"
       tambienVer={['preparacion-auditoria', 'capacitacion-anual']}
       lecturas={[
         { href: '/obligaciones', etiqueta: 'Catálogo completo de obligaciones' },

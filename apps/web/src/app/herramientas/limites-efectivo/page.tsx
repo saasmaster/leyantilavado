@@ -16,7 +16,6 @@ export default function Pagina() {
       slug="limites-efectivo"
       titulo="Límites de efectivo del artículo 32"
       entradilla="Verifica antes de cerrar la operación. El artículo 32 es una prohibición, no un umbral de reporte: rebasarlo es infracción aunque presentes el aviso puntualmente."
-      actualizadoEn="2026-08-11"
       tambienVer={['calculadora-umbrales', 'calculadora-multas']}
       lecturas={[
         { href: '/limites-efectivo', etiqueta: 'Tabla completa de límites del artículo 32' },

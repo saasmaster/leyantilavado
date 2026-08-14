@@ -16,7 +16,6 @@ export default function Pagina() {
       slug="cuestionario"
       titulo="¿Me aplica la Ley Antilavado?"
       entradilla="Un diagnóstico que ramifica según lo que contestas y termina con números concretos, no con un “consulta a un especialista”. Se resuelve completo en tu navegador."
-      actualizadoEn="2026-08-11"
       tambienVer={['calculadora-umbrales', 'plan-cumplimiento']}
       lecturas={[
         { href: '/actividades-vulnerables', etiqueta: 'Las 16 fracciones del artículo 17' },

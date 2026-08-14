@@ -17,7 +17,6 @@ export default function Pagina() {
       slug="calculadora-uma"
       titulo="Conversor de UMA"
       entradilla="Convierte en los dos sentidos con el valor correcto para la fecha de tu operación, no con el del año en curso. Incluye la tabla histórica completa de 2016 a 2026."
-      actualizadoEn="2026-08-11"
       tambienVer={['calculadora-umbrales', 'calculadora-multas']}
       lecturas={[
         { href: '/umbrales', etiqueta: 'Tabla de umbrales por actividad' },

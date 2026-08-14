@@ -16,7 +16,6 @@ export default function Pagina() {
       slug="beneficiario-controlador"
       titulo="Beneficiario controlador"
       entradilla="Arma la estructura corporativa, deja que la herramienta multiplique los porcentajes por toda la cadena y descubre quién controla de verdad, incluso cuando el control no viene de las acciones."
-      actualizadoEn="2026-08-11"
       tambienVer={['checklist-expediente', 'clasificacion-clientes']}
       lecturas={[
         { href: '/obligaciones/beneficiario-controlador', etiqueta: 'La obligación completa' },
