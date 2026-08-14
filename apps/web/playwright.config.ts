@@ -26,8 +26,12 @@ export default defineConfig({
   retries: process.env['CI'] ? 2 : 0,
   workers: process.env['CI'] ? 2 : 4,
   reporter: process.env['CI'] ? [['github'], ['html', { open: 'never' }]] : [['list']],
-  timeout: 30_000,
-  expect: { timeout: 7_000 },
+  // Contra un servidor remoto los 30 s se quedan cortos y `page.goto` agota el
+  // tiempo en pruebas que recorren decenas de rutas: da un fallo que parece una
+  // aserción rota y sólo es latencia. Pasó en la primera corrida contra
+  // producción —122 de 128, y las seis «fallidas» pasaban al repetirlas—.
+  timeout: EXTERNA ? 90_000 : 30_000,
+  expect: { timeout: EXTERNA ? 20_000 : 7_000 },
 
   use: {
     baseURL: BASE,
