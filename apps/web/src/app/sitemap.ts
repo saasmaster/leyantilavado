@@ -3,6 +3,7 @@ import { datos } from '@leyantilavado/rules-engine';
 import { CATEGORIAS_PROVEEDOR } from '@leyantilavado/types';
 import { REVISION_VIGENTE } from '@/content/autores';
 import { SITIO } from '@/lib/sitio';
+import { CASOS_PRACTICOS } from '@/content/casos-practicos';
 
 /**
  * Sitemap generado desde el motor de reglas, no escrito a mano.
@@ -121,6 +122,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     'mecanismos-automatizados',
     'capacitacion-anual',
     'importar-operaciones',
+    'plan-30-noviembre',
+    'consulta-libre',
   ].map((h) => entrada(`/herramientas/${h}`, 0.85, 'monthly'));
 
   // Sólo las actividades cuya regla ya pasó verificación editorial.
@@ -131,6 +134,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const obligaciones = obligacionesPublicadas.map((o) =>
     entrada(`/obligaciones/${o.slug}`, 0.75, 'monthly', modificadoEn(o)),
   );
+
+  // «Qué cambió» tiene una página por actividad, generadas con
+  // `dynamicParams = false`: el sitemap debe listar exactamente las mismas que
+  // existen, o anunciaría URL que devuelven 404.
+  const queCambio = [
+    entrada('/que-cambio', 0.85, 'monthly'),
+    ...datos.ACTIVIDADES.map((a) => entrada(`/que-cambio/${a.slug}`, 0.7, 'monthly')),
+  ];
+
+  // Los casos prácticos también son estáticos con `dynamicParams = false`:
+  // el sitemap se genera desde la misma lista que `generateStaticParams`, así
+  // no pueden desincronizarse.
+  const casosPracticos = [
+    entrada('/casos-practicos', 0.85, 'monthly'),
+    ...CASOS_PRACTICOS.map((c) => entrada(`/casos-practicos/${c.slug}`, 0.7, 'monthly')),
+  ];
 
   const categoriasDirectorio = CATEGORIAS_PROVEEDOR.map((c) =>
     entrada(`/directorio/${c}`, 0.7, 'weekly'),
@@ -157,6 +176,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...herramientas,
     ...actividades,
     ...obligaciones,
+    ...queCambio,
+    ...casosPracticos,
     ...categoriasDirectorio,
     ...legales,
   ];

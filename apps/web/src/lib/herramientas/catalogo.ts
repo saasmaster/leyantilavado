@@ -3,6 +3,8 @@ import {
   BookOpenCheck,
   Calculator,
   CalendarClock,
+  Route,
+  MessageCircleQuestion,
   ClipboardCheck,
   Coins,
   Cpu,
@@ -86,6 +88,15 @@ export const GRUPOS: { clave: GrupoHerramienta; titulo: string; descripcion: str
 
 export const HERRAMIENTAS: Herramienta[] = [
   {
+    slug: 'consulta-libre',
+    titulo: 'Consulta en lenguaje natural',
+    resumen: 'Descríbelo con tus palabras.',
+    grupo: 'diagnostico',
+    icono: MessageCircleQuestion,
+    queCalcula:
+      'Interpreta una frase como «vendí un reloj de 180 mil en efectivo», enseña qué entendió para que lo corrijas, y resuelve el umbral con el motor.',
+  },
+  {
     slug: 'cuestionario',
     titulo: '¿Me aplica la Ley Antilavado?',
     resumen: 'Diagnóstico guiado que ramifica según tus respuestas.',
@@ -138,6 +149,15 @@ export const HERRAMIENTAS: Herramienta[] = [
     icono: Banknote,
     queCalcula:
       'Compara la porción liquidada en efectivo o metales contra el límite de la actividad, usando la base con IVA que exige el artículo 32.',
+  },
+  {
+    slug: 'plan-30-noviembre',
+    titulo: 'Plan hacia el 30 de noviembre',
+    resumen: 'Tu actividad y tu alta en el SPPLD.',
+    grupo: 'plazos',
+    icono: Route,
+    queCalcula:
+      'Arma la línea de tiempo de lo que hay que tener listo antes de que el Acuerdo 115/2026 entre en vigor, con el fundamento de cada hito y la cuenta regresiva.',
   },
   {
     slug: 'fecha-limite-aviso',

@@ -42,12 +42,15 @@ export const NAVEGACION: { titulo: string; enlaces: EnlaceNav[] }[] = [
       { href: '/limites-efectivo', etiqueta: 'Límites de efectivo', descripcion: 'Las prohibiciones del art. 32' },
       { href: '/multas', etiqueta: 'Multas y sanciones', descripcion: 'Rangos del art. 54 y autocorrección' },
       { href: '/glosario', etiqueta: 'Glosario', descripcion: 'PLD, EBR, PEP, beneficiario controlador' },
+      { href: '/casos-practicos', etiqueta: 'Casos prácticos', descripcion: 'Operaciones reales resueltas paso a paso' },
+      { href: '/que-cambio', etiqueta: 'Qué cambió para ti', descripcion: 'La reforma y el Acuerdo 115/2026, por actividad' },
       { href: '/preguntas-frecuentes', etiqueta: 'Preguntas frecuentes', descripcion: 'Las dudas que más se repiten, con su artículo' },
     ],
   },
   {
     titulo: 'Herramientas',
     enlaces: [
+      { href: '/herramientas/consulta-libre', etiqueta: 'Consulta con tus palabras', descripcion: '«Vendí un reloj de 180 mil en efectivo»' },
       { href: '/herramientas/cuestionario', etiqueta: '¿Me aplica la ley?', descripcion: 'Diagnóstico guiado en minutos' },
       { href: '/herramientas/calculadora-umbrales', etiqueta: 'Calculadora de umbrales', descripcion: 'Por actividad y fecha de operación' },
       { href: '/herramientas/calculadora-uma', etiqueta: 'Conversor UMA', descripcion: 'Histórico 2016-2026' },
@@ -55,6 +58,7 @@ export const NAVEGACION: { titulo: string; enlaces: EnlaceNav[] }[] = [
       { href: '/herramientas/limites-efectivo', etiqueta: 'Límites de efectivo', descripcion: 'Verifica antes de cerrar la operación' },
       { href: '/herramientas/calculadora-multas', etiqueta: 'Estimador de multas', descripcion: 'Rangos y escenarios de autocorrección' },
       { href: '/herramientas/fecha-limite-aviso', etiqueta: 'Fecha límite de aviso', descripcion: 'El día 17 y sus trampas' },
+      { href: '/herramientas/plan-30-noviembre', etiqueta: 'Plan al 30 de noviembre', descripcion: 'Qué tener listo antes de que entre en vigor' },
       { href: '/herramientas/beneficiario-controlador', etiqueta: 'Beneficiario controlador', descripcion: 'Traza la estructura corporativa' },
       { href: '/herramientas', etiqueta: 'Ver todas', descripcion: 'Catálogo completo' },
     ],

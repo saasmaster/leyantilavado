@@ -21,6 +21,13 @@ const RUTAS_PUBLICAS = [
   '/reforma-ley-antilavado-2026',
   '/acuerdo-115-2026',
   '/actualizaciones',
+  // Secciones nuevas: una página índice y una hija de cada ruta dinámica, que
+  // es donde aparecen los fallos de `generateStaticParams` y de metadatos.
+  '/casos-practicos',
+  '/casos-practicos/notaria-compraventa-inmueble-pago-mixto',
+  '/que-cambio',
+  '/que-cambio/fe-publica-notarios',
+  '/que-cambio/donativos',
   // ── Herramientas ───────────────────────────────────────────────────────
   '/herramientas',
   '/herramientas/cuestionario',
@@ -31,6 +38,8 @@ const RUTAS_PUBLICAS = [
   '/herramientas/calculadora-multas',
   '/herramientas/fecha-limite-aviso',
   '/herramientas/beneficiario-controlador',
+  '/herramientas/consulta-libre',
+  '/herramientas/plan-30-noviembre',
   '/herramientas/matriz-riesgos',
   '/herramientas/clasificacion-clientes',
   '/herramientas/checklist-expediente',
