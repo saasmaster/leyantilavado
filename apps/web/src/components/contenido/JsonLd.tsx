@@ -142,7 +142,25 @@ export function jsonLdConjuntoDatos({
     ...(publicadoEn ? { datePublished: publicadoEn } : {}),
     ...(version ? { version } : {}),
     ...(cobertura ? { temporalCoverage: cobertura } : {}),
-    spatialCoverage: { '@type': 'Country', name: 'México' },
+    /*
+     * `Place`, no `Country`, aunque `Country` sea más preciso.
+     *
+     * En schema.org `Country` desciende de `Place` (Country →
+     * AdministrativeArea → Place), así que declararlo era correcto. El
+     * validador de `Dataset` de Google no sigue esa herencia: espera `Place` o
+     * texto, y con `Country` emitía «Invalid object type for field
+     * spatialCoverage» en /umbrales y /limites-efectivo.
+     *
+     * Es un aviso no crítico —el dato se indexa igual— pero cuesta la
+     * elegibilidad para Google Dataset Search, que es justo donde queremos
+     * aparecer con los umbrales. Se conserva el país en `addressCountry`, así
+     * que no se pierde precisión: sólo se expresa donde el parser sí la lee.
+     */
+    spatialCoverage: {
+      '@type': 'Place',
+      name: 'México',
+      address: { '@type': 'PostalAddress', addressCountry: 'MX' },
+    },
     ...(variables ? { variableMeasured: variables } : {}),
     creator: { '@type': 'Organization', name: SITIO.nombre, url: SITIO.url },
     publisher: { '@type': 'Organization', name: SITIO.nombre, url: SITIO.url },

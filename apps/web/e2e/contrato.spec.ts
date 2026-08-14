@@ -260,6 +260,46 @@ test.describe('SEO técnico', () => {
     }
   });
 
+  /**
+   * El marcado `Dataset` tiene que pasar el validador de Google, no sólo ser
+   * correcto según schema.org.
+   *
+   * Search Console reportó «Invalid object type for field spatialCoverage» en
+   * /umbrales y /limites-efectivo. El valor era `Country`, que en schema.org
+   * desciende de `Place` y por tanto es válido —pero el parser de Google no
+   * sigue esa herencia y espera `Place` o texto.
+   *
+   * Es un aviso no crítico, y ahí está el problema: la página se indexa igual,
+   * el build pasa, nada se ve roto, y sólo se pierde la elegibilidad para
+   * Google Dataset Search —que es justo donde estas dos páginas tienen algo que
+   * ganar—. Un fallo que no duele es un fallo que vuelve.
+   */
+  test('el marcado Dataset usa los tipos que Google acepta', async ({ page }) => {
+    for (const ruta of ['/umbrales', '/limites-efectivo']) {
+      await page.goto(ruta);
+      const bloques = await page.locator('script[type="application/ld+json"]').allTextContents();
+
+      const datasets = bloques
+        .flatMap((b) => {
+          const dato: unknown = JSON.parse(b);
+          return Array.isArray(dato) ? dato : [dato];
+        })
+        .filter((d): d is Record<string, unknown> => {
+          return !!d && typeof d === 'object' && (d as Record<string, unknown>)['@type'] === 'Dataset';
+        });
+
+      expect(datasets.length, `${ruta} debe emitir un Dataset`).toBeGreaterThan(0);
+
+      for (const ds of datasets) {
+        const cobertura = ds['spatialCoverage'] as Record<string, unknown> | string | undefined;
+        expect(cobertura, `${ruta}: falta spatialCoverage`).toBeDefined();
+        if (typeof cobertura === 'object') {
+          expect(cobertura['@type'], `${ruta}: spatialCoverage debe ser Place`).toBe('Place');
+        }
+      }
+    }
+  });
+
   test('el manifiesto de la PWA es válido', async ({ request }) => {
     const res = await request.get('/manifest.webmanifest');
     expect(res.status()).toBe(200);
