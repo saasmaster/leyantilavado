@@ -6,6 +6,7 @@ import { construirMetadata, jsonLdFAQ, jsonLdMigaDePan, jsonParaScript } from '@
 import { FuentesPrincipales } from '@/components/contenido/FuentesPrincipales';
 import { EncabezadoPagina } from '@/components/inicio/comun';
 import { CATEGORIAS_FAQ, TOTAL_PREGUNTAS } from '@/content/preguntas-frecuentes';
+import { glosar } from '@/lib/glosar';
 
 export const metadata: Metadata = construirMetadata({
   titulo: 'Preguntas frecuentes sobre la Ley Antilavado',
@@ -106,7 +107,13 @@ export default function PreguntasFrecuentes() {
                             key={i}
                             className="text-[0.925rem] leading-relaxed text-[var(--color-tinta-suave)] [&+&]:mt-3"
                           >
-                            {parrafo}
+                            {/* Se glosa por párrafo, no por respuesta entera:
+                                así el primer uso se enlaza en cada párrafo y
+                                no sólo en el primero de una respuesta larga,
+                                que es donde el lector ya perdió el hilo del
+                                término. El JSON-LD de FAQPage se arma arriba
+                                con `p.respuesta.join(' ')` sin tocar. */}
+                            {glosar(parrafo)}
                           </p>
                         ))}
 

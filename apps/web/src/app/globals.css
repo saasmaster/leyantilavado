@@ -435,6 +435,31 @@
   .prosa > * + * {
     margin-top: 1.2em;
   }
+
+  /*
+   * Término del glosario enlazado automáticamente.
+   *
+   * Deliberadamente más callado que un enlace normal: hereda el color del
+   * texto y sólo lleva un subrayado punteado. Un párrafo legal puede contener
+   * cinco términos, y pintarlos todos del azul de los enlaces convertiría la
+   * lectura en una pantalla de opciones —el lector deja de leer y empieza a
+   * decidir a cuál hacer clic—. El punteado dice «esto tiene definición» sin
+   * competir con los enlaces que sí llevan a otra página del argumento.
+   */
+  .termino-glosario {
+    color: inherit;
+    text-decoration: underline dotted;
+    text-decoration-color: color-mix(in srgb, var(--color-petroleo) 55%, transparent);
+    text-underline-offset: 0.22em;
+    text-decoration-thickness: 1px;
+    cursor: help;
+    transition: color 150ms, text-decoration-color 150ms;
+  }
+  .termino-glosario:hover,
+  .termino-glosario:focus-visible {
+    color: var(--color-petroleo-hondo);
+    text-decoration-color: var(--color-petroleo-hondo);
+  }
   .prosa h2,
   .prosa h3,
   .prosa h4 {

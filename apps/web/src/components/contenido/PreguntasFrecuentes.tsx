@@ -1,4 +1,5 @@
 import type { PreguntaFrecuente } from '@/content/tipos';
+import { glosar } from '@/lib/glosar';
 
 /**
  * Bloque de preguntas frecuentes.
@@ -27,8 +28,13 @@ export function PreguntasFrecuentes({
             </span>
             {p.pregunta}
           </summary>
+          {/* Se glosa la respuesta visible, nunca el dato que alimenta el
+              JSON-LD: `FAQPage` exige texto plano en `acceptedAnswer`, y ese
+              marcado se construye aparte a partir de `p.respuesta` sin tocar.
+              Enlazar aquí no puede contaminar allí porque son dos lecturas
+              distintas de la misma cadena. */}
           <div className="px-4 pb-4 pl-10 leading-relaxed text-[var(--color-tinta-suave)]">
-            {p.respuesta}
+            {glosar(p.respuesta)}
           </div>
         </details>
       ))}

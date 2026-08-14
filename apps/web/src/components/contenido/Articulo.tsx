@@ -3,6 +3,7 @@ import { ChevronRight, FileCheck2, Info, ScrollText } from 'lucide-react';
 import { Insignia, Nota } from '@leyantilavado/ui';
 import { AVISO_LEGAL_TEXTO, FIRMA_POR_DEFECTO } from '@/content/autores';
 import type { FirmaContenido } from '@/content/tipos';
+import { glosar } from '@/lib/glosar';
 
 /* ── Migas de pan ──────────────────────────────────────────────────────────── */
 
@@ -68,7 +69,7 @@ export function CabeceraArticulo({
       <h1 className="text-3xl font-semibold leading-tight md:text-4xl">{titulo}</h1>
 
       {entradilla && (
-        <p className="prosa mt-4 text-lg text-[var(--color-tinta-suave)]">{entradilla}</p>
+        <p className="prosa mt-4 text-lg text-[var(--color-tinta-suave)]">{glosar(entradilla)}</p>
       )}
 
       <div className="mt-6 rounded-[var(--radius-card)] border border-[color-mix(in_srgb,var(--color-petroleo)_30%,transparent)] bg-[var(--color-petroleo-tenue)] p-5">
@@ -76,7 +77,10 @@ export function CabeceraArticulo({
           <Info aria-hidden className="size-4" />
           Respuesta directa
         </p>
-        <p className="leading-relaxed text-[var(--color-tinta)]">{respuestaDirecta}</p>
+        {/* La respuesta directa es el párrafo que más gente lee del sitio —a
+            menudo el único— y el que más vocabulario técnico concentra. Es
+            donde el glosario enlazado rinde más. */}
+        <p className="leading-relaxed text-[var(--color-tinta)]">{glosar(respuestaDirecta)}</p>
       </div>
     </header>
   );
