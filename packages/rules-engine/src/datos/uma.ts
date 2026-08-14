@@ -1,10 +1,12 @@
 import { pesosACentavos, type Procedencia, type ValorUMA } from '@leyantilavado/types';
+import { ULTIMA_MODIFICACION, ULTIMA_REVISION } from './revision';
 
 const PROCEDENCIA_UMA = (anio: number, verificado: boolean): Procedencia => ({
   fuentes: ['inegi-uma'],
   disposicion: `Valor de la UMA ${anio} publicado por el INEGI`,
   verificacion: verificado ? 'oficial_verificado' : 'fuente_secundaria',
-  ultimaRevision: '2026-08-11',
+  ultimaRevision: ULTIMA_REVISION,
+  ultimaModificacion: ULTIMA_MODIFICACION,
   notaEditorial: verificado
     ? undefined
     : 'Valor histórico pendiente de contraste directo contra el comunicado del INEGI del año correspondiente.',

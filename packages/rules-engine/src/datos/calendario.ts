@@ -1,10 +1,12 @@
 import type { HitoCalendario, Procedencia } from '@leyantilavado/types';
+import { ULTIMA_MODIFICACION, ULTIMA_REVISION } from './revision';
 
 const P = (disposicion: string, verificado = true): Procedencia => ({
   fuentes: ['dof-acuerdo-115-2026'],
   disposicion,
   verificacion: verificado ? 'oficial_verificado' : 'no_verificado',
-  ultimaRevision: '2026-08-11',
+  ultimaRevision: ULTIMA_REVISION,
+  ultimaModificacion: ULTIMA_MODIFICACION,
   notaEditorial: verificado
     ? 'Fecha tomada de los artículos transitorios del Acuerdo 115/2026 publicado en el DOF.'
     : 'Fecha estimada a partir de un plazo en meses. No hay una fecha calendario en el texto oficial.',
@@ -146,6 +148,7 @@ export const PENDIENTES_SIN_FECHA = [
       'La obligación está prevista en la norma, pero su exigibilidad corre a partir de seis meses después de que la UIF publique la Resolución con los formatos oficiales. Esa Resolución no aparece publicada a la fecha de la última revisión, por lo que no existe una fecha cierta.',
     obligaciones: ['operaciones-inusuales'],
     procedencia: P('Arts. 26 Bis, 26 Bis 1, 26 Bis 2 y 27, Acuerdo 115/2026'),
-    ultimaRevision: '2026-08-11',
+    ultimaRevision: ULTIMA_REVISION,
+  ultimaModificacion: ULTIMA_MODIFICACION,
   },
 ] as const;

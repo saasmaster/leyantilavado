@@ -1,4 +1,5 @@
 import type { Autor, FirmaContenido } from './tipos';
+import { datos } from '@leyantilavado/rules-engine';
 
 /**
  * Sistema de autoría.
@@ -38,17 +39,16 @@ export const AUTORES_POR_ID: Record<string, Autor> = Object.fromEntries(
 /**
  * Fecha de la última pasada editorial: cuándo alguien miró las fuentes.
  *
- * **Ya no coincide con `ultimaRevision` de los datos del motor, y es a
- * propósito.** Son dos preguntas distintas: ésta responde «¿cuándo se revisó?»
- * y la del motor «¿cuándo cambió el dato?». El 14-ago-2026 se revisó y no
- * cambió nada, así que sólo se mueve ésta.
+ * **Se reexporta del motor a propósito, no se escribe aquí.** Durante un rato
+ * fueron dos constantes independientes y el resultado se vio en la portada: un
+ * sello decía «Última revisión: 2026-08-11» a dos dedos de un pie que decía
+ * «14 de agosto». Ninguna mentía —eran respuestas a preguntas distintas— pero
+ * juntas sólo se leen como una incoherencia, y en un sitio cuya promesa es la
+ * trazabilidad eso cuesta más de lo que aporta.
  *
- * Mover también las diez del motor tendría un coste concreto: `ultimaRevision`
- * alimenta el `lastModified` del sitemap, y subirlas anunciaría las 97 URL como
- * modificadas hoy sin que se haya tocado una cifra. Es exactamente el problema
- * que se arregló al dejar de usar `new Date()` ahí —un buscador que ve eso dos
- * o tres veces deja de creerle al campo, y entonces deja de creerle también el
- * día que una reforma sí cambia una tabla, que es justo el día que importa—.
+ * Ahora hay una sola fecha de revisión en todo el proyecto, y la que alimenta
+ * el `lastModified` del sitemap es otra —`ULTIMA_MODIFICACION`—, que sólo se
+ * mueve cuando un dato cambia de verdad.
  *
  * **No es sólo una etiqueta.** Se le pasa a `convertirUMA()` y a
  * `describirUmbral()`, así que decide qué versión de regla y qué valor de UMA
@@ -63,7 +63,7 @@ export const AUTORES_POR_ID: Record<string, Autor> = Object.fromEntries(
  * /multas, /limites-efectivo, /reforma-ley-antilavado-2026 y la calculadora de
  * UMA se compararon antes y después: idénticas.
  */
-export const REVISION_VIGENTE = '2026-08-14';
+export const REVISION_VIGENTE = datos.ULTIMA_REVISION;
 
 export const FIRMA_POR_DEFECTO: FirmaContenido = {
   autor: EQUIPO_EDITORIAL,

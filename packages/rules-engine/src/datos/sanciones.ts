@@ -1,3 +1,4 @@
+import { ULTIMA_MODIFICACION, ULTIMA_REVISION } from './revision';
 import type {
   ConsecuenciaPenal,
   EscenarioAutocorreccion,
@@ -9,7 +10,8 @@ const P = (disposicion: string, fuentes = ['lfpiorpi-vigente']): Procedencia => 
   fuentes,
   disposicion,
   verificacion: 'oficial_verificado',
-  ultimaRevision: '2026-08-11',
+  ultimaRevision: ULTIMA_REVISION,
+  ultimaModificacion: ULTIMA_MODIFICACION,
   notaEditorial:
     'Contrastado contra el texto de la LFPIORPI publicado por la Cámara de Diputados (DOF 16-07-2025).',
 });
@@ -174,7 +176,8 @@ export const CONSECUENCIAS_PENALES: readonly ConsecuenciaPenal[] = [
       fuentes: ['lfpiorpi-vigente'],
       disposicion: 'Art. 62 LFPIORPI',
       verificacion: 'oficial_verificado',
-      ultimaRevision: '2026-08-11',
+      ultimaRevision: ULTIMA_REVISION,
+  ultimaModificacion: ULTIMA_MODIFICACION,
       notaEditorial:
         'El valor del día multa (art. 29 del Código Penal Federal) no se ha contrastado directamente: el estimador no convierte días multa a pesos.',
     },

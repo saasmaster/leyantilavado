@@ -1,10 +1,12 @@
 import type { CategoriaObligacion, Obligacion, Procedencia } from '@leyantilavado/types';
+import { ULTIMA_MODIFICACION, ULTIMA_REVISION } from './revision';
 
 const P = (disposicion: string, fuentes: string[] = ['lfpiorpi-vigente']): Procedencia => ({
   fuentes,
   disposicion,
   verificacion: 'fuente_secundaria',
-  ultimaRevision: '2026-08-11',
+  ultimaRevision: ULTIMA_REVISION,
+  ultimaModificacion: ULTIMA_MODIFICACION,
   notaEditorial: 'Pendiente de contraste literal contra el texto vigente y el Acuerdo 115/2026.',
 });
 

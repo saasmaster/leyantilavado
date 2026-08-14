@@ -1,3 +1,4 @@
+import { ULTIMA_MODIFICACION, ULTIMA_REVISION } from './revision';
 import type {
   ActividadSlug,
   EspecificacionUmbral,
@@ -11,7 +12,8 @@ const P = (disposicion: string, nota?: string): Procedencia => ({
   fuentes: ['lfpiorpi-vigente', 'sat-umbrales'],
   disposicion,
   verificacion: 'oficial_verificado',
-  ultimaRevision: '2026-08-11',
+  ultimaRevision: ULTIMA_REVISION,
+  ultimaModificacion: ULTIMA_MODIFICACION,
   notaEditorial:
     nota ??
     'Contrastado contra la tabla oficial de umbrales del SAT y el texto vigente de la LFPIORPI (última reforma DOF 16-07-2025).',
@@ -21,7 +23,8 @@ const P_REVISAR = (disposicion: string, nota: string): Procedencia => ({
   fuentes: ['lfpiorpi-vigente'],
   disposicion,
   verificacion: 'no_verificado',
-  ultimaRevision: '2026-08-11',
+  ultimaRevision: ULTIMA_REVISION,
+  ultimaModificacion: ULTIMA_MODIFICACION,
   notaEditorial: nota,
 });
 

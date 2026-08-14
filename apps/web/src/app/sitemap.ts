@@ -20,7 +20,20 @@ import { SITIO } from '@/lib/sitio';
  * umbral, y la de cada actividad es la suya.
  */
 
-type ConProcedencia = { procedencia: { ultimaRevision: string } };
+/**
+ * Para el sitemap importa cuándo **cambió** el dato, no cuándo se revisó.
+ *
+ * Son campos distintos justamente por esto: una pasada editorial que confirma
+ * que nada cambió no debe anunciar 97 URL como modificadas. `ultimaRevision`
+ * queda como respaldo para datos que aún no declaran su fecha de modificación.
+ */
+type ConProcedencia = {
+  procedencia: { ultimaRevision: string; ultimaModificacion?: string };
+};
+
+function modificadoEn(item: ConProcedencia): string {
+  return item.procedencia.ultimaModificacion ?? item.procedencia.ultimaRevision;
+}
 
 /**
  * Revisión más reciente de un conjunto de datos del motor.
@@ -31,7 +44,8 @@ type ConProcedencia = { procedencia: { ultimaRevision: string } };
 function revisionDe(items: readonly ConProcedencia[]): string {
   let max = '';
   for (const item of items) {
-    if (item.procedencia.ultimaRevision > max) max = item.procedencia.ultimaRevision;
+    const f = modificadoEn(item);
+    if (f > max) max = f;
   }
   return max || REVISION_VIGENTE;
 }
@@ -111,11 +125,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Sólo las actividades cuya regla ya pasó verificación editorial.
   const actividades = datos.ACTIVIDADES.map((a) =>
-    entrada(`/actividades-vulnerables/${a.slug}`, 0.8, 'monthly', a.procedencia.ultimaRevision),
+    entrada(`/actividades-vulnerables/${a.slug}`, 0.8, 'monthly', modificadoEn(a)),
   );
 
   const obligaciones = obligacionesPublicadas.map((o) =>
-    entrada(`/obligaciones/${o.slug}`, 0.75, 'monthly', o.procedencia.ultimaRevision),
+    entrada(`/obligaciones/${o.slug}`, 0.75, 'monthly', modificadoEn(o)),
   );
 
   const categoriasDirectorio = CATEGORIAS_PROVEEDOR.map((c) =>

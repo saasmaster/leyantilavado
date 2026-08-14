@@ -34,8 +34,23 @@ export interface Procedencia {
   /** "Art. 17, fracción VII" */
   disposicion: string;
   verificacion: NivelVerificacion;
-  /** ISO date */
+  /**
+   * Cuándo se miraron las fuentes por última vez. ISO date.
+   *
+   * Es la fecha que se enseña al lector. Sube en cada pasada editorial aunque
+   * no cambie nada: su valor está precisamente en poder decir «lo comprobamos
+   * el jueves y sigue igual».
+   */
   ultimaRevision: string;
+  /**
+   * Cuándo cambió el dato por última vez. ISO date.
+   *
+   * Alimenta el `lastModified` del sitemap, y por eso NO sube en una revisión
+   * que no encontró cambios: anunciar la modificación de páginas que no se
+   * tocaron es la señal que un buscador acaba ignorando, incluido el día en que
+   * una reforma sí mueva una tabla. Si falta, se asume `ultimaRevision`.
+   */
+  ultimaModificacion?: string;
   revisadoPor?: string;
   notaEditorial?: string;
 }
