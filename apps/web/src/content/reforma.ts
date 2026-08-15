@@ -83,18 +83,22 @@ export const CAMBIOS_ANTES_DESPUES: readonly CambioReforma[] = [
     supuesto: 'Notarios: constitución o modificación de fideicomisos traslativos o de garantía',
     reglaId: 'fe-publica-notarios--fideicomisos',
     campo: 'aviso',
-    antesUMA: 8000,
+    // El texto anterior decía «ocho mil veinticinco», no ocho mil. Estaba
+    // redondeado, y en una tabla que existe para comparar cifras el redondeo
+    // es el único error que no se puede permitir.
+    antesUMA: 8025,
     disposicion: 'Art. 17, fracción XII, Apartado A, inciso d)',
     endurece: true,
     nota:
-      'Se mantienen las excepciones para los fideicomisos constituidos a favor de instituciones del sistema financiero u organismos públicos de vivienda.',
+      'Doble cambio: el umbral bajó a la mitad y el objeto se amplió. Antes el supuesto sólo alcanzaba fideicomisos sobre inmuebles; hoy no se limita a ellos. Se mantienen las excepciones para los constituidos a favor de instituciones del sistema financiero u organismos públicos de vivienda.',
   },
   {
     clave: 'notarios-sociedades',
     supuesto: 'Notarios: constitución de personas morales y operaciones sobre acciones o partes sociales',
     reglaId: 'fe-publica-notarios--constitucion-personas-morales',
     campo: 'aviso',
-    antesUMA: 8000,
+    // «Ocho mil veinticinco» en el texto anterior. Ver nota en el inciso d).
+    antesUMA: 8025,
     disposicion: 'Art. 17, fracción XII, Apartado A, inciso c)',
     endurece: true,
     nota:
@@ -176,6 +180,97 @@ export const CAMBIOS_ANTES_DESPUES: readonly CambioReforma[] = [
       'Se incorpora la supervisión expresa de la Secretaría, y el Reglamento prevé plazos cortos para atender requerimientos y para sancionar su desatención.',
     disposicion: 'Art. 22 Bis de la ley y arts. 8 y 9 del Reglamento',
     endurece: true,
+  },
+  /*
+   * Cambios de ALCANCE: misma cifra, obligación distinta.
+   *
+   * Existen porque la reforma casi no movió números —sólo cuatro supuestos
+   * cambiaron de umbral— pero sí movió a quién y a qué alcanza cada fracción.
+   * Sin estas entradas, quien compare sólo cifras concluye «sin cambios» justo
+   * donde más cambió su obligación: es el caso de la joyería, que pasó de
+   * reportar sólo efectivo a reportar cualquier forma de pago con el mismo
+   * 1,605 UMA de siempre.
+   *
+   * Todos salen de `research/umbrales-antes-de-la-reforma.md`, contrastado
+   * contra el texto original de la LFPIORPI (DOF 17-10-2012).
+   */
+  {
+    clave: 'joyeria-efectivo',
+    supuesto: 'Joyería y metales preciosos: el aviso deja de depender del efectivo',
+    antesTexto:
+      'Aviso sólo cuando la operación se hacía EN EFECTIVO por 1,605 veces el salario mínimo o más. Quien cobraba por transferencia, tarjeta o cheque no daba aviso por ningún monto.',
+    despuesTexto:
+      'Aviso cuando el monto del acto u operación alcanza 1,605 UMA, sea cual sea la forma de pago.',
+    disposicion: 'Art. 17, fracción VI',
+    endurece: true,
+    nota:
+      'La cifra es idéntica y la obligación es otra: para este sector es el cambio más importante de la reforma. Un comparador que sólo mire números lo reportaría como «sin cambios».',
+  },
+  {
+    clave: 'tarjetas-filtro',
+    supuesto: 'Tarjetas e instrumentos de almacenamiento: desaparece el filtro de entrada',
+    antesTexto:
+      'La fracción sólo aplicaba «siempre y cuando» el emisor mantuviera relación de negocios con el adquirente, los instrumentos permitieran transferencia de fondos, o su comercialización fuera ocasional.',
+    despuesTexto:
+      'El filtro se suprimió: la actividad es vulnerable por sí misma. Se reestructuró en tres incisos y se añadió el «abono de recursos» como hecho generador.',
+    disposicion: 'Art. 17, fracción II',
+    endurece: true,
+    nota:
+      'Antes un emisor podía quedar fuera si no cumplía ninguna de las tres condiciones. Ya no.',
+  },
+  {
+    clave: 'inmobiliarias-cuenta-propia',
+    supuesto: 'Inmobiliarias: se suprime el requisito de actuar por cuenta de clientes',
+    antesTexto:
+      'Alcanzaba la «prestación de servicios» de construcción, desarrollo o intermediación «por cuenta o a favor de clientes de quienes presten dichos servicios».',
+    despuesTexto:
+      'Alcanza la «realización de actividades» de construcción, desarrollo e intermediación, sin exigir que se actúe por cuenta ajena.',
+    disposicion: 'Art. 17, fracción V',
+    endurece: true,
+    nota:
+      'El desarrollador que vende por cuenta propia queda dentro, cuando antes había argumento para sostener que no. El umbral de aviso no se movió.',
+  },
+  {
+    clave: 'traslado-monto-indeterminado',
+    supuesto: 'Traslado de valores: aviso cuando el monto no puede determinarse',
+    antesTexto: 'El aviso procedía al alcanzar 3,210 UMA. Sin regla para el monto indeterminable.',
+    despuesTexto:
+      'Se añade un inciso b): si no es posible determinar el monto, se presenta aviso en todos los casos.',
+    disposicion: 'Art. 17, fracción X, inciso b) (adicionado)',
+    endurece: true,
+    nota: 'Cierra la vía de no reportar alegando monto indeterminado.',
+  },
+  {
+    clave: 'corredores-fideicomisos-salvedad',
+    supuesto: 'Corredores públicos: se estrecha el supuesto de fideicomisos',
+    antesTexto: 'Todo fideicomiso celebrado ante corredor era objeto de aviso, sin salvedad.',
+    despuesTexto:
+      'Se exceptúan los constituidos para garantizar algún crédito a favor de instituciones que integran el sistema financiero.',
+    disposicion: 'Art. 17, fracción XII, Apartado B, inciso c)',
+    endurece: false,
+    nota:
+      'Es de los pocos cambios que reducen el alcance en lugar de ampliarlo.',
+  },
+  {
+    clave: 'comercio-exterior-sujetos',
+    supuesto: 'Comercio exterior: se amplían los sujetos obligados',
+    antesTexto: 'Sólo el agente o apoderado aduanal.',
+    despuesTexto:
+      'Se añaden la agencia aduanal y el despacho que las personas físicas y morales promuevan sin intervención de agente o agencia aduanal.',
+    disposicion: 'Art. 17, fracción XIV',
+    endurece: true,
+    nota:
+      'Quien despacha por cuenta propia pasa a realizar actividad vulnerable, sin que cambie ningún umbral.',
+  },
+  {
+    clave: 'beneficiario-controlador-25',
+    supuesto: 'Beneficiario controlador: el umbral de control baja de 50 % a 25 %',
+    antesTexto: 'Se consideraba beneficiario controlador a quien tuviera más del cincuenta por ciento del capital social.',
+    despuesTexto: 'Se considera a quien tenga más del veinticinco por ciento del capital social.',
+    disposicion: 'Art. 3, fracción III, inciso b), subinciso ii)',
+    endurece: true,
+    nota:
+      'El porcentaje se redujo a la mitad, así que estructuras que antes no tenían beneficiario controlador identificable ahora sí lo tienen. Ojo: el porcentaje es uno de tres criterios alternativos —también cuenta imponer decisiones en asamblea o dirigir de hecho la administración—, de modo que alguien con 0 % puede serlo. Resolverlo sólo con un porcentaje produce falsos negativos.',
   },
 ];
 
