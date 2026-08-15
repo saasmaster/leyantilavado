@@ -1,12 +1,12 @@
 import type { HitoCalendario, Procedencia } from '@leyantilavado/types';
-import { ULTIMA_MODIFICACION, ULTIMA_REVISION } from './revision';
+import { SIN_CAMBIOS_DESDE, ULTIMA_REVISION } from './revision';
 
 const P = (disposicion: string, verificado = true): Procedencia => ({
   fuentes: ['dof-acuerdo-115-2026'],
   disposicion,
   verificacion: verificado ? 'oficial_verificado' : 'no_verificado',
   ultimaRevision: ULTIMA_REVISION,
-  ultimaModificacion: ULTIMA_MODIFICACION,
+  ultimaModificacion: SIN_CAMBIOS_DESDE,
   notaEditorial: verificado
     ? 'Fecha tomada de los artículos transitorios del Acuerdo 115/2026 publicado en el DOF.'
     : 'Fecha estimada a partir de un plazo en meses. No hay una fecha calendario en el texto oficial.',
@@ -149,6 +149,6 @@ export const PENDIENTES_SIN_FECHA = [
     obligaciones: ['operaciones-inusuales'],
     procedencia: P('Arts. 26 Bis, 26 Bis 1, 26 Bis 2 y 27, Acuerdo 115/2026'),
     ultimaRevision: ULTIMA_REVISION,
-  ultimaModificacion: ULTIMA_MODIFICACION,
+  ultimaModificacion: SIN_CAMBIOS_DESDE,
   },
 ] as const;

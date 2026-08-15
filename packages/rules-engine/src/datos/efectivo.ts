@@ -1,12 +1,12 @@
 import type { Procedencia, ReglaEfectivo } from '@leyantilavado/types';
-import { ULTIMA_MODIFICACION, ULTIMA_REVISION } from './revision';
+import { SIN_CAMBIOS_DESDE, ULTIMA_REVISION } from './revision';
 
 const P: Procedencia = {
   fuentes: ['lfpiorpi-vigente', 'sat-umbrales'],
   disposicion: 'Art. 32 LFPIORPI',
   verificacion: 'oficial_verificado',
   ultimaRevision: ULTIMA_REVISION,
-  ultimaModificacion: ULTIMA_MODIFICACION,
+  ultimaModificacion: SIN_CAMBIOS_DESDE,
   notaEditorial:
     'Contrastado contra el art. 32 de la LFPIORPI vigente y la tabla del SAT. Los montos se miden al día en que se realiza el pago o se cumple la obligación.',
 };

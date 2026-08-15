@@ -1,12 +1,12 @@
 import type { Actividad, Procedencia } from '@leyantilavado/types';
-import { ULTIMA_MODIFICACION, ULTIMA_REVISION } from './revision';
+import { SIN_CAMBIOS_DESDE, ULTIMA_REVISION } from './revision';
 
 const P = (disposicion: string, revisar = false): Procedencia => ({
   fuentes: ['lfpiorpi-vigente', 'sat-umbrales'],
   disposicion,
   verificacion: revisar ? 'no_verificado' : 'oficial_verificado',
   ultimaRevision: ULTIMA_REVISION,
-  ultimaModificacion: ULTIMA_MODIFICACION,
+  ultimaModificacion: SIN_CAMBIOS_DESDE,
   notaEditorial: revisar
     ? 'La ley enuncia este apartado sin fijar umbrales y la tabla del SAT no lo incluye. No debe publicarse un umbral sin confirmación.'
     : 'Contrastado contra la tabla oficial de umbrales del SAT y el texto vigente de la LFPIORPI (última reforma DOF 16-07-2025).',

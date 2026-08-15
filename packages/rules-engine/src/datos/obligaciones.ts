@@ -98,7 +98,16 @@ const DEFS: Def[] = [
     recurrencia: 'semestral',
     alcance:
       'Alcance: todas las actividades vulnerables. Lo que cambia por actividad es el CONTENIDO del expediente —los Anexos 1 a 10 de las reglas de carácter general—, no si el expediente existe. Esos anexos no se han leído todavía.',
-    disposicion: 'Art. 18, fracciones I y IV',
+    // El expediente ÚNICO de identificación no lo crea el art. 18: lo crea y lo
+    // regula el art. 12 de las reglas de carácter general, que es donde está su
+    // integración, su actualización y el deber de tenerlo disponible para la
+    // autoridad. El art. 18 fr. I es el enganche legal —identificar y recabar
+    // copia—, pero citarlo solo dejaba fuera la disposición que de verdad
+    // describe esta obligación, incluida la recurrencia semestral.
+    //
+    // Antes citaba `Art. 18, fracción II`, que trata de preguntar al cliente su
+    // actividad u ocupación cuando hay Relación de negocios: otra obligación.
+    disposicion: 'Art. 18, fracción I, y art. 12 de las disposiciones de carácter general',
     pasos: [
       { texto: 'Crear el expediente único al identificar al cliente.' },
       { texto: 'Incorporar la documentación soporte de cada operación.' },
