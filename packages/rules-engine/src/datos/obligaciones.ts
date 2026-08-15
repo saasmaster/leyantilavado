@@ -1,13 +1,17 @@
 import type { CategoriaObligacion, Obligacion, Procedencia } from '@leyantilavado/types';
 import { ULTIMA_MODIFICACION, ULTIMA_REVISION } from './revision';
 
-const P = (disposicion: string, fuentes: string[] = ['lfpiorpi-vigente']): Procedencia => ({
+const P = (
+  disposicion: string,
+  alcance: string,
+  fuentes: string[] = ['lfpiorpi-vigente'],
+): Procedencia => ({
   fuentes,
   disposicion,
   verificacion: 'fuente_secundaria',
   ultimaRevision: ULTIMA_REVISION,
   ultimaModificacion: ULTIMA_MODIFICACION,
-  notaEditorial: 'Pendiente de contraste literal contra el texto vigente y el Acuerdo 115/2026.',
+  notaEditorial: `${alcance} Mapeo de alcance propuesto por la redacción, sin revisión jurídica firmada. El resto de la ficha sigue pendiente de contraste literal contra el texto vigente y el Acuerdo 115/2026.`,
 });
 
 interface Def {
@@ -18,6 +22,17 @@ interface Def {
   pasos: { texto: string; evidencia?: string }[];
   recurrencia?: Obligacion['recurrencia'];
   disposicion: string;
+  /**
+   * Por qué `actividades` queda como queda.
+   *
+   * Obligatorio a propósito: `actividades: []` significa «alcanza a todas» y es
+   * indistinguible de «nadie lo ha mirado». Este campo obliga a que cada
+   * obligación declare cuál de las dos cosas es, con la cita que lo sustenta, y
+   * la frase acaba impresa en el sello de procedencia de su página.
+   *
+   * Dossier: research/mapeo-obligaciones-actividades.md
+   */
+  alcance: string;
   fuentes?: string[];
 }
 
@@ -29,7 +44,9 @@ const DEFS: Def[] = [
       'Quien realiza una actividad vulnerable debe darse de alta en el padrón del SAT y habilitar su acceso al portal SPPLD para poder presentar avisos.',
     categoria: 'registro',
     recurrencia: 'unica',
-    disposicion: 'Art. 18, fracción I',
+    alcance:
+      'Alcance: todas las actividades vulnerables. El art. 18, fracción IV Bis manda enviar la información del alta a «quienes realicen las Actividades Vulnerables establecidas en el artículo 17 de la Ley», sin distinguir fracción.',
+    disposicion: 'Art. 18, fracción IV Bis',
     fuentes: ['lfpiorpi-vigente', 'sppld-portal'],
     pasos: [
       { texto: 'Contar con e.firma vigente de la persona física o moral.', evidencia: 'Constancia de e.firma' },
@@ -46,6 +63,8 @@ const DEFS: Def[] = [
       'Las personas morales deben designar ante la autoridad a un representante encargado del cumplimiento, con facultades suficientes y datos actualizados.',
     categoria: 'gobierno',
     recurrencia: 'unica',
+    alcance:
+      'Alcance: todas las actividades vulnerables. El art. 20 obliga a «las personas morales y quienes actúen a través de fideicomisos o cualquier otra figura jurídica que realicen Actividades Vulnerables»: acota por tipo de persona, no por fracción del art. 17.',
     disposicion: 'Art. 20',
     pasos: [
       { texto: 'Elegir a una persona con nivel jerárquico y facultades suficientes.' },
@@ -60,6 +79,8 @@ const DEFS: Def[] = [
     resumen:
       'Antes o al momento de realizar el acto, hay que identificar de forma directa al cliente o usuario y verificar su identidad con documentos válidos.',
     categoria: 'identificacion',
+    alcance:
+      'Alcance: todas las actividades vulnerables. El encabezado del art. 18 dice «Quienes realicen las Actividades Vulnerables a que se refiere el artículo anterior tendrán las obligaciones siguientes», y la fracción I no introduce excepción por fracción.',
     disposicion: 'Art. 18, fracción I',
     pasos: [
       { texto: 'Recabar los datos generales de la persona física o moral.', evidencia: 'Formato de identificación' },
@@ -75,7 +96,9 @@ const DEFS: Def[] = [
       'Cada cliente identificado requiere un expediente único de identificación, actualizado y disponible para la autoridad.',
     categoria: 'expediente',
     recurrencia: 'semestral',
-    disposicion: 'Art. 18, fracción II',
+    alcance:
+      'Alcance: todas las actividades vulnerables. Lo que cambia por actividad es el CONTENIDO del expediente —los Anexos 1 a 10 de las reglas de carácter general—, no si el expediente existe. Esos anexos no se han leído todavía.',
+    disposicion: 'Art. 18, fracciones I y IV',
     pasos: [
       { texto: 'Crear el expediente único al identificar al cliente.' },
       { texto: 'Incorporar la documentación soporte de cada operación.' },
@@ -89,6 +112,8 @@ const DEFS: Def[] = [
     resumen:
       'Hay que preguntar y documentar quién es la persona física que finalmente se beneficia o controla al cliente, incluso cuando el control es indirecto.',
     categoria: 'identificacion',
+    alcance:
+      'Alcance: todas las actividades vulnerables. El art. 18, fracción III no distingue fracción del art. 17; las excepciones de las reglas generales (clientes que cotizan en bolsa) dependen del tipo de cliente, no de la actividad.',
     disposicion: 'Art. 18, fracción III',
     pasos: [
       { texto: 'Solicitar por escrito la manifestación del cliente sobre su beneficiario controlador.', evidencia: 'Manifestación firmada' },
@@ -103,6 +128,8 @@ const DEFS: Def[] = [
     resumen:
       'La información, documentación y soportes de las operaciones y de la identificación deben conservarse por diez años.',
     categoria: 'conservacion',
+    alcance:
+      'Alcance: todas las actividades vulnerables. Cabo suelto declarado: el art. 18, fracción IV dice «en el domicilio registrado ante la Secretaría para este efecto, excepto para la fracción XIV del artículo 17 de esta Ley, por al menos un plazo de diez años». Se lee que la excepción recae sobre el domicilio y no sobre el plazo —el art. 20 del Reglamento impone los diez años a «quienes realicen las Actividades Vulnerables establecidas en el artículo 17» sin excluir a nadie—, pero la redacción admite otra lectura y comercio exterior no se marca como exento.',
     disposicion: 'Art. 18, fracción IV',
     pasos: [
       { texto: 'Definir el repositorio y el formato de conservación.' },
@@ -118,6 +145,8 @@ const DEFS: Def[] = [
       'Los avisos por operaciones que alcanzan el umbral se presentan a más tardar el día 17 del mes siguiente a aquel en que ocurrió la operación.',
     categoria: 'avisos',
     recurrencia: 'mensual',
+    alcance:
+      'Alcance: todas las actividades vulnerables. El art. 23 abre con «Quienes realicen Actividades Vulnerables de las previstas en el artículo 17 de esta Ley». Lo que sí cambia por actividad es la VÍA: comercio exterior avisa por el sistema del pedimento (art. 16 del Reglamento) y notarios pueden hacerlo por el sistema de declaraciones fiscales federales (art. 24, último párrafo de la Ley).',
     disposicion: 'Art. 23',
     fuentes: ['lfpiorpi-vigente', 'sppld-portal'],
     pasos: [
@@ -134,6 +163,8 @@ const DEFS: Def[] = [
       'Cuando en el periodo no hubo operaciones que alcanzaran el umbral de aviso, de todas formas debe presentarse el informe correspondiente.',
     categoria: 'avisos',
     recurrencia: 'mensual',
+    alcance:
+      'Alcance: todas las actividades vulnerables. Nace del alta en el padrón, no de la fracción: el art. 12, último párrafo del Reglamento obliga a seguir presentando Avisos o Informes mientras no se tramite la baja. El art. 25 de las reglas generales no se ha contrastado literalmente.',
     disposicion: 'Art. 23',
     fuentes: ['lfpiorpi-vigente', 'sppld-portal'],
     pasos: [
@@ -148,6 +179,8 @@ const DEFS: Def[] = [
     resumen:
       'Cuando se detecta una operación inusual o preocupante, el aviso corre en un plazo mucho más corto que el ordinario. Incluye supuestos de operaciones intentadas.',
     categoria: 'avisos',
+    alcance:
+      'Alcance: todas las actividades vulnerables. El art. 18, fracción VI, segundo párrafo condiciona el aviso de 24 horas a la sospecha, no a la actividad ni al umbral.',
     disposicion: 'Art. 17 y disposiciones de carácter general',
     pasos: [
       { texto: 'Documentar la alerta y el análisis que la originó.', evidencia: 'Expediente del caso' },
@@ -163,6 +196,8 @@ const DEFS: Def[] = [
       'Se debe contar con una metodología documentada que evalúe los riesgos del negocio y clasifique a los clientes en función de ellos.',
     categoria: 'riesgos',
     recurrencia: 'anual',
+    alcance:
+      'Alcance: todas las actividades vulnerables. El art. 18, fracción VII no distingue fracción; el art. 34 Ter de las reglas generales lo confirma por contraste, al tener que decir que los apartados C y D de la fracción XII observan el capítulo «en lo conducente».',
     disposicion: 'Reglamento y disposiciones de carácter general',
     fuentes: ['lfpiorpi-vigente', 'dof-reglamento-2026', 'dof-acuerdo-115-2026'],
     pasos: [
@@ -180,6 +215,8 @@ const DEFS: Def[] = [
       'Cada cliente debe quedar clasificado en riesgo bajo, medio o alto, y la clasificación debe revisarse periódicamente.',
     categoria: 'riesgos',
     recurrencia: 'semestral',
+    alcance:
+      'Alcance: todas las actividades vulnerables. Desarrolla el art. 18, fracción VII, cuyo encabezado no distingue fracción. El capítulo III Bis de las reglas generales no se ha contrastado literalmente.',
     disposicion: 'Reglamento y disposiciones de carácter general',
     pasos: [
       { texto: 'Aplicar la metodología a cada cliente al darlo de alta.' },
@@ -195,6 +232,8 @@ const DEFS: Def[] = [
       'Hay que construir un perfil esperado de operación para cada cliente y compararlo contra su comportamiento real de forma periódica.',
     categoria: 'riesgos',
     recurrencia: 'semestral',
+    alcance:
+      'Alcance: todas las actividades vulnerables. El art. 18, fracción X ordena el monitoreo del perfil transaccional a todo el que realiza una actividad vulnerable. El capítulo III Ter de las reglas generales no se ha contrastado literalmente.',
     disposicion: 'Disposiciones de carácter general',
     pasos: [
       { texto: 'Definir el perfil esperado con base en la actividad declarada del cliente.' },
@@ -209,6 +248,8 @@ const DEFS: Def[] = [
     resumen:
       'Se debe identificar si el cliente, su beneficiario controlador o sus familiares cercanos son PEP y aplicar medidas reforzadas cuando así sea.',
     categoria: 'riesgos',
+    alcance:
+      'Alcance: todas las actividades vulnerables. El art. 18, fracción VIII exige políticas «que les permitan identificar y dar seguimiento a los actos u operaciones que lleven a cabo con Personas Políticamente Expuestas», sin distinguir fracción.',
     disposicion: 'Disposiciones de carácter general',
     pasos: [
       { texto: 'Consultar al cliente y verificar contra fuentes de PEP.' },
@@ -224,6 +265,8 @@ const DEFS: Def[] = [
       'El manual documenta cómo la organización cumple: identificación, expedientes, avisos, riesgos, capacitación, auditoría y conservación.',
     categoria: 'gobierno',
     recurrencia: 'anual',
+    alcance:
+      'Alcance: todas las actividades vulnerables. El art. 18, fracción VIII no distingue fracción. La exención por no operación de las reglas generales depende de los actos que cada quien decida no realizar, no de su actividad.',
     disposicion: 'Reglamento y disposiciones de carácter general',
     pasos: [
       { texto: 'Redactar las políticas de identificación, expediente y conservación.' },
@@ -238,6 +281,8 @@ const DEFS: Def[] = [
     resumen:
       'La normativa exige contar con sistemas que apoyen la detección de umbrales, la acumulación, las alertas y la trazabilidad de las decisiones.',
     categoria: 'tecnologia',
+    alcance:
+      'Alcance: todas las actividades vulnerables. El art. 18, fracción X no distingue fracción; las reglas generales gradúan el mecanismo «al volumen, naturaleza, complejidad y al Riesgo», no por actividad.',
     disposicion: 'Reglamento y disposiciones de carácter general',
     fuentes: ['lfpiorpi-vigente', 'dof-reglamento-2026', 'dof-acuerdo-115-2026'],
     pasos: [
@@ -254,6 +299,8 @@ const DEFS: Def[] = [
       'El personal involucrado debe recibir capacitación al menos una vez al año, con evidencia de asistencia y evaluación.',
     categoria: 'capacitacion',
     recurrencia: 'anual',
+    alcance:
+      'Alcance: todas las actividades vulnerables. El art. 18, fracción IX no distingue fracción, y el art. 20, tercer párrafo añade la capacitación anual del representante encargado del cumplimiento.',
     disposicion: 'Reglamento y disposiciones de carácter general',
     pasos: [
       { texto: 'Definir el programa anual y el personal alcanzado.' },
@@ -268,6 +315,8 @@ const DEFS: Def[] = [
     resumen:
       'Debe existir un procedimiento documentado para investigar los antecedentes del personal que participa en las funciones de cumplimiento.',
     categoria: 'gobierno',
+    alcance:
+      'Alcance: todas las actividades vulnerables. Misma fracción que la capacitación: el art. 18, fracción IX manda «desarrollar procesos para la selección de personal» a todo el que realiza una actividad vulnerable.',
     disposicion: 'Reglamento y disposiciones de carácter general',
     pasos: [
       { texto: 'Definir el alcance de la investigación por puesto.' },
@@ -282,6 +331,8 @@ const DEFS: Def[] = [
       'El programa de cumplimiento debe someterse a una auditoría con periodicidad anual, que genera hallazgos y un plan de remediación.',
     categoria: 'auditoria',
     recurrencia: 'anual',
+    alcance:
+      'Alcance: todas las actividades vulnerables. El art. 18, fracción XI no distingue fracción: lo que gradúa quién puede auditar es el riesgo (bajo o medio contra alto), no la actividad.',
     disposicion: 'Reglamento y disposiciones de carácter general',
     fuentes: ['lfpiorpi-vigente', 'dof-reglamento-2026', 'dof-acuerdo-115-2026'],
     pasos: [
@@ -299,6 +350,8 @@ const DEFS: Def[] = [
       'El resultado de la auditoría se formaliza en un dictamen que se presenta ante la autoridad en el plazo aplicable.',
     categoria: 'auditoria',
     recurrencia: 'anual',
+    alcance:
+      'Alcance: todas las actividades vulnerables. El art. 12 Bis del Reglamento obliga a «quienes realicen Actividades Vulnerables» a obtener, conservar y entregar el dictamen al SAT. El capítulo XIV de las reglas generales no se ha contrastado literalmente.',
     disposicion: 'Disposiciones de carácter general',
     pasos: [
       { texto: 'Integrar el dictamen con base en el informe de auditoría.' },
@@ -321,7 +374,7 @@ export const OBLIGACIONES: readonly Obligacion[] = DEFS.map((d) => ({
     ...(p.evidencia ? { evidencia: p.evidencia } : {}),
   })),
   ...(d.recurrencia ? { recurrencia: d.recurrencia } : {}),
-  procedencia: P(d.disposicion, d.fuentes),
+  procedencia: P(d.disposicion, d.alcance, d.fuentes),
   estado: 'revisado' as const,
 }));
 

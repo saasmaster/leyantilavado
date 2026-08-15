@@ -1,6 +1,10 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import type { PerfilProveedor, SolicitudContacto } from '@leyantilavado/types';
+import type {
+  NivelVerificacionProveedor,
+  PerfilProveedor,
+  SolicitudContacto,
+} from '@leyantilavado/types';
 import type { DocumentoGuardado } from './documentos';
 
 /* ────────────────────────────────────────────────────────────────────────────
@@ -31,11 +35,15 @@ async function leerLista<T>(archivo: string): Promise<T[]> {
   }
 }
 
-async function agregar<T>(archivo: string, registro: T): Promise<void> {
+async function escribirLista<T>(archivo: string, lista: readonly T[]): Promise<void> {
   await mkdir(DIRECTORIO_DATOS, { recursive: true });
+  await writeFile(path.join(DIRECTORIO_DATOS, archivo), JSON.stringify(lista, null, 2), 'utf8');
+}
+
+async function agregar<T>(archivo: string, registro: T): Promise<void> {
   const lista = await leerLista<T>(archivo);
   lista.push(registro);
-  await writeFile(path.join(DIRECTORIO_DATOS, archivo), JSON.stringify(lista, null, 2), 'utf8');
+  await escribirLista(archivo, lista);
 }
 
 /**
@@ -70,6 +78,57 @@ function folio(prefijo: string, semilla: string): string {
   let h = 0;
   for (const c of semilla) h = (h * 31 + c.charCodeAt(0)) >>> 0;
   return `${prefijo}-${h.toString(36).toUpperCase().padStart(7, '0').slice(0, 7)}`;
+}
+
+/* ── Moderación de las altas ─────────────────────────────────────────────── */
+
+/**
+ * Las tres decisiones que puede tomar moderación sobre un alta.
+ *
+ * Los nombres son los mismos que usa `verification_requests.status` en
+ * `supabase/migrations/0006_directorio.sql`: cuando esto se mueva a Postgres
+ * será un cambio de almacén, no un rediseño del vocabulario.
+ */
+export type DecisionModeracion = 'aprobada' | 'rechazada' | 'correccion_solicitada';
+
+export type EstadoModeracionAlta =
+  | 'pendiente'
+  | 'revisado'
+  | 'rechazado'
+  | 'correccion_solicitada';
+
+const ESTADO_TRAS_DECISION: Record<DecisionModeracion, EstadoModeracionAlta> = {
+  aprobada: 'revisado',
+  rechazada: 'rechazado',
+  correccion_solicitada: 'correccion_solicitada',
+};
+
+/**
+ * Una decisión de moderación, con quién y cuándo.
+ *
+ * Postgres ya lleva bitácora de todo (`audit_logs`, migración 0011), pero las
+ * altas del formulario público todavía no viven ahí: se escriben en `.data`, y
+ * ese almacén no tiene ningún historial. Hasta que migren, el registro va
+ * pegado a la propia solicitud —es el único sitio donde no se puede perder—.
+ */
+export interface EntradaBitacora {
+  decision: DecisionModeracion;
+  /** Cuenta que decidió. El id es el que manda; el correo es para leerlo. */
+  actorId: string;
+  actor: string;
+  /** Obligatorio salvo al aprobar: sin motivo no hay nada que corregir. */
+  motivo?: string;
+  /** Sólo al aprobar: el nivel de verificación que se le fija al perfil. */
+  nivelVerificacion?: NivelVerificacionProveedor;
+  registradoEn: string;
+}
+
+export interface DecisionAlta {
+  decision: DecisionModeracion;
+  actorId: string;
+  actor: string;
+  motivo?: string;
+  nivelVerificacion?: NivelVerificacionProveedor;
 }
 
 /* ── Registros que produce el público ───────────────────────────────────── */
@@ -112,10 +171,12 @@ export interface AltaProveedor {
    * puede subir el nivel de verificación por encima de `sin_verificar`.
    */
   publicado: boolean;
-  estadoModeracion: 'pendiente' | 'revisado' | 'rechazado';
+  estadoModeracion: EstadoModeracionAlta;
   /** Slug del perfil público que generó esta alta. */
   perfilSlug?: string;
   creadoEn: string;
+  /** Historial de moderación. Ausente en las altas anteriores a la consola. */
+  bitacora?: EntradaBitacora[];
 }
 
 export interface ReclamoPerfil {
@@ -159,6 +220,73 @@ export interface RepositorioDirectorio {
   guardarAlta(alta: Omit<AltaProveedor, 'id' | 'folio' | 'publicado' | 'estadoModeracion'>): Promise<string>;
   guardarReclamo(reclamo: Omit<ReclamoPerfil, 'id' | 'folio' | 'estadoModeracion'>): Promise<string>;
   guardarReporte(reporte: Omit<ReportePerfil, 'id' | 'folio' | 'estadoModeracion'>): Promise<string>;
+  /** Todas las altas, tal cual están en disco. Sólo para moderación. */
+  listarAltas(): Promise<AltaProveedor[]>;
+  /** `null` si no existe un alta con ese id. */
+  moderarAlta(id: string, decision: DecisionAlta): Promise<AltaProveedor | null>;
+}
+
+/**
+ * Efecto de una decisión sobre el alta y sobre su perfil público.
+ *
+ * Es una función pura y separada de la escritura a propósito: aquí viven las
+ * tres reglas que importan —la bitácora crece y nunca se sustituye, un rechazo
+ * despublica pero no borra, y sólo una aprobación puede mover el nivel de
+ * verificación— y así se pueden probar sin tocar disco.
+ *
+ * `ahora` entra como parámetro, como en el motor jurídico: nada aquí llama al
+ * reloj por su cuenta.
+ */
+export function aplicarDecision(
+  alta: AltaProveedor,
+  perfil: PerfilProveedor | null,
+  decision: DecisionAlta,
+  ahora: string,
+): { alta: AltaProveedor; perfil: PerfilProveedor | null } {
+  const motivo = decision.motivo?.trim() ?? '';
+
+  // Frontera dura: rechazar o pedir corrección sin decir por qué deja a quien
+  // se dio de alta con un perfil bloqueado y nada que arreglar.
+  if (decision.decision !== 'aprobada' && !motivo) {
+    throw new Error('Un rechazo o una petición de corrección exige motivo.');
+  }
+
+  const nivel = decision.nivelVerificacion ?? 'sin_verificar';
+
+  const entrada: EntradaBitacora = {
+    decision: decision.decision,
+    actorId: decision.actorId,
+    actor: decision.actor,
+    ...(motivo ? { motivo } : {}),
+    ...(decision.decision === 'aprobada' ? { nivelVerificacion: nivel } : {}),
+    registradoEn: ahora,
+  };
+
+  const altaNueva: AltaProveedor = {
+    ...alta,
+    estadoModeracion: ESTADO_TRAS_DECISION[decision.decision],
+    bitacora: [...(alta.bitacora ?? []), entrada],
+  };
+
+  if (!perfil) return { alta: altaNueva, perfil: null };
+
+  // Pedir corrección no toca el perfil: ya está publicado como «sin verificar»,
+  // que es exactamente lo que sigue siendo cierto mientras se corrige.
+  if (decision.decision === 'correccion_solicitada') {
+    return { alta: altaNueva, perfil };
+  }
+
+  return {
+    alta: altaNueva,
+    perfil: {
+      ...perfil,
+      ...(decision.decision === 'aprobada'
+        ? { verificacion: nivel, publicado: true }
+        : // Rechazar marca estado. El registro se queda: nada se borra nunca.
+          { publicado: false }),
+      actualizadoEn: ahora,
+    },
+  };
 }
 
 const ARCHIVO_PERFILES = 'directorio-perfiles.json';
@@ -247,6 +375,37 @@ export const repositorioDirectorio: RepositorioDirectorio = {
     await agregar(ARCHIVO_PERFILES, perfil);
 
     return numeroFolio;
+  },
+
+  async listarAltas() {
+    return leerLista<AltaProveedor>(ARCHIVO_ALTAS);
+  },
+
+  async moderarAlta(id, decision) {
+    const altas = await leerLista<AltaProveedor>(ARCHIVO_ALTAS);
+    const indice = altas.findIndex((a) => a.id === id);
+    if (indice === -1) return null;
+
+    const perfiles = await leerLista<PerfilProveedor>(ARCHIVO_PERFILES);
+    // El perfil que nació del alta comparte su id (ver `guardarAlta`).
+    const indicePerfil = perfiles.findIndex((p) => p.id === id);
+
+    const resultado = aplicarDecision(
+      altas[indice] as AltaProveedor,
+      indicePerfil === -1 ? null : (perfiles[indicePerfil] as PerfilProveedor),
+      decision,
+      new Date().toISOString(),
+    );
+
+    altas[indice] = resultado.alta;
+    await escribirLista(ARCHIVO_ALTAS, altas);
+
+    if (indicePerfil !== -1 && resultado.perfil) {
+      perfiles[indicePerfil] = resultado.perfil;
+      await escribirLista(ARCHIVO_PERFILES, perfiles);
+    }
+
+    return resultado.alta;
   },
 
   async guardarReclamo(reclamo) {

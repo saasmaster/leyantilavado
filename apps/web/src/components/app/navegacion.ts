@@ -99,6 +99,7 @@ export const NAVEGACION_ADMIN: readonly { titulo: string; enlaces: readonly Enla
   {
     titulo: 'Directorio y negocio',
     enlaces: [
+      { href: '/admin/directorio', etiqueta: 'Altas del directorio' },
       { href: '/admin/proveedores', etiqueta: 'Proveedores' },
       { href: '/admin/verificaciones', etiqueta: 'Solicitudes de verificación' },
       { href: '/admin/patrocinios', etiqueta: 'Patrocinios' },
