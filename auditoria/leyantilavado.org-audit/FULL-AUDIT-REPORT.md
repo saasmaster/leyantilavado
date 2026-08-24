@@ -12,7 +12,7 @@ informe SEO/GEO/Seguridad se contrastó antes de actuar.
 | Categoría | Peso | Nota | Qué la sostiene |
 |---|---:|---:|---|
 | SEO técnico | 22 % | 92 | 164/164 URL del sitemap en 200. Sitemap generado desde el motor. Robots con regla propia por rastreador de IA. |
-| Calidad de contenido | 23 % | 82 | Profundidad real y cifras que salen del motor versionado. Baja por la identidad legal ausente. |
+| Calidad de contenido | 23 % | 82 | Profundidad real y cifras que salen del motor versionado. La autoría es colectiva por decisión declarada. |
 | SEO on-page | 20 % | 86 | Títulos y descripciones escritos a mano, H1 correcto, migas en tres niveles. |
 | Datos estructurados | 10 % | 92 | Dataset, FAQ, Article, Organization, Breadcrumb, y ahora ItemList y WebApplication. |
 | Rendimiento | 10 % | 80 | **No medido en esta pasada.** Nota provisional; ver §5. |
@@ -137,16 +137,21 @@ TypeScript no existe en ejecución: lo que viniera en la query pasaba tal cual a
 `verifyOtp`, permitiendo verificar un token por un flujo distinto del que
 anunciaba el correo. Ahora hay lista blanca cerrada.
 
-### C-01 · Falta la identidad legal del responsable — ALTO · **bloqueado en Jorge**
+### C-01 · Identidad legal del responsable — **decisión tomada: no se publica**
 
-No hay razón social, RFC ni domicilio en `/nosotros`, `/contacto` ni
-`/legal/aviso-de-privacidad`. En un sitio YMYL de cumplimiento normativo, esto
-pesa **más** que la autoría anónima: la LFPDPPP obliga a identificar al
-responsable del tratamiento, y un centro que exige transparencia a otros no
-puede omitir la suya.
+El sitio no publica razón social, RFC ni domicilio, y **es una decisión de
+Jorge del 24 de agosto de 2026**, no un hueco por llenar. Queda registrado aquí
+para que ninguna auditoría posterior lo vuelva a abrir como pendiente.
 
-Es el hallazgo de contenido más grave y **no lo puedo resolver yo**: requiere
-datos que sólo Jorge tiene.
+Lo que sí publica, y cubre la función práctica: se declara plataforma privada e
+independiente, dice explícitamente que no es una autoridad, y ofrece un canal
+de contacto con folio para el ejercicio de derechos ARCO.
+
+Queda dicho, para que la decisión sea informada: la LFPDPPP pide que el aviso
+de privacidad identifique al responsable del tratamiento. Publicar los datos
+cerraría ese punto y subiría la señal de confianza en un sitio YMYL. Es una
+valoración de riesgo que corresponde a Jorge, y está tomada.
+
 
 ### G-01 · Posible pérdida de cifras al extraer `/umbrales` — **NO VERIFICADO**
 

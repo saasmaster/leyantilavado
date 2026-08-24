@@ -1,3 +1,8 @@
+> **Nota posterior (24 ago 2026).** Los hallazgos C-01 y C-03 —identidad legal
+> del responsable y autor con credenciales— **no son pendientes**: Jorge decidió
+> no publicar esos datos. Se conserva el análisis por su valor de diagnóstico,
+> pero no debe reabrirse como tarea.
+
 # Auditoría de contenido y E-E-A-T — leyantilavado.org
 
 Fecha de esta pasada: 2026-08-24. Verifica y actualiza la auditoría del 12-ago-2026.

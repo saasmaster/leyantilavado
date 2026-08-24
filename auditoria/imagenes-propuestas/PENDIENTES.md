@@ -95,15 +95,11 @@ Reemplazan a las tres descartadas por llevar contenido falso legible:
 | `/herramientas/calculadora-multas` | Balanza y monedas, luz seria | Era una multa de estacionamiento de Londres, £80 |
 | `/herramientas/plan-30-noviembre` | Calendario de sobremesa **sin mes ni números legibles** | Marcaba octubre; la fecha del plan es el 30 de noviembre |
 
-## 5 · Prioridad baja — retrato del responsable
+## 5 · Retrato del responsable — **descartado**
 
-Formato: **1200 × 1200 px**, fotografía real.
+No se pide. Jorge decidió el 24 de agosto de 2026 no publicar responsable con
+nombre ni datos societarios, así que no hay retrato que encargar.
 
-No es material decorativo: la auditoría marcó como el hallazgo de contenido más
-grave que el sitio no identifica a un responsable con nombre. En un sitio YMYL
-de cumplimiento normativo, una persona con cara y credenciales pesa más que
-cualquier fotografía de escritorio. **No sirve una imagen generada**: tiene que
-ser quien de verdad responda por el contenido.
 
 ---
 

@@ -4,13 +4,15 @@ import { datos } from '@leyantilavado/rules-engine';
 /**
  * Sistema de autoría.
  *
- * Todavía no hay personas con nombre asignadas al contenido. En lugar de
- * inventar un autor con credenciales que no podemos acreditar, el contenido lo
- * firma el equipo editorial y se declara abiertamente el método de trabajo.
+ * **El contenido lo firma el equipo editorial, y ésa es la postura, no una
+ * etapa intermedia.** Inventar un autor con credenciales que no se pueden
+ * acreditar sería peor que firmar colectivamente, y firmar colectivamente
+ * mientras se declara el método de trabajo es una posición honesta y completa.
  *
- * El tipo `Autor` ya soporta persona con nombre y credenciales: cuando haya un
- * revisor real, se agrega aquí y se pasa como `revisor` en la firma de las
- * páginas que revise. No hay que tocar ninguna página para eso.
+ * El tipo `Autor` admite persona con nombre y credenciales, y `revisor` existe
+ * en la firma de las páginas. Están ahí porque el modelo de datos lo permite,
+ * no porque falte llenarlos: si algún día se decide nombrar a alguien, se
+ * agrega aquí sin tocar ninguna página.
  */
 export const EQUIPO_EDITORIAL: Autor = {
   id: 'equipo-editorial',
