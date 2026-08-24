@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Check, ExternalLink, MousePointerClick, ShieldCheck, X } from 'lucide-react';
 import { formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { Insignia, Nota, Tarjeta, TarjetaCuerpo, TablaEnvoltura } from '@leyantilavado/ui';
 import { construirMetadata, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
 import { EncabezadoPagina } from '@/components/inicio/comun';
+import { CapturaPanel } from '@/components/extension/CapturaPanel';
 import { AVISO_LEGAL_TEXTO } from '@/content/autores';
 import {
   COMO_SE_USA,
@@ -79,25 +81,56 @@ export default function PaginaExtension() {
       />
 
       <div className="contenedor-app py-12 md:py-16">
-        {/* ── Instalación ──────────────────────────────────────────────── */}
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-          {URL_TIENDA ? (
-            <a
-              href={URL_TIENDA}
-              className="relleno-accion inline-flex items-center justify-center gap-2 rounded-[var(--radius-control)] px-5 py-3 font-medium text-white"
-            >
-              Instalar desde Chrome Web Store
-              <ExternalLink aria-hidden className="size-4" />
-            </a>
-          ) : (
-            /* Sin URL de tienda no se ofrece un botón que lleve a ninguna
-               parte: un enlace roto desde la página que promete precisión
-               cuesta más que la ausencia del botón. */
-            <Insignia tono="ambar">Próximamente en la Chrome Web Store</Insignia>
-          )}
-          <a href="#privacidad" className="text-sm underline underline-offset-4">
-            Ver la política de privacidad
-          </a>
+        {/* ── Presentación con la captura ──────────────────────────────── */}
+        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_auto]">
+          <div>
+            <div className="flex items-center gap-3">
+              <Image
+                src="/extension/icono.png"
+                alt=""
+                width={48}
+                height={48}
+                className="rounded-[0.7rem] shadow-sm"
+              />
+              <div>
+                <p className="font-semibold text-[var(--color-tinta)]">{EXTENSION.nombre}</p>
+                <p className="text-sm text-[var(--color-tinta-tenue)]">Extensión de Google Chrome</p>
+              </div>
+            </div>
+
+            <p className="prosa mt-6 text-lg">
+              Selecciona una cantidad en cualquier página, haz clic derecho y elige{' '}
+              <strong>«Analizar con {EXTENSION.nombre}»</strong>. El panel lateral se abre con el
+              importe ya detectado, completas lo que falte y obtienes el resultado con su
+              fundamento.
+            </p>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              {URL_TIENDA ? (
+                <a
+                  href={URL_TIENDA}
+                  className="relleno-accion inline-flex items-center justify-center gap-2 rounded-[var(--radius-control)] px-5 py-3 font-medium text-white"
+                >
+                  Instalar desde Chrome Web Store
+                  <ExternalLink aria-hidden className="size-4" />
+                </a>
+              ) : (
+                /* Sin URL de tienda no se ofrece un botón que lleve a ninguna
+                   parte: un enlace roto desde la página que promete precisión
+                   cuesta más que la ausencia del botón. */
+                <Insignia tono="ambar">Próximamente en la Chrome Web Store</Insignia>
+              )}
+              <a href="#privacidad" className="text-sm underline underline-offset-4">
+                Ver la política de privacidad
+              </a>
+            </div>
+          </div>
+
+          <CapturaPanel
+            src="/extension/tienda-1.png"
+            alt="Panel lateral de la extensión mostrando el resultado de una operación: la conclusión arriba y debajo los datos capturados con los que se calculó."
+            prioridad
+          />
         </div>
 
         {/* ── Para quién ───────────────────────────────────────────────── */}
@@ -129,7 +162,12 @@ export default function PaginaExtension() {
             Cada obligación se evalúa por separado, con su propio importe, su UMA aplicable y su
             umbral. No se colapsan en una sola respuesta porque no son la misma pregunta.
           </p>
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-6 grid gap-10 lg:grid-cols-[auto_minmax(0,1fr)]">
+            <CapturaPanel
+              src="/extension/tienda-2.png"
+              alt="Panel con cuatro bloques independientes: identificación, aviso, acumulación de seis meses y restricción de efectivo, cada uno con su importe, su UMA y su umbral."
+            />
+            <div className="grid gap-4 sm:grid-cols-2">
             {QUE_RESUELVE.map((q) => (
               <Tarjeta key={q.titulo}>
                 <TarjetaCuerpo>
@@ -140,6 +178,7 @@ export default function PaginaExtension() {
                 </TarjetaCuerpo>
               </Tarjeta>
             ))}
+            </div>
           </div>
         </section>
 
@@ -171,7 +210,8 @@ export default function PaginaExtension() {
           <h2 id="diferencias" className="text-2xl font-semibold">
             Qué la hace distinta
           </h2>
-          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+          <div className="mt-6 grid gap-10 lg:grid-cols-[minmax(0,1fr)_auto]">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
             {DIFERENCIAS.map((d) => (
               <Tarjeta key={d.titulo}>
                 <TarjetaCuerpo>
@@ -182,6 +222,11 @@ export default function PaginaExtension() {
                 </TarjetaCuerpo>
               </Tarjeta>
             ))}
+            </div>
+            <CapturaPanel
+              src="/extension/tienda-3.png"
+              alt="Cada umbral muestra su artículo, la fuente oficial, desde cuándo está vigente y la fecha de la última verificación."
+            />
           </div>
         </section>
 
