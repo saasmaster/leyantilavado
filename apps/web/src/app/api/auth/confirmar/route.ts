@@ -12,10 +12,31 @@ import { supabaseConfigurado } from '@/lib/supabase/configuracion';
  * convertiría este endpoint en un redirector abierto, perfecto para mandar a
  * alguien a un clon del sitio justo después de que confirma su correo.
  */
+/**
+ * Tipos de enlace que este endpoint acepta.
+ *
+ * Antes el parámetro se casteaba con `as EmailOtpType` sin comprobar nada, y un
+ * cast de TypeScript no existe en tiempo de ejecución: lo que llegara en la
+ * query pasaba tal cual a `verifyOtp`. Eso permite construir un enlace que
+ * verifica el token como un tipo distinto del que el correo anunciaba —por
+ * ejemplo, colar a alguien por el flujo de «aceptar invitación» cuando creía
+ * estar confirmando su correo—. El vector necesita ingeniería social, pero la
+ * defensa cuesta cuatro líneas.
+ *
+ * La lista es cerrada a propósito: si Supabase añade un tipo nuevo, este
+ * endpoint lo rechaza hasta que alguien decida conscientemente admitirlo.
+ */
+const TIPOS_ACEPTADOS = ['signup', 'recovery', 'invite', 'magiclink', 'email_change'] as const;
+
+function tipoValido(valor: string | null): valor is EmailOtpType {
+  return valor !== null && (TIPOS_ACEPTADOS as readonly string[]).includes(valor);
+}
+
 export async function GET(peticion: NextRequest) {
   const params = peticion.nextUrl.searchParams;
   const token_hash = params.get('token_hash');
-  const type = params.get('type') as EmailOtpType | null;
+  const tipoCrudo = params.get('type');
+  const type = tipoValido(tipoCrudo) ? tipoCrudo : null;
   const destino = destinoSeguro(params.get('destino'), '/panel');
 
   const errorUrl = new URL('/entrar?aviso=enlace_invalido', peticion.url);

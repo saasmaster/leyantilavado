@@ -52,4 +52,38 @@ describe('destinoSeguro', () => {
       expect(destinoSeguro(malicioso, '/panel')).toBe('/panel');
     }
   });
+
+  /**
+   * Regresión de un redirector abierto real.
+   *
+   * El estándar de URL manda eliminar tabuladores y saltos de línea antes de
+   * interpretar el texto, así que `/\n/sitio-falso.mx` empieza con un solo `/`
+   * —pasaba las comprobaciones— pero el navegador lo lee como `//sitio-falso.mx`.
+   *
+   * La prueba no se conforma con mirar la cadena: resuelve el resultado con
+   * `new URL` igual que hace el endpoint, porque el fallo estaba justo en la
+   * distancia entre lo que se validaba y lo que se usaba.
+   */
+  it('rechaza los destinos que el analizador de URL convierte en protocolo relativo', () => {
+    const base = 'https://leyantilavado.org/api/auth/confirmar';
+
+    for (const malicioso of [
+      '/\n/sitio-falso.mx',
+      '/\t/sitio-falso.mx',
+      '/\r/sitio-falso.mx',
+      '/\n\t/sitio-falso.mx',
+      '  //sitio-falso.mx',
+      '\n//sitio-falso.mx',
+    ]) {
+      const salida = destinoSeguro(malicioso, '/panel');
+      const resuelto = new URL(salida, base);
+      expect(resuelto.origin, `${JSON.stringify(malicioso)} se escapó del sitio`).toBe(
+        'https://leyantilavado.org',
+      );
+    }
+  });
+
+  it('no acepta destinos absurdamente largos', () => {
+    expect(destinoSeguro(`/panel?x=${'a'.repeat(4000)}`, '/panel')).toBe('/panel');
+  });
 });

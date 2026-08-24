@@ -37,6 +37,14 @@ export const ETIQUETA_ROL: Record<RolOrganizacion, string> = {
 };
 
 /**
+ * Longitud máxima aceptada para un destino interno.
+ *
+ * Ninguna ruta real del sitio se acerca a esto. El tope existe para que un
+ * `?destino=` de kilobytes no acabe en los registros del servidor.
+ */
+const LARGO_MAXIMO_DESTINO = 2048;
+
+/**
  * Sanea el parámetro `destino` de los redirectos de autenticación.
  *
  * Sólo se aceptan rutas internas. Aceptar una URL absoluta convertiría
@@ -44,10 +52,33 @@ export const ETIQUETA_ROL: Record<RolOrganizacion, string> = {
  * `/entrar?destino=https://sitio-falso.mx` para llevarlo a un clon del panel
  * justo después de que teclea su contraseña. `//host` también se rechaza
  * porque el navegador lo interpreta como protocolo relativo.
+ *
+ * ── Por qué se normaliza antes de validar ──────────────────────────────────
+ *
+ * Validar la cadena cruda no basta, y esta función lo hizo durante meses.
+ * El estándar de URL obliga a **eliminar** tabuladores, saltos de línea y
+ * retornos de carro del texto ANTES de interpretarlo. Así que `/⁠\n/evil.com`
+ * empieza con un solo `/` y pasaba las tres comprobaciones de abajo, pero
+ * `new URL()` y el navegador lo leen como `//evil.com`: protocolo relativo,
+ * es decir, redirector abierto hacia un dominio ajeno.
+ *
+ * Comprobado: `new URL('/\n/evil.com', 'https://leyantilavado.org')` devuelve
+ * `https://evil.com/`. Lo mismo con `\t` y con `\r`.
+ *
+ * La lección general es que **hay que validar la cadena que se va a usar, no
+ * la que llegó**. Por eso se normaliza primero y se devuelve el valor ya
+ * normalizado: lo que sale de aquí es exactamente lo que verá `new URL()`.
  */
 export function destinoSeguro(valor: string | null | undefined, porOmision: string): string {
   if (!valor) return porOmision;
-  if (!valor.startsWith('/')) return porOmision;
-  if (valor.startsWith('//') || valor.startsWith('/\\')) return porOmision;
-  return valor;
+  if (valor.length > LARGO_MAXIMO_DESTINO) return porOmision;
+
+  // Las mismas transformaciones que hará el analizador de URL: quitar
+  // tabuladores y saltos de línea en cualquier posición, y recortar los
+  // controles C0 y espacios de los extremos.
+  const normalizado = valor.replace(/[\t\n\r]/g, '').replace(/^[\u0000-\u0020]+|[\u0000-\u0020]+$/g, '');
+
+  if (!normalizado.startsWith('/')) return porOmision;
+  if (normalizado.startsWith('//') || normalizado.startsWith('/\\')) return porOmision;
+  return normalizado;
 }
