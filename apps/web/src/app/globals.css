@@ -540,3 +540,46 @@
     padding-block: clamp(3.5rem, 2rem + 6vw, 7rem);
   }
 }
+
+/* ── Paralaje de las bandas a sangre ────────────────────────────────────────
+ *
+ * La imagen se dibuja un 24 % más alta que su banda y recorre esa holgura
+ * mientras la banda cruza la pantalla. El desplazamiento es corto a propósito:
+ * un paralaje que se nota es un truco; uno que sólo da profundidad es diseño.
+ *
+ * `view()` ata la animación al paso del elemento por el viewport, sin un solo
+ * listener de scroll. Donde no exista, la imagen se queda quieta y ya está.
+ */
+@layer components {
+  @keyframes deriva-paralaje {
+    from {
+      transform: translate3d(0, -6%, 0);
+    }
+    to {
+      transform: translate3d(0, 6%, 0);
+    }
+  }
+
+  @supports (animation-timeline: view()) {
+    .banda-paralaje__imagen {
+      animation: deriva-paralaje linear both;
+      animation-timeline: view();
+      /* Recorre sólo mientras la banda está entrando y saliendo; en el centro
+         del viewport queda estable, que es cuando se lee el texto. */
+      animation-range: cover 0% cover 100%;
+      will-change: transform;
+    }
+
+    /*
+     * La regla global de `prefers-reduced-motion` fija `animation-duration` a
+     * 0.01ms, y eso NO detiene una animación guiada por scroll: su avance lo
+     * marca el timeline, no el reloj. Hay que soltar el timeline.
+     */
+    @media (prefers-reduced-motion: reduce) {
+      .banda-paralaje__imagen {
+        animation-timeline: none;
+        transform: none;
+      }
+    }
+  }
+}

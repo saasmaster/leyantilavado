@@ -26,6 +26,8 @@ import {
   REGIMEN_CFF,
 } from '@/content/multas';
 import { construirMetadata, jsonLdFAQ, jsonLdMigaDePan } from '@/lib/sitio';
+import { ImagenEditorial } from '@/components/contenido/ImagenEditorial';
+import mazoSanciones from '../../../public/img/editorial/mazo-sanciones.webp';
 
 const RUTA = '/multas';
 
@@ -95,6 +97,12 @@ export default function PaginaMultas() {
         ]}
         respuestaDirecta="El art. 53 enumera las conductas que son infracción y el art. 54 fija cuánto cuesta cada grupo de ellas. Son dos artículos distintos y casi todos los resúmenes del mercado los mezclan. La autocorrección, por su parte, vive en el art. 55: el 56 regula la revocación de permisos, que es otra cosa."
         entradilla="Los rangos que ves aquí se leen del motor de reglas y se convierten a pesos con la UMA vigente a la fecha de revisión."
+      />
+
+      <ImagenEditorial
+        imagen={mazoSanciones}
+        alt="Un mazo de madera sobre una mesa junto a expedientes atados con listón."
+        pie="El artículo 53 enumera las infracciones y el 54 fija cuánto cuesta cada grupo. Son dos artículos distintos."
       />
 
       <IndiceContenidos entradas={INDICE} />

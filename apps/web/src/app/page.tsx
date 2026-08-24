@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 import { datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
+import { formatearMXN } from '@leyantilavado/types';
 import { SITIO, construirMetadata, jsonParaScript } from '@/lib/sitio';
 import {
   CuentaRegresivaReglas,
@@ -11,6 +14,8 @@ import { MapaDelSitio } from '@/components/inicio/MapaDelSitio';
 import { QueEs } from '@/components/inicio/QueEs';
 import { FuentesPrincipales } from '@/components/contenido/FuentesPrincipales';
 import { Newsletter } from '@/components/inicio/Newsletter';
+import { BandaParalaje } from '@/components/contenido/BandaParalaje';
+import umaPizarron from '../../public/img/editorial/uma-pizarron.webp';
 
 export const metadata: Metadata = construirMetadata({
   titulo: SITIO.nombre,
@@ -68,6 +73,7 @@ const JSON_LD = {
 };
 
 export default function Inicio() {
+  const umaMasReciente = datos.UMA_VIGENTE_MAS_RECIENTE;
   // La hora se resuelve en el servidor y viaja como prop, para que el primer
   // render del cliente produzca exactamente el mismo HTML.
   const ahoraISO = new Date().toISOString();
@@ -91,6 +97,45 @@ export default function Inicio() {
         titulo="Lo siguiente que vence"
         descripcion="Las tres reglas más próximas del calendario 2026-2029. Las fechas son nominales: no las recorremos por días inhábiles sin una regla oficial que lo respalde."
       />
+
+      {/*
+        * El único momento a sangre de la portada.
+        *
+        * Va aquí y no arriba: el hero ya tiene su imagen, y dos bandas grandes
+        * seguidas se anulan. Aparece después de las fechas que vencen, cuando
+        * el lector ya entendió que hay plazos, para explicarle la unidad con la
+        * que se miden.
+        *
+        * La cifra sale del motor. Escribirla a mano en la portada sería el
+        * error que este sitio le señala a todos los demás: el 1 de febrero
+        * quedaría vieja y nadie se enteraría.
+        */}
+      <BandaParalaje imagen={umaPizarron} alt="">
+        <div className="max-w-2xl">
+          <h2 className="text-3xl font-semibold text-white md:text-4xl">
+            Todo se mide en UMA, y la UMA cambia cada 1 de febrero
+          </h2>
+          <p className="mt-5 text-lg leading-relaxed text-[color-mix(in_srgb,white_86%,transparent)]">
+            Los umbrales de la Ley Antilavado no están en pesos: están en veces la Unidad de Medida
+            y Actualización. Una operación del 15 de enero se mide con la UMA del año anterior, no
+            con la del año en curso. Es el error más repetido de las tablas que circulan cada enero.
+          </p>
+          <p className="mt-5 text-[color-mix(in_srgb,white_78%,transparent)]">
+            UMA diaria más reciente registrada:{' '}
+            <strong className="cifra font-semibold text-white">
+              {formatearMXN(umaMasReciente.diariaCentavos)}
+            </strong>{' '}
+            ({umaMasReciente.anio}).
+          </p>
+          <Link
+            href="/herramientas/calculadora-uma"
+            className="mt-7 inline-flex min-h-11 items-center gap-2 rounded-[var(--radius-control)] bg-white px-5 font-medium text-[var(--color-marino)] transition-transform duration-200 hover:-translate-y-0.5"
+          >
+            Convertir UMA a pesos por fecha
+            <ArrowRight aria-hidden className="size-4" />
+          </Link>
+        </div>
+      </BandaParalaje>
 
       <div className="contenedor-app">
         <FuentesPrincipales className="seccion border-t border-[var(--color-borde)] pt-12" />

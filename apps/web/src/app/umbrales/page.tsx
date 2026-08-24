@@ -20,6 +20,8 @@ import { jsonLdArticulo, jsonLdConjuntoDatos } from '@/components/contenido/Json
 import { REVISION_VIGENTE } from '@/content/autores';
 import { VERSION_LEGAL } from '@leyantilavado/rules-engine';
 import { construirMetadata, jsonLdFAQ, jsonLdMigaDePan } from '@/lib/sitio';
+import { ImagenEditorial } from '@/components/contenido/ImagenEditorial';
+import balanza from '../../../public/img/editorial/balanza.webp';
 
 const RUTA = '/umbrales';
 const ANIO_MAS_RECIENTE = ANIOS_UMA_DISPONIBLES[0] ?? 2026;
@@ -139,6 +141,12 @@ export default function PaginaUmbrales() {
         ]}
         respuestaDirecta="Cada actividad vulnerable tiene dos umbrales: uno de identificación y otro de aviso, expresados en veces el valor diario de la UMA. Esta tabla los muestra todos, los convierte a pesos con la UMA del año que elijas y conserva el detalle que las tablas estáticas pierden: el comparador exacto, la periodicidad y los supuestos de las reglas que no son un número."
         entradilla="Es la tabla que usamos internamente para alimentar las calculadoras del sitio. No hay dos versiones: lo que ves aquí es lo que calcula el motor."
+      />
+
+      <ImagenEditorial
+        imagen={balanza}
+        alt="Una balanza de dos platos con monedas en un lado y una calculadora antigua en el otro."
+        pie="Un umbral es una comparación, no una cifra suelta: el importe de la operación de un lado, el umbral de su actividad convertido a pesos con la UMA de esa fecha del otro."
       />
 
       <IndiceContenidos entradas={INDICE} />

@@ -18,6 +18,7 @@ import {
   describirUmbral,
 } from '@/components/contenido';
 import { jsonLdArticulo } from '@/components/contenido/JsonLd';
+import { RetratoOficio } from '@/components/contenido/RetratoOficio';
 import { REVISION_VIGENTE } from '@/content/autores';
 import { CAMBIOS_TRANSVERSALES, cambiosPropios } from '@/content/cambios-por-actividad';
 import { CASOS_POR_SLUG } from '@/content/casos-practicos';
@@ -227,6 +228,11 @@ export default async function PaginaOficio({
         entradilla={`También lo buscan como ${oficio.tambienBuscado.join(', ')}.`}
         respuestaDirecta={oficio.respuestaDirecta}
       />
+
+      {/* Después del titular y de la respuesta directa, no antes: quien llega
+          aquí viene a saber si le aplica la ley, y eso se responde con texto.
+          La foto confirma que está en la página de su giro. */}
+      <RetratoOficio slug={slug} />
 
       <IndiceContenidos entradas={indice} />
 

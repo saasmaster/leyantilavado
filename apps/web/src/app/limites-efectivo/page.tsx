@@ -24,6 +24,8 @@ import {
   PUNTOS_CLAVE_EFECTIVO,
 } from '@/content/efectivo';
 import { construirMetadata, jsonLdFAQ, jsonLdMigaDePan } from '@/lib/sitio';
+import { ImagenEditorial } from '@/components/contenido/ImagenEditorial';
+import efectivoPesos from '../../../public/img/editorial/efectivo-pesos.webp';
 
 const RUTA = '/limites-efectivo';
 
@@ -101,6 +103,12 @@ export default function PaginaLimitesEfectivo() {
         ]}
         respuestaDirecta="El art. 32 no es un umbral de reporte: es una prohibición. Por encima del límite de cada supuesto no se puede liquidar ni aceptar el pago en efectivo, divisas o metales preciosos, aunque el pago se haga por conducto de una entidad financiera. Y se mide con IVA incluido, a diferencia de los umbrales de aviso del art. 17, que se miden sin IVA."
         entradilla="Presentar el aviso no vuelve lícito un pago en efectivo por encima del límite. Son dos controles independientes con dos consecuencias distintas."
+      />
+
+      <ImagenEditorial
+        imagen={efectivoPesos}
+        alt="Billetes de cien y quinientos pesos y varias monedas sobre un plato de cerámica."
+        pie="El artículo 32 no pide avisar: prohíbe liquidar en efectivo por encima del límite. Se mide con IVA incluido."
       />
 
       <IndiceContenidos entradas={INDICE} />
