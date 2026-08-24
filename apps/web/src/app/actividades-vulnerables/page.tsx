@@ -25,7 +25,7 @@ import { jsonLdArticulo } from '@/components/contenido/JsonLd';
 const RUTA = '/actividades-vulnerables';
 
 export const metadata: Metadata = construirMetadata({
-  titulo: `Actividades vulnerables: las ${CIFRAS.fracciones} fracciones del art. 17`,
+  titulo: `Actividades vulnerables ${datos.UMA_VIGENTE_MAS_RECIENTE.anio}: las ${CIFRAS.fracciones} fracciones`,
   descripcion: `Los ${datos.ACTIVIDADES.length} supuestos del art. 17 con su umbral de identificación y de aviso, a quién alcanza cada uno y qué obligaciones genera.`,
   ruta: RUTA,
   tipo: 'article',
@@ -119,7 +119,7 @@ export default function PaginaActividades() {
           { texto: ETIQUETA_ACTIVIDADES, tono: 'petroleo' },
           { texto: `Vigente al ${REVISION_VIGENTE}`, tono: 'neutro' },
         ]}
-        respuestaDirecta={`El artículo 17 de la Ley Antilavado lista ${CIFRAS.fracciones} fracciones de actividades vulnerables. Como varias se desdoblan en incisos y apartados con reglas propias, en la práctica hay ${CIFRAS.supuestos} supuestos distintos, de los cuales ${CIFRAS.supuestosVerificados} tienen umbral verificado contra fuente oficial y ${CIFRAS.supuestosPendientes} existen en la ley sin cifra publicada por la autoridad. Por eso cada uno tiene su propia página en lugar de una tabla que los aplane a un solo número.`}
+        respuestaDirecta={`El artículo 17 de la Ley Antilavado lista ${CIFRAS.fracciones} fracciones de actividades vulnerables: de la I a la XVI, más la V Bis que adicionó la reforma publicada el 16 de julio de 2025. Como varias se desdoblan en incisos y apartados con reglas propias, en la práctica hay ${CIFRAS.supuestos} supuestos distintos, de los cuales ${CIFRAS.supuestosVerificados} tienen umbral verificado contra fuente oficial y ${CIFRAS.supuestosPendientes} existen en la ley sin cifra publicada por la autoridad. Por eso cada uno tiene su propia página en lugar de una tabla que los aplane a un solo número.`}
       />
 
       <IndiceContenidos entradas={INDICE} />

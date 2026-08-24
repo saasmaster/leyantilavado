@@ -34,7 +34,12 @@ interface Props {
    * imagen decorativa en una página donde alguien vino a calcular es ruido. Va
    * DESPUÉS de la calculadora, nunca antes.
    */
-  imagen?: { src: import('next/image').StaticImageData; alt: string };
+  imagen?: {
+    src: import('next/image').StaticImageData;
+    alt: string;
+    /** `diagrama` para gráficos: respeta su proporción y no los recorta. */
+    proporcion?: 'cuadrada' | 'diagrama';
+  };
   /** La lógica o fórmula, explicada en palabras. */
   comoCalcula: React.ReactNode;
   /** Ejemplo resuelto con cifras. */
@@ -178,7 +183,7 @@ export function MarcoHerramienta({
             <ImagenEditorial
               imagen={imagen.src}
               alt={imagen.alt}
-              proporcion="cuadrada"
+              proporcion={imagen.proporcion ?? 'cuadrada'}
               className="no-imprimir"
             />
           ) : null}

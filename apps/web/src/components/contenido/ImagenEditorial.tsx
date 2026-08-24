@@ -26,14 +26,25 @@ export function ImagenEditorial({
   pie?: React.ReactNode;
   /** `true` sólo si la imagen entra en el primer pantallazo de la ruta. */
   prioridad?: boolean;
-  proporcion?: 'panoramica' | 'cuadrada';
+  /**
+   * `diagrama` respeta la proporción real del archivo y NO recorta.
+   *
+   * Un diagrama es información, no ambiente: recortarlo pierde una rama del
+   * árbol o el último mes de la línea de tiempo. Las fotografías sí se
+   * recortan, porque ahí lo que importa es el encuadre y no el borde.
+   */
+  proporcion?: 'panoramica' | 'cuadrada' | 'diagrama';
   className?: string;
 }) {
   return (
     <figure className={`my-10 ${className}`}>
       <div
         className={`relative overflow-clip rounded-[var(--radius-card)] border border-[var(--color-borde)] bg-[var(--color-marfil-hondo)] shadow-[0_18px_44px_-24px_rgb(10_31_60/.38)] ${
-          proporcion === 'cuadrada' ? 'aspect-square sm:aspect-[4/3]' : 'aspect-[16/9]'
+          proporcion === 'diagrama'
+            ? ''
+            : proporcion === 'cuadrada'
+              ? 'aspect-square sm:aspect-[4/3]'
+              : 'aspect-[16/9]'
         }`}
       >
         <Image
@@ -43,7 +54,7 @@ export function ImagenEditorial({
           priority={prioridad}
           placeholder="blur"
           sizes="(min-width: 1024px) 46rem, 100vw"
-          className="size-full object-cover"
+          className={proporcion === 'diagrama' ? 'h-auto w-full' : 'size-full object-cover'}
         />
       </div>
       {pie ? (

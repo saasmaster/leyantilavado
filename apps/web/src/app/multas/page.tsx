@@ -1,3 +1,4 @@
+import { ArrowRight } from 'lucide-react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { convertirUMA, datos } from '@leyantilavado/rules-engine';
@@ -15,6 +16,8 @@ import {
   PreguntasFrecuentes,
   Seccion,
 } from '@/components/contenido';
+import { BandaParalaje } from '@/components/contenido/BandaParalaje';
+import bandaMultas from '../../../public/img/bandas/multas.webp';
 import { jsonLdArticulo } from '@/components/contenido/JsonLd';
 import { REVISION_VIGENTE } from '@/content/autores';
 import {
@@ -26,8 +29,6 @@ import {
   REGIMEN_CFF,
 } from '@/content/multas';
 import { construirMetadata, jsonLdFAQ, jsonLdMigaDePan } from '@/lib/sitio';
-import { ImagenEditorial } from '@/components/contenido/ImagenEditorial';
-import mazoSanciones from '../../../public/img/editorial/mazo-sanciones.webp';
 
 const RUTA = '/multas';
 
@@ -71,6 +72,7 @@ export default function PaginaMultas() {
   const procedencia = datos.SANCIONES[0]?.procedencia;
 
   return (
+    <>
     <div className="contenedor-app py-12 md:py-16">
       <JsonLd datos={jsonLdMigaDePan(migas)} />
       <JsonLd
@@ -99,11 +101,6 @@ export default function PaginaMultas() {
         entradilla="Los rangos que ves aquí se leen del motor de reglas y se convierten a pesos con la UMA vigente a la fecha de revisión."
       />
 
-      <ImagenEditorial
-        imagen={mazoSanciones}
-        alt="Un mazo de madera sobre una mesa junto a expedientes atados con listón."
-        pie="El artículo 53 enumera las infracciones y el 54 fija cuánto cuesta cada grupo. Son dos artículos distintos."
-      />
 
       <IndiceContenidos entradas={INDICE} />
 
@@ -488,5 +485,29 @@ export default function PaginaMultas() {
       <FirmaEditorial />
       <AvisoLegal />
     </div>
+
+    {/* Cierra como sus hermanas, y sustituye al mazo que estaba antes: las
+        sanciones de la LFPIORPI son administrativas —las impone la autoridad
+        fiscal, no un juez— así que un mazo de tribunal sugería un proceso que
+        no es el que describe esta página. */}
+    <BandaParalaje imagen={bandaMultas} alt="">
+      <div className="max-w-2xl">
+        <h2 className="text-3xl font-semibold text-white md:text-4xl">
+          Antes de suponer el peor escenario, calcúlalo
+        </h2>
+        <p className="mt-5 text-lg leading-relaxed text-[color-mix(in_srgb,white_86%,transparent)]">
+          Los rangos del artículo 54 son amplios y la autocorrección del 55 cambia el resultado.
+          Ver la cifra de tu caso concreto, con su artículo, ayuda más que leer un rango.
+        </p>
+        <Link
+          href="/herramientas/calculadora-multas"
+          className="mt-7 inline-flex min-h-11 items-center gap-2 rounded-[var(--radius-control)] bg-white px-5 font-medium text-[var(--color-marino)] transition-transform duration-200 hover:-translate-y-0.5"
+        >
+          Estimar la multa de un caso
+          <ArrowRight aria-hidden className="size-4" />
+        </Link>
+      </div>
+    </BandaParalaje>
+    </>
   );
 }

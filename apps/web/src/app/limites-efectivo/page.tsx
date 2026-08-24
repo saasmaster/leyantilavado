@@ -15,6 +15,7 @@ import {
   PreguntasFrecuentes,
   Seccion,
 } from '@/components/contenido';
+import diagEfectivo from '../../../public/img/diagramas/identificacion-vs-limite-efectivo.webp';
 import { jsonLdArticulo, jsonLdConjuntoDatos } from '@/components/contenido/JsonLd';
 import { REVISION_VIGENTE } from '@/content/autores';
 import {
@@ -112,6 +113,13 @@ export default function PaginaLimitesEfectivo() {
       />
 
       <IndiceContenidos entradas={INDICE} />
+
+      <ImagenEditorial
+        imagen={diagEfectivo}
+        alt="Árbol de decisión. De la pregunta «¿cobra o paga en efectivo?» salen dos ramas: identificar al cliente si el acto es actividad vulnerable, por el artículo 17; y respetar el límite de efectivo si el pago es en dinero, por el artículo 32. Ambas llevan a la misma conclusión: son obligaciones independientes y cumplir una no exime de la otra."
+        proporcion="diagrama"
+        pie="El artículo 17 y el artículo 32 corren en paralelo y se miden distinto: los umbrales del 17 son sin IVA y el límite del 32 con IVA incluido. Quedarse por debajo del límite de efectivo no exime de identificar, y haber identificado no autoriza a cobrar en efectivo por encima del límite."
+      />
 
       <Seccion id="que-prohibe" titulo="Qué prohíbe exactamente el art. 32">
         <ListaConVinetas items={PUNTOS_CLAVE_EFECTIVO} />

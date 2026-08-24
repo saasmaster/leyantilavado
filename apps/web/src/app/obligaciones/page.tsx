@@ -14,6 +14,8 @@ import {
   Migas,
   Seccion,
 } from '@/components/contenido';
+import { ImagenEditorial } from '@/components/contenido/ImagenEditorial';
+import diagIdentificacionAviso from '../../../public/img/diagramas/identificacion-vs-aviso.webp';
 import { jsonLdArticulo } from '@/components/contenido/JsonLd';
 import { REVISION_VIGENTE } from '@/content/autores';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
@@ -78,6 +80,13 @@ export default function PaginaObligaciones() {
       />
 
       <IndiceContenidos entradas={INDICE} />
+
+      <ImagenEditorial
+        imagen={diagIdentificacionAviso}
+        alt="Dos columnas comparadas. Identificar al cliente: desde el umbral más bajo, integrar expediente y conservar diez años. Presentar aviso: además de identificar, reportar la operación y hacerlo dentro de los plazos. Una flecha indica que el segundo exige el primero."
+        proporcion="diagrama"
+        pie="Identificar y avisar no son la misma obligación ni se activan al mismo monto. El umbral de identificación siempre es igual o menor que el de aviso, así que toda operación que obliga a avisar obliga también a identificar —nunca al revés—."
+      />
 
       <Seccion
         id="de-donde-salen"

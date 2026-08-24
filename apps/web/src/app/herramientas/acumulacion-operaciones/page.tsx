@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { construirMetadata } from '@/lib/sitio';
 import { MarcoHerramienta } from '@/components/herramientas/MarcoHerramienta';
 import { Acumulacion } from './Acumulacion';
+import diagAcumulacion from '../../../../public/img/diagramas/acumulacion-6-meses.webp';
 
 export const metadata: Metadata = construirMetadata({
   titulo: 'Acumulación de operaciones en seis meses',
@@ -14,6 +15,7 @@ export default function Pagina() {
   return (
     <MarcoHerramienta
       slug="acumulacion-operaciones"
+      imagen={{ proporcion: 'diagrama', src: diagAcumulacion, alt: 'Línea de tiempo de seis meses. En cada mes aparecen pesas que se van sumando, de una en el mes 1 a seis en el mes 6, y debajo una flecha marca el umbral de aviso que se alcanza con la suma y no con una sola operación.' }}
       titulo="Acumulación de seis meses"
       entradilla="La regla antifraccionamiento en la práctica: captura las operaciones de un mismo cliente y ve en cuál exactamente se cruzó el umbral de aviso."
       tambienVer={['calculadora-umbrales', 'importar-operaciones']}
