@@ -1,11 +1,11 @@
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
-import path from 'node:path';
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import path from "node:path";
 import type {
   NivelVerificacionProveedor,
   PerfilProveedor,
   SolicitudContacto,
-} from '@leyantilavado/types';
-import type { DocumentoGuardado } from './documentos';
+} from "@leyantilavado/types";
+import type { DocumentoGuardado } from "./documentos";
 
 /* ────────────────────────────────────────────────────────────────────────────
  * Adaptador de persistencia del directorio.
@@ -20,14 +20,47 @@ import type { DocumentoGuardado } from './documentos';
  *  · Sin consentimiento explícito no se guarda una solicitud de contacto.
  * ────────────────────────────────────────────────────────────────────────── */
 
-const DIRECTORIO_DATOS = path.join(process.cwd(), '.data');
+const DIRECTORIO_DATOS = path.join(process.cwd(), ".data");
 
-// ponytail: lectura+escritura de archivo completo, sin bloqueo. Suficiente para
-// el volumen de un formulario público en modo de prueba; con Supabase esto
-// desaparece. Si antes de eso el volumen creciera, el arreglo es una cola.
+/* ── Serialización de las escrituras ────────────────────────────────────────
+ *
+ * Todo aquí es leer el archivo entero, modificarlo en memoria y volver a
+ * escribirlo. Sin coordinación, dos peticiones simultáneas leen la MISMA lista
+ * inicial y la segunda escritura pisa a la primera: se pierde un alta, en
+ * silencio y sin error para quien la envió.
+ *
+ * No basta con serializar la escritura suelta. Hay tres secuencias de
+ * leer→decidir→escribir que deben ser atómicas **completas**:
+ *
+ *   · `guardarAlta` reserva un slug libre y sólo después escribe dos archivos.
+ *     Si otra alta se cuela en medio, ambas acaban con el mismo slug —y el
+ *     slug es la URL pública, así que una empresa vería la ficha de otra—.
+ *   · `moderarAlta` escribe altas y perfiles en dos pasos que deben cuadrar.
+ *   · Cualquier `agregar` sobre la misma lista.
+ *
+ * Por eso la cola se aplica en la frontera pública (`enFila`) y NO dentro de
+ * los ayudantes: si los ayudantes también encolaran, una operación pública que
+ * llama a dos de ellos esperaría a su propia tarea y se bloquearía para
+ * siempre. Los ayudantes de abajo son deliberadamente crudos; entrar por
+ * `enFila` es responsabilidad de cada método público que escribe.
+ *
+ * Es el mismo patrón que ya usa el boletín en `api/newsletter/route.ts`.
+ * Desaparece cuando esto viva en Supabase, donde la atomicidad la da la base.
+ * ────────────────────────────────────────────────────────────────────────── */
+
+let cola: Promise<unknown> = Promise.resolve();
+
+function enFila<T>(tarea: () => Promise<T>): Promise<T> {
+  const siguiente = cola.then(tarea);
+  // La cola guarda la versión neutralizada: un fallo en una operación no debe
+  // arrastrar a las siguientes, pero quien llamó sí recibe su propio error.
+  cola = siguiente.catch(() => undefined);
+  return siguiente;
+}
+
 async function leerLista<T>(archivo: string): Promise<T[]> {
   try {
-    const crudo = await readFile(path.join(DIRECTORIO_DATOS, archivo), 'utf8');
+    const crudo = await readFile(path.join(DIRECTORIO_DATOS, archivo), "utf8");
     const datos: unknown = JSON.parse(crudo);
     return Array.isArray(datos) ? (datos as T[]) : [];
   } catch {
@@ -35,11 +68,19 @@ async function leerLista<T>(archivo: string): Promise<T[]> {
   }
 }
 
-async function escribirLista<T>(archivo: string, lista: readonly T[]): Promise<void> {
+async function escribirLista<T>(
+  archivo: string,
+  lista: readonly T[],
+): Promise<void> {
   await mkdir(DIRECTORIO_DATOS, { recursive: true });
-  await writeFile(path.join(DIRECTORIO_DATOS, archivo), JSON.stringify(lista, null, 2), 'utf8');
+  await writeFile(
+    path.join(DIRECTORIO_DATOS, archivo),
+    JSON.stringify(lista, null, 2),
+    "utf8",
+  );
 }
 
+/** Añade sin encolar. Sólo debe llamarse desde dentro de un `enFila`. */
 async function agregar<T>(archivo: string, registro: T): Promise<void> {
   const lista = await leerLista<T>(archivo);
   lista.push(registro);
@@ -56,14 +97,16 @@ async function agregar<T>(archivo: string, registro: T): Promise<void> {
 async function slugLibre(nombre: string): Promise<string> {
   const base =
     nombre
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
       .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-+|-+$/g, '')
-      .slice(0, 60) || 'proveedor';
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 60) || "proveedor";
 
-  const existentes = new Set((await leerLista<PerfilProveedor>(ARCHIVO_PERFILES)).map((p) => p.slug));
+  const existentes = new Set(
+    (await leerLista<PerfilProveedor>(ARCHIVO_PERFILES)).map((p) => p.slug),
+  );
   if (!existentes.has(base)) return base;
 
   for (let n = 2; n < 1000; n++) {
@@ -77,7 +120,7 @@ async function slugLibre(nombre: string): Promise<string> {
 function folio(prefijo: string, semilla: string): string {
   let h = 0;
   for (const c of semilla) h = (h * 31 + c.charCodeAt(0)) >>> 0;
-  return `${prefijo}-${h.toString(36).toUpperCase().padStart(7, '0').slice(0, 7)}`;
+  return `${prefijo}-${h.toString(36).toUpperCase().padStart(7, "0").slice(0, 7)}`;
 }
 
 /* ── Moderación de las altas ─────────────────────────────────────────────── */
@@ -89,18 +132,16 @@ function folio(prefijo: string, semilla: string): string {
  * `supabase/migrations/0006_directorio.sql`: cuando esto se mueva a Postgres
  * será un cambio de almacén, no un rediseño del vocabulario.
  */
-export type DecisionModeracion = 'aprobada' | 'rechazada' | 'correccion_solicitada';
+export type DecisionModeracion =
+  "aprobada" | "rechazada" | "correccion_solicitada";
 
 export type EstadoModeracionAlta =
-  | 'pendiente'
-  | 'revisado'
-  | 'rechazado'
-  | 'correccion_solicitada';
+  "pendiente" | "revisado" | "rechazado" | "correccion_solicitada";
 
 const ESTADO_TRAS_DECISION: Record<DecisionModeracion, EstadoModeracionAlta> = {
-  aprobada: 'revisado',
-  rechazada: 'rechazado',
-  correccion_solicitada: 'correccion_solicitada',
+  aprobada: "revisado",
+  rechazada: "rechazado",
+  correccion_solicitada: "correccion_solicitada",
 };
 
 /**
@@ -189,17 +230,17 @@ export interface ReclamoPerfil {
   cargo: string;
   pruebaRelacion: string;
   consentimiento: boolean;
-  estadoModeracion: 'pendiente';
+  estadoModeracion: "pendiente";
   creadoEn: string;
 }
 
 export type MotivoReporte =
-  | 'informacion_incorrecta'
-  | 'no_es_el_titular'
-  | 'credencial_falsa'
-  | 'practica_enganosa'
-  | 'perfil_duplicado'
-  | 'otro';
+  | "informacion_incorrecta"
+  | "no_es_el_titular"
+  | "credencial_falsa"
+  | "practica_enganosa"
+  | "perfil_duplicado"
+  | "otro";
 
 export interface ReportePerfil {
   id: string;
@@ -209,7 +250,7 @@ export interface ReportePerfil {
   detalle: string;
   /** Opcional: se puede reportar de forma anónima. */
   correo?: string;
-  estadoModeracion: 'pendiente';
+  estadoModeracion: "pendiente";
   creadoEn: string;
 }
 
@@ -217,13 +258,25 @@ export interface RepositorioDirectorio {
   listarPerfiles(): Promise<PerfilProveedor[]>;
   perfilPorSlug(slug: string): Promise<PerfilProveedor | null>;
   guardarSolicitudContacto(solicitud: SolicitudContacto): Promise<string>;
-  guardarAlta(alta: Omit<AltaProveedor, 'id' | 'folio' | 'publicado' | 'estadoModeracion'>): Promise<string>;
-  guardarReclamo(reclamo: Omit<ReclamoPerfil, 'id' | 'folio' | 'estadoModeracion'>): Promise<string>;
-  guardarReporte(reporte: Omit<ReportePerfil, 'id' | 'folio' | 'estadoModeracion'>): Promise<string>;
+  guardarAlta(
+    alta: Omit<
+      AltaProveedor,
+      "id" | "folio" | "publicado" | "estadoModeracion"
+    >,
+  ): Promise<string>;
+  guardarReclamo(
+    reclamo: Omit<ReclamoPerfil, "id" | "folio" | "estadoModeracion">,
+  ): Promise<string>;
+  guardarReporte(
+    reporte: Omit<ReportePerfil, "id" | "folio" | "estadoModeracion">,
+  ): Promise<string>;
   /** Todas las altas, tal cual están en disco. Sólo para moderación. */
   listarAltas(): Promise<AltaProveedor[]>;
   /** `null` si no existe un alta con ese id. */
-  moderarAlta(id: string, decision: DecisionAlta): Promise<AltaProveedor | null>;
+  moderarAlta(
+    id: string,
+    decision: DecisionAlta,
+  ): Promise<AltaProveedor | null>;
 }
 
 /**
@@ -243,22 +296,22 @@ export function aplicarDecision(
   decision: DecisionAlta,
   ahora: string,
 ): { alta: AltaProveedor; perfil: PerfilProveedor | null } {
-  const motivo = decision.motivo?.trim() ?? '';
+  const motivo = decision.motivo?.trim() ?? "";
 
   // Frontera dura: rechazar o pedir corrección sin decir por qué deja a quien
   // se dio de alta con un perfil bloqueado y nada que arreglar.
-  if (decision.decision !== 'aprobada' && !motivo) {
-    throw new Error('Un rechazo o una petición de corrección exige motivo.');
+  if (decision.decision !== "aprobada" && !motivo) {
+    throw new Error("Un rechazo o una petición de corrección exige motivo.");
   }
 
-  const nivel = decision.nivelVerificacion ?? 'sin_verificar';
+  const nivel = decision.nivelVerificacion ?? "sin_verificar";
 
   const entrada: EntradaBitacora = {
     decision: decision.decision,
     actorId: decision.actorId,
     actor: decision.actor,
     ...(motivo ? { motivo } : {}),
-    ...(decision.decision === 'aprobada' ? { nivelVerificacion: nivel } : {}),
+    ...(decision.decision === "aprobada" ? { nivelVerificacion: nivel } : {}),
     registradoEn: ahora,
   };
 
@@ -272,7 +325,7 @@ export function aplicarDecision(
 
   // Pedir corrección no toca el perfil: ya está publicado como «sin verificar»,
   // que es exactamente lo que sigue siendo cierto mientras se corrige.
-  if (decision.decision === 'correccion_solicitada') {
+  if (decision.decision === "correccion_solicitada") {
     return { alta: altaNueva, perfil };
   }
 
@@ -280,7 +333,7 @@ export function aplicarDecision(
     alta: altaNueva,
     perfil: {
       ...perfil,
-      ...(decision.decision === 'aprobada'
+      ...(decision.decision === "aprobada"
         ? { verificacion: nivel, publicado: true }
         : // Rechazar marca estado. El registro se queda: nada se borra nunca.
           { publicado: false }),
@@ -289,11 +342,11 @@ export function aplicarDecision(
   };
 }
 
-const ARCHIVO_PERFILES = 'directorio-perfiles.json';
-const ARCHIVO_SOLICITUDES = 'directorio-solicitudes.json';
-const ARCHIVO_ALTAS = 'directorio-altas.json';
-const ARCHIVO_RECLAMOS = 'directorio-reclamos.json';
-const ARCHIVO_REPORTES = 'directorio-reportes.json';
+const ARCHIVO_PERFILES = "directorio-perfiles.json";
+const ARCHIVO_SOLICITUDES = "directorio-solicitudes.json";
+const ARCHIVO_ALTAS = "directorio-altas.json";
+const ARCHIVO_RECLAMOS = "directorio-reclamos.json";
+const ARCHIVO_REPORTES = "directorio-reportes.json";
 
 export const repositorioDirectorio: RepositorioDirectorio = {
   async listarPerfiles() {
@@ -313,68 +366,78 @@ export const repositorioDirectorio: RepositorioDirectorio = {
   async guardarSolicitudContacto(solicitud) {
     if (!solicitud.consentimiento) {
       // Frontera dura: sin consentimiento no hay dato que compartir.
-      throw new Error('No se puede registrar una solicitud sin consentimiento explícito.');
+      throw new Error(
+        "No se puede registrar una solicitud sin consentimiento explícito.",
+      );
     }
-    await agregar(ARCHIVO_SOLICITUDES, solicitud);
-    return folio('SOL', solicitud.id);
+    await enFila(() => agregar(ARCHIVO_SOLICITUDES, solicitud));
+    return folio("SOL", solicitud.id);
   },
 
   async guardarAlta(alta) {
-    const id = crypto.randomUUID();
-    const numeroFolio = folio('ALT', id);
-    const slug = await slugLibre(alta.nombre);
+    // Una sola tarea encolada: reservar el slug y escribir los dos archivos
+    // tienen que ser indivisibles (ver la nota de la cola, arriba).
+    return enFila(async () => {
+      const id = crypto.randomUUID();
+      const numeroFolio = folio("ALT", id);
+      const slug = await slugLibre(alta.nombre);
 
-    const registro: AltaProveedor = {
-      ...alta,
-      id,
-      folio: numeroFolio,
-      publicado: true,
-      estadoModeracion: 'pendiente',
-      perfilSlug: slug,
-    };
-    await agregar(ARCHIVO_ALTAS, registro);
+      const registro: AltaProveedor = {
+        ...alta,
+        id,
+        folio: numeroFolio,
+        publicado: true,
+        estadoModeracion: "pendiente",
+        perfilSlug: slug,
+      };
+      await agregar(ARCHIVO_ALTAS, registro);
 
-    // El perfil público que nace del alta. `sin_verificar` es el único nivel
-    // que puede asignarse solo: los demás exigen que una persona haya mirado
-    // un documento, y eso todavía no ha ocurrido.
-    const ahora = new Date().toISOString();
-    const perfil: PerfilProveedor = {
-      id,
-      slug,
-      nombre: alta.nombre,
-      categorias: alta.categorias as PerfilProveedor['categorias'],
-      actividadesAtendidas: alta.actividadesAtendidas as PerfilProveedor['actividadesAtendidas'],
-      biografia: alta.biografia,
-      servicios: alta.servicios,
-      industrias: [],
-      ubicaciones: [
-        {
-          estado: alta.estado,
-          ...(alta.ciudad ? { ciudad: alta.ciudad } : {}),
-          coberturaNacional: alta.coberturaNacional,
-          atencionRemota: alta.atencionRemota,
-          atencionPresencial: alta.atencionPresencial,
-        },
-      ],
-      idiomas: alta.idiomas,
-      ...(alta.aniosExperiencia !== undefined ? { aniosExperiencia: alta.aniosExperiencia } : {}),
-      tamanosCliente: alta.tamanosCliente as PerfilProveedor['tamanosCliente'],
-      ...(alta.sitioWeb ? { sitioWeb: alta.sitioWeb } : {}),
-      // Las credenciales llegan como texto libre y NO se publican como
-      // credenciales: publicarlas sería convertir en afirmación verificada lo
-      // que sólo es lo que alguien escribió de sí mismo.
-      credenciales: [],
-      verificacion: 'sin_verificar',
-      plan: 'gratuito',
-      patrocinado: false,
-      aceptaNuevosClientes: true,
-      publicado: true,
-      creadoEn: ahora,
-      actualizadoEn: ahora,
-    };
-    await agregar(ARCHIVO_PERFILES, perfil);
+      // El perfil público que nace del alta. `sin_verificar` es el único nivel
+      // que puede asignarse solo: los demás exigen que una persona haya mirado
+      // un documento, y eso todavía no ha ocurrido.
+      const ahora = new Date().toISOString();
+      const perfil: PerfilProveedor = {
+        id,
+        slug,
+        nombre: alta.nombre,
+        categorias: alta.categorias as PerfilProveedor["categorias"],
+        actividadesAtendidas:
+          alta.actividadesAtendidas as PerfilProveedor["actividadesAtendidas"],
+        biografia: alta.biografia,
+        servicios: alta.servicios,
+        industrias: [],
+        ubicaciones: [
+          {
+            estado: alta.estado,
+            ...(alta.ciudad ? { ciudad: alta.ciudad } : {}),
+            coberturaNacional: alta.coberturaNacional,
+            atencionRemota: alta.atencionRemota,
+            atencionPresencial: alta.atencionPresencial,
+          },
+        ],
+        idiomas: alta.idiomas,
+        ...(alta.aniosExperiencia !== undefined
+          ? { aniosExperiencia: alta.aniosExperiencia }
+          : {}),
+        tamanosCliente:
+          alta.tamanosCliente as PerfilProveedor["tamanosCliente"],
+        ...(alta.sitioWeb ? { sitioWeb: alta.sitioWeb } : {}),
+        // Las credenciales llegan como texto libre y NO se publican como
+        // credenciales: publicarlas sería convertir en afirmación verificada lo
+        // que sólo es lo que alguien escribió de sí mismo.
+        credenciales: [],
+        verificacion: "sin_verificar",
+        plan: "gratuito",
+        patrocinado: false,
+        aceptaNuevosClientes: true,
+        publicado: true,
+        creadoEn: ahora,
+        actualizadoEn: ahora,
+      };
+      await agregar(ARCHIVO_PERFILES, perfil);
 
-    return numeroFolio;
+      return numeroFolio;
+    });
   },
 
   async listarAltas() {
@@ -382,30 +445,34 @@ export const repositorioDirectorio: RepositorioDirectorio = {
   },
 
   async moderarAlta(id, decision) {
-    const altas = await leerLista<AltaProveedor>(ARCHIVO_ALTAS);
-    const indice = altas.findIndex((a) => a.id === id);
-    if (indice === -1) return null;
+    return enFila(async () => {
+      const altas = await leerLista<AltaProveedor>(ARCHIVO_ALTAS);
+      const indice = altas.findIndex((a) => a.id === id);
+      if (indice === -1) return null;
 
-    const perfiles = await leerLista<PerfilProveedor>(ARCHIVO_PERFILES);
-    // El perfil que nació del alta comparte su id (ver `guardarAlta`).
-    const indicePerfil = perfiles.findIndex((p) => p.id === id);
+      const perfiles = await leerLista<PerfilProveedor>(ARCHIVO_PERFILES);
+      // El perfil que nació del alta comparte su id (ver `guardarAlta`).
+      const indicePerfil = perfiles.findIndex((p) => p.id === id);
 
-    const resultado = aplicarDecision(
-      altas[indice] as AltaProveedor,
-      indicePerfil === -1 ? null : (perfiles[indicePerfil] as PerfilProveedor),
-      decision,
-      new Date().toISOString(),
-    );
+      const resultado = aplicarDecision(
+        altas[indice] as AltaProveedor,
+        indicePerfil === -1
+          ? null
+          : (perfiles[indicePerfil] as PerfilProveedor),
+        decision,
+        new Date().toISOString(),
+      );
 
-    altas[indice] = resultado.alta;
-    await escribirLista(ARCHIVO_ALTAS, altas);
+      altas[indice] = resultado.alta;
+      await escribirLista(ARCHIVO_ALTAS, altas);
 
-    if (indicePerfil !== -1 && resultado.perfil) {
-      perfiles[indicePerfil] = resultado.perfil;
-      await escribirLista(ARCHIVO_PERFILES, perfiles);
-    }
+      if (indicePerfil !== -1 && resultado.perfil) {
+        perfiles[indicePerfil] = resultado.perfil;
+        await escribirLista(ARCHIVO_PERFILES, perfiles);
+      }
 
-    return resultado.alta;
+      return resultado.alta;
+    });
   },
 
   async guardarReclamo(reclamo) {
@@ -413,10 +480,10 @@ export const repositorioDirectorio: RepositorioDirectorio = {
     const registro: ReclamoPerfil = {
       ...reclamo,
       id,
-      folio: folio('REC', id),
-      estadoModeracion: 'pendiente',
+      folio: folio("REC", id),
+      estadoModeracion: "pendiente",
     };
-    await agregar(ARCHIVO_RECLAMOS, registro);
+    await enFila(() => agregar(ARCHIVO_RECLAMOS, registro));
     return registro.folio;
   },
 
@@ -425,19 +492,21 @@ export const repositorioDirectorio: RepositorioDirectorio = {
     const registro: ReportePerfil = {
       ...reporte,
       id,
-      folio: folio('REP', id),
-      estadoModeracion: 'pendiente',
+      folio: folio("REP", id),
+      estadoModeracion: "pendiente",
     };
-    await agregar(ARCHIVO_REPORTES, registro);
+    await enFila(() => agregar(ARCHIVO_REPORTES, registro));
     return registro.folio;
   },
 };
 
 export const ETIQUETA_MOTIVO_REPORTE: Record<MotivoReporte, string> = {
-  informacion_incorrecta: 'La información del perfil es incorrecta o está desactualizada',
-  no_es_el_titular: 'Quien controla el perfil no es la persona o empresa que dice ser',
-  credencial_falsa: 'Una credencial o certificación mostrada parece falsa',
-  practica_enganosa: 'Ofrece resultados que la ley no permite garantizar',
-  perfil_duplicado: 'Es un perfil duplicado',
-  otro: 'Otro motivo',
+  informacion_incorrecta:
+    "La información del perfil es incorrecta o está desactualizada",
+  no_es_el_titular:
+    "Quien controla el perfil no es la persona o empresa que dice ser",
+  credencial_falsa: "Una credencial o certificación mostrada parece falsa",
+  practica_enganosa: "Ofrece resultados que la ley no permite garantizar",
+  perfil_duplicado: "Es un perfil duplicado",
+  otro: "Otro motivo",
 };
