@@ -23,6 +23,7 @@ import { jsonLdArticulo } from '@/components/contenido/JsonLd';
 import { REVISION_VIGENTE } from '@/content/autores';
 import { CONTENIDO_ACTIVIDADES } from '@/content/actividades';
 import { construirMetadata, jsonLdFAQ, jsonLdMigaDePan } from '@/lib/sitio';
+import { OFICIOS_POR_ACTIVIDAD } from '@/content/oficios';
 
 const BASE = '/actividades-vulnerables';
 
@@ -408,6 +409,15 @@ export default async function PaginaActividad({
             titulo: 'Contenido relacionado',
             enlaces: [
               { href: BASE, etiqueta: 'Todas las actividades vulnerables' },
+              /* Enlace recíproco a la puerta coloquial. Esta ficha es la
+                 referencia jurídica y ya rankea por el término legal; sin este
+                 enlace, quien llega buscando «art. 17 fracción XII» nunca se
+                 entera de que existe una entrada escrita en el idioma de su
+                 gremio. Sólo se ofrecen los oficios de alcance `nucleo`. */
+              ...(OFICIOS_POR_ACTIVIDAD[actividad.slug] ?? []).map((o) => ({
+                href: `/para/${o.slug}`,
+                etiqueta: `Guía para ${o.nombreCorto.toLowerCase()}`,
+              })),
               { href: '/umbrales', etiqueta: 'Tabla completa de umbrales' },
               { href: '/multas', etiqueta: 'Qué pasa si no cumples' },
               { href: '/glosario', etiqueta: 'Glosario de términos' },

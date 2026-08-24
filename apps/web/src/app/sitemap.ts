@@ -4,6 +4,8 @@ import { CATEGORIAS_PROVEEDOR } from '@leyantilavado/types';
 import { REVISION_VIGENTE } from '@/content/autores';
 import { SITIO } from '@/lib/sitio';
 import { CASOS_PRACTICOS } from '@/content/casos-practicos';
+import { OFICIOS } from '@/content/oficios';
+import { TRAMITES } from '@/content/tramites';
 
 /**
  * Sitemap generado desde el motor de reglas, no escrito a mano.
@@ -84,7 +86,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entrada('/obligaciones', 0.9, 'monthly', revObligaciones),
     entrada('/limites-efectivo', 0.85, 'monthly', revEfectivo),
     entrada('/multas', 0.85, 'monthly', revSanciones),
+    entrada('/requerimiento-sat', 0.9, 'monthly', revSanciones),
     entrada('/calendario-cumplimiento', 0.9, 'weekly', revCalendario),
+    entrada('/exigibilidad', 0.9, 'weekly', revCalendario),
+    entrada('/guia-aviso', 0.9, 'monthly', revObligaciones),
     entrada('/reforma-ley-antilavado-2026', 0.95, 'weekly'),
     entrada('/acuerdo-115-2026', 0.9, 'weekly'),
     entrada('/actualizaciones', 0.8, 'weekly'),
@@ -151,6 +156,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...CASOS_PRACTICOS.map((c) => entrada(`/casos-practicos/${c.slug}`, 0.7, 'monthly')),
   ];
 
+  // Puertas de entrada por oficio. Son estáticas con `dynamicParams = false`,
+  // así que el sitemap sale de la misma lista que `generateStaticParams`.
+  // Hub de trámites del SPPLD: estático con `dynamicParams = false`.
+  const tramites = [
+    entrada('/tramites', 0.9, 'monthly'),
+    ...TRAMITES.map((t) => entrada(`/tramites/${t.slug}`, 0.85, 'monthly')),
+  ];
+
+  const porOficio = [
+    entrada('/para', 0.85, 'monthly'),
+    ...OFICIOS.map((o) => entrada(`/para/${o.slug}`, 0.8, 'monthly')),
+  ];
+
   const categoriasDirectorio = CATEGORIAS_PROVEEDOR.map((c) =>
     entrada(`/directorio/${c}`, 0.7, 'weekly'),
   );
@@ -178,6 +196,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...obligaciones,
     ...queCambio,
     ...casosPracticos,
+    ...porOficio,
+    ...tramites,
     ...categoriasDirectorio,
     ...legales,
   ];

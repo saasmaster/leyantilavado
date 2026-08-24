@@ -3,6 +3,8 @@ import { datos } from '@leyantilavado/rules-engine';
 import { LARGO_DESCRIPCION, LARGO_TITULO, construirMetadata } from './sitio';
 import { CONTENIDO_ACTIVIDADES } from '../content/actividades';
 import { CONTENIDO_OBLIGACIONES } from '../content/obligaciones';
+import { OFICIOS } from '../content/oficios';
+import { TRAMITES } from '../content/tramites';
 
 /* ────────────────────────────────────────────────────────────────────────────
  * El largo de los textos de buscador se verifica, no se recorta.
@@ -28,11 +30,29 @@ const textos: readonly { fuente: string; titulo: string; descripcion: string }[]
     titulo: c.tituloSEO,
     descripcion: c.descripcionSEO,
   })),
+  // Las puertas por oficio entran aquí por la misma razón que las demás: son
+  // páginas indexables con título y descripción propios, y sin esta cobertura
+  // un texto largo se recortaría en el buscador sin que nada avisara.
+  ...OFICIOS.map((o) => ({
+    fuente: `oficio ${o.slug}`,
+    titulo: o.tituloSEO,
+    descripcion: o.descripcionSEO,
+  })),
+  ...TRAMITES.map((t) => ({
+    fuente: `trámite ${t.slug}`,
+    titulo: t.tituloSEO,
+    descripcion: t.descripcionSEO,
+  })),
 ];
 
 describe('textos de buscador', () => {
   it('hay textos que verificar (el catálogo no está vacío)', () => {
-    expect(textos.length).toBe(datos.ACTIVIDADES.length + datos.OBLIGACIONES.length);
+    // La suma no es decorativa: si un catálogo dejara de exportar, el arreglo
+    // quedaría corto y las pruebas de largo pasarían sobre un conjunto vacío
+    // sin que nada avisara. Al añadir una fuente hay que sumarla aquí.
+    expect(textos.length).toBe(
+      datos.ACTIVIDADES.length + datos.OBLIGACIONES.length + OFICIOS.length + TRAMITES.length,
+    );
   });
 
   it.each(textos)('$fuente: el título cabe en el resultado', ({ titulo }) => {

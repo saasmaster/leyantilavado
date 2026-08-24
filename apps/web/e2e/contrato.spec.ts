@@ -23,6 +23,15 @@ const RUTAS_PUBLICAS = [
   '/actualizaciones',
   // Secciones nuevas: una página índice y una hija de cada ruta dinámica, que
   // es donde aparecen los fallos de `generateStaticParams` y de metadatos.
+  '/tramites',
+  '/tramites/alta-y-registro',
+  '/tramites/baja-del-padron',
+  '/guia-aviso',
+  '/exigibilidad',
+  '/requerimiento-sat',
+  '/para',
+  '/para/notarias',
+  '/para/casas-de-empeno',
   '/casos-practicos',
   '/casos-practicos/notaria-compraventa-inmueble-pago-mixto',
   '/que-cambio',

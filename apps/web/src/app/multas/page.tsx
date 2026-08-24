@@ -123,6 +123,21 @@ export default function PaginaMultas() {
           </div>
         </div>
 
+        {/* Esta página enumera lo que puede costar una infracción y ahí se
+            detenía. Quien llega aquí suele tener un papel del SAT en la mano y
+            necesita saber qué hacer, no sólo cuánto duele: sin esta salida, la
+            página asusta y deja al lector sin siguiente paso. */}
+        <Nota tono="info" className="mt-5" titulo="¿Ya te llegó algo del SAT?">
+          <p>
+            Si tienes un requerimiento, una carta o una visita en curso, los plazos corren y el
+            orden en que actúes cambia el resultado.{' '}
+            <Link href="/requerimiento-sat" className="underline underline-offset-4">
+              Qué hacer cuando te llega un requerimiento
+            </Link>{' '}
+            reúne los plazos con su artículo y explica la autocorrección del art. 55.
+          </p>
+        </Nota>
+
         <Nota tono="atencion" className="mt-5" titulo="Por qué importa la distinción">
           <p>
             Cuando alguien dice &ldquo;la fracción III son de tanto a tanto&rdquo;, la pregunta

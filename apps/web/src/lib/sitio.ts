@@ -36,12 +36,17 @@ export const NAVEGACION: { titulo: string; enlaces: EnlaceNav[] }[] = [
   {
     titulo: 'Entender la ley',
     enlaces: [
+      { href: '/para', etiqueta: 'Busca tu giro', descripcion: 'Notaría, inmobiliaria, joyería, casa de empeño…' },
       { href: '/actividades-vulnerables', etiqueta: 'Actividades vulnerables', descripcion: 'Las 16 fracciones del art. 17 y a quién alcanzan' },
       { href: '/umbrales', etiqueta: 'Umbrales', descripcion: 'Tabla completa de identificación y aviso' },
       { href: '/obligaciones', etiqueta: 'Obligaciones', descripcion: 'Qué tienes que hacer y con qué evidencia' },
       { href: '/limites-efectivo', etiqueta: 'Límites de efectivo', descripcion: 'Las prohibiciones del art. 32' },
       { href: '/multas', etiqueta: 'Multas y sanciones', descripcion: 'Rangos del art. 54 y autocorrección' },
+      { href: '/requerimiento-sat', etiqueta: 'Me llegó un requerimiento', descripcion: 'Los plazos reales y cómo regularizar' },
       { href: '/glosario', etiqueta: 'Glosario', descripcion: 'PLD, EBR, PEP, beneficiario controlador' },
+      { href: '/exigibilidad', etiqueta: '¿Ya me es exigible?', descripcion: 'Qué corre hoy y qué llega en 2027 y 2028' },
+      { href: '/tramites', etiqueta: 'Trámites del portal', descripcion: 'Alta, baja, modificación y representante' },
+      { href: '/guia-aviso', etiqueta: 'Cómo presentar un aviso', descripcion: 'De la plantilla al acuse, paso a paso' },
       { href: '/casos-practicos', etiqueta: 'Casos prácticos', descripcion: 'Operaciones reales resueltas paso a paso' },
       { href: '/que-cambio', etiqueta: 'Qué cambió para ti', descripcion: 'La reforma y el Acuerdo 115/2026, por actividad' },
       { href: '/preguntas-frecuentes', etiqueta: 'Preguntas frecuentes', descripcion: 'Las dudas que más se repiten, con su artículo' },
