@@ -37,7 +37,7 @@ export const NAVEGACION: { titulo: string; enlaces: EnlaceNav[] }[] = [
     titulo: 'Entender la ley',
     enlaces: [
       { href: '/para', etiqueta: 'Busca tu giro', descripcion: 'Notaría, inmobiliaria, joyería, casa de empeño…' },
-      { href: '/actividades-vulnerables', etiqueta: 'Actividades vulnerables', descripcion: 'Las 16 fracciones del art. 17 y a quién alcanzan' },
+      { href: '/actividades-vulnerables', etiqueta: 'Actividades vulnerables', descripcion: 'Las 17 fracciones del art. 17 y a quién alcanzan' },
       { href: '/umbrales', etiqueta: 'Umbrales', descripcion: 'Tabla completa de identificación y aviso' },
       { href: '/obligaciones', etiqueta: 'Obligaciones', descripcion: 'Qué tienes que hacer y con qué evidencia' },
       { href: '/limites-efectivo', etiqueta: 'Límites de efectivo', descripcion: 'Las prohibiciones del art. 32' },

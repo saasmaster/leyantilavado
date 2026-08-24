@@ -134,7 +134,7 @@ export const CATEGORIAS_FAQ: CategoriaFAQ[] = [
           href: '/herramientas/limites-efectivo',
           etiqueta: 'Verificar el límite de efectivo',
         },
-        verMas: { href: '/actividades-vulnerables', etiqueta: 'Ver las 16 fracciones' },
+        verMas: { href: '/actividades-vulnerables', etiqueta: 'Ver las 17 fracciones' },
       },
       {
         id: 'nunca-rebaso-umbral',

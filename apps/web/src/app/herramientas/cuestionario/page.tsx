@@ -20,7 +20,7 @@ export default function Pagina() {
       entradilla="Un diagnóstico que ramifica según lo que contestas y termina con números concretos, no con un “consulta a un especialista”. Se resuelve completo en tu navegador."
       tambienVer={['calculadora-umbrales', 'plan-cumplimiento']}
       lecturas={[
-        { href: '/actividades-vulnerables', etiqueta: 'Las 16 fracciones del artículo 17' },
+        { href: '/actividades-vulnerables', etiqueta: 'Las 17 fracciones del artículo 17' },
         { href: '/obligaciones', etiqueta: 'Todas las obligaciones, con su evidencia' },
         { href: '/calendario-cumplimiento', etiqueta: 'Calendario 2026-2029' },
       ]}

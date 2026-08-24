@@ -108,6 +108,9 @@ interface Def {
   revisar?: string;
 }
 
+const NOTA_APARTADO_D =
+  'El Apartado D remite a los supuestos del Apartado A «en los términos que se señalan», así que el umbral es el mismo que para notarios. La tabla de umbrales del SAT todavía no desglosa este apartado.';
+
 const DEFINICIONES: Def[] = [
   // ── I. Juegos con apuesta, concursos y sorteos ──────────────────────────
   {
@@ -330,24 +333,79 @@ const DEFINICIONES: Def[] = [
     nota: 'Aplica cuando el acreedor no forma parte del sistema financiero.',
   },
 
-  // ── XII Apartados C y D. Sin umbral publicado ───────────────────────────
+  // ── XII Apartado C. Servidores públicos con fe pública ──────────────────
+  //
+  // Contrastado contra el texto vigente (DOF 16-07-2025): el apartado enuncia
+  // al sujeto obligado y remite al art. 3, fr. VII, pero **no fija monto**. No
+  // es que falte revisarlo: la ley guarda silencio, así que no hay cifra que
+  // publicar sin inventarla.
   {
     actividad: 'fe-publica-servidores-publicos',
-    identificacion: { tipo: 'requiere_revision', nota: 'Sin umbral publicado por la autoridad.' },
-    aviso: { tipo: 'requiere_revision', nota: 'Sin umbral publicado por la autoridad.' },
+    identificacion: {
+      tipo: 'requiere_revision',
+      nota: 'El artículo 17 no fija umbral para este apartado: enuncia al sujeto obligado y remite al artículo 3, fracción VII.',
+    },
+    aviso: {
+      tipo: 'requiere_revision',
+      nota: 'El artículo 17 no fija umbral para este apartado: enuncia al sujeto obligado y remite al artículo 3, fracción VII.',
+    },
     acumulacion: SIN_ACUM,
     disposicion: 'Art. 17, fracción XII, Apartado C',
     revisar:
-      'La ley enuncia el apartado sin fijar umbrales y la tabla oficial de umbrales del SAT no lo incluye. No debe publicarse una cifra sin confirmación de la autoridad.',
+      'Contrastado contra el texto vigente (DOF 16-07-2025): el apartado no establece monto. Tampoco aparece en la tabla de umbrales del SAT. Consulta el marco que rige tus atribuciones de fe pública.',
+  },
+
+  // ── XII Apartado D. Personas facilitadoras (adicionado DOF 16-07-2025) ──
+  //
+  // Literal: respecto de las personas facilitadoras aplican «las previstas en
+  // el apartado A de esta fracción, en los términos que se señalan». Es una
+  // remisión expresa, así que los umbrales son los del Apartado A.
+  // MISMO CONTENIDO que la app Flutter: si cambia uno, cambia el otro.
+  {
+    actividad: 'personas-facilitadoras',
+    subtipo: 'inmuebles',
+    identificacion: siempre(),
+    aviso: uma(
+      8000,
+      'La base es el valor más alto entre el precio pactado, el valor catastral, el valor comercial y el monto garantizado por suerte principal.',
+    ),
+    disposicion: 'Art. 17, fracción XII, Apartado D (remite al Apartado A, inciso a)',
+    nota: NOTA_APARTADO_D,
   },
   {
     actividad: 'personas-facilitadoras',
-    identificacion: { tipo: 'requiere_revision', nota: 'Sin umbral publicado por la autoridad.' },
-    aviso: { tipo: 'requiere_revision', nota: 'Sin umbral publicado por la autoridad.' },
+    subtipo: 'poderes-irrevocables',
+    identificacion: siempre(),
+    aviso: siempre(),
     acumulacion: SIN_ACUM,
-    disposicion: 'Art. 17, fracción XII, Apartado D (adicionado DOF 16-07-2025)',
-    revisar:
-      'Apartado nuevo que remite a los supuestos del Apartado A "en los términos que se señalan". No aparece en la tabla del SAT. Requiere revisión editorial antes de publicar umbrales.',
+    disposicion: 'Art. 17, fracción XII, Apartado D (remite al Apartado A, inciso b)',
+    nota: NOTA_APARTADO_D,
+  },
+  {
+    actividad: 'personas-facilitadoras',
+    subtipo: 'constitucion-personas-morales',
+    identificacion: siempre(),
+    aviso: siempre(),
+    acumulacion: SIN_ACUM,
+    disposicion: 'Art. 17, fracción XII, Apartado D (remite al Apartado A, inciso c)',
+    nota: NOTA_APARTADO_D,
+  },
+  {
+    actividad: 'personas-facilitadoras',
+    subtipo: 'fideicomisos',
+    identificacion: siempre(),
+    aviso: uma(4000),
+    disposicion: 'Art. 17, fracción XII, Apartado D (remite al Apartado A, inciso d)',
+    nota: NOTA_APARTADO_D,
+  },
+  {
+    actividad: 'personas-facilitadoras',
+    subtipo: 'mutuo-credito',
+    identificacion: siempre(),
+    aviso: siempre(),
+    acumulacion: SIN_ACUM,
+    disposicion: 'Art. 17, fracción XII, Apartado D (remite al Apartado A, inciso e)',
+    nota: NOTA_APARTADO_D,
   },
 
   // ── XIII. Donativos ─────────────────────────────────────────────────────

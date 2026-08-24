@@ -1,5 +1,18 @@
+import { datos } from '@leyantilavado/rules-engine';
 import type { ActividadSlug } from '@leyantilavado/types';
 import type { PreguntaFrecuente } from './tipos';
+
+/*
+ * El año que llevan los títulos, tomado del corpus y no escrito a mano.
+ *
+ * Buscar «ley antilavado 2026» es intención de actualidad, y un título con año
+ * la capta. Pero un año escrito a mano envejece: el 1 de febrero de 2027 las 17
+ * páginas seguirían anunciando 2026, y un año viejo en un título es peor señal
+ * que no llevarlo. Sale del valor de UMA más reciente registrado —que es
+ * justamente el año al que aplican las cifras de estas páginas— así que avanza
+ * solo cuando el INEGI publica el siguiente.
+ */
+const ANIO_VIGENTE = datos.UMA_VIGENTE_MAS_RECIENTE.anio;
 
 /* ────────────────────────────────────────────────────────────────────────────
  * Oficios: la puerta con el nombre que la gente escribe.
@@ -91,7 +104,7 @@ export const OFICIOS: readonly Oficio[] = [
     titulo: 'Ley Antilavado para notarías',
     nombreCorto: 'Notarías',
     tambienBuscado: ['notario público', 'notaría pública', 'escribano', 'fedatario público'],
-    tituloSEO: 'Ley Antilavado para notarías: los cinco supuestos',
+    tituloSEO: `Ley Antilavado para notarías ${ANIO_VIGENTE}: los cinco supuestos`,
     descripcionSEO:
       'Qué actos del protocolo caen en el Apartado A, cuáles generan aviso sin importar el monto y con qué valor se mide cada uno.',
     resumen:
@@ -148,7 +161,7 @@ export const OFICIOS: readonly Oficio[] = [
     titulo: 'Ley Antilavado para corredores públicos',
     nombreCorto: 'Corredores públicos',
     tambienBuscado: ['correduría pública', 'corredor público titulado', 'fedatario mercantil'],
-    tituloSEO: 'Ley Antilavado para corredores públicos',
+    tituloSEO: `Ley Antilavado para corredores públicos ${ANIO_VIGENTE}`,
     descripcionSEO:
       'Qué actos de la correduría son actividad vulnerable, cuáles avisan sin importar el monto y cuál es el único con umbral en UMA.',
     resumen:
@@ -202,7 +215,7 @@ export const OFICIOS: readonly Oficio[] = [
     titulo: 'Ley Antilavado para inmobiliarias y asesores',
     nombreCorto: 'Inmobiliarias',
     tambienBuscado: ['bróker inmobiliario', 'asesor inmobiliario', 'agente de bienes raíces', 'bienes raíces'],
-    tituloSEO: 'Ley Antilavado para inmobiliarias y asesores',
+    tituloSEO: `Ley Antilavado para inmobiliarias y asesores ${ANIO_VIGENTE}`,
     descripcionSEO:
       'Si intermedias compraventas de inmuebles eres sujeto obligado. Qué te obliga la fracción V, desde cuándo y qué expediente te piden.',
     resumen:
@@ -271,7 +284,7 @@ export const OFICIOS: readonly Oficio[] = [
     titulo: 'Ley Antilavado para constructoras y desarrolladoras',
     nombreCorto: 'Constructoras',
     tambienBuscado: ['desarrolladora inmobiliaria', 'promotor de vivienda', 'preventa de departamentos'],
-    tituloSEO: 'Ley Antilavado para constructoras y desarrolladoras',
+    tituloSEO: `Ley Antilavado para constructoras y desarrolladoras ${ANIO_VIGENTE}`,
     descripcionSEO:
       'Construir y vender es la fracción V; recibir recursos para un desarrollo es la V Bis, adicionada en 2025. Cuál te toca y desde cuándo.',
     resumen:
@@ -334,7 +347,7 @@ export const OFICIOS: readonly Oficio[] = [
     titulo: 'Ley Antilavado si rentas locales, oficinas o naves',
     nombreCorto: 'Arrendadores',
     tambienBuscado: ['arrendamiento de locales', 'renta de oficinas', 'administradora de propiedades', 'naves industriales'],
-    tituloSEO: 'Ley Antilavado si rentas locales u oficinas',
+    tituloSEO: `Ley Antilavado para arrendamiento ${ANIO_VIGENTE}`,
     descripcionSEO:
       'El arrendamiento de inmuebles es actividad vulnerable y su umbral se mide sobre la renta mensual, no sobre el contrato completo.',
     resumen:
@@ -393,7 +406,7 @@ export const OFICIOS: readonly Oficio[] = [
     titulo: 'Ley Antilavado para joyerías y compra-oro',
     nombreCorto: 'Joyerías',
     tambienBuscado: ['compra de oro', 'relojería de lujo', 'compraventa de plata', 'joyero'],
-    tituloSEO: 'Ley Antilavado para joyerías y compra-oro',
+    tituloSEO: `Ley Antilavado para joyerías y compra-oro ${ANIO_VIGENTE}`,
     descripcionSEO:
       'Vender o comprar metales, piedras, joyas y relojes es actividad vulnerable con independencia de la forma de pago. Qué te toca hacer.',
     resumen:
@@ -456,7 +469,7 @@ export const OFICIOS: readonly Oficio[] = [
     titulo: 'Ley Antilavado para galerías y casas de subasta',
     nombreCorto: 'Galerías de arte',
     tambienBuscado: ['casa de subastas', 'marchante de arte', 'venta de obra plástica'],
-    tituloSEO: 'Ley Antilavado para galerías y casas de subasta',
+    tituloSEO: `Ley Antilavado para galerías y casas de subasta ${ANIO_VIGENTE}`,
     descripcionSEO:
       'La subasta y comercialización de obras de arte es actividad vulnerable cuando alcanza el monto de la ley. Qué se identifica y qué se avisa.',
     resumen:
@@ -514,7 +527,7 @@ export const OFICIOS: readonly Oficio[] = [
     titulo: 'Ley Antilavado para agencias y lotes de autos',
     nombreCorto: 'Agencias de autos',
     tambienBuscado: ['lote de autos usados', 'distribuidora automotriz', 'venta de seminuevos', 'compraventa de motos'],
-    tituloSEO: 'Ley Antilavado para agencias y lotes de autos',
+    tituloSEO: `Ley Antilavado para agencias y lotes de autos ${ANIO_VIGENTE}`,
     descripcionSEO:
       'Vender vehículos nuevos o usados es actividad vulnerable. Cuándo avisas, qué límite tiene el efectivo del enganche y qué expediente te piden.',
     resumen:
@@ -584,7 +597,7 @@ export const OFICIOS: readonly Oficio[] = [
     titulo: 'Ley Antilavado para talleres de blindaje',
     nombreCorto: 'Blindaje',
     tambienBuscado: ['blindaje de autos', 'blindaje arquitectónico', 'blindaje de casas', 'nivel de blindaje'],
-    tituloSEO: 'Ley Antilavado para talleres de blindaje',
+    tituloSEO: `Ley Antilavado para talleres de blindaje ${ANIO_VIGENTE}`,
     descripcionSEO:
       'Blindar vehículos o inmuebles de forma habitual es actividad vulnerable. Qué se identifica, qué se avisa y qué pasa si importas el material.',
     resumen:
@@ -648,7 +661,7 @@ export const OFICIOS: readonly Oficio[] = [
     titulo: 'Ley Antilavado para casas de empeño',
     nombreCorto: 'Casas de empeño',
     tambienBuscado: ['montepío', 'prestamista prendario', 'préstamo con garantía'],
-    tituloSEO: 'Ley Antilavado para casas de empeño',
+    tituloSEO: `Ley Antilavado para casas de empeño ${ANIO_VIGENTE}`,
     descripcionSEO:
       'Prestar con garantía sin ser entidad financiera es la fracción IV. Y si vendes la prenda no rescatada, revisa además la fracción VI.',
     resumen:
@@ -711,7 +724,7 @@ export const OFICIOS: readonly Oficio[] = [
     titulo: 'Ley Antilavado para plataformas de activos virtuales',
     nombreCorto: 'Activos virtuales',
     tambienBuscado: ['exchange de criptomonedas', 'compraventa de bitcoin', 'cajero de criptomonedas', 'P2P de cripto'],
-    tituloSEO: 'Ley Antilavado para plataformas de cripto',
+    tituloSEO: `Ley Antilavado para plataformas de cripto ${ANIO_VIGENTE}`,
     descripcionSEO:
       'El intercambio de activos virtuales tiene dos disparadores independientes: el monto de la operación y la comisión cobrada por el servicio.',
     resumen:
@@ -770,7 +783,7 @@ export const OFICIOS: readonly Oficio[] = [
     titulo: 'Ley Antilavado para contadores y despachos',
     nombreCorto: 'Contadores',
     tambienBuscado: ['despacho contable', 'contador público independiente', 'outsourcing contable'],
-    tituloSEO: 'Ley Antilavado para contadores y despachos',
+    tituloSEO: `Ley Antilavado para contadores y despachos ${ANIO_VIGENTE}`,
     descripcionSEO:
       'El aviso de la fracción XI no depende del monto: depende de si realizas la operación en nombre y representación de tu cliente.',
     resumen:
@@ -827,7 +840,7 @@ export const OFICIOS: readonly Oficio[] = [
     titulo: 'Ley Antilavado para abogados',
     nombreCorto: 'Abogados',
     tambienBuscado: ['despacho jurídico', 'abogado corporativo', 'fiscalista', 'consultor legal'],
-    tituloSEO: 'Ley Antilavado para abogados: cuándo te toca',
+    tituloSEO: `Ley Antilavado para abogados ${ANIO_VIGENTE}: cuándo te toca`,
     descripcionSEO:
       'La fracción XI alcanza cinco actos concretos y preserva el secreto profesional. Cuándo nace el aviso y cuándo no, con su fundamento.',
     resumen:
@@ -886,7 +899,7 @@ export const OFICIOS: readonly Oficio[] = [
     titulo: 'Ley Antilavado para donatarias y asociaciones civiles',
     nombreCorto: 'Donatarias',
     tambienBuscado: ['asociación civil', 'fundación', 'institución de asistencia privada', 'ONG'],
-    tituloSEO: 'Ley Antilavado para donatarias y asociaciones',
+    tituloSEO: `Ley Antilavado para donatarias y asociaciones ${ANIO_VIGENTE}`,
     descripcionSEO:
       'Recibir donativos es actividad vulnerable cuando alcanzan el monto de la ley. Qué identificas del donante y qué se acumula.',
     resumen:
@@ -943,7 +956,7 @@ export const OFICIOS: readonly Oficio[] = [
     titulo: 'Ley Antilavado para agencias aduanales',
     nombreCorto: 'Agencias aduanales',
     tambienBuscado: ['agente aduanal', 'apoderado aduanal', 'despacho aduanero'],
-    tituloSEO: 'Ley Antilavado para agencias aduanales',
+    tituloSEO: `Ley Antilavado para agencias aduanales ${ANIO_VIGENTE}`,
     descripcionSEO:
       'Seis incisos y no todos se miden igual: cuatro generan aviso cualquiera que sea el valor y dos se miden por el valor individual del bien.',
     resumen:
@@ -994,7 +1007,7 @@ export const OFICIOS: readonly Oficio[] = [
     titulo: 'Ley Antilavado para empresas de traslado de valores',
     nombreCorto: 'Traslado de valores',
     tambienBuscado: ['transporte de valores', 'custodia de efectivo', 'empresa de bóveda'],
-    tituloSEO: 'Ley Antilavado para empresas de traslado de valores',
+    tituloSEO: `Ley Antilavado para empresas de traslado de valores ${ANIO_VIGENTE}`,
     descripcionSEO:
       'Cuando el monto trasladado o custodiado no se puede determinar, el aviso procede en todos los casos. Qué te obliga la fracción X.',
     resumen:
@@ -1046,7 +1059,7 @@ export const OFICIOS: readonly Oficio[] = [
     titulo: 'Ley Antilavado para casinos, sorteos y apuestas',
     nombreCorto: 'Casinos y sorteos',
     tambienBuscado: ['casino', 'sala de sorteos', 'apuestas en línea', 'rifas y loterías'],
-    tituloSEO: 'Ley Antilavado para casinos y sorteos',
+    tituloSEO: `Ley Antilavado para casinos y sorteos ${ANIO_VIGENTE}`,
     descripcionSEO:
       'La venta de boletos o fichas y el pago de premios son actividad vulnerable. Qué identificas del jugador y qué se acumula.',
     resumen:

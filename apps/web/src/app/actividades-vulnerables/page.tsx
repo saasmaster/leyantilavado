@@ -24,11 +24,8 @@ import { jsonLdArticulo } from '@/components/contenido/JsonLd';
 
 const RUTA = '/actividades-vulnerables';
 
-/** Fracciones "raíz" del art. 17: II a), II b) y II c) son una sola fracción. */
-const FRACCIONES_RAIZ = new Set(datos.ACTIVIDADES.map((a) => a.fraccion.split(' ')[0]));
-
 export const metadata: Metadata = construirMetadata({
-  titulo: `Actividades vulnerables: las ${FRACCIONES_RAIZ.size} fracciones del art. 17`,
+  titulo: `Actividades vulnerables: las ${CIFRAS.fracciones} fracciones del art. 17`,
   descripcion: `Los ${datos.ACTIVIDADES.length} supuestos del art. 17 con su umbral de identificación y de aviso, a quién alcanza cada uno y qué obligaciones genera.`,
   ruta: RUTA,
   tipo: 'article',
@@ -118,7 +115,7 @@ export default function PaginaActividades() {
       <CabeceraArticulo
         titulo="Actividades vulnerables: el catálogo completo del artículo 17"
         etiquetas={[
-          { texto: `${FRACCIONES_RAIZ.size} fracciones`, tono: 'marino' },
+          { texto: `${CIFRAS.fracciones} fracciones`, tono: 'marino' },
           { texto: ETIQUETA_ACTIVIDADES, tono: 'petroleo' },
           { texto: `Vigente al ${REVISION_VIGENTE}`, tono: 'neutro' },
         ]}

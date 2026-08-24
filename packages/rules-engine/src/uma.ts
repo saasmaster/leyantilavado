@@ -75,11 +75,14 @@ export function derivadosUMA(valor: ValorUMA): {
   mensual: Centavos;
   anual: Centavos;
 } {
+  // El orden de las operaciones importa: el INEGI **redondea la mensual
+  // primero** y luego la multiplica por 12. Calcular `diaria × 364.8` da 5
+  // centavos de más en 2026, y esa diferencia se propaga a cada umbral.
+  const mensual = multiplicar(valor.diariaCentavos, 30.4);
   return {
     diaria: valor.diariaCentavos,
-    // El INEGI calcula la mensual como diaria × 30.4
-    mensual: multiplicar(valor.diariaCentavos, 30.4),
-    anual: multiplicar(valor.diariaCentavos, 30.4 * 12),
+    mensual,
+    anual: multiplicar(mensual, 12),
   };
 }
 

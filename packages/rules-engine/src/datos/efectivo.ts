@@ -129,19 +129,21 @@ export const REGLAS_EFECTIVO: readonly ReglaEfectivo[] = [
     periodicidad: 'operacion',
     discrepanciaOficial: {
       descripcion:
-        'Dos fuentes oficiales publican reglas distintas para este supuesto. Mientras la autoridad no lo aclare, la herramienta muestra ambas y no calcula un resultado definitivo.',
+        'Las dos fuentes oficiales no dicen lo mismo. La herramienta aplica la más estricta —3,210 UMA— porque el artículo 32 es una prohibición: rebasarla es infracción, y quedarse por debajo cumple con cualquiera de las dos lecturas.',
       segunSAT: 'La tabla del SAT publica un límite fijo de 3,210 UMA.',
       segunLey:
-        'El texto de la ley remite al umbral de la fracción con la que se relaciona la consignación: 8,025 UMA si es sobre inmuebles y 3,210 UMA en los demás casos.',
+        'La fracción VIII remite a «los umbrales dispuestos en cada fracción», que serían 8,025 UMA si la consignación se relaciona con un inmueble y 3,210 UMA en los demás casos.',
     },
     vigencia: { desde: '2025-07-17', hasta: null },
     procedencia: {
       ...P,
-      verificacion: 'no_verificado',
+      disposicion: 'Art. 32, fracción VIII LFPIORPI',
+      verificacion: 'oficial_verificado',
+      ultimaRevision: '2026-08-24',
       notaEditorial:
-        'Existe una contradicción entre la tabla del SAT y el texto de la ley. Requiere revisión editorial antes de publicarse como regla firme.',
+        'Texto contrastado contra la LFPIORPI vigente (DOF 16-07-2025). La fracción VIII remite al umbral de cada fracción; la tabla del SAT publica 3,210 fijo. Se aplica el más estricto y se informa la diferencia en cada resultado.',
     },
-    estado: 'borrador',
+    estado: 'publicado',
   },
 ];
 

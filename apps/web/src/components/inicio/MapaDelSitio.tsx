@@ -57,7 +57,7 @@ const ENTENDER: Destino[] = [
     href: '/actividades-vulnerables',
     titulo: 'Actividades vulnerables',
     descripcion:
-      'Las 16 fracciones del art. 17, quién cae en cada una y quién no. Con los incisos desglosados, no aplanados a un solo número.',
+      'Las 17 fracciones del art. 17, quién cae en cada una y quién no. Con los incisos desglosados, no aplanados a un solo número.',
     dato: TOTAL_ACTIVIDADES,
     icono: Layers,
     destacado: true,

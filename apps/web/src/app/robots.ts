@@ -61,6 +61,15 @@ export default function robots(): MetadataRoute.Robots {
       })),
     ],
     sitemap: `${SITIO.url}/sitemap.xml`,
-    host: SITIO.url,
+    /*
+     * Sin `host`.
+     *
+     * Google no lee esa directiva —nunca la soportó— y los rastreadores que sí
+     * la interpretan esperan sólo el nombre de host, sin `https://`. Es decir:
+     * la línea que servíamos no la entendía nadie. Como el dominio canónico ya
+     * se declara donde sí se respeta —la etiqueta `canonical` de cada página y
+     * la redirección de `www` al apex—, la directiva no aporta y se retira en
+     * lugar de dejar una instrucción malformada en un archivo público.
+     */
   };
 }

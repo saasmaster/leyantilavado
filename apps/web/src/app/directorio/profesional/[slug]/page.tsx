@@ -183,7 +183,15 @@ export default async function PaginaPerfil({ params }: { params: Promise<{ slug:
               <p className="mt-3 text-sm">
                 <a
                   href={perfil.sitioWeb}
-                  rel="nofollow noopener external"
+                  /*
+                   * `sponsored` cuando el perfil es de pago, `nofollow` cuando
+                   * no lo es. Google distingue los dos: `sponsored` declara que
+                   * el enlace existe porque alguien pagó, y usar `nofollow` a
+                   * secas para un enlace pagado lo oculta. En un directorio que
+                   * cobra por aparecer, esa distinción es la diferencia entre
+                   * declarar el modelo de negocio y disimularlo.
+                   */
+                  rel={`${perfil.patrocinado ? 'sponsored' : 'nofollow'} noopener external`}
                   target="_blank"
                   className="text-[var(--color-petroleo-hondo)] underline underline-offset-4"
                 >

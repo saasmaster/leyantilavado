@@ -93,7 +93,7 @@ const ENTRADAS: readonly EntradaActualizacion[] = [
     tipo: 'ley',
     titulo: 'Reforma a la LFPIORPI: nuevas fracciones, nuevos umbrales y nuevas obligaciones',
     resumen:
-      'Decreto que reforma la ley, en vigor desde el 17 de julio de 2025. Es el único de los tres instrumentos con jerarquía para modificar el art. 17, y lo hizo.',
+      'Decreto que reforma la ley, publicado en el Diario Oficial el 16 de julio de 2025 y en vigor desde el 17. Es el único de los tres instrumentos con jerarquía para modificar el art. 17, y lo hizo.',
     impacto: [
       'Se adiciona la fracción V Bis de desarrollo inmobiliario y el apartado XII-D de personas facilitadoras.',
       'Baja el umbral de aviso de los notarios en inmuebles y en fideicomisos, y la constitución de personas morales pasa a generar aviso siempre.',
@@ -107,8 +107,6 @@ const ENTRADAS: readonly EntradaActualizacion[] = [
       { etiqueta: 'Actividades vulnerables', href: '/actividades-vulnerables' },
       { etiqueta: 'Límites de efectivo', href: '/limites-efectivo' },
     ],
-    requiereRevision:
-      'La fecha de entrada en vigor está corroborada por los transitorios del decreto que reformó el reglamento. La fecha de publicación en el Diario Oficial se apoya en fuentes secundarias coincidentes y está pendiente de contraste contra la nota original del DOF.',
   },
   {
     id: 'sitio-lanzamiento-contenido',

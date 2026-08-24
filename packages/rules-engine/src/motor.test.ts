@@ -220,11 +220,36 @@ describe('Fe pública: reglas distintas por inciso, no un umbral único', () => 
     expect(r.aviso.alcanzado).toBe(true);
   });
 
+  // Apartado C: la ley enuncia al sujeto obligado y no fija monto.
   it('los apartados sin umbral publicado piden revisión profesional, no inventan cifra', () => {
-    const r = evaluarOperacion(op({ actividad: 'personas-facilitadoras', monto: $('1000000') }));
+    const r = evaluarOperacion(
+      op({ actividad: 'fe-publica-servidores-publicos', monto: $('1000000') }),
+    );
     expect(r.conclusion).toBe('requiere_revision_profesional');
     expect(r.confianza).toBe('baja');
     expect(r.aviso.conversion).toBeNull();
+  });
+
+  // El Apartado D remite al A: los umbrales tienen que salir idénticos. Si
+  // alguien toca uno solo de los dos, esta prueba lo caza.
+  it('el Apartado D hereda los umbrales del Apartado A', () => {
+    for (const subtipo of [
+      'inmuebles',
+      'poderes-irrevocables',
+      'constitucion-personas-morales',
+      'fideicomisos',
+      'mutuo-credito',
+    ]) {
+      const d = buscarRegla('personas-facilitadoras', subtipo, '2026-06-15');
+      const a = buscarRegla('fe-publica-notarios', subtipo, '2026-06-15');
+      expect(d, `falta Apartado D ${subtipo}`).toBeTruthy();
+      expect(a, `falta Apartado A ${subtipo}`).toBeTruthy();
+      // Sólo lo operativo: la nota del Apartado D habla de la remisión y es
+      // distinta a propósito.
+      const forma = (u: NonNullable<typeof d>['aviso']) =>
+        u.tipo === 'uma' ? { tipo: u.tipo, uma: u.uma, comparador: u.comparador } : { tipo: u.tipo };
+      expect(forma(d!.aviso)).toEqual(forma(a!.aviso));
+    }
   });
 });
 

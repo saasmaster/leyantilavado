@@ -1,7 +1,19 @@
 import type { MetadataRoute } from 'next';
 import { datos } from '@leyantilavado/rules-engine';
 import { CATEGORIAS_PROVEEDOR } from '@leyantilavado/types';
-import { REVISION_VIGENTE } from '@/content/autores';
+/*
+ * El `lastmod` sale de `datos.ULTIMA_MODIFICACION`, no de la fecha de revisión.
+ *
+ * Son preguntas distintas y el propio corpus lo documenta: la revisión dice
+ * «miramos las fuentes tal día», la modificación dice «tal día cambió un dato».
+ * `lastmod` responde a la segunda.
+ *
+ * Este archivo usaba la primera, así que cada pasada editorial anunciaba 114
+ * URL como modificadas aunque no se hubiera tocado una cifra —justo lo que la
+ * nota de `revision.ts` advierte que no hay que hacer, y que ese fichero
+ * describe como «la clase de señal que un buscador deja de creer»—. El diseño
+ * estaba bien escrito; era este archivo el que no lo seguía.
+ */
 import { SITIO } from '@/lib/sitio';
 import { CASOS_PRACTICOS } from '@/content/casos-practicos';
 import { OFICIOS } from '@/content/oficios';
@@ -50,7 +62,7 @@ function revisionDe(items: readonly ConProcedencia[]): string {
     const f = modificadoEn(item);
     if (f > max) max = f;
   }
-  return max || REVISION_VIGENTE;
+  return max || datos.ULTIMA_MODIFICACION;
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -60,7 +72,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ruta: string,
     prioridad: number,
     frecuencia: MetadataRoute.Sitemap[number]['changeFrequency'],
-    modificado: string = REVISION_VIGENTE,
+    modificado: string = datos.ULTIMA_MODIFICACION,
   ) => ({
     url: `${base}${ruta}`,
     lastModified: modificado,
