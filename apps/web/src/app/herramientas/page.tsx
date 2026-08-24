@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ExternalLink, Puzzle } from 'lucide-react';
 import { Nota, Tarjeta, TarjetaCuerpo } from '@leyantilavado/ui';
 import { VERSION_LEGAL, datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { construirMetadata, jsonLdCatalogo, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
 import { GRUPOS, HERRAMIENTAS, rutaHerramienta } from '@/lib/herramientas/catalogo';
+import { EXTENSION, URL_TIENDA } from '@/content/extension';
 
 const ACTUALIZADO = '2026-08-11';
 
@@ -122,6 +123,63 @@ export default function IndiceHerramientas() {
           </section>
         );
       })}
+
+      {/* La extensión, aparte de los grupos.
+          Va en su propio bloque y no como una tarjeta más: las de arriba son
+          calculadoras que corren en esta página, y ésta es software que se
+          instala en el navegador. Mezclarlas haría que alguien pulsara
+          esperando una calculadora y se encontrara una ficha de tienda. */}
+      <section aria-labelledby="extension" className="mt-14">
+        <Tarjeta className="border-[var(--color-petroleo-tenue)] bg-[var(--color-petroleo-tenue)]/35">
+          <TarjetaCuerpo className="flex flex-col gap-5 sm:flex-row sm:items-start">
+            <span
+              aria-hidden
+              className="inline-flex size-11 shrink-0 items-center justify-center rounded-[var(--radius-control)] bg-[var(--color-superficie)] text-[var(--color-petroleo-hondo)]"
+            >
+              <Puzzle className="size-5" />
+            </span>
+            <div className="min-w-0">
+              <h2
+                id="extension"
+                className="text-xl font-semibold text-[var(--color-tinta)] sm:text-2xl"
+              >
+                Lo mismo, sin salir de donde estás
+              </h2>
+              <p className="mt-2 max-w-2xl leading-relaxed text-[var(--color-tinta-suave)]">
+                {EXTENSION.nombre} es una extensión de Chrome que usa este mismo motor. Selecciona
+                una cantidad en cualquier página, haz clic derecho, y el panel lateral te dice si
+                alcanza el umbral de identificación, el de aviso, si debe acumularse y si choca con
+                el artículo 32 —con el artículo y la UMA aplicada a la vista—.
+              </p>
+              <p className="mt-2 text-sm text-[var(--color-tinta-tenue)]">
+                Funciona sin cuenta y sin servidores: lo que capturas se queda en tu navegador.
+              </p>
+
+              <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
+                {/* `inline` y no `inline-flex`: con flex, al envolverse en
+                    móvil la flecha se iba sola al borde derecho de la segunda
+                    línea. Así sigue a la última palabra, como cualquier texto. */}
+                <Link
+                  href="/extension"
+                  className="text-sm font-medium text-[var(--color-petroleo-hondo)]"
+                >
+                  Ver qué resuelve y su política de privacidad
+                  <ArrowRight aria-hidden className="ml-1.5 inline size-4 align-[-0.18em]" />
+                </Link>
+                {URL_TIENDA ? (
+                  <a
+                    href={URL_TIENDA}
+                    className="inline-flex items-center gap-1.5 text-sm text-[var(--color-tinta-suave)] underline underline-offset-4"
+                  >
+                    Instalar desde Chrome Web Store
+                    <ExternalLink aria-hidden className="size-3.5" />
+                  </a>
+                ) : null}
+              </div>
+            </div>
+          </TarjetaCuerpo>
+        </Tarjeta>
+      </section>
 
       <section aria-labelledby="por-que" className="prosa mt-16">
         <h2 id="por-que" className="text-2xl font-semibold text-[var(--color-tinta)]">
