@@ -319,6 +319,48 @@ test.describe('SEO técnico', () => {
     }
   });
 
+  /**
+   * La extensión se publicó en la Chrome Web Store el 24 ago 2026.
+   *
+   * Esta prueba existe porque el botón y el marcado del producto son
+   * condicionales: si alguien vacía `URL_TIENDA`, la página sigue construyendo
+   * y sigue pasando el resto de la suite —simplemente deja de ofrecer el
+   * producto, en silencio—. Aquí eso falla.
+   *
+   * También veta las estrellas inventadas: `aggregateRating` sin reseñas
+   * reales es motivo de sanción manual de Google, y en un sitio cuya promesa
+   * es «no inventamos cifras» sería la contradicción más cara posible.
+   */
+  test('la extensión se ofrece con su ficha real y sin reseñas inventadas', async ({ page }) => {
+    await page.goto('/extension');
+
+    const boton = page.getByRole('link', { name: /Chrome Web Store/i });
+    await expect(boton).toBeVisible();
+    const href = await boton.getAttribute('href');
+    expect(href, 'el botón debe apuntar a la Chrome Web Store').toMatch(
+      /^https:\/\/chromewebstore\.google\.com\/detail\//,
+    );
+    // Los parámetros de sesión de quien copió el enlace no deben publicarse.
+    expect(href).not.toMatch(/authuser=|[?&]hl=/);
+
+    const bloques = await page.locator('script[type="application/ld+json"]').allTextContents();
+    const apps = bloques
+      .flatMap((b) => {
+        const dato: unknown = JSON.parse(b);
+        return Array.isArray(dato) ? dato : [dato];
+      })
+      .filter((d): d is Record<string, unknown> => {
+        return (
+          !!d && typeof d === 'object' &&
+          (d as Record<string, unknown>)['@type'] === 'SoftwareApplication'
+        );
+      });
+
+    expect(apps.length, 'debe emitirse un SoftwareApplication').toBe(1);
+    expect(apps[0]?.['downloadUrl'], 'el marcado debe llevar a la ficha').toBe(href);
+    expect(apps[0]?.['aggregateRating'], 'no se declaran reseñas que no existen').toBeUndefined();
+  });
+
   test('el manifiesto de la PWA es válido', async ({ request }) => {
     const res = await request.get('/manifest.webmanifest');
     expect(res.status()).toBe(200);

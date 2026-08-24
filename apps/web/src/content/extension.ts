@@ -16,11 +16,18 @@
 /**
  * URL de la ficha en la Chrome Web Store.
  *
- * Vacía a propósito mientras no exista: inventar un enlace de tienda es peor
- * que no ofrecerlo —lleva a un 404 desde la página que promete precisión— así
- * que la interfaz muestra «próximamente» hasta que se rellene.
+ * Publicada el 24 de agosto de 2026. Se guarda **sin** los parámetros
+ * `?authuser=` ni `?hl=` con que la tienda comparte el enlace: `authuser`
+ * pertenece a la sesión de quien copió la URL y `hl` fuerza el idioma de la
+ * ficha —en inglés, para un público mexicano—. La tienda ya elige el idioma
+ * por el del navegador del visitante.
+ *
+ * Si algún día se retira la extensión, vaciar esta constante basta: la landing
+ * vuelve sola a «próximamente» en vez de ofrecer un enlace roto desde la
+ * página que promete precisión.
  */
-export const URL_TIENDA = '';
+export const URL_TIENDA =
+  'https://chromewebstore.google.com/detail/ley-antilavado-mx/lhbfjookglekbihgolmboaiknechpmhg';
 
 export const EXTENSION = {
   nombre: 'Ley Antilavado MX',

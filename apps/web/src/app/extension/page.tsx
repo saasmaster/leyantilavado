@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Check, ExternalLink, MousePointerClick, ShieldCheck, X } from 'lucide-react';
 import { formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { Insignia, Nota, Tarjeta, TarjetaCuerpo, TablaEnvoltura } from '@leyantilavado/ui';
-import { construirMetadata, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
+import { SITIO, construirMetadata, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
 import { EncabezadoPagina } from '@/components/inicio/comun';
 import { CapturaPanel } from '@/components/extension/CapturaPanel';
 import { AVISO_LEGAL_TEXTO } from '@/content/autores';
@@ -29,6 +29,40 @@ const MIGA = [
   { nombre: 'Inicio', ruta: '/' },
   { nombre: 'Extensión de Chrome', ruta: '/extension' },
 ];
+
+/**
+ * Marcado del producto para buscadores.
+ *
+ * Sólo tiene sentido desde que la extensión está publicada: antes habría
+ * declarado un `SoftwareApplication` con `downloadUrl` a ninguna parte.
+ *
+ * Deliberadamente **sin `aggregateRating`**: la ficha aún no acumula reseñas y
+ * ese campo es el que Google usa para pintar estrellas en el resultado.
+ * Inventarlo es lo que este sitio le pide a todo el mundo no hacer, y además
+ * es motivo de sanción manual por reseñas falsas.
+ *
+ * `price: '0'` es un hecho, no una promesa de marketing: la extensión no cobra
+ * ni tiene compras dentro.
+ */
+const JSON_LD_APP = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: EXTENSION.nombre,
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Chrome',
+  url: `${SITIO.url}/extension`,
+  downloadUrl: URL_TIENDA,
+  description: EXTENSION.entradilla,
+  inLanguage: 'es-MX',
+  isAccessibleForFree: true,
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'MXN',
+  },
+  publisher: { '@id': `${SITIO.url}/#organizacion` },
+  privacyPolicy: `${SITIO.url}/extension#privacidad`,
+};
 
 /**
  * Landing de la extensión de Chrome, con su política de privacidad dentro.
@@ -71,6 +105,14 @@ export default function PaginaExtension() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonParaScript(jsonLdMigaDePan(MIGA)) }}
       />
+      {/* Sin ficha publicada no se declara el producto: un `downloadUrl` vacío
+          es peor que no tener marcado. La misma condición que el botón. */}
+      {URL_TIENDA ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonParaScript(JSON_LD_APP) }}
+        />
+      ) : null}
 
       <EncabezadoPagina
         miga={MIGA}
