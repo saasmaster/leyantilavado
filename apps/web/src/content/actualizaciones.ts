@@ -12,6 +12,24 @@ import type { EntradaActualizacion } from './tipos';
  */
 const ENTRADAS: readonly EntradaActualizacion[] = [
   {
+    id: 'revision-2026-08-23',
+    fecha: '2026-08-23',
+    tipo: 'sitio',
+    titulo: 'Revisión de fuentes: sin cambios normativos',
+    resumen:
+      'Se contrastaron las fuentes oficiales y no hay instrumento nuevo desde el Acuerdo 115/2026 (DOF 7 de agosto de 2026). El marco sigue siendo la Ley reformada en julio de 2025, el Reglamento de marzo de 2026 y ese Acuerdo, que entra en vigor el 30 de noviembre.',
+    impacto: [
+      'Ninguna cifra del sitio cambia. Los umbrales, los límites de efectivo y las multas siguen siendo los mismos.',
+      'Se publica esta entrada porque una revisión que no encuentra cambios también es información: dice hasta qué día se comprobó, que es lo que permite confiar en la fecha de revisión de cada página.',
+      'La versión del corpus legal no se mueve, porque numera el último cambio de dato y no la fecha de la revisión.',
+    ],
+    paginasAfectadas: [
+      { etiqueta: 'Umbrales', href: '/umbrales' },
+      { etiqueta: 'Calendario de cumplimiento', href: '/calendario-cumplimiento' },
+      { etiqueta: 'Qué cambió para tu actividad', href: '/que-cambio' },
+    ],
+  },
+  {
     id: 'acuerdo-115-2026',
     fecha: '2026-08-07',
     tipo: 'reglas',

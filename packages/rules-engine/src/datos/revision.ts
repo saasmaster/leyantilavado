@@ -25,8 +25,18 @@
  * una vigencia en `./`.
  */
 
-/** Fecha de la última pasada editorial sobre las fuentes oficiales. */
-export const ULTIMA_REVISION = '2026-08-14';
+/**
+ * Fecha de la última pasada editorial sobre las fuentes oficiales.
+ *
+ * 23-ago-2026: sin instrumento nuevo desde el Acuerdo 115/2026 (DOF
+ * 7-ago-2026, en vigor el 30-nov-2026). El marco sigue siendo los mismos tres
+ * instrumentos. Ninguna `vigencia.desde` cae entre el 14 y el 23, y la UMA se
+ * actualiza en febrero, así que ninguna cifra publicada cambia con esta fecha
+ * —comprobado comparando las 467 cifras de /umbrales, /multas,
+ * /limites-efectivo, /obligaciones, /reforma-ley-antilavado-2026 y la
+ * calculadora de UMA antes y después—.
+ */
+export const ULTIMA_REVISION = '2026-08-23';
 
 /**
  * Fecha en que cambió por última vez algún dato del corpus.
