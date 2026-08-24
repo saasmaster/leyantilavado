@@ -100,6 +100,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entrada('/directorio', 0.85, 'weekly'),
     entrada('/directorio/alta', 0.4, 'monthly'),
     entrada('/software-cumplimiento', 0.7, 'monthly'),
+    // Landing de la extensión de Chrome. Lleva su política de privacidad
+    // dentro, en `#privacidad`, y ésa es la URL que se declara en la tienda.
+    // Fuera del menú por decisión de producto, pero en el sitemap: sin enlace
+    // entrante sería incomprobable para quien revisa la ficha.
+    entrada('/extension', 0.8, 'monthly'),
     entrada('/cursos', 0.6, 'monthly'),
     entrada('/plantillas', 0.6, 'monthly'),
     entrada('/precios', 0.7, 'monthly'),
@@ -156,14 +161,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...CASOS_PRACTICOS.map((c) => entrada(`/casos-practicos/${c.slug}`, 0.7, 'monthly')),
   ];
 
-  // Puertas de entrada por oficio. Son estáticas con `dynamicParams = false`,
-  // así que el sitemap sale de la misma lista que `generateStaticParams`.
-  // Hub de trámites del SPPLD: estático con `dynamicParams = false`.
+  // Hub de trámites del SPPLD: estático con `dynamicParams = false`, así que
+  // el sitemap sale de la misma lista que `generateStaticParams`.
   const tramites = [
     entrada('/tramites', 0.9, 'monthly'),
     ...TRAMITES.map((t) => entrada(`/tramites/${t.slug}`, 0.85, 'monthly')),
   ];
 
+  // Puertas de entrada por oficio, con la misma garantía.
   const porOficio = [
     entrada('/para', 0.85, 'monthly'),
     ...OFICIOS.map((o) => entrada(`/para/${o.slug}`, 0.8, 'monthly')),
