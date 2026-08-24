@@ -5,8 +5,8 @@ import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { clienteServidor } from '@/lib/supabase/servidor';
 import { destinoSeguro, esRolValido } from './permisos';
+import { origenDeCabeceras } from './origen';
 import { supabaseConfigurado } from '@/lib/supabase/configuracion';
-import { SITIO } from '@/lib/sitio';
 import {
   CONTRASENA_MINIMA,
   CREDENCIALES_INVALIDAS,
@@ -49,12 +49,7 @@ function texto(datos: FormData, clave: string): string {
  * tiene que ser la URL real del sitio.
  */
 async function origen(): Promise<string> {
-  const cabeceras = await headers();
-  const host = cabeceras.get('x-forwarded-host') ?? cabeceras.get('host');
-  if (!host) return SITIO.url;
-  const protocolo =
-    cabeceras.get('x-forwarded-proto') ?? (host.startsWith('localhost') ? 'http' : 'https');
-  return `${protocolo}://${host}`;
+  return origenDeCabeceras(await headers());
 }
 
 /* ── Entrar ──────────────────────────────────────────────────────────────── */

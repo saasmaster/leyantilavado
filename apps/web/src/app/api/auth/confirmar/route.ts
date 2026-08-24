@@ -3,6 +3,7 @@ import type { EmailOtpType } from '@supabase/supabase-js';
 import { clienteServidor } from '@/lib/supabase/servidor';
 import { destinoSeguro } from '@/lib/supabase/middleware';
 import { supabaseConfigurado } from '@/lib/supabase/configuracion';
+import { origenDeCabeceras } from '@/lib/auth/origen';
 
 /**
  * Punto de aterrizaje de los enlaces por correo (confirmación de registro,
@@ -40,19 +41,17 @@ export async function GET(peticion: NextRequest) {
   const destino = destinoSeguro(params.get('destino'), '/panel');
 
   /*
-   * La base es `nextUrl`, no `peticion.url`.
+   * El origen público sólo lo conoce el proxy.
    *
-   * `peticion.url` es la URL cruda con la que el proceso de Node recibió la
-   * petición, y detrás de nginx eso resolvía a `https://localhost:5400`: el
-   * puerto interno. Se veía en la cabecera `Location` de producción. El
-   * middleware, que usa `nextUrl`, sí devolvía el origen público —esa
-   * diferencia es la que delató el fallo—.
+   * Ni `peticion.url` ni `peticion.nextUrl` sirven aquí: detrás de nginx la app
+   * escucha en 127.0.0.1:5400 y los dos resuelven a ese origen interno.
+   * Producción devolvía literalmente `Location: https://localhost:5400/entrar`.
    *
-   * Hoy no rompía nada porque sin Supabase configurado este endpoint no
-   * completa ningún flujo. El día que se conecte, cada persona que pulsara el
-   * enlace de su correo habría aterrizado en `https://localhost:5400/panel`.
+   * El middleware sí acierta, y esa asimetría engaña —invita a creer que
+   * `nextUrl` es la fuente buena—. Se probó contra producción y no lo es.
    */
-  const errorUrl = new URL('/entrar?aviso=enlace_invalido', peticion.nextUrl);
+  const base = origenDeCabeceras(peticion.headers);
+  const errorUrl = new URL('/entrar?aviso=enlace_invalido', base);
 
   if (!supabaseConfigurado || !token_hash || !type) {
     return NextResponse.redirect(errorUrl);
@@ -64,5 +63,5 @@ export async function GET(peticion: NextRequest) {
   const { error } = await supabase.auth.verifyOtp({ type, token_hash });
   if (error) return NextResponse.redirect(errorUrl);
 
-  return NextResponse.redirect(new URL(destino, peticion.nextUrl));
+  return NextResponse.redirect(new URL(destino, base));
 }
