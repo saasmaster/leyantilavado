@@ -300,6 +300,73 @@ export function jsonLdMigaDePan(items: { nombre: string; ruta: string }[]) {
   };
 }
 
+/**
+ * Catálogo enumerado, para páginas que listan cosas.
+ *
+ * `ItemList` es lo que le dice a un buscador «esto es un catálogo de N cosas y
+ * este es su orden», en vez de dejar que lo deduzca de un montón de enlaces.
+ * Se usa en `/herramientas` y `/directorio`, que son justo eso.
+ *
+ * Se emiten sólo `url` y `name` por elemento —no fichas completas— porque
+ * describir cada herramienta aquí duplicaría lo que ya declara su propia
+ * página, y dos descripciones del mismo objeto acaban divergiendo.
+ */
+export function jsonLdCatalogo(
+  nombre: string,
+  descripcion: string,
+  elementos: { nombre: string; ruta: string }[],
+) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: nombre,
+    description: descripcion,
+    numberOfItems: elementos.length,
+    itemListOrder: 'https://schema.org/ItemListUnordered',
+    itemListElement: elementos.map((e, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: e.nombre,
+      url: `${SITIO.url}${e.ruta}`,
+    })),
+  };
+}
+
+/**
+ * Marcado de una herramienta interactiva del sitio.
+ *
+ * Las 19 calculadoras son software que se ejecuta en el navegador, no
+ * artículos: `WebApplication` es el tipo que lo dice. Importa para GEO más que
+ * para el buscador clásico —un modelo que resuelve «¿hay una calculadora de
+ * umbrales de la Ley Antilavado?» necesita reconocerlas como herramientas.
+ *
+ * `price: '0'` es un hecho comprobable, no una promesa: las herramientas no
+ * cobran ni piden cuenta. Sin `aggregateRating`: no hay reseñas, y declarar
+ * estrellas inexistentes es sanción manual de Google.
+ */
+export function jsonLdHerramienta(opciones: {
+  nombre: string;
+  descripcion: string;
+  ruta: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: opciones.nombre,
+    description: opciones.descripcion,
+    url: `${SITIO.url}${opciones.ruta}`,
+    applicationCategory: 'BusinessApplication',
+    // Corre en el navegador: no hay nada que instalar ni sistema operativo que
+    // exigir. `browserRequirements` es el campo honesto para eso.
+    browserRequirements: 'Requiere JavaScript.',
+    operatingSystem: 'Cualquiera con navegador web',
+    inLanguage: 'es-MX',
+    isAccessibleForFree: true,
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'MXN' },
+    publisher: { '@id': `${SITIO.url}/#organizacion` },
+  };
+}
+
 export function jsonLdFAQ(preguntas: { pregunta: string; respuesta: string }[]) {
   return {
     '@context': 'https://schema.org',

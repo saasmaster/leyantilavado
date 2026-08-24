@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ArrowRight, ChevronRight } from 'lucide-react';
 import { AvisoIndependencia, Nota, Tarjeta, TarjetaCuerpo } from '@leyantilavado/ui';
 import { formatearFechaLarga } from '@leyantilavado/rules-engine';
-import { jsonLdFAQ, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
+import { jsonLdFAQ, jsonLdHerramienta, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
 import { relacionadas, rutaHerramienta } from '@/lib/herramientas/catalogo';
 import { EstilosImpresion } from './EstilosImpresion';
 import { SelloImpresion } from './SelloImpresion';
@@ -83,6 +83,22 @@ export function MarcoHerramienta({
               { nombre: 'Herramientas', ruta: '/herramientas' },
               { nombre: titulo, ruta: rutaHerramienta(slug) },
             ]),
+          ),
+        }}
+      />
+      {/* Una calculadora no es un artículo. Declararla como `WebApplication`
+          es lo que permite que un modelo la reconozca como herramienta al
+          resolver «¿existe una calculadora de umbrales de la Ley Antilavado?».
+          Va aquí y no en cada página para que las 19 lo hereden sin repetirlo. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonParaScript(
+            jsonLdHerramienta({
+              nombre: titulo,
+              descripcion: entradilla,
+              ruta: rutaHerramienta(slug),
+            }),
           ),
         }}
       />

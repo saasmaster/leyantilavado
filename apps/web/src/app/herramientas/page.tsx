@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { Nota, Tarjeta, TarjetaCuerpo } from '@leyantilavado/ui';
 import { VERSION_LEGAL, datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
-import { construirMetadata, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
+import { construirMetadata, jsonLdCatalogo, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
 import { GRUPOS, HERRAMIENTAS, rutaHerramienta } from '@/lib/herramientas/catalogo';
 
 const ACTUALIZADO = '2026-08-11';
@@ -29,6 +29,21 @@ export default function IndiceHerramientas() {
               { nombre: 'Inicio', ruta: '/' },
               { nombre: 'Herramientas', ruta: '/herramientas' },
             ]),
+          ),
+        }}
+      />
+      {/* El catálogo sale de la misma lista que pinta las tarjetas, así que no
+          puede desincronizarse: una herramienta nueva entra en los dos sitios
+          a la vez o en ninguno. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonParaScript(
+            jsonLdCatalogo(
+              'Herramientas de la Ley Antilavado',
+              'Calculadoras y diagnósticos que resuelven umbrales, plazos y obligaciones de la LFPIORPI con el artículo y la UMA aplicada a la vista.',
+              HERRAMIENTAS.map((h) => ({ nombre: h.titulo, ruta: rutaHerramienta(h.slug) })),
+            ),
           ),
         }}
       />
