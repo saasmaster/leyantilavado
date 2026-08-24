@@ -1,3 +1,11 @@
+> **Cerrado el 24 de agosto de 2026.** Las 24 imágenes de la segunda tanda
+> pasaron la revisión completa y están integradas: los 17 oficios tienen foto,
+> las 10 rutas principales tienen tarjeta social propia, y las 3 bandas y los
+> 3 reemplazos de herramientas están en producción.
+>
+> Se conserva el documento por la sección «Regla que manda sobre todas las
+> demás» y por el registro de lo descartado en la primera tanda.
+
 # Imágenes que faltan — LeyAntilavado.org
 
 **Actualizado:** 24 de agosto de 2026.
