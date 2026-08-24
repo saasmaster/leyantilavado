@@ -39,7 +39,20 @@ export async function GET(peticion: NextRequest) {
   const type = tipoValido(tipoCrudo) ? tipoCrudo : null;
   const destino = destinoSeguro(params.get('destino'), '/panel');
 
-  const errorUrl = new URL('/entrar?aviso=enlace_invalido', peticion.url);
+  /*
+   * La base es `nextUrl`, no `peticion.url`.
+   *
+   * `peticion.url` es la URL cruda con la que el proceso de Node recibió la
+   * petición, y detrás de nginx eso resolvía a `https://localhost:5400`: el
+   * puerto interno. Se veía en la cabecera `Location` de producción. El
+   * middleware, que usa `nextUrl`, sí devolvía el origen público —esa
+   * diferencia es la que delató el fallo—.
+   *
+   * Hoy no rompía nada porque sin Supabase configurado este endpoint no
+   * completa ningún flujo. El día que se conecte, cada persona que pulsara el
+   * enlace de su correo habría aterrizado en `https://localhost:5400/panel`.
+   */
+  const errorUrl = new URL('/entrar?aviso=enlace_invalido', peticion.nextUrl);
 
   if (!supabaseConfigurado || !token_hash || !type) {
     return NextResponse.redirect(errorUrl);
@@ -51,5 +64,5 @@ export async function GET(peticion: NextRequest) {
   const { error } = await supabase.auth.verifyOtp({ type, token_hash });
   if (error) return NextResponse.redirect(errorUrl);
 
-  return NextResponse.redirect(new URL(destino, peticion.url));
+  return NextResponse.redirect(new URL(destino, peticion.nextUrl));
 }

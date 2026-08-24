@@ -6,6 +6,7 @@ import { revalidatePath } from 'next/cache';
 import { clienteServidor } from '@/lib/supabase/servidor';
 import { destinoSeguro, esRolValido } from './permisos';
 import { supabaseConfigurado } from '@/lib/supabase/configuracion';
+import { SITIO } from '@/lib/sitio';
 import {
   CONTRASENA_MINIMA,
   CREDENCIALES_INVALIDAS,
@@ -36,10 +37,23 @@ function texto(datos: FormData, clave: string): string {
   return typeof valor === 'string' ? valor.trim() : '';
 }
 
+/**
+ * Origen público del sitio, para los enlaces que viajan por correo.
+ *
+ * El respaldo es `SITIO.url` y no `localhost:5400`. Un respaldo a localhost
+ * parece inofensivo porque en desarrollo es lo correcto, pero si en producción
+ * faltara la cabecera —un proxy nuevo, un cambio de configuración— el sitio no
+ * fallaría: mandaría correos de recuperación con enlaces a `localhost`, que
+ * nadie puede abrir y que además no se puede corregir a posteriori porque el
+ * correo ya salió. Cuando un respaldo va a acabar en la bandeja de alguien,
+ * tiene que ser la URL real del sitio.
+ */
 async function origen(): Promise<string> {
   const cabeceras = await headers();
-  const host = cabeceras.get('x-forwarded-host') ?? cabeceras.get('host') ?? 'localhost:5400';
-  const protocolo = cabeceras.get('x-forwarded-proto') ?? (host.startsWith('localhost') ? 'http' : 'https');
+  const host = cabeceras.get('x-forwarded-host') ?? cabeceras.get('host');
+  if (!host) return SITIO.url;
+  const protocolo =
+    cabeceras.get('x-forwarded-proto') ?? (host.startsWith('localhost') ? 'http' : 'https');
   return `${protocolo}://${host}`;
 }
 
