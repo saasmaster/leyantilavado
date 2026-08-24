@@ -1,3 +1,4 @@
+import { ArrowRight } from 'lucide-react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { datos } from '@leyantilavado/rules-engine';
@@ -16,6 +17,8 @@ import {
 import { jsonLdArticulo } from '@/components/contenido/JsonLd';
 import { REVISION_VIGENTE } from '@/content/autores';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
+import { BandaParalaje } from '@/components/contenido/BandaParalaje';
+import bandaObligaciones from '../../../public/img/bandas/obligaciones.webp';
 
 const RUTA = '/obligaciones';
 
@@ -47,6 +50,7 @@ export default function PaginaObligaciones() {
   })).filter((g) => g.obligaciones.length > 0);
 
   return (
+    <>
     <div className="contenedor-app py-12 md:py-16">
       <JsonLd datos={jsonLdMigaDePan(migas)} />
       <JsonLd
@@ -227,5 +231,24 @@ export default function PaginaObligaciones() {
       <FirmaEditorial />
       <AvisoLegal />
     </div>
+
+    {/* A sangre y fuera del contenedor: es el cierre de la página, no una
+        sección más. Lleva al siguiente paso en vez de terminar en seco. */}
+    <BandaParalaje imagen={bandaObligaciones} alt="Un archivador de fuelle abierto, con separadores de colores, sobre una mesa de madera.">
+      <div className="max-w-2xl">
+        <h2 className="text-3xl font-semibold text-white md:text-4xl">Cada obligación tiene su artículo, su plazo y su prueba</h2>
+        <p className="mt-5 text-lg leading-relaxed text-[color-mix(in_srgb,white_86%,transparent)]">
+          No basta con saber que hay que identificar al cliente: importa desde qué monto, con qué documentos, en cuánto tiempo y qué hay que poder enseñar si llega un requerimiento.
+        </p>
+        <Link
+          href="/herramientas/comparador-obligaciones"
+          className="mt-7 inline-flex min-h-11 items-center gap-2 rounded-[var(--radius-control)] bg-white px-5 font-medium text-[var(--color-marino)] transition-transform duration-200 hover:-translate-y-0.5"
+        >
+          Comparar dos actividades lado a lado
+          <ArrowRight aria-hidden className="size-4" />
+        </Link>
+      </div>
+    </BandaParalaje>
+    </>
   );
 }

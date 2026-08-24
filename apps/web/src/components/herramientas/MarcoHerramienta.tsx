@@ -5,6 +5,7 @@ import { AvisoIndependencia, Nota, Tarjeta, TarjetaCuerpo } from '@leyantilavado
 import { formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { jsonLdFAQ, jsonLdHerramienta, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
 import { relacionadas, rutaHerramienta } from '@/lib/herramientas/catalogo';
+import { ImagenEditorial } from '@/components/contenido/ImagenEditorial';
 import { EstilosImpresion } from './EstilosImpresion';
 import { SelloImpresion } from './SelloImpresion';
 import { REVISION_VIGENTE } from '@/content/autores';
@@ -26,6 +27,14 @@ interface Props {
   actualizadoEn?: string;
   /** Explicación original: qué resuelve y por qué importa. */
   introduccion: React.ReactNode;
+  /**
+   * Fotografía de descanso entre la herramienta y su explicación.
+   *
+   * Opcional a propósito: la mayoría de las herramientas no la necesita, y una
+   * imagen decorativa en una página donde alguien vino a calcular es ruido. Va
+   * DESPUÉS de la calculadora, nunca antes.
+   */
+  imagen?: { src: import('next/image').StaticImageData; alt: string };
   /** La lógica o fórmula, explicada en palabras. */
   comoCalcula: React.ReactNode;
   /** Ejemplo resuelto con cifras. */
@@ -59,6 +68,7 @@ export function MarcoHerramienta({
   entradilla,
   actualizadoEn = REVISION_VIGENTE,
   introduccion,
+  imagen,
   comoCalcula,
   ejemplo,
   faq,
@@ -163,6 +173,15 @@ export function MarcoHerramienta({
             </h2>
             {introduccion}
           </section>
+
+          {imagen ? (
+            <ImagenEditorial
+              imagen={imagen.src}
+              alt={imagen.alt}
+              proporcion="cuadrada"
+              className="no-imprimir"
+            />
+          ) : null}
 
           <section aria-labelledby="como-calcula" className="prosa mt-10">
             <h2 id="como-calcula" className="text-2xl font-semibold text-[var(--color-tinta)]">

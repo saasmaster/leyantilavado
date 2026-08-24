@@ -117,13 +117,11 @@ export const ENLACES_PIE: { titulo: string; enlaces: EnlaceNav[] }[] = [
 /**
  * Imagen de las tarjetas sociales.
  *
- * Va aquí, en `construirMetadata`, y no como un `opengraph-image.tsx` por
- * ruta: ese archivo sólo cubre el segmento donde vive, así que el de la raíz
- * dejaba 138 de 140 páginas sin imagen. Compartir cualquiera de ellas en
- * WhatsApp o LinkedIn producía una tarjeta desnuda, que es la que nadie abre.
- *
- * `opengraph-image.tsx` sigue existiendo y genera esta misma imagen; una ruta
- * que quiera la suya propia sólo tiene que declararla y Next la prefiere.
+ * Se declara aquí y no se deja al convenio de archivos de Next: un
+ * `opengraph-image.tsx` sólo cubre el segmento donde vive, así que el de la
+ * raíz dejaba a casi todas las páginas sin imagen. Compartir cualquiera de
+ * ellas en WhatsApp o LinkedIn producía una tarjeta desnuda, que es la que
+ * nadie abre.
  */
 export const IMAGEN_SOCIAL = {
   url: `${SITIO.url}/opengraph-image`,
@@ -131,6 +129,44 @@ export const IMAGEN_SOCIAL = {
   height: 630,
   alt: 'LeyAntilavado.org — centro independiente de información sobre la LFPIORPI',
 } as const;
+
+/**
+ * Rutas con tarjeta social propia.
+ *
+ * Cada una tiene su `opengraph-image.tsx`, con su fotografía y su texto.
+ *
+ * Hace falta enumerarlas porque este archivo escribe `openGraph.images` a mano
+ * y **eso tiene prioridad sobre el convenio de archivos**: mientras el valor
+ * explícito apuntara siempre a la raíz, poner un `opengraph-image.tsx` en una
+ * carpeta no cambiaba nada. Costó descubrirlo porque el archivo se genera y se
+ * sirve correctamente en su URL; simplemente nadie la anunciaba.
+ *
+ * Una ruta nueva sin entrada aquí hereda la tarjeta de la raíz, que es un
+ * respaldo digno. Una entrada sin su archivo daría 404 en la imagen, así que
+ * las dos cosas se añaden juntas.
+ */
+const RUTAS_CON_TARJETA_PROPIA: ReadonlySet<string> = new Set([
+  '/umbrales',
+  '/obligaciones',
+  '/multas',
+  '/limites-efectivo',
+  '/calendario-cumplimiento',
+  '/reforma-ley-antilavado-2026',
+  '/preguntas-frecuentes',
+  '/glosario',
+  '/directorio',
+  '/herramientas',
+]);
+
+function imagenSocialDe(ruta: string, tituloCompleto: string) {
+  if (!RUTAS_CON_TARJETA_PROPIA.has(ruta)) return IMAGEN_SOCIAL;
+  return {
+    url: `${SITIO.url}${ruta}/opengraph-image`,
+    width: 1200,
+    height: 630,
+    alt: tituloCompleto,
+  } as const;
+}
 
 /**
  * JSON seguro para incrustar dentro de un `<script>`.
@@ -244,7 +280,7 @@ export function construirMetadata({
       title: tituloCompleto,
       description: descripcionCorta,
       locale: SITIO.locale,
-      images: [IMAGEN_SOCIAL],
+      images: [imagenSocialDe(ruta, tituloCompleto)],
       ...(publicadoEn ? { publishedTime: publicadoEn } : {}),
       ...(actualizadoEn ? { modifiedTime: actualizadoEn } : {}),
     },
@@ -252,7 +288,7 @@ export function construirMetadata({
       card: 'summary_large_image',
       title: tituloCompleto,
       description: descripcionCorta,
-      images: [IMAGEN_SOCIAL.url],
+      images: [imagenSocialDe(ruta, tituloCompleto).url],
     },
   };
 }

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { construirMetadata } from '@/lib/sitio';
 import { MarcoHerramienta } from '@/components/herramientas/MarcoHerramienta';
 import { Cuestionario } from './Cuestionario';
+import fotoCuestionario from '../../../../public/img/herramientas/cuestionario.webp';
 
 export const metadata: Metadata = construirMetadata({
   titulo: '¿Me aplica la Ley Antilavado? Cuestionario guiado',
@@ -14,6 +15,7 @@ export default function Pagina() {
   return (
     <MarcoHerramienta
       slug="cuestionario"
+      imagen={{ src: fotoCuestionario, alt: 'Un formulario en blanco sujeto a una tabla con clip, junto a un lápiz.' }}
       titulo="¿Me aplica la Ley Antilavado?"
       entradilla="Un diagnóstico que ramifica según lo que contestas y termina con números concretos, no con un “consulta a un especialista”. Se resuelve completo en tu navegador."
       tambienVer={['calculadora-umbrales', 'plan-cumplimiento']}

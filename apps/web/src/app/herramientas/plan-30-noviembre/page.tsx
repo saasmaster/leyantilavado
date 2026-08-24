@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { construirMetadata } from '@/lib/sitio';
 import { MarcoHerramienta } from '@/components/herramientas/MarcoHerramienta';
 import { Plan } from './Plan';
+import fotoPlan30Noviembre from '../../../../public/img/herramientas/plan-30-noviembre.webp';
 
 export const metadata: Metadata = construirMetadata({
   titulo: 'Plan personalizado hacia el 30 de noviembre de 2026',
@@ -14,6 +15,7 @@ export default function Pagina() {
   return (
     <MarcoHerramienta
       slug="plan-30-noviembre"
+      imagen={{ src: fotoPlan30Noviembre, alt: 'Un calendario de sobremesa en blanco sobre un escritorio de madera.' }}
       titulo="Plan hacia el 30 de noviembre de 2026"
       entradilla="El Acuerdo 115/2026 entra en vigor el 30 de noviembre y escalona lo demás hasta 2029. Dime tu actividad y si ya estás en el padrón, y te devuelvo los hitos que te tocan, en orden, con lo que hay que tener en cada uno y el artículo del que sale la fecha."
       tambienVer={['plan-cumplimiento', 'preparacion-auditoria', 'mecanismos-automatizados']}

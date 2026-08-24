@@ -1,3 +1,5 @@
+import { ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 import type { Metadata } from 'next';
 import { datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { Nota } from '@leyantilavado/ui';
@@ -16,6 +18,8 @@ import {
   type HitoVista,
   type PendienteVista,
 } from '@/components/contenido';
+import { BandaParalaje } from '@/components/contenido/BandaParalaje';
+import bandaCalendario from '../../../public/img/bandas/calendario.webp';
 
 const RUTA = '/calendario-cumplimiento';
 const TITULO = 'Calendario de cumplimiento 2026-2029';
@@ -74,6 +78,7 @@ export default function Calendario() {
   const ahoraISO = new Date().toISOString();
 
   return (
+    <>
     <div className="contenedor-app py-10 md:py-14">
       <JsonLd
         datos={[
@@ -210,5 +215,24 @@ export default function Calendario() {
       <FirmaEditorial />
       <AvisoLegal />
     </div>
+
+    {/* A sangre y fuera del contenedor: es el cierre de la página, no una
+        sección más. Lleva al siguiente paso en vez de terminar en seco. */}
+    <BandaParalaje imagen={bandaCalendario} alt="Una agenda abierta con las páginas en blanco, junto a una tela clara.">
+      <div className="max-w-2xl">
+        <h2 className="text-3xl font-semibold text-white md:text-4xl">Las fechas no llegan todas juntas</h2>
+        <p className="mt-5 text-lg leading-relaxed text-[color-mix(in_srgb,white_86%,transparent)]">
+          El Acuerdo 115/2026 escalona sus obligaciones entre 2026 y 2029. Saber cuál te toca primero es lo que separa una preparación ordenada de una carrera de último minuto.
+        </p>
+        <Link
+          href="/herramientas/plan-30-noviembre"
+          className="mt-7 inline-flex min-h-11 items-center gap-2 rounded-[var(--radius-control)] bg-white px-5 font-medium text-[var(--color-marino)] transition-transform duration-200 hover:-translate-y-0.5"
+        >
+          Ver qué tener listo antes del 30 de noviembre
+          <ArrowRight aria-hidden className="size-4" />
+        </Link>
+      </div>
+    </BandaParalaje>
+    </>
   );
 }

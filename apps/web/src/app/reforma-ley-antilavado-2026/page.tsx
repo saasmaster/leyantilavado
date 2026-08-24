@@ -20,6 +20,8 @@ import {
   describirUmbral,
   textoPlanoUmbral,
 } from '@/components/contenido';
+import { BandaParalaje } from '@/components/contenido/BandaParalaje';
+import bandaReforma from '../../../public/img/bandas/reforma.webp';
 
 const RUTA = '/reforma-ley-antilavado-2026';
 const TITULO = 'Reforma a la Ley Antilavado 2025-2026: qué cambió';
@@ -76,6 +78,7 @@ const INDICE = [
 
 export default function Reforma() {
   return (
+    <>
     <div className="contenedor-app py-10 md:py-14">
       <JsonLd
         datos={[
@@ -334,5 +337,24 @@ export default function Reforma() {
       <FirmaEditorial />
       <AvisoLegal />
     </div>
+
+    {/* A sangre y fuera del contenedor: es el cierre de la página, no una
+        sección más. Lleva al siguiente paso en vez de terminar en seco. */}
+    <BandaParalaje imagen={bandaReforma} alt="Un libro antiguo abierto sobre una mesa de madera, junto a la luz de una ventana.">
+      <div className="max-w-2xl">
+        <h2 className="text-3xl font-semibold text-white md:text-4xl">La ley de antes y la de ahora, lado a lado</h2>
+        <p className="mt-5 text-lg leading-relaxed text-[color-mix(in_srgb,white_86%,transparent)]">
+          La reforma de 2025 y el Acuerdo 115/2026 no cambiaron lo mismo para todos. Hay actividades que apenas se movieron y otras que entraron completas al régimen.
+        </p>
+        <Link
+          href="/que-cambio"
+          className="mt-7 inline-flex min-h-11 items-center gap-2 rounded-[var(--radius-control)] bg-white px-5 font-medium text-[var(--color-marino)] transition-transform duration-200 hover:-translate-y-0.5"
+        >
+          Ver qué cambió para tu actividad
+          <ArrowRight aria-hidden className="size-4" />
+        </Link>
+      </div>
+    </BandaParalaje>
+    </>
   );
 }

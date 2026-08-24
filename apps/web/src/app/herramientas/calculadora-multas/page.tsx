@@ -3,6 +3,7 @@ import { construirMetadata } from '@/lib/sitio';
 import { MarcoHerramienta } from '@/components/herramientas/MarcoHerramienta';
 import { EstimadorMultas } from './EstimadorMultas';
 import { ConsecuenciasPenales } from './ConsecuenciasPenales';
+import fotoCalculadoraMultas from '../../../../public/img/herramientas/calculadora-multas.webp';
 
 export const metadata: Metadata = construirMetadata({
   titulo: 'Estimador de multas de la Ley Antilavado',
@@ -15,6 +16,7 @@ export default function Pagina() {
   return (
     <MarcoHerramienta
       slug="calculadora-multas"
+      imagen={{ src: fotoCalculadoraMultas, alt: 'Una balanza de latón junto a unas monedas sobre lino claro.' }}
       titulo="Estimador de multas"
       entradilla="Los rangos que la ley contempla para cada infracción, convertidos a pesos con la UMA de la fecha, más los escenarios de autocorrección y sus requisitos reales."
       tambienVer={['fecha-limite-aviso', 'preparacion-auditoria']}
