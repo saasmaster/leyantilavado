@@ -1,9 +1,15 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, ExternalLink, ShieldCheck } from 'lucide-react';
+import { ArrowRight, ShieldCheck } from 'lucide-react';
 import { AvisoIndependencia, Nota, Tarjeta, TarjetaCuerpo } from '@leyantilavado/ui';
 import { SITIO, construirMetadata, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
 import { EncabezadoPagina } from '@/components/inicio/comun';
+import { BotonGooglePlay } from '@/components/app/BotonGooglePlay';
+import { CapturaApp } from '@/components/app/CapturaApp';
+import capturaInicio from '../../../public/img/app/inicio.webp';
+import capturaEvaluar from '../../../public/img/app/evaluar.webp';
+import capturaCalculadora from '../../../public/img/app/calculadora.webp';
+import capturaOperaciones from '../../../public/img/app/operaciones.webp';
 import {
   APP,
   DESLINDE,
@@ -86,24 +92,30 @@ export default function PaginaApp() {
       />
 
       <div className="contenedor-app pb-16">
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+        {/*
+          * Fila de descarga, a todo el ancho y compacta.
+          *
+          * Antes esto era una rejilla de dos columnas con la captura al lado, y
+          * el resultado fue un hueco muerto: un bloque de texto corto centrado
+          * verticalmente contra una captura de teléfono de 638 px deja media
+          * columna vacía. La captura necesita como pareja algo de su altura, y
+          * eso es la lista de preguntas de abajo, no dos líneas de texto.
+          */}
+        <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-4">
           {URL_PLAY ? (
-            <a
-              href={URL_PLAY}
-              className="relleno-accion inline-flex min-h-11 items-center justify-center gap-2 rounded-[var(--radius-control)] px-5 py-3 font-medium text-white"
-            >
-              Descargar en Google Play
-              <ExternalLink aria-hidden className="size-4" />
-            </a>
+            <BotonGooglePlay href={URL_PLAY} />
           ) : (
             <Nota tono="atencion">Próximamente en Google Play</Nota>
           )}
           <Link href="/legal/privacidad-app" className="text-sm underline underline-offset-4">
             Ver la política de privacidad
           </Link>
+          <p className="w-full text-sm text-[var(--color-tinta-tenue)] sm:w-auto">
+            Android · gratis de instalar · funciona sin conexión y sin cuenta
+          </p>
         </div>
 
-        {/* ── Qué responde ─────────────────────────────────────────────── */}
+        {/* ── Qué responde, con la pantalla de inicio al lado ──────────── */}
         <section aria-labelledby="que-responde" className="mt-14">
           <h2 id="que-responde" className="text-2xl font-semibold text-[var(--color-tinta)]">
             Las preguntas que resuelve
@@ -112,16 +124,68 @@ export default function PaginaApp() {
             Siempre en el mismo orden: respuesta, razón, fundamento y fuente. Nunca un sí o un no
             a secas.
           </p>
-          <ul className="mt-6 grid gap-3 md:grid-cols-2">
-            {QUE_RESPONDE.map((p) => (
-              <li
-                key={p}
-                className="rounded-[var(--radius-control)] border border-[var(--color-borde)] bg-[var(--color-superficie)] px-4 py-3 text-[var(--color-tinta-suave)]"
-              >
-                {p}
-              </li>
-            ))}
-          </ul>
+
+          <div className="mt-8 grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_17rem]">
+            <ul className="flex flex-col gap-3">
+              {QUE_RESPONDE.map((p) => (
+                <li
+                  key={p}
+                  className="rounded-[var(--radius-control)] border border-[var(--color-borde)] bg-[var(--color-superficie)] px-4 py-3 text-[var(--color-tinta-suave)]"
+                >
+                  {p}
+                </li>
+              ))}
+            </ul>
+
+            {/* Ancho fijo, nunca `w-full` en una columna `auto`: esa
+                combinación es circular y ya colapsó una captura a dos píxeles
+                en la landing de la extensión. */}
+            <CapturaApp
+              imagen={capturaInicio}
+              alt="Pantalla de inicio de la app con el negocio de ejemplo «Joyería La Perla», un aviso de que tres operaciones alcanzan el umbral, la próxima obligación con su fecha, y accesos rápidos para registrar, calcular umbral, verificar efectivo y ver la agenda."
+              prioridad
+              className="mx-auto w-[15rem] sm:w-[17rem] lg:mx-0 lg:w-[17rem]"
+              pie="Lo primero que ves es lo que vence, no un menú."
+            />
+          </div>
+        </section>
+
+        {/* ── Cómo se ve ───────────────────────────────────────────────── */}
+        <section aria-labelledby="como-se-ve" className="mt-14">
+          <h2 id="como-se-ve" className="text-2xl font-semibold text-[var(--color-tinta)]">
+            Cómo responde
+          </h2>
+          <p className="prosa mt-2">
+            Cada pantalla enseña el cálculo, no sólo el veredicto: el umbral que aplicó, la UMA de
+            esa fecha y el artículo del que sale.
+          </p>
+
+          {/*
+            * Ancho fijo por columna y no `w-full` dentro de una rejilla `auto`.
+            * Esa combinación es circular —la columna se mide por su contenido y
+            * el contenido pide el 100 % de la columna— y ya colapsó una captura
+            * a dos píxeles en la landing de la extensión.
+            */}
+          <div className="mt-8 flex flex-wrap justify-center gap-8 lg:justify-start">
+            <CapturaApp
+              imagen={capturaEvaluar}
+              alt="Pantalla «Evaluar» con la pregunta «¿Qué quieres averiguar?», un acceso al cuestionario que decide si la actividad es vulnerable, y la lista de calculadoras: umbrales, acumulación de seis meses y verificador de efectivo."
+              className="w-[15rem] shrink-0 sm:w-[16rem]"
+              pie="Empieza por la pregunta, no por el formulario."
+            />
+            <CapturaApp
+              imagen={capturaCalculadora}
+              alt="Resultado de la calculadora de umbrales: «Probablemente debes presentar aviso», con el umbral de identificación de 805 UMA, su equivalencia en pesos, la UMA aplicada del año 2026 y en cuánto se rebasa el umbral."
+              className="w-[15rem] shrink-0 sm:w-[16rem]"
+              pie="El umbral, su equivalencia en pesos y la UMA que se aplicó por la fecha de la operación."
+            />
+            <CapturaApp
+              imagen={capturaOperaciones}
+              alt="Listado de operaciones agrupadas por mes, cada una con su importe, actividad, fecha y una etiqueta de «posible aviso». Los registros del ejemplo están marcados como demostración."
+              className="w-[15rem] shrink-0 sm:w-[16rem]"
+              pie="El historial es lo que permite sumar seis meses y sostener una auditoría."
+            />
+          </div>
         </section>
 
         {/* ── App o extensión ──────────────────────────────────────────── */}
