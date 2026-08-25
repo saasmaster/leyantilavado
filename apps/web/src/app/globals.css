@@ -583,3 +583,47 @@
     }
   }
 }
+
+/* ── Entrada al entrar en pantalla ──────────────────────────────────────────
+ *
+ * Un solo gesto para todo el sitio: el elemento sube unos píxeles y aparece
+ * mientras cruza el borde inferior. No hay retardos escalonados escritos a
+ * mano; con `view()` cada elemento tiene su propia línea de tiempo, así que una
+ * fila de tres se escalona sola por la posición que ocupa.
+ *
+ * `animation-range` termina en `cover 38%`: el elemento acaba de entrar y ya
+ * está quieto: nadie lee algo que todavía se está moviendo.
+ */
+@layer components {
+  @keyframes entra-suave {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 14px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @supports (animation-timeline: view()) {
+    .entra-al-ver {
+      animation: entra-suave linear both;
+      animation-timeline: view();
+      animation-range: cover 2% cover 38%;
+    }
+
+    /*
+     * Igual que en el paralaje: la regla global de `prefers-reduced-motion`
+     * fija `animation-duration`, y a una animación guiada por scroll la gobierna
+     * el timeline. Hay que soltarlo, o el elemento se queda a medio aparecer.
+     */
+    @media (prefers-reduced-motion: reduce) {
+      .entra-al-ver {
+        animation-timeline: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+  }
+}

@@ -6,6 +6,7 @@ import { SITIO, construirMetadata, jsonLdMigaDePan, jsonParaScript } from '@/lib
 import { EncabezadoPagina } from '@/components/inicio/comun';
 import { BotonGooglePlay } from '@/components/app/BotonGooglePlay';
 import { CapturaApp } from '@/components/app/CapturaApp';
+import { VitrinaApp } from '@/components/app/VitrinaApp';
 import capturaInicio from '../../../public/img/app/inicio.webp';
 import capturaEvaluar from '../../../public/img/app/evaluar.webp';
 import capturaCalculadora from '../../../public/img/app/calculadora.webp';
@@ -93,30 +94,45 @@ export default function PaginaApp() {
 
       <div className="contenedor-app pb-16">
         {/*
-          * Fila de descarga, a todo el ancho y compacta.
+          * Vitrina: el teléfono manda, y la descarga vive junto a él.
           *
-          * Antes esto era una rejilla de dos columnas con la captura al lado, y
-          * el resultado fue un hueco muerto: un bloque de texto corto centrado
-          * verticalmente contra una captura de teléfono de 638 px deja media
-          * columna vacía. La captura necesita como pareja algo de su altura, y
-          * eso es la lista de preguntas de abajo, no dos líneas de texto.
+          * El patrón de landing de app pide encabezar con el dispositivo, y
+          * aquí además resuelve un problema de color: las capturas son de tema
+          * oscuro y sobre el marfil del sitio flotaban como recortes.
           */}
-        <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-4">
-          {URL_PLAY ? (
-            <BotonGooglePlay href={URL_PLAY} />
-          ) : (
-            <Nota tono="atencion">Próximamente en Google Play</Nota>
-          )}
-          <Link href="/legal/privacidad-app" className="text-sm underline underline-offset-4">
-            Ver la política de privacidad
-          </Link>
-          <p className="w-full text-sm text-[var(--color-tinta-tenue)] sm:w-auto">
+        <VitrinaApp
+          captura={capturaInicio}
+          alt="Pantalla de inicio de la app con el negocio de ejemplo «Joyería La Perla», un aviso de que tres operaciones alcanzan el umbral, la próxima obligación con su fecha, y accesos rápidos para registrar, calcular umbral, verificar efectivo y ver la agenda."
+        >
+          <p className="text-2xl font-semibold leading-tight text-white md:text-3xl">
+            Lo primero que ves es lo que vence.
+          </p>
+          <p className="mt-4 max-w-md leading-relaxed text-[color-mix(in_srgb,white_82%,transparent)]">
+            La misma respuesta que da este sitio, pero guardando el historial: qué operaciones
+            registraste, cuáles alcanzaron umbral, qué se acumula con qué y qué plazo corre.
+          </p>
+
+          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
+            {URL_PLAY ? (
+              <BotonGooglePlay href={URL_PLAY} />
+            ) : (
+              <Nota tono="atencion">Próximamente en Google Play</Nota>
+            )}
+            <Link
+              href="/legal/privacidad-app"
+              className="text-sm text-[color-mix(in_srgb,white_82%,transparent)] underline underline-offset-4"
+            >
+              Ver la política de privacidad
+            </Link>
+          </div>
+
+          <p className="mt-6 text-sm text-[color-mix(in_srgb,white_64%,transparent)]">
             Android · gratis de instalar · funciona sin conexión y sin cuenta
           </p>
-        </div>
+        </VitrinaApp>
 
-        {/* ── Qué responde, con la pantalla de inicio al lado ──────────── */}
-        <section aria-labelledby="que-responde" className="mt-14">
+        {/* ── Qué responde ─────────────────────────────────────────────── */}
+        <section aria-labelledby="que-responde" className="mt-16">
           <h2 id="que-responde" className="text-2xl font-semibold text-[var(--color-tinta)]">
             Las preguntas que resuelve
           </h2>
@@ -125,29 +141,22 @@ export default function PaginaApp() {
             a secas.
           </p>
 
-          <div className="mt-8 grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_17rem]">
-            <ul className="flex flex-col gap-3">
-              {QUE_RESPONDE.map((p) => (
-                <li
-                  key={p}
-                  className="rounded-[var(--radius-control)] border border-[var(--color-borde)] bg-[var(--color-superficie)] px-4 py-3 text-[var(--color-tinta-suave)]"
-                >
-                  {p}
-                </li>
-              ))}
-            </ul>
-
-            {/* Ancho fijo, nunca `w-full` en una columna `auto`: esa
-                combinación es circular y ya colapsó una captura a dos píxeles
-                en la landing de la extensión. */}
-            <CapturaApp
-              imagen={capturaInicio}
-              alt="Pantalla de inicio de la app con el negocio de ejemplo «Joyería La Perla», un aviso de que tres operaciones alcanzan el umbral, la próxima obligación con su fecha, y accesos rápidos para registrar, calcular umbral, verificar efectivo y ver la agenda."
-              prioridad
-              className="mx-auto w-[15rem] sm:w-[17rem] lg:mx-0 lg:w-[17rem]"
-              pie="Lo primero que ves es lo que vence, no un menú."
-            />
-          </div>
+          {/* Dos columnas de texto, no seis tarjetas: son preguntas, y una
+              tarjeta por pregunta convierte una lista en un muro. */}
+          <ul className="mt-7 grid gap-x-10 gap-y-0 md:grid-cols-2">
+            {QUE_RESPONDE.map((p) => (
+              <li
+                key={p}
+                className="flex items-start gap-3 border-b border-[var(--color-borde)] py-4 text-[var(--color-tinta-suave)]"
+              >
+                <span
+                  aria-hidden
+                  className="mt-2 size-1.5 shrink-0 rounded-full bg-[var(--color-petroleo)]"
+                />
+                {p}
+              </li>
+            ))}
+          </ul>
         </section>
 
         {/* ── Cómo se ve ───────────────────────────────────────────────── */}
@@ -166,23 +175,23 @@ export default function PaginaApp() {
             * el contenido pide el 100 % de la columna— y ya colapsó una captura
             * a dos píxeles en la landing de la extensión.
             */}
-          <div className="mt-8 flex flex-wrap justify-center gap-8 lg:justify-start">
+          <div className="mt-8 flex flex-wrap justify-center gap-8 lg:justify-start lg:gap-10">
             <CapturaApp
               imagen={capturaEvaluar}
               alt="Pantalla «Evaluar» con la pregunta «¿Qué quieres averiguar?», un acceso al cuestionario que decide si la actividad es vulnerable, y la lista de calculadoras: umbrales, acumulación de seis meses y verificador de efectivo."
-              className="w-[15rem] shrink-0 sm:w-[16rem]"
+              className="entra-al-ver w-[15rem] shrink-0 sm:w-[16rem]"
               pie="Empieza por la pregunta, no por el formulario."
             />
             <CapturaApp
               imagen={capturaCalculadora}
               alt="Resultado de la calculadora de umbrales: «Probablemente debes presentar aviso», con el umbral de identificación de 805 UMA, su equivalencia en pesos, la UMA aplicada del año 2026 y en cuánto se rebasa el umbral."
-              className="w-[15rem] shrink-0 sm:w-[16rem]"
+              className="entra-al-ver w-[15rem] shrink-0 sm:w-[16rem]"
               pie="El umbral, su equivalencia en pesos y la UMA que se aplicó por la fecha de la operación."
             />
             <CapturaApp
               imagen={capturaOperaciones}
               alt="Listado de operaciones agrupadas por mes, cada una con su importe, actividad, fecha y una etiqueta de «posible aviso». Los registros del ejemplo están marcados como demostración."
-              className="w-[15rem] shrink-0 sm:w-[16rem]"
+              className="entra-al-ver w-[15rem] shrink-0 sm:w-[16rem]"
               pie="El historial es lo que permite sumar seis meses y sostener una auditoría."
             />
           </div>
@@ -225,25 +234,54 @@ export default function PaginaApp() {
           </div>
         </section>
 
-        {/* ── Funciones ────────────────────────────────────────────────── */}
-        <section aria-labelledby="funciones" className="mt-14">
+        {/* ── Qué trae ─────────────────────────────────────────────────── */}
+        <section aria-labelledby="funciones" className="mt-16">
           <h2 id="funciones" className="text-2xl font-semibold text-[var(--color-tinta)]">
             Qué trae
           </h2>
-          <ul className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {FUNCIONES.map((f) => (
-              <li key={f.titulo}>
-                <Tarjeta className="h-full">
-                  <TarjetaCuerpo>
-                    <h3 className="font-semibold text-[var(--color-tinta)]">{f.titulo}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-[var(--color-tinta-suave)]">
-                      {f.detalle}
-                    </p>
-                  </TarjetaCuerpo>
-                </Tarjeta>
-              </li>
-            ))}
-          </ul>
+
+          {/*
+            * La primera función ocupa el doble y las demás van en lista.
+            *
+            * Siete tarjetas del mismo tamaño no son una jerarquía: son un muro
+            * donde el lector no sabe qué mirar primero. Y aquí sí hay un
+            * primero — que el motor sea el mismo del sitio es el argumento, y
+            * el resto son consecuencias suyas.
+            */}
+          {/* `items-start`: sin él la tarjeta destacada se estira para igualar la
+              altura de la lista y queda medio bloque de color vacío debajo del
+              texto. Una tarjeta debe medir lo que mide su contenido. */}
+          <div className="mt-7 grid items-start gap-6 lg:grid-cols-[1.15fr_1fr]">
+            <div className="entra-al-ver rounded-[var(--radius-card)] border border-[var(--color-petroleo-tenue)] bg-[var(--color-petroleo-tenue)]/45 p-6 md:p-8">
+              <h3 className="text-xl font-semibold text-[var(--color-tinta)]">
+                {FUNCIONES[0]?.titulo}
+              </h3>
+              <p className="mt-3 leading-relaxed text-[var(--color-tinta-suave)]">
+                {FUNCIONES[0]?.detalle}
+              </p>
+              <Link
+                href="/metodologia-editorial"
+                className="mt-5 inline-block text-sm font-medium text-[var(--color-petroleo-hondo)]"
+              >
+                Cómo se mantiene ese motor
+                <ArrowRight aria-hidden className="ml-1.5 inline size-4 align-[-0.18em]" />
+              </Link>
+            </div>
+
+            <ul className="flex flex-col">
+              {FUNCIONES.slice(1).map((f) => (
+                <li
+                  key={f.titulo}
+                  className="border-b border-[var(--color-borde)] py-4 first:pt-0 last:border-0"
+                >
+                  <h3 className="font-semibold text-[var(--color-tinta)]">{f.titulo}</h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-[var(--color-tinta-suave)]">
+                    {f.detalle}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
         </section>
 
         {/* ── Privacidad ───────────────────────────────────────────────── */}
@@ -270,6 +308,29 @@ export default function PaginaApp() {
         <Nota tono="atencion" titulo="Qué NO es esta app" className="mt-10">
           <p>{DESLINDE}</p>
         </Nota>
+
+        {/*
+          * Descarga otra vez al cierre.
+          *
+          * Quien llegó hasta aquí leyó privacidad, permisos y deslinde: es el
+          * punto donde una persona cuidadosa decide, y obligarla a subir a
+          * buscar el botón es perder justo a la que más se lo pensó.
+          */}
+        <section
+          aria-labelledby="descargar"
+          className="entra-al-ver mt-16 flex flex-col items-start gap-6 rounded-[var(--radius-card)] border border-[var(--color-borde)] bg-[var(--color-marfil-hondo)] p-8 sm:flex-row sm:items-center sm:justify-between md:p-10"
+        >
+          <div>
+            <h2 id="descargar" className="text-xl font-semibold text-[var(--color-tinta)] md:text-2xl">
+              Instálala y registra tu primera operación
+            </h2>
+            <p className="mt-2 max-w-lg text-[var(--color-tinta-suave)]">
+              Trae un negocio de ejemplo con operaciones ya evaluadas, así que se entiende antes de
+              capturar nada tuyo.
+            </p>
+          </div>
+          {URL_PLAY ? <BotonGooglePlay href={URL_PLAY} /> : null}
+        </section>
 
         <AvisoIndependencia className="mt-10" />
       </div>
