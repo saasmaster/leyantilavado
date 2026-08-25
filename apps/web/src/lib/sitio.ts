@@ -65,8 +65,9 @@ export const NAVEGACION: { titulo: string; enlaces: EnlaceNav[] }[] = [
       { href: '/herramientas/fecha-limite-aviso', etiqueta: 'Fecha límite de aviso', descripcion: 'El día 17 y sus trampas' },
       { href: '/herramientas/plan-30-noviembre', etiqueta: 'Plan al 30 de noviembre', descripcion: 'Qué tener listo antes de que entre en vigor' },
       { href: '/herramientas/beneficiario-controlador', etiqueta: 'Beneficiario controlador', descripcion: 'Traza la estructura corporativa' },
-      // La extensión no es una calculadora del sitio, pero resuelve lo mismo
-      // desde cualquier página. Va al final del grupo, junto a «Ver todas».
+      // Ni la app ni la extensión son calculadoras del sitio, pero resuelven lo
+      // mismo fuera de él. Van al final del grupo, junto a «Ver todas».
+      { href: '/app', etiqueta: 'App para Android', descripcion: 'Lleva el expediente y los vencimientos en el teléfono' },
       { href: '/extension', etiqueta: 'Extensión de Chrome', descripcion: 'Analiza una operación sin salir de donde estás' },
       { href: '/herramientas', etiqueta: 'Ver todas', descripcion: 'Catálogo completo' },
     ],

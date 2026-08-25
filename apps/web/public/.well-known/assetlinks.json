@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "org.leyantilavado.mx",
+      "sha256_cert_fingerprints": [
+        "F6:46:3F:D5:F4:6A:83:62:F8:28:75:61:C0:7C:BF:37:E6:22:0D:84:68:1E:8C:19:59:98:46:D4:FD:47:E0:63"
+      ]
+    }
+  }
+]

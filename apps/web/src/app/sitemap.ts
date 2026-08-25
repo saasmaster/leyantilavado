@@ -116,6 +116,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // dentro, en `#privacidad`, y ésa es la URL que se declara en la tienda.
     // Fuera del menú por decisión de producto, pero en el sitemap: sin enlace
     // entrante sería incomprobable para quien revisa la ficha.
+    // La app declara App Links con `pathPrefix="/app"`, así que esta ruta es
+    // además el destino de sus enlaces profundos.
+    entrada('/app', 0.8, 'monthly'),
     entrada('/extension', 0.8, 'monthly'),
     entrada('/cursos', 0.6, 'monthly'),
     entrada('/plantillas', 0.6, 'monthly'),
