@@ -6,7 +6,7 @@ import { ResultadosDirectorio } from '@/components/directorio/ResultadosDirector
 import { ETIQUETA_CATEGORIA, FICHAS_CATEGORIA, ORDEN_CATEGORIAS } from '@/lib/directorio/catalogo';
 import { buscarProveedores, leerFiltros } from '@/lib/directorio/filtros';
 import { repositorioDirectorio } from '@/lib/directorio/repositorio';
-import { construirMetadata, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
+import { construirMetadata, jsonLdCatalogo, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
 
 export const metadata: Metadata = construirMetadata({
   titulo: 'Directorio de profesionales en prevención de lavado de dinero',
@@ -36,6 +36,23 @@ export default async function PaginaDirectorio({
               { nombre: 'Inicio', ruta: '/' },
               { nombre: 'Directorio', ruta: '/directorio' },
             ]),
+          ),
+        }}
+      />
+      {/* El catálogo sale de `ORDEN_CATEGORIAS`, la misma lista que pinta las
+          tarjetas: una categoría nueva entra en los dos sitios o en ninguno. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonParaScript(
+            jsonLdCatalogo(
+              'Directorio profesional de cumplimiento LFPIORPI',
+              'Categorías de profesionales y herramientas que trabajan con obligaciones de la Ley Antilavado en México.',
+              ORDEN_CATEGORIAS.map((c) => ({
+                nombre: ETIQUETA_CATEGORIA[c],
+                ruta: `/directorio/${c}`,
+              })),
+            ),
           ),
         }}
       />
