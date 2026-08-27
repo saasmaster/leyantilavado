@@ -142,6 +142,18 @@ export function construirLlmsTxt(): string {
   );
 
   seccion(
+    'El corpus completo, en un solo archivo',
+    [
+      enlace(
+        'llms-full.txt',
+        '/llms-full.txt',
+        'todas las actividades con sus dos umbrales y su comparador, las obligaciones con su artículo, los límites del art. 32, la UMA de cada año y el calendario. Generado del mismo motor que las páginas, así que no puede quedarse viejo.',
+      ),
+    ],
+    'Si vas a resolver una pregunta concreta sobre cifras, empieza por aquí en lugar de recorrer las páginas una a una:',
+  );
+
+  seccion(
     'Cómo trabajamos',
     [
       enlace('Metodología editorial', '/metodologia-editorial', 'los niveles de verificación y qué significa "Requiere revisión editorial".'),

@@ -29,6 +29,22 @@ export function ProveedorTema({ children }: { children: React.ReactNode }) {
     const raiz = document.documentElement;
     const seraOscuro = !raiz.classList.contains('oscuro');
     raiz.classList.toggle('oscuro', seraOscuro);
+
+    /*
+     * La barra del navegador sigue al tema elegido.
+     *
+     * `<meta name="theme-color">` sólo entiende `media`, no clases, así que un
+     * sitio con interruptor manual —éste no sigue `prefers-color-scheme`, es
+     * decisión de producto— tiene que moverlo a mano. Sin esto, quien enciende
+     * el modo oscuro se queda con la barra de estado en marfil sobre una
+     * página oscura: el desajuste se ve en cada scroll, en el borde superior.
+     *
+     * Los dos valores son `--color-marfil` en cada tema, leídos de
+     * `globals.css`, no inventados aquí.
+     */
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', seraOscuro ? '#080f19' : '#FBFAF7');
+
     try {
       localStorage.setItem('tema', seraOscuro ? 'oscuro' : 'claro');
     } catch {
