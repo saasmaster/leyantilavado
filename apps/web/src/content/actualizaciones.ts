@@ -12,6 +12,24 @@ import type { EntradaActualizacion } from './tipos';
  */
 const ENTRADAS: readonly EntradaActualizacion[] = [
   {
+    id: 'corpus-32-viii-y-xii-d',
+    fecha: '2026-08-24',
+    tipo: 'sitio',
+    titulo: 'Se resuelven dos supuestos que estaban publicados sin cifra',
+    resumen:
+      'Dos reglas que se publicaban declarando que no había respuesta pasan a tenerla, contrastadas contra el texto vigente de la ley (DOF 16-07-2025). Cambia lo que devuelven las herramientas en esos dos supuestos.',
+    impacto: [
+      'Artículo 32, fracción VIII (consignación de pago): antes se mostraban las dos lecturas oficiales sin elegir una y la herramienta no calculaba resultado. Ahora se aplica la más estricta —3,210 UMA— y se sigue informando la diferencia en cada resultado. El motivo es que el artículo 32 es una prohibición: quedarse por debajo del límite menor cumple con cualquiera de las dos lecturas, y rebasarlo es infracción bajo una de ellas.',
+      'Artículo 17, fracción XII, Apartado D (personas facilitadoras): antes se publicaba sin umbral. El apartado remite expresamente a los supuestos del Apartado A «en los términos que se señalan», así que ahora toma los umbrales de notarios, citando esa remisión. La tabla del SAT todavía no desglosa este apartado.',
+      'El Apartado C sigue SIN umbral publicado, y así se declara: la ley enuncia al sujeto obligado sin fijar monto. No se le asigna la cifra de otro apartado.',
+    ],
+    paginasAfectadas: [
+      { etiqueta: 'Límites de efectivo', href: '/limites-efectivo' },
+      { etiqueta: 'Umbrales', href: '/umbrales' },
+      { etiqueta: 'Actividades vulnerables', href: '/actividades-vulnerables' },
+    ],
+  },
+  {
     id: 'revision-2026-08-23',
     fecha: '2026-08-23',
     tipo: 'sitio',

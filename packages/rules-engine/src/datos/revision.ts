@@ -41,20 +41,23 @@ export const ULTIMA_REVISION = '2026-08-23';
 /**
  * Fecha en que cambió por última vez algún dato del corpus.
  *
- * 2026-08-14: se corrigieron dos `disposicion` del catálogo de obligaciones.
- * No cambió ninguna cifra, pero una cita SÍ es un dato del corpus —se imprime
- * bajo el sello de procedencia de cada página de obligación— y su corrección
- * es exactamente el tipo de cambio que esta fecha existe para señalar. Que la
- * revisión del 14 no encontrara instrumento nuevo no impide que ese mismo día
- * se corrigiera un error propio.
+ * 2026-08-24: dos supuestos que se publicaban SIN respuesta pasaron a tenerla,
+ * contrastados contra el texto vigente (DOF 16-07-2025). Los dos cambian lo que
+ * devuelven las herramientas, que es exactamente lo que esta fecha existe para
+ * señalar:
  *
- * - `alta-sppld` citaba el art. 18 fr. I (identificación del cliente); el alta
- *   en el Padrón es la fr. IV Bis, adicionada por el DOF 16-07-2025.
- * - `expedientes` citaba la fr. II (actividad u ocupación del cliente en
- *   Relación de negocios); el expediente único lo regula el art. 12 de las
- *   disposiciones de carácter general.
+ * - Art. 32, fr. VIII (consignación de pago): estaba en `borrador` mostrando
+ *   las dos lecturas oficiales sin elegir. Ahora aplica la más estricta,
+ *   3,210 UMA, y sigue informando la discrepancia. El art. 32 es una
+ *   prohibición: por debajo del límite menor se cumple con ambas lecturas.
+ * - Art. 17, fr. XII, Apartado D (personas facilitadoras): estaba sin umbral.
+ *   El apartado remite al Apartado A «en los términos que se señalan», así que
+ *   toma los umbrales de notarios, citando la remisión.
  *
- * Antes: 2026-08-11, última vez que se tocaron cifras.
+ * El Apartado C sigue sin umbral publicado y así se declara.
+ *
+ * Antes: 2026-08-14, cuando se corrigieron dos `disposicion` del catálogo de
+ * obligaciones. Antes de eso, 2026-08-11.
  *
  * **Esta constante es la del CORPUS, y de ella sale `VERSION_LEGAL`.** No la
  * uses como `ultimaModificacion` de un dataset que no cambió: cada fichero de
@@ -63,7 +66,7 @@ export const ULTIMA_REVISION = '2026-08-23';
  * modificadas porque cambió una cita en uno solo — que es exactamente el ruido
  * que este campo existe para evitar.
  */
-export const ULTIMA_MODIFICACION = '2026-08-14';
+export const ULTIMA_MODIFICACION = '2026-08-24';
 
 /**
  * Fecha de modificación de los datasets que NO se han tocado desde el 11.
