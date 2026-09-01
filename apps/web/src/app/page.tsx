@@ -53,7 +53,7 @@ const SIN_FECHA: ReglaSinFecha[] = datos.PENDIENTES_SIN_FECHA.map((p) => ({
   id: p.id,
   titulo: p.titulo,
   descripcion: p.descripcion,
-  motivo: `Fundamento: ${p.procedencia.disposicion}. Última revisión: ${p.ultimaRevision}.`,
+  motivo: `Fundamento: ${p.procedencia.disposicion}. Última revisión: ${formatearFechaLarga(p.ultimaRevision)}.`,
 }));
 
 const ACTIVIDADES_BOLETIN = datos.ACTIVIDADES_PUBLICABLES.map((a) => ({

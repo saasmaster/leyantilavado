@@ -6,8 +6,17 @@ import { VERSION_LEGAL, datos, formatearFechaLarga } from '@leyantilavado/rules-
 import { construirMetadata, jsonLdCatalogo, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
 import { GRUPOS, HERRAMIENTAS, rutaHerramienta } from '@/lib/herramientas/catalogo';
 import { EXTENSION, URL_TIENDA } from '@/content/extension';
+import { REVISION_VIGENTE } from '@/content/autores';
 
-const ACTUALIZADO = '2026-08-11';
+/**
+ * Se DERIVA de la revisión del corpus, nunca se escribe a mano.
+ *
+ * Aquí había un literal, y se quedó en el 11 de agosto mientras el resto del
+ * sitio avanzaba: esta página anunciaba «Revisado el 11 de agosto» junto a un
+ * corpus que ya se había revisado tres semanas después. Una fecha copiada a
+ * mano sólo es correcta el día que se escribe.
+ */
+const ACTUALIZADO = REVISION_VIGENTE;
 
 export const metadata: Metadata = construirMetadata({
   titulo: 'Herramientas de la Ley Antilavado',

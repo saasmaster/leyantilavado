@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { formatearFechaLarga } from '@leyantilavado/rules-engine';
 import Link from 'next/link';
 import { ExternalLink } from 'lucide-react';
 import { Insignia, Nota, TablaEnvoltura } from '@leyantilavado/ui';
@@ -70,7 +71,7 @@ export default function PaginaSoftware() {
 
       <Nota tono="info" titulo="Cómo leer esta tabla">
         <p>
-          En la revisión del {FECHA_REVISION_SOFTWARE} sólo pudimos comprobar por observación
+          En la revisión del {formatearFechaLarga(FECHA_REVISION_SOFTWARE)} sólo pudimos comprobar por observación
           directa un criterio en todos los proveedores: si publican precio. El resto aparece como{' '}
           <strong>“sin comprobar”</strong>, y ahí se va a quedar hasta que probemos el producto con
           datos propios. Preferimos una tabla con huecos honestos a una tabla llena de lo que dice
