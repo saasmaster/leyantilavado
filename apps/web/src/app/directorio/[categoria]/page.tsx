@@ -9,6 +9,7 @@ import { ResultadosDirectorio } from '@/components/directorio/ResultadosDirector
 import { esCategoria, FICHAS_CATEGORIA } from '@/lib/directorio/catalogo';
 import { buscarProveedores, leerFiltros } from '@/lib/directorio/filtros';
 import { repositorioDirectorio } from '@/lib/directorio/repositorio';
+import { MINIMO_PARA_INDEXAR } from '@/lib/directorio/indexabilidad';
 import { construirMetadata, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
 
 /**
@@ -19,7 +20,8 @@ import { construirMetadata, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio'
  * enseñar «Sin resultados» le enseña al buscador que esta URL no cumple lo que
  * promete.
  */
-const MINIMO_PARA_INDEXAR = 3;
+// El umbral y la regla viven en `lib/directorio/indexabilidad`, de donde
+// también bebe el sitemap: si sólo estuvieran aquí, volverían a divergir.
 
 export function generateStaticParams() {
   return CATEGORIAS_PROVEEDOR.map((categoria) => ({ categoria }));
@@ -52,7 +54,14 @@ export async function generateMetadata({
   );
 
   return construirMetadata({
-    titulo: `${ficha.plural} en prevención de lavado de dinero`,
+    // Sin el guardia, «Consultores en prevención de lavado de dinero» salía
+    // como «…en prevención de lavado de dinero en prevención de lavado de
+    // dinero»: el sufijo se añadía a un plural que ya lo llevaba. Se arregla
+    // en la plantilla y no en la cadena, porque la siguiente categoría que se
+    // llame así volvería a romperlo.
+    titulo: ficha.plural.toLowerCase().includes('lavado de dinero')
+      ? ficha.plural
+      : `${ficha.plural} en prevención de lavado de dinero`,
     descripcion: ficha.resumen,
     ruta: `/directorio/${categoria}`,
     ...(perfiles.length < MINIMO_PARA_INDEXAR ? { noindex: true } : {}),

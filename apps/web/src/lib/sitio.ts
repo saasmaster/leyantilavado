@@ -1,4 +1,7 @@
 import type { Metadata } from 'next';
+import { datos } from '@leyantilavado/rules-engine';
+import { URL_PLAY } from '@/content/app';
+import { URL_TIENDA } from '@/content/extension';
 
 export const SITIO = {
   nombre: 'LeyAntilavado.org',
@@ -227,8 +230,25 @@ export const LARGO_DESCRIPCION = 160;
  * Perder la marca no cuesta nada: ya aparece en el dominio, que se muestra
  * encima del título en el resultado.
  */
+/**
+ * El año de los títulos NO se escribe a mano.
+ *
+ * Un «2026» literal en 22 títulos es la misma clase de fecha que ya se pudrió
+ * una vez en `/herramientas`: correcta el día que se teclea y falsa a partir
+ * del 1 de enero. Aquí sale de la UMA vigente más reciente del motor, así que
+ * avanza exactamente cuando el corpus incorpora el valor del año siguiente
+ * —que es el día en que el título de verdad cambia de significado—.
+ *
+ * Se sustituye en título y descripción, no sólo en el título, porque la
+ * descripción compite por las mismas búsquedas.
+ */
+const ANIO_VIGENTE = String(datos.UMA_VIGENTE_MAS_RECIENTE.anio);
+const conAnio = (texto: string): string => texto.replaceAll('{año}', ANIO_VIGENTE);
+
 function componerTitulo(titulo: string, ruta: string): string {
-  if (ruta === '/') return `${SITIO.nombre} — Ley Antilavado y LFPIORPI en México`;
+  // La portada es el término más buscado del sitio y su título era el nombre
+  // de la marca seguido de dos siglas. La marca ya sale encima, en el dominio.
+  if (ruta === '/') return conAnio('Ley Antilavado México {año}: umbrales y obligaciones');
 
   const conMarca = `${titulo} | ${SITIO.nombre}`;
   return conMarca.length <= LARGO_TITULO ? conMarca : titulo;
@@ -258,8 +278,8 @@ export function construirMetadata({
   tipo?: 'website' | 'article';
 }): Metadata {
   const url = `${SITIO.url}${ruta}`;
-  const tituloCompleto = componerTitulo(titulo, ruta);
-  const descripcionCorta = descripcion;
+  const tituloCompleto = componerTitulo(conAnio(titulo), ruta);
+  const descripcionCorta = conAnio(descripcion);
   const indexar = SITIO.indexable && !noindex;
 
   return {
@@ -313,6 +333,19 @@ export function jsonLdOrganizacion() {
     logo: LOGO,
     image: LOGO,
     description: SITIO.subtitulo,
+    /**
+     * `sameAs` sólo con propiedades que este proyecto CONTROLA y que un
+     * tercero puede verificar: sus dos publicaciones en tiendas oficiales.
+     *
+     * Deliberadamente sin perfiles sociales ni entradas de enciclopedia. Este
+     * campo afirma «esta organización y esa página son la misma entidad»;
+     * apuntarlo a algo que no controlamos, o que no existe, es una afirmación
+     * falsa sobre identidad, no una oportunidad de posicionamiento.
+     *
+     * Las dos fichas son además el vínculo más fuerte disponible: Google ya
+     * sabe quién las publicó, y ninguna de las dos se puede falsificar.
+     */
+    sameAs: [URL_PLAY, URL_TIENDA],
     // Declaración explícita: no somos gobierno.
     disambiguatingDescription:
       'Plataforma privada e independiente. No pertenece ni está afiliada al SAT, la UIF ni a ninguna autoridad gubernamental de México.',

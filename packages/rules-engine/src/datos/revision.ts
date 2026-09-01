@@ -82,7 +82,22 @@ export const ULTIMA_REVISION = '2026-09-01';
  * modificadas porque cambió una cita en uno solo — que es exactamente el ruido
  * que este campo existe para evitar.
  */
-export const ULTIMA_MODIFICACION = '2026-08-24';
+export const ULTIMA_MODIFICACION = '2026-09-01';
+
+/*
+ * 2026-09-01: la serie histórica de la UMA 2016–2025 pasó de
+ * `fuente_secundaria` a `oficial_verificado`. Las cifras NO cambiaron —se
+ * contrastaron una a una contra la tabla «Valor de la UMA» del INEGI y
+ * coinciden dígito a dígito—, pero sí cambió lo que la página publica: diez
+ * filas dejaron de llevar el aviso «pendiente de contraste oficial».
+ *
+ * Sube porque cambió el contenido publicado, no porque se revisara: una
+ * revisión sin cambios no mueve esta fecha, y las dos anteriores no la
+ * movieron. Sólo `uma.ts` la referencia, así que el sitemap anuncia como
+ * modificadas las páginas con UMA y no el sitio entero.
+ *
+ * Antes: 2026-08-24.
+ */
 
 /**
  * Fecha de modificación de los datasets que NO se han tocado desde el 11.

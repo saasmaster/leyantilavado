@@ -12,6 +12,23 @@ import type { EntradaActualizacion } from './tipos';
  */
 const ENTRADAS: readonly EntradaActualizacion[] = [
   {
+    id: 'uma-historica-verificada',
+    fecha: '2026-09-01',
+    tipo: 'sitio',
+    titulo: 'La serie histórica de la UMA queda contrastada contra el INEGI',
+    resumen:
+      'Los valores de la UMA de 2016 a 2025 se publicaban con un aviso de que estaban pendientes de contraste directo. Se compararon uno a uno con la tabla oficial del INEGI: los once coinciden dígito a dígito. El aviso se retira porque la comprobación se hizo.',
+    impacto: [
+      'Ninguna cifra cambia. Lo que cambia es lo que la página declara sobre ellas: diez filas dejan de mostrar «pendiente de contraste oficial» y pasan a «contrastado contra la publicación oficial».',
+      'Importa porque la calculadora de UMA convierte a pesos con estos valores: una operación de 2019 se mide con 84.49 pesos diarios, no con la UMA de hoy. Hasta ahora ese cálculo se ofrecía con una advertencia sobre su propio insumo.',
+      'La fecha de modificación del corpus sube al 1 de septiembre y sólo la declara el conjunto de la UMA, así que únicamente las páginas que la muestran se anuncian como modificadas.',
+    ],
+    paginasAfectadas: [
+      { etiqueta: 'Umbrales', href: '/umbrales' },
+      { etiqueta: 'Calculadora de UMA', href: '/herramientas/calculadora-uma' },
+    ],
+  },
+  {
     id: 'revision-2026-09-01',
     fecha: '2026-09-01',
     tipo: 'sitio',

@@ -67,10 +67,32 @@ export const AUTORES_POR_ID: Record<string, Autor> = Object.fromEntries(
  */
 export const REVISION_VIGENTE = datos.ULTIMA_REVISION;
 
+/**
+ * Fecha real de publicación del sitio: su primer despliegue público.
+ *
+ * Es un hecho fijo, no una variable editorial. Aquí estaba `REVISION_VIGENTE`,
+ * de modo que cada pasada de fuentes movía el `datePublished` de las 165
+ * páginas hacia adelante: el sitio afirmaba haberse publicado el día que se
+ * revisó. Además de falso, es contraproducente —le dice al buscador que todo
+ * el contenido nació ayer, borrando la antigüedad que cuesta meses ganar— y se
+ * parece demasiado a manipular fechas.
+ */
+export const PUBLICADO_DESDE = '2026-08-12';
+
 export const FIRMA_POR_DEFECTO: FirmaContenido = {
   autor: EQUIPO_EDITORIAL,
-  publicadoEn: REVISION_VIGENTE,
-  actualizadoEn: REVISION_VIGENTE,
+  publicadoEn: PUBLICADO_DESDE,
+  /**
+   * `dateModified` responde «cuándo cambió el contenido», que es la MISMA
+   * pregunta que responde el `lastmod` del sitemap. Alimentarla con la fecha
+   * de revisión las hacía contradecirse: el schema de /umbrales declaraba
+   * 2026-09-01 mientras su lastmod decía 2026-08-11, y un buscador que ve dos
+   * respuestas distintas a la misma pregunta deja de creer las dos.
+   *
+   * La fecha de revisión no desaparece: viaja en `lastReviewed`, que es el
+   * campo de schema.org que de verdad significa «esto se comprobó tal día».
+   */
+  actualizadoEn: datos.ULTIMA_MODIFICACION,
 };
 
 /** Aviso legal que acompaña a toda página de contenido. */

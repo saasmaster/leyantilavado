@@ -349,7 +349,7 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
   /* ── IV. Préstamos y créditos ────────────────────────────────────────────── */
   {
     slug: 'prestamos-creditos',
-    tituloSEO: 'Préstamos sin ser entidad financiera (art. 17-IV)',
+    tituloSEO: 'Ley Antilavado en préstamos {año}: umbrales y avisos',
     descripcionSEO:
       'Prestamistas privados, casas de empeño y factoraje: qué significa habitual o profesional, desde cuándo hay que identificar y cuándo nace el aviso.',
     respuestaDirecta:
@@ -417,7 +417,7 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
   /* ── V. Inmobiliaria ─────────────────────────────────────────────────────── */
   {
     slug: 'inmuebles-construccion-intermediacion',
-    tituloSEO: 'Inmobiliarias: identificación siempre (art. 17-V)',
+    tituloSEO: 'Ley Antilavado para inmobiliarias {año}: umbrales y avisos',
     descripcionSEO:
       'Constructoras, inmobiliarias y brókers: por qué se identifica desde el primer peso, cuándo nace el aviso y quién reporta frente al notario.',
     respuestaDirecta:
@@ -690,7 +690,7 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
   /* ── VIII. Vehículos ─────────────────────────────────────────────────────── */
   {
     slug: 'vehiculos',
-    tituloSEO: 'Agencias y lotes de autos (art. 17-VIII)',
+    tituloSEO: 'Ley Antilavado para autos {año}: umbral y efectivo',
     descripcionSEO:
       'Venta de vehículos terrestres, marítimos y aéreos, nuevos o usados: umbral de identificación, umbral de aviso, permuta y límite de efectivo.',
     respuestaDirecta:
@@ -965,7 +965,7 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
   /* ── XII A. Notarios ─────────────────────────────────────────────────────── */
   {
     slug: 'fe-publica-notarios',
-    tituloSEO: 'Notarios: umbral por inciso (art. 17-XII A)',
+    tituloSEO: 'Ley Antilavado para notarios {año}: umbral por inciso',
     descripcionSEO:
       'Los cinco incisos del apartado A: inmuebles, poderes irrevocables, sociedades, fideicomisos y mutuos. Qué bajó de umbral y qué pasó a avisarse siempre.',
     respuestaDirecta:
@@ -1343,7 +1343,7 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
   /* ── XV. Arrendamiento ───────────────────────────────────────────────────── */
   {
     slug: 'arrendamiento-inmuebles',
-    tituloSEO: 'Arrendamiento: el umbral es mensual (art. 17-XV)',
+    tituloSEO: 'Ley Antilavado en arrendamiento {año}: umbral mensual',
     descripcionSEO:
       'Rentar locales, oficinas, bodegas o vivienda: por qué el umbral se mide sobre la renta mensual y no sobre el total del contrato, y el matiz que decide.',
     respuestaDirecta:

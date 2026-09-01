@@ -1,5 +1,5 @@
 import { IMAGEN_SOCIAL, LOGO, SITIO, jsonParaScript } from '@/lib/sitio';
-import { EQUIPO_EDITORIAL } from '@/content/autores';
+import { EQUIPO_EDITORIAL, REVISION_VIGENTE } from '@/content/autores';
 
 /**
  * Datos estructurados.
@@ -58,7 +58,17 @@ export function jsonLdArticulo({
      * `opengraph-image.tsx` y pasarla por parámetro.
      */
     image: { '@type': 'ImageObject', ...IMAGEN_SOCIAL },
-    mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITIO.url}${ruta}` },
+    /**
+     * `lastReviewed` es el campo de schema.org para «cuándo se comprobó esto»,
+     * distinto de `dateModified`, que es «cuándo cambió». Este sitio revisa
+     * fuentes sin que cambie nada —y publicarlo es medio producto—, así que
+     * necesita los dos campos y no puede colapsarlos en uno.
+     */
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${SITIO.url}${ruta}`,
+      lastReviewed: REVISION_VIGENTE,
+    },
     isPartOf: { '@type': 'WebSite', '@id': `${SITIO.url}/#sitio` },
     datePublished: publicadoEn,
     dateModified: actualizadoEn,

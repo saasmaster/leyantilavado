@@ -18,6 +18,7 @@ import { SITIO } from '@/lib/sitio';
 import { CASOS_PRACTICOS } from '@/content/casos-practicos';
 import { OFICIOS } from '@/content/oficios';
 import { TRAMITES } from '@/content/tramites';
+import { categoriasIndexables } from '@/lib/directorio/indexabilidad';
 
 /**
  * Sitemap generado desde el motor de reglas, no escrito a mano.
@@ -65,7 +66,7 @@ function revisionDe(items: readonly ConProcedencia[]): string {
   return max || datos.ULTIMA_MODIFICACION;
 }
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = SITIO.url;
 
   const entrada = (
@@ -189,7 +190,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...OFICIOS.map((o) => entrada(`/para/${o.slug}`, 0.8, 'monthly')),
   ];
 
-  const categoriasDirectorio = CATEGORIAS_PROVEEDOR.map((c) =>
+  // Sólo las categorías que de verdad se indexan. Pedir el rastreo de una URL
+  // que responde `noindex` es una señal contradictoria, y se emitía diez veces.
+  const indexables = await categoriasIndexables();
+  const categoriasDirectorio = CATEGORIAS_PROVEEDOR.filter((c) => indexables.has(c)).map((c) =>
     entrada(`/directorio/${c}`, 0.7, 'weekly'),
   );
 

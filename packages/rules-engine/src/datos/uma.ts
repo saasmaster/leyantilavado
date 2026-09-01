@@ -1,12 +1,16 @@
 import { pesosACentavos, type Procedencia, type ValorUMA } from '@leyantilavado/types';
-import { SIN_CAMBIOS_DESDE, ULTIMA_REVISION } from './revision';
+import { ULTIMA_MODIFICACION, ULTIMA_REVISION } from './revision';
 
 const PROCEDENCIA_UMA = (anio: number, verificado: boolean): Procedencia => ({
   fuentes: ['inegi-uma'],
   disposicion: `Valor de la UMA ${anio} publicado por el INEGI`,
   verificacion: verificado ? 'oficial_verificado' : 'fuente_secundaria',
   ultimaRevision: ULTIMA_REVISION,
-  ultimaModificacion: SIN_CAMBIOS_DESDE,
+  // Este dataset SÍ cambió el 1-sep: diez valores dejaron de publicarse con el
+  // aviso de «pendiente de contraste». Declararlo aquí y no en `revision.ts`
+  // es lo que impide que las 136 URL se anuncien como modificadas por un
+  // cambio que sólo afecta a las que muestran la UMA.
+  ultimaModificacion: ULTIMA_MODIFICACION,
   notaEditorial: verificado
     ? undefined
     : 'Valor histórico pendiente de contraste directo contra el comunicado del INEGI del año correspondiente.',
@@ -30,17 +34,28 @@ function uma(anio: number, diaria: string, verificado = false): ValorUMA {
   };
 }
 
+/**
+ * Serie completa, contrastada contra la tabla «Valor de la UMA» del INEGI el
+ * 1 de septiembre de 2026: las once cifras coinciden dígito a dígito.
+ *
+ * Hasta entonces sólo 2026 estaba marcada como verificada y las otras diez
+ * salían publicadas con el aviso de «pendiente de contraste oficial». Era
+ * honesto, pero también era la mitad de una tabla histórica advirtiendo de sí
+ * misma, y bastaba con abrir la página del INEGI para cerrarlo.
+ *
+ * El aviso se retira porque la comprobación se hizo, no porque estorbara.
+ */
 export const VALORES_UMA: readonly ValorUMA[] = [
-  uma(2016, '73.04'),
-  uma(2017, '75.49'),
-  uma(2018, '80.60'),
-  uma(2019, '84.49'),
-  uma(2020, '86.88'),
-  uma(2021, '89.62'),
-  uma(2022, '96.22'),
-  uma(2023, '103.74'),
-  uma(2024, '108.57'),
-  uma(2025, '113.14'),
+  uma(2016, '73.04', true),
+  uma(2017, '75.49', true),
+  uma(2018, '80.60', true),
+  uma(2019, '84.49', true),
+  uma(2020, '86.88', true),
+  uma(2021, '89.62', true),
+  uma(2022, '96.22', true),
+  uma(2023, '103.74', true),
+  uma(2024, '108.57', true),
+  uma(2025, '113.14', true),
   uma(2026, '117.31', true),
 ];
 

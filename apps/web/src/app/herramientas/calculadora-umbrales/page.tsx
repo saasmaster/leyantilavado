@@ -4,7 +4,7 @@ import { MarcoHerramienta } from '@/components/herramientas/MarcoHerramienta';
 import { Calculadora } from './Calculadora';
 
 export const metadata: Metadata = construirMetadata({
-  titulo: 'Calculadora de umbrales de identificación y aviso',
+  titulo: 'Calculadora Ley Antilavado {año}: umbrales LFPIORPI',
   descripcion:
     'Captura actividad, monto y fecha, y obtén si se alcanza el umbral de identificación y el de aviso con la UMA vigente en esa fecha exacta.',
   ruta: '/herramientas/calculadora-umbrales',
