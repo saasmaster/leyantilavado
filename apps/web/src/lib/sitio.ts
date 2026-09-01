@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { datos } from '@leyantilavado/rules-engine';
+import { modificadoDeRuta } from './seo/modificacion';
 import { URL_PLAY } from '@/content/app';
 import { URL_TIENDA } from '@/content/extension';
 
@@ -303,7 +304,11 @@ export function construirMetadata({
       locale: SITIO.locale,
       images: [imagenSocialDe(ruta, tituloCompleto)],
       ...(publicadoEn ? { publishedTime: publicadoEn } : {}),
-      ...(actualizadoEn ? { modifiedTime: actualizadoEn } : {}),
+      // Misma fuente que el `dateModified` del JSON-LD y que el `lastmod` del
+      // sitemap. Una tarjeta social que declara una fecha distinta de la que
+      // declara el schema de la misma URL es la tercera versión del mismo
+      // fallo, y sólo se ve al compartir el enlace.
+      ...(actualizadoEn ? { modifiedTime: modificadoDeRuta(ruta) } : {}),
     },
     twitter: {
       card: 'summary_large_image',

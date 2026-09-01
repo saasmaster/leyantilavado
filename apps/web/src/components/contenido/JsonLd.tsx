@@ -30,6 +30,12 @@ export function jsonLdArticulo({
   descripcion: string;
   ruta: string;
   publicadoEn: string;
+  /**
+   * Se conserva porque las páginas ya lo declaran y porque marca la intención
+   * de «esto tiene fecha de cambio». NO decide `dateModified`: esa fecha la
+   * fija la ruta, que es la única forma de que no contradiga al sitemap. Si
+   * una ruta necesita una fecha propia, se declara en `lib/seo/modificacion`.
+   */
   actualizadoEn: string;
   seccion?: string;
 }) {
@@ -133,6 +139,12 @@ export function jsonLdConjuntoDatos({
   nombre: string;
   descripcion: string;
   ruta: string;
+  /**
+   * Se conserva porque las páginas ya lo declaran y porque marca la intención
+   * de «esto tiene fecha de cambio». NO decide `dateModified`: esa fecha la
+   * fija la ruta, que es la única forma de que no contradiga al sitemap. Si
+   * una ruta necesita una fecha propia, se declara en `lib/seo/modificacion`.
+   */
   actualizadoEn: string;
   publicadoEn?: string;
   version?: string;
@@ -151,7 +163,10 @@ export function jsonLdConjuntoDatos({
     description: descripcion,
     url: `${SITIO.url}${ruta}`,
     inLanguage: 'es-MX',
-    dateModified: actualizadoEn,
+    // Misma regla que en el artículo: la ruta decide. Este nodo se escapó del
+    // primer arreglo y dejó /limites-efectivo declarando 2026-09-01 en su
+    // Dataset contra 2026-08-11 en el sitemap.
+    dateModified: modificadoDeRuta(ruta),
     ...(publicadoEn ? { datePublished: publicadoEn } : {}),
     ...(version ? { version } : {}),
     ...(cobertura ? { temporalCoverage: cobertura } : {}),
