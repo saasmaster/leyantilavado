@@ -76,13 +76,40 @@ export interface PreguntaGuia {
 
 /* ── Fuentes ─────────────────────────────────────────────────────────────── */
 
+/**
+ * Línea base de integridad, tomada el 1-sep-2026.
+ *
+ * El monitor regulatorio (`api/cron/monitor-fuentes`) vigila las siete fuentes
+ * de `datos.FUENTES` por hash, pero NO estos ocho documentos: son la guía
+ * operativa del portal, no el corpus legal, y se quedaron fuera. Sin una línea
+ * base, `consultadaEl` sólo puede afirmar «alguien lo abrió ese día» — nunca
+ * «sigue diciendo lo mismo».
+ *
+ * Estos son los sha-256 (12 primeros caracteres) y el tamaño en bytes con que
+ * se descargaron. La próxima pasada que los reproduzca puede mover
+ * `consultadaEl` sabiendo lo que afirma; la que encuentre uno distinto tiene
+ * que volver a leer ESE documento antes de tocar su fecha.
+ *
+ *   inst_excel.pdf          f862df43e2c2   7 658 971
+ *   inst_excel2.pdf         be6ee60d3680   6 552 296
+ *   inst_modificatorio.pdf  c5d1c86f5546   1 581 465
+ *   inst_baja.pdf           35b3941213e0   1 567 486
+ *   sppld.html              131122f9caa4      26 304
+ *   tecnica.html            54cda020b107      24 261
+ *   preguntas.html          880a3e5fb397     303 971
+ *   sppld/ (aplicativo)     e19a65848288         481
+ *
+ * Las dos páginas HTML del SAT llevan marco de gob.mx: un cambio de hash puede
+ * ser el pie de página del portal y no el contenido. Cambió el hash, se lee el
+ * documento; no se deduce nada del número solo.
+ */
 export const FUENTES_GUIA: readonly FuenteGuia[] = [
   {
     id: 'inst-excel',
     nombre: 'Instructivo Excel — cómo generar el archivo XML de Avisos',
     emisor: 'SHCP / SAT — Portal de Prevención de Lavado de Dinero',
     url: 'https://www.pld.hacienda.gob.mx/work/models/PLD/documentos/inst_excel.pdf',
-    consultadaEl: '2026-08-23',
+    consultadaEl: '2026-09-01',
     nota:
       'Once pasos ilustrados con capturas de pantalla. Es el documento que el portal enlaza desde la sección «Sistema del Portal en Internet [SPPLD]».',
   },
@@ -91,7 +118,7 @@ export const FUENTES_GUIA: readonly FuenteGuia[] = [
     nombre: 'Instructivo Excel (variante inst_excel2.pdf)',
     emisor: 'SHCP / SAT — Portal de Prevención de Lavado de Dinero',
     url: 'https://www.pld.hacienda.gob.mx/work/models/PLD/documentos/inst_excel2.pdf',
-    consultadaEl: '2026-08-23',
+    consultadaEl: '2026-09-01',
     nota:
       'Mismo contenido que inst_excel.pdf salvo por una línea: esta variante NO incluye la advertencia del tamaño máximo de 2 MB del XML. Si trabajas con una copia descargada hace tiempo, revisa cuál de las dos tienes.',
   },
@@ -100,21 +127,21 @@ export const FUENTES_GUIA: readonly FuenteGuia[] = [
     nombre: '¿Cómo presentar un Aviso Modificatorio?',
     emisor: 'SHCP / SAT — Portal de Prevención de Lavado de Dinero',
     url: 'https://www.pld.hacienda.gob.mx/work/models/PLD/documentos/inst_modificatorio.pdf',
-    consultadaEl: '2026-08-23',
+    consultadaEl: '2026-09-01',
   },
   {
     id: 'inst-baja',
     nombre: '¿Cómo dar de Baja una Actividad Vulnerable?',
     emisor: 'SHCP / SAT — Portal de Prevención de Lavado de Dinero',
     url: 'https://www.pld.hacienda.gob.mx/work/models/PLD/documentos/inst_baja.pdf',
-    consultadaEl: '2026-08-23',
+    consultadaEl: '2026-09-01',
   },
   {
     id: 'sppld-sistema',
     nombre: 'Sistema del Portal en Internet [SPPLD]',
     emisor: 'SAT',
     url: 'https://sppld.sat.gob.mx/pld/interiores/sppld.html',
-    consultadaEl: '2026-08-23',
+    consultadaEl: '2026-09-01',
     nota:
       'Describe las dos vías de presentación —captura en línea y envío masivo— y los requisitos de navegador.',
   },
@@ -123,14 +150,14 @@ export const FUENTES_GUIA: readonly FuenteGuia[] = [
     nombre: 'Recomendaciones técnicas del portal',
     emisor: 'SAT',
     url: 'https://sppld.sat.gob.mx/pld/interiores/tecnica.html',
-    consultadaEl: '2026-08-23',
+    consultadaEl: '2026-09-01',
   },
   {
     id: 'sppld-preguntas',
     nombre: 'Preguntas frecuentes y criterios',
     emisor: 'SAT',
     url: 'https://sppld.sat.gob.mx/pld/interiores/preguntas.html',
-    consultadaEl: '2026-08-23',
+    consultadaEl: '2026-09-01',
     nota:
       'La propia página advierte que sus respuestas «tienen carácter orientativo e informativo y en ningún caso constituyen un acto de autoridad o una interpretación».',
   },
@@ -139,7 +166,7 @@ export const FUENTES_GUIA: readonly FuenteGuia[] = [
     nombre: 'Acceso al Sistema del Portal en Internet [SPPLD]',
     emisor: 'SAT',
     url: 'https://sppld.sat.gob.mx/sppld/',
-    consultadaEl: '2026-08-23',
+    consultadaEl: '2026-09-01',
     nota: 'Aplicativo autenticado. Las plantillas .xlsm se descargan desde dentro, no desde el sitio público.',
   },
 ];

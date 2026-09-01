@@ -23,6 +23,7 @@ const RUTAS_PUBLICAS = [
   '/actualizaciones',
   // Secciones nuevas: una página índice y una hija de cada ruta dinámica, que
   // es donde aparecen los fallos de `generateStaticParams` y de metadatos.
+  '/app',
   '/extension',
   '/tramites',
   '/tramites/alta-y-registro',
@@ -359,6 +360,88 @@ test.describe('SEO técnico', () => {
     expect(apps.length, 'debe emitirse un SoftwareApplication').toBe(1);
     expect(apps[0]?.['downloadUrl'], 'el marcado debe llevar a la ficha').toBe(href);
     expect(apps[0]?.['aggregateRating'], 'no se declaran reseñas que no existen').toBeUndefined();
+  });
+
+  /**
+   * La app Android está publicada y su manifiesto declara App Links
+   * verificados para `leyantilavado.org/app`.
+   *
+   * Esta prueba existe porque el fallo es silencioso: si `assetlinks.json`
+   * desaparece o deja de servirse como JSON, Android simplemente no verifica y
+   * los enlaces se abren en el navegador. Nadie recibe un error, ni el sitio ni
+   * el teléfono, y el defecto sólo se nota si alguien prueba a abrir un enlace
+   * con la app instalada.
+   */
+  test('el sitio autoriza los App Links de la app Android', async ({ request }) => {
+    const res = await request.get('/.well-known/assetlinks.json');
+    expect(res.status()).toBe(200);
+
+    const enlaces = await res.json();
+    expect(Array.isArray(enlaces)).toBe(true);
+
+    const android = enlaces.find(
+      (e: { target?: { namespace?: string } }) => e.target?.namespace === 'android_app',
+    );
+    expect(android, 'falta la declaración de la app Android').toBeDefined();
+    expect(android.target.package_name).toBe('org.leyantilavado.mx');
+    expect(android.relation).toContain('delegate_permission/common.handle_all_urls');
+    expect(
+      android.target.sha256_cert_fingerprints.length,
+      'sin huella no se verifica nada',
+    ).toBeGreaterThan(0);
+  });
+
+  test('la landing de la app se ofrece con su ficha real', async ({ page }) => {
+    await page.goto('/app');
+
+    // La página repite la descarga: una vez arriba y otra al cierre, después de
+    // privacidad y deslinde, que es donde decide quien se lo piensa. Por eso se
+    // comprueban TODAS y no la primera: un segundo botón mal puesto sería peor
+    // que no tenerlo, porque nadie vuelve a mirar el que ya funcionaba.
+    const botones = page.getByRole('link', { name: /Google Play/i });
+    const cuantos = await botones.count();
+    expect(cuantos, 'la landing debe ofrecer la descarga').toBeGreaterThan(0);
+
+    for (let i = 0; i < cuantos; i++) {
+      const href = await botones.nth(i).getAttribute('href');
+      expect(href, `botón ${i + 1}`).toMatch(
+        /^https:\/\/play\.google\.com\/store\/apps\/details\?id=/,
+      );
+      // `pli` es un parámetro de la sesión de quien copió el enlace.
+      expect(href, `botón ${i + 1}`).not.toMatch(/[?&]pli=/);
+    }
+  });
+
+  /**
+   * `llms-full.txt` publica el corpus entero para modelos.
+   *
+   * Se vigila porque su fallo sería mudo en los dos sentidos: si la ruta
+   * desaparece nadie se entera, y si alguien congelara las cifras en un archivo
+   * estático el corpus seguiría sirviéndose —viejo— durante años.
+   *
+   * La comprobación de que la UMA vigente aparece es justamente eso: si el
+   * archivo dejara de derivarse del motor, este número sería el primero en
+   * desincronizarse.
+   */
+  test('el corpus completo se publica para modelos y sale del motor', async ({ request }) => {
+    const res = await request.get('/llms-full.txt');
+    expect(res.status()).toBe(200);
+    expect(res.headers()['content-type']).toContain('text/plain');
+
+    const txt = await res.text();
+    expect(txt.length, 'un corpus de menos de 5 KB está incompleto').toBeGreaterThan(5000);
+
+    // El comparador es la distinción que este sitio defiende: sin él, «superior
+    // a» e «igual o superior a» se colapsan y se inventa o se borra una
+    // obligación justo en el borde.
+    expect(txt).toContain('igual o superior a');
+    // Lo no verificado se declara, no se rellena con la cifra de otra fracción.
+    expect(txt).toContain('sin umbral publicado');
+    // Si esto falla, el archivo dejó de leer del motor.
+    expect(txt).toMatch(/UMA más reciente registrada: año 20\d\d/);
+
+    const corto = await (await request.get('/llms.txt')).text();
+    expect(corto, 'el llms.txt debe apuntar al corpus completo').toContain('/llms-full.txt');
   });
 
   test('el manifiesto de la PWA es válido', async ({ request }) => {

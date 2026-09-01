@@ -28,15 +28,31 @@
 /**
  * Fecha de la última pasada editorial sobre las fuentes oficiales.
  *
- * 23-ago-2026: sin instrumento nuevo desde el Acuerdo 115/2026 (DOF
- * 7-ago-2026, en vigor el 30-nov-2026). El marco sigue siendo los mismos tres
- * instrumentos. Ninguna `vigencia.desde` cae entre el 14 y el 23, y la UMA se
- * actualiza en febrero, así que ninguna cifra publicada cambia con esta fecha
- * —comprobado comparando las 467 cifras de /umbrales, /multas,
- * /limites-efectivo, /obligaciones, /reforma-ley-antilavado-2026 y la
- * calculadora de UMA antes y después—.
+ * 1-sep-2026: sin cambios. Lo que se comprobó, y contra qué:
+ *
+ * - **Texto vigente.** La ficha de reformas de la Cámara de Diputados sigue
+ *   dando el 16-07-2025 como última reforma de la LFPIORPI. No hay decreto
+ *   posterior, así que el texto sobre el que descansa todo el corpus no se ha
+ *   movido.
+ * - **Instrumentos.** Ninguno nuevo desde el Acuerdo 115/2026 (DOF 7-ago-2026,
+ *   en vigor el 30-nov-2026). El marco siguen siendo los mismos tres.
+ * - **Tabla de umbrales del SAT.** Comparados los conjuntos COMPLETOS de
+ *   valores en UMA, el nuestro y el suyo: coinciden exactamente —4, 210, 325,
+ *   485, 645, 805, 1,285, 1,605, 2,410, 3,210, 4,000, 4,815, 6,420, 8,000 y
+ *   8,025—, ninguno de más ni de menos. La UMA 2026 que publica el SAT
+ *   (117.31 diarios) es la que usa el motor.
+ * - **Resolución de formatos de la UIF.** Sigue sin aparecer publicada. Es la
+ *   única pieza capaz de convertir un pendiente en un plazo cierto —los avisos
+ *   de 24 horas—, y por eso se vuelve a mirar en cada pasada. Mientras no
+ *   exista, `PENDIENTES_SIN_FECHA` sigue siendo la respuesta honesta.
+ *
+ * Ninguna `vigencia.desde` cae entre el 24-ago y el 1-sep, y la UMA se
+ * actualiza en febrero. Ninguna cifra publicada cambia con esta fecha, y por
+ * eso `ULTIMA_MODIFICACION` NO sube: véase la regla al principio del fichero.
+ *
+ * Antes: 2026-08-23.
  */
-export const ULTIMA_REVISION = '2026-08-23';
+export const ULTIMA_REVISION = '2026-09-01';
 
 /**
  * Fecha en que cambió por última vez algún dato del corpus.

@@ -19,8 +19,15 @@ import type { PreguntaFrecuente } from './tipos';
  *   Acuerdo 115/2026 (reglas de carácter general), DOF 07-08-2026.
  */
 
-/** Fecha en que se leyeron los textos oficiales citados en esta página. */
-export const CONSULTA_FUENTES = '2026-08-23';
+/**
+ * Fecha en que se leyeron los textos oficiales citados en esta página.
+ *
+ * 1-sep-2026: las cinco fichas de reformas vueltas a comprobar, y las cinco
+ * siguen dando la misma última reforma que cuando se redactó la página. No es
+ * un detalle menor: los plazos de esta página salen de la LFPA y la LFPCA, no
+ * de la LFPIORPI, y son las dos que más se reforman sin que nadie lo anuncie.
+ */
+export const CONSULTA_FUENTES = '2026-09-01';
 
 /* ── Los tres papeles que no son lo mismo ─────────────────────────────────── */
 

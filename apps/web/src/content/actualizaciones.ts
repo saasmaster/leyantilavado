@@ -12,6 +12,26 @@ import type { EntradaActualizacion } from './tipos';
  */
 const ENTRADAS: readonly EntradaActualizacion[] = [
   {
+    id: 'revision-2026-09-01',
+    fecha: '2026-09-01',
+    tipo: 'sitio',
+    titulo: 'Revisión de fuentes: sin cambios normativos',
+    resumen:
+      'Pasada sobre las fuentes oficiales. No hay instrumento nuevo desde el Acuerdo 115/2026 (DOF 7 de agosto de 2026) y ninguna cifra publicada cambia. El marco sigue siendo la Ley reformada en julio de 2025, el Reglamento de marzo de 2026 y ese Acuerdo, que entra en vigor el 30 de noviembre.',
+    impacto: [
+      'La ficha de reformas de la Cámara de Diputados sigue dando el 16 de julio de 2025 como última reforma de la Ley. No hay decreto posterior, así que el texto sobre el que descansa todo el sitio no se ha movido.',
+      'Se compararon los umbrales del sitio contra la tabla oficial del SAT, conjunto completo contra conjunto completo: coinciden exactamente, ninguno de más ni de menos. El valor de la UMA 2026 que publica el SAT —117.31 pesos diarios— es el que usan las herramientas.',
+      'La Resolución de formatos de la Unidad de Inteligencia Financiera sigue sin publicarse. Es la única pieza capaz de convertir el aviso de veinticuatro horas en un plazo con fecha, así que ese aviso sigue declarado como pendiente sin fecha cierta, que es lo único que se puede afirmar hoy.',
+      'También se volvieron a comprobar la Ley Federal de Procedimiento Administrativo y la de Procedimiento Contencioso Administrativo, de donde salen los plazos para responder un requerimiento. Las dos siguen en su última reforma conocida.',
+      'La versión del corpus legal no se mueve, porque numera el último cambio de dato y no la fecha de la revisión.',
+    ],
+    paginasAfectadas: [
+      { etiqueta: 'Umbrales', href: '/umbrales' },
+      { etiqueta: 'Calendario de cumplimiento', href: '/calendario-cumplimiento' },
+      { etiqueta: 'Qué hacer ante un requerimiento', href: '/requerimiento-sat' },
+    ],
+  },
+  {
     id: 'corpus-32-viii-y-xii-d',
     fecha: '2026-08-24',
     tipo: 'sitio',
