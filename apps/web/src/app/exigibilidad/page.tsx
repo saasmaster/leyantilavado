@@ -15,7 +15,7 @@ import {
   Seccion,
   jsonLdArticulo,
 } from '@/components/contenido';
-import { REVISION_VIGENTE } from '@/content/autores';
+import { MODIFICADO_EN, PUBLICADO_DESDE, REVISION_VIGENTE } from '@/content/autores';
 import { construirMetadata, jsonLdFAQ, jsonLdMigaDePan } from '@/lib/sitio';
 import { EstadoHoy } from './EstadoHoy';
 
@@ -50,8 +50,8 @@ export const metadata: Metadata = construirMetadata({
   descripcion: DESCRIPCION,
   ruta: RUTA,
   tipo: 'article',
-  publicadoEn: REVISION_VIGENTE,
-  actualizadoEn: REVISION_VIGENTE,
+  publicadoEn: PUBLICADO_DESDE,
+  actualizadoEn: MODIFICADO_EN,
 });
 
 /* ── Cruce de datos ──────────────────────────────────────────────────────── */
@@ -279,8 +279,8 @@ export default function PaginaExigibilidad() {
           titulo: TITULO,
           descripcion: DESCRIPCION,
           ruta: RUTA,
-          publicadoEn: REVISION_VIGENTE,
-          actualizadoEn: REVISION_VIGENTE,
+          publicadoEn: PUBLICADO_DESDE,
+          actualizadoEn: MODIFICADO_EN,
           seccion: 'Cumplimiento',
         })}
       />

@@ -22,6 +22,7 @@ import {
 } from '@/components/contenido';
 import { BandaParalaje } from '@/components/contenido/BandaParalaje';
 import bandaReforma from '../../../public/img/bandas/reforma.webp';
+import { MODIFICADO_EN } from '@/content/autores';
 
 const RUTA = '/reforma-ley-antilavado-2026';
 const TITULO = 'Reforma a la Ley Antilavado 2025-2026: qué cambió';
@@ -34,7 +35,7 @@ export const metadata: Metadata = construirMetadata({
   ruta: RUTA,
   tipo: 'article',
   publicadoEn: '2026-08-11',
-  actualizadoEn: REVISION_VIGENTE,
+  actualizadoEn: MODIFICADO_EN,
 });
 
 /**
@@ -91,7 +92,7 @@ export default function Reforma() {
             descripcion: DESCRIPCION,
             ruta: RUTA,
             publicadoEn: '2026-08-11',
-            actualizadoEn: REVISION_VIGENTE,
+            actualizadoEn: MODIFICADO_EN,
             seccion: 'Marco normativo',
           }),
         ]}

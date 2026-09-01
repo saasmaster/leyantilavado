@@ -10,7 +10,7 @@ import {
   Migas,
 } from '@/components/contenido';
 import { jsonLdArticulo, jsonLdConjuntoTerminos } from '@/components/contenido/JsonLd';
-import { REVISION_VIGENTE } from '@/content/autores';
+import { MODIFICADO_EN, PUBLICADO_DESDE, REVISION_VIGENTE } from '@/content/autores';
 import { GLOSARIO_ORDENADO, GLOSARIO_POR_SLUG, INICIALES_GLOSARIO, inicialDe } from '@/content/glosario';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
 
@@ -22,8 +22,8 @@ export const metadata: Metadata = construirMetadata({
     'PLD, EBR, PEP, beneficiario controlador, perfil transaccional y el resto del vocabulario de la LFPIORPI, en español claro y con su disposición.',
   ruta: RUTA,
   tipo: 'article',
-  publicadoEn: REVISION_VIGENTE,
-  actualizadoEn: REVISION_VIGENTE,
+  publicadoEn: PUBLICADO_DESDE,
+  actualizadoEn: MODIFICADO_EN,
 });
 
 export default function PaginaGlosario() {
@@ -47,8 +47,8 @@ export default function PaginaGlosario() {
           titulo: 'Glosario de la Ley Antilavado',
           descripcion: 'Vocabulario de la LFPIORPI explicado en español de México.',
           ruta: RUTA,
-          publicadoEn: REVISION_VIGENTE,
-          actualizadoEn: REVISION_VIGENTE,
+          publicadoEn: PUBLICADO_DESDE,
+          actualizadoEn: MODIFICADO_EN,
           seccion: 'Glosario',
         })}
       />

@@ -9,7 +9,7 @@ import {
   ETIQUETA_TIPO_ACTUALIZACION,
 } from '@/content/actualizaciones';
 import type { TipoActualizacion } from '@/content/tipos';
-import { REVISION_VIGENTE } from '@/content/autores';
+import { MODIFICADO_EN, REVISION_VIGENTE } from '@/content/autores';
 import {
   AvisoLegal,
   CabeceraArticulo,
@@ -30,7 +30,7 @@ export const metadata: Metadata = construirMetadata({
   ruta: RUTA,
   tipo: 'article',
   publicadoEn: '2026-08-11',
-  actualizadoEn: REVISION_VIGENTE,
+  actualizadoEn: MODIFICADO_EN,
 });
 
 const TONO: Record<TipoActualizacion, 'marino' | 'petroleo' | 'ambar' | 'rojo' | 'verde' | 'neutro'> =
@@ -57,7 +57,7 @@ export default function Actualizaciones() {
             descripcion: DESCRIPCION,
             ruta: RUTA,
             publicadoEn: '2026-08-11',
-            actualizadoEn: REVISION_VIGENTE,
+            actualizadoEn: MODIFICADO_EN,
             seccion: 'Marco normativo',
           }),
         ]}

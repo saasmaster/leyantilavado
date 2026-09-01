@@ -19,7 +19,7 @@ import {
 } from '@/components/contenido';
 import { jsonLdArticulo } from '@/components/contenido/JsonLd';
 import { RetratoOficio } from '@/components/contenido/RetratoOficio';
-import { REVISION_VIGENTE } from '@/content/autores';
+import { MODIFICADO_EN, PUBLICADO_DESDE, REVISION_VIGENTE } from '@/content/autores';
 import { CAMBIOS_TRANSVERSALES, cambiosPropios } from '@/content/cambios-por-actividad';
 import { CASOS_POR_SLUG } from '@/content/casos-practicos';
 import { OFICIOS, OFICIOS_POR_SLUG, type ActividadDeOficio, type Oficio } from '@/content/oficios';
@@ -72,8 +72,8 @@ export async function generateMetadata({
     descripcion: oficio.descripcionSEO,
     ruta: `${BASE}/${slug}`,
     tipo: 'article',
-    publicadoEn: REVISION_VIGENTE,
-    actualizadoEn: REVISION_VIGENTE,
+    publicadoEn: PUBLICADO_DESDE,
+    actualizadoEn: MODIFICADO_EN,
   });
 }
 
@@ -202,8 +202,8 @@ export default async function PaginaOficio({
             titulo: oficio.tituloSEO,
             descripcion: oficio.descripcionSEO,
             ruta,
-            publicadoEn: REVISION_VIGENTE,
-            actualizadoEn: REVISION_VIGENTE,
+            publicadoEn: PUBLICADO_DESDE,
+            actualizadoEn: MODIFICADO_EN,
             seccion: 'Por oficio',
           }),
           jsonLdFAQ(oficio.faq.map((f) => ({ pregunta: f.pregunta, respuesta: f.respuesta }))),

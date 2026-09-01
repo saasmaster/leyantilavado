@@ -12,7 +12,7 @@ import {
   ETIQUETA_TIPO_CLIENTE,
   type CasoPractico,
 } from '@/content/casos-practicos';
-import { REVISION_VIGENTE } from '@/content/autores';
+import { MODIFICADO_EN, PUBLICADO_DESDE, REVISION_VIGENTE } from '@/content/autores';
 import { construirMetadata, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
 
 /* Next sólo admite ciertos exports en un `page.tsx`, así que la ruta se repite
@@ -24,8 +24,8 @@ export const metadata: Metadata = construirMetadata({
   descripcion: `${CASOS_PRACTICOS.length} operaciones de negocios mexicanos resueltas con el motor del sitio: qué umbral activan, si hay que identificar, si hay que avisar y qué conservar.`,
   ruta: RUTA_CASOS,
   tipo: 'article',
-  publicadoEn: REVISION_VIGENTE,
-  actualizadoEn: REVISION_VIGENTE,
+  publicadoEn: PUBLICADO_DESDE,
+  actualizadoEn: MODIFICADO_EN,
 });
 
 const MIGA = [

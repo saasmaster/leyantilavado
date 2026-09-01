@@ -474,6 +474,58 @@ test.describe('SEO técnico', () => {
     await expect(tarjeta).toContainText(/de 20\d\d/);
   });
 
+  /**
+   * El `dateModified` del schema y el `lastmod` del sitemap responden la misma
+   * pregunta sobre la misma URL. Si discrepan, el sitio da dos respuestas y el
+   * buscador no elige la buena: deja de creer las dos, y `lastmod` sólo sirve
+   * mientras se le cree.
+   *
+   * Discreparon: /umbrales declaraba 2026-09-01 en su schema y 2026-08-11 en
+   * el sitemap, tres semanas de diferencia, porque cada uno lo calculaba por su
+   * cuenta. Ahora los dos salen de `lib/seo/modificacion`.
+   */
+  test('el sitemap y el schema dan la misma fecha de modificación', async ({ request }) => {
+    const xml = await (await request.get('/sitemap.xml')).text();
+
+    const lastmod = new Map<string, string>();
+    for (const bloque of xml.split('<url>').slice(1)) {
+      const loc = /<loc>([^<]+)</.exec(bloque)?.[1];
+      const lm = /<lastmod>([^<T]+)/.exec(bloque)?.[1];
+      if (loc && lm) lastmod.set(new URL(loc).pathname, lm);
+    }
+    expect(lastmod.size, 'el sitemap no trae lastmod').toBeGreaterThan(100);
+
+    // Muestra de rutas con dataset propio, que es donde puede divergir.
+    const muestra = ['/umbrales', '/obligaciones', '/limites-efectivo', '/multas', '/exigibilidad'];
+    for (const ruta of muestra) {
+      const html = await (await request.get(ruta)).text();
+      const enSchema = [...html.matchAll(/"dateModified":"(\d{4}-\d{2}-\d{2})/g)].map((m) => m[1]);
+      expect(enSchema.length, `${ruta} no declara dateModified`).toBeGreaterThan(0);
+      for (const fecha of enSchema) {
+        expect(fecha, `${ruta}: schema dice ${fecha}, sitemap dice ${lastmod.get(ruta)}`).toBe(
+          lastmod.get(ruta),
+        );
+      }
+    }
+  });
+
+  /**
+   * Ninguna URL debe pedir rastreo desde el sitemap y responder `noindex`.
+   * Pasaba con las diez categorías del directorio, cuyo `noindex` es
+   * condicional al número de perfiles y el sitemap no preguntaba.
+   */
+  test('ninguna URL del sitemap responde noindex', async ({ request }) => {
+    const xml = await (await request.get('/sitemap.xml')).text();
+    const rutas = [...xml.matchAll(/<loc>([^<]+)</g)].map((m) => new URL(m[1]!).pathname);
+
+    const contradictorias: string[] = [];
+    for (const ruta of rutas) {
+      const html = await (await request.get(ruta)).text();
+      if (/<meta name="robots" content="[^"]*noindex/.test(html)) contradictorias.push(ruta);
+    }
+    expect(contradictorias, contradictorias.join(', ')).toEqual([]);
+  });
+
   test('el manifiesto de la PWA es válido', async ({ request }) => {
     const res = await request.get('/manifest.webmanifest');
     expect(res.status()).toBe(200);

@@ -79,6 +79,17 @@ export const REVISION_VIGENTE = datos.ULTIMA_REVISION;
  */
 export const PUBLICADO_DESDE = '2026-08-12';
 
+/**
+ * «Cuándo cambió el contenido», para las páginas que declaran sus fechas a
+ * mano en vez de usar `FIRMA_POR_DEFECTO`.
+ *
+ * Existe porque arreglar sólo la firma por omisión dejó el fallo vivo en 85
+ * sitios: cada página que escribía `actualizadoEn: MODIFICADO_EN` seguía
+ * afirmando que su contenido cambió el día en que se revisaron las fuentes.
+ * `fechas-articulo.test.ts` impide que vuelva a colarse.
+ */
+export const MODIFICADO_EN = datos.ULTIMA_MODIFICACION;
+
 export const FIRMA_POR_DEFECTO: FirmaContenido = {
   autor: EQUIPO_EDITORIAL,
   publicadoEn: PUBLICADO_DESDE,

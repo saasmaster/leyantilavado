@@ -18,7 +18,7 @@ import {
 } from '@/components/contenido';
 import { jsonLdArticulo } from '@/components/contenido/JsonLd';
 import { ETIQUETA_CATEGORIA, ETIQUETA_RECURRENCIA } from '@/components/contenido/categorias';
-import { REVISION_VIGENTE } from '@/content/autores';
+import { MODIFICADO_EN, PUBLICADO_DESDE, REVISION_VIGENTE } from '@/content/autores';
 import { CONTENIDO_OBLIGACIONES } from '@/content/obligaciones';
 import { construirMetadata, jsonLdFAQ, jsonLdMigaDePan } from '@/lib/sitio';
 
@@ -69,8 +69,8 @@ export async function generateMetadata({
     descripcion: encontrado.contenido.descripcionSEO,
     ruta: `${BASE}/${slug}`,
     tipo: 'article',
-    publicadoEn: REVISION_VIGENTE,
-    actualizadoEn: REVISION_VIGENTE,
+    publicadoEn: PUBLICADO_DESDE,
+    actualizadoEn: MODIFICADO_EN,
   });
 }
 
@@ -119,8 +119,8 @@ export default async function PaginaObligacion({
           titulo: contenido.tituloSEO,
           descripcion: contenido.descripcionSEO,
           ruta,
-          publicadoEn: REVISION_VIGENTE,
-          actualizadoEn: REVISION_VIGENTE,
+          publicadoEn: PUBLICADO_DESDE,
+          actualizadoEn: MODIFICADO_EN,
           seccion: 'Obligaciones',
         })}
       />

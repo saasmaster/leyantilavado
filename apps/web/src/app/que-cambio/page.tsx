@@ -13,7 +13,7 @@ import {
   Seccion,
 } from '@/components/contenido';
 import { jsonLdArticulo } from '@/components/contenido/JsonLd';
-import { REVISION_VIGENTE } from '@/content/autores';
+import { MODIFICADO_EN, PUBLICADO_DESDE, REVISION_VIGENTE } from '@/content/autores';
 import { CAMBIOS_ANTES_DESPUES } from '@/content/reforma';
 import {
   ACTIVIDADES_CON_CAMBIO_PROPIO,
@@ -35,8 +35,8 @@ export const metadata: Metadata = construirMetadata({
   descripcion: DESCRIPCION,
   ruta: RUTA,
   tipo: 'article',
-  publicadoEn: REVISION_VIGENTE,
-  actualizadoEn: REVISION_VIGENTE,
+  publicadoEn: PUBLICADO_DESDE,
+  actualizadoEn: MODIFICADO_EN,
 });
 
 const MIGAS = [
@@ -61,8 +61,8 @@ export default function PaginaQueCambio() {
             titulo: TITULO,
             descripcion: DESCRIPCION,
             ruta: RUTA,
-            publicadoEn: REVISION_VIGENTE,
-            actualizadoEn: REVISION_VIGENTE,
+            publicadoEn: PUBLICADO_DESDE,
+            actualizadoEn: MODIFICADO_EN,
             seccion: 'Marco normativo',
           }),
         ]}

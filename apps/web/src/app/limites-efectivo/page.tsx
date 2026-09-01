@@ -17,7 +17,7 @@ import {
 } from '@/components/contenido';
 import diagEfectivo from '../../../public/img/diagramas/identificacion-vs-limite-efectivo.webp';
 import { jsonLdArticulo, jsonLdConjuntoDatos } from '@/components/contenido/JsonLd';
-import { REVISION_VIGENTE } from '@/content/autores';
+import { MODIFICADO_EN, PUBLICADO_DESDE, REVISION_VIGENTE } from '@/content/autores';
 import {
   COMPARATIVA_IVA,
   FAQ_EFECTIVO,
@@ -44,8 +44,8 @@ export const metadata: Metadata = construirMetadata({
     'Cuánto efectivo se puede recibir por un inmueble, un vehículo, joyería, arte o una renta, y la diferencia entre medir con IVA (art. 32) y sin IVA.',
   ruta: RUTA,
   tipo: 'article',
-  publicadoEn: REVISION_VIGENTE,
-  actualizadoEn: REVISION_VIGENTE,
+  publicadoEn: PUBLICADO_DESDE,
+  actualizadoEn: MODIFICADO_EN,
 });
 
 const INDICE = [
@@ -78,8 +78,8 @@ export default function PaginaLimitesEfectivo() {
           descripcion:
             'Los ocho supuestos del art. 32, sus límites en UMA y en pesos, y la diferencia de base con los umbrales del art. 17.',
           ruta: RUTA,
-          publicadoEn: REVISION_VIGENTE,
-          actualizadoEn: REVISION_VIGENTE,
+          publicadoEn: PUBLICADO_DESDE,
+          actualizadoEn: MODIFICADO_EN,
           seccion: 'Efectivo',
         })}
       />
@@ -88,7 +88,7 @@ export default function PaginaLimitesEfectivo() {
           nombre: 'Límites al uso de efectivo del artículo 32 de la LFPIORPI',
           descripcion: `Los ${reglas.length} supuestos del art. 32 con su límite en UMA, su periodicidad y las discrepancias entre fuentes oficiales.`,
           ruta: RUTA,
-          actualizadoEn: REVISION_VIGENTE,
+          actualizadoEn: MODIFICADO_EN,
         })}
       />
       <JsonLd datos={jsonLdFAQ(FAQ_EFECTIVO.map((f) => ({ ...f })))} />

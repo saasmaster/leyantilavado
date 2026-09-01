@@ -17,7 +17,7 @@ import {
   TablaUmbrales,
 } from '@/components/contenido';
 import { jsonLdArticulo, jsonLdConjuntoDatos } from '@/components/contenido/JsonLd';
-import { REVISION_VIGENTE } from '@/content/autores';
+import { MODIFICADO_EN, PUBLICADO_DESDE, REVISION_VIGENTE } from '@/content/autores';
 import { VERSION_LEGAL } from '@leyantilavado/rules-engine';
 import { construirMetadata, jsonLdFAQ, jsonLdMigaDePan } from '@/lib/sitio';
 import { ImagenEditorial } from '@/components/contenido/ImagenEditorial';
@@ -32,8 +32,8 @@ export const metadata: Metadata = construirMetadata({
   descripcion: `Las ${datos.UMBRALES.length} reglas de umbral del art. 17, con identificación y aviso por actividad, conversión a pesos y el comparador exacto que usa la ley.`,
   ruta: RUTA,
   tipo: 'article',
-  publicadoEn: REVISION_VIGENTE,
-  actualizadoEn: REVISION_VIGENTE,
+  publicadoEn: PUBLICADO_DESDE,
+  actualizadoEn: MODIFICADO_EN,
 });
 
 const INDICE = [
@@ -100,8 +100,8 @@ export default function PaginaUmbrales() {
           descripcion:
             'Tabla completa de umbrales por actividad vulnerable, en UMA y en pesos, con selector de año.',
           ruta: RUTA,
-          publicadoEn: REVISION_VIGENTE,
-          actualizadoEn: REVISION_VIGENTE,
+          publicadoEn: PUBLICADO_DESDE,
+          actualizadoEn: MODIFICADO_EN,
           seccion: 'Umbrales',
         })}
       />
@@ -110,8 +110,8 @@ export default function PaginaUmbrales() {
           nombre: 'Umbrales de identificación y aviso del artículo 17 de la LFPIORPI',
           descripcion: `Conjunto de ${datos.UMBRALES.length} reglas de umbral por actividad vulnerable, con su comparador, periodicidad y regla de acumulación, convertibles a pesos con los valores de la UMA de ${ANIO_MAS_ANTIGUO} a ${ANIO_MAS_RECIENTE}.`,
           ruta: RUTA,
-          actualizadoEn: REVISION_VIGENTE,
-          publicadoEn: REVISION_VIGENTE,
+          actualizadoEn: MODIFICADO_EN,
+          publicadoEn: PUBLICADO_DESDE,
           version: VERSION_LEGAL,
           cobertura: `${ANIO_MAS_ANTIGUO}/${ANIO_MAS_RECIENTE}`,
           variables: [

@@ -16,7 +16,7 @@ import {
   UmbralVista,
   describirUmbral,
 } from '@/components/contenido';
-import { REVISION_VIGENTE } from '@/content/autores';
+import { MODIFICADO_EN, PUBLICADO_DESDE, REVISION_VIGENTE } from '@/content/autores';
 import { CONTENIDO_ACTIVIDADES } from '@/content/actividades';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
 import { FuentesPrincipales } from '@/components/contenido/FuentesPrincipales';
@@ -29,8 +29,8 @@ export const metadata: Metadata = construirMetadata({
   descripcion: `Los ${datos.ACTIVIDADES.length} supuestos del art. 17 con su umbral de identificación y de aviso, a quién alcanza cada uno y qué obligaciones genera.`,
   ruta: RUTA,
   tipo: 'article',
-  publicadoEn: REVISION_VIGENTE,
-  actualizadoEn: REVISION_VIGENTE,
+  publicadoEn: PUBLICADO_DESDE,
+  actualizadoEn: MODIFICADO_EN,
 });
 
 const INDICE = [
@@ -104,8 +104,8 @@ export default function PaginaActividades() {
           descripcion:
             'Catálogo de actividades vulnerables con su umbral de identificación y de aviso.',
           ruta: RUTA,
-          publicadoEn: REVISION_VIGENTE,
-          actualizadoEn: REVISION_VIGENTE,
+          publicadoEn: PUBLICADO_DESDE,
+          actualizadoEn: MODIFICADO_EN,
           seccion: 'Actividades vulnerables',
         })}
       />

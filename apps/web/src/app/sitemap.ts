@@ -19,6 +19,7 @@ import { CASOS_PRACTICOS } from '@/content/casos-practicos';
 import { OFICIOS } from '@/content/oficios';
 import { TRAMITES } from '@/content/tramites';
 import { categoriasIndexables } from '@/lib/directorio/indexabilidad';
+import { modificadoDeRuta } from '@/lib/seo/modificacion';
 
 /**
  * Sitemap generado desde el motor de reglas, no escrito a mano.
@@ -43,29 +44,12 @@ import { categoriasIndexables } from '@/lib/directorio/indexabilidad';
  * que nada cambió no debe anunciar 97 URL como modificadas. `ultimaRevision`
  * queda como respaldo para datos que aún no declaran su fecha de modificación.
  */
-type ConProcedencia = {
-  procedencia: { ultimaRevision: string; ultimaModificacion?: string };
-};
-
-function modificadoEn(item: ConProcedencia): string {
-  return item.procedencia.ultimaModificacion ?? item.procedencia.ultimaRevision;
-}
-
 /**
  * Revisión más reciente de un conjunto de datos del motor.
  *
  * Las fechas son ISO `YYYY-MM-DD`, así que comparar cadenas basta y evita
  * construir objetos `Date` sólo para ordenarlas.
  */
-function revisionDe(items: readonly ConProcedencia[]): string {
-  let max = '';
-  for (const item of items) {
-    const f = modificadoEn(item);
-    if (f > max) max = f;
-  }
-  return max || datos.ULTIMA_MODIFICACION;
-}
-
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = SITIO.url;
 
@@ -73,36 +57,32 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ruta: string,
     prioridad: number,
     frecuencia: MetadataRoute.Sitemap[number]['changeFrequency'],
-    modificado: string = datos.ULTIMA_MODIFICACION,
+    modificado?: string,
   ) => ({
     url: `${base}${ruta}`,
-    lastModified: modificado,
+    // Sin `modificado` explícito manda el módulo compartido, que es el mismo
+    // que alimenta el `dateModified` del JSON-LD. Así no pueden discrepar.
+    lastModified: modificado ?? modificadoDeRuta(ruta),
     changeFrequency: frecuencia,
     priority: prioridad,
   });
 
-  const revUmbrales = revisionDe(datos.UMBRALES_PUBLICADOS);
-  const revActividades = revisionDe(datos.ACTIVIDADES_PUBLICABLES);
-  const revEfectivo = revisionDe(datos.REGLAS_EFECTIVO_PUBLICADAS);
-  const revSanciones = revisionDe(datos.SANCIONES);
-  const revCalendario = revisionDe(datos.CALENDARIO);
 
   const obligacionesPublicadas = datos.OBLIGACIONES.filter(
     (o) => o.estado === 'publicado' || o.estado === 'revisado',
   );
-  const revObligaciones = revisionDe(obligacionesPublicadas);
 
   const principales = [
     entrada('/', 1.0, 'weekly'),
-    entrada('/actividades-vulnerables', 0.9, 'monthly', revActividades),
-    entrada('/umbrales', 0.95, 'monthly', revUmbrales),
-    entrada('/obligaciones', 0.9, 'monthly', revObligaciones),
-    entrada('/limites-efectivo', 0.85, 'monthly', revEfectivo),
-    entrada('/multas', 0.85, 'monthly', revSanciones),
-    entrada('/requerimiento-sat', 0.9, 'monthly', revSanciones),
-    entrada('/calendario-cumplimiento', 0.9, 'weekly', revCalendario),
-    entrada('/exigibilidad', 0.9, 'weekly', revCalendario),
-    entrada('/guia-aviso', 0.9, 'monthly', revObligaciones),
+    entrada('/actividades-vulnerables', 0.9, 'monthly'),
+    entrada('/umbrales', 0.95, 'monthly'),
+    entrada('/obligaciones', 0.9, 'monthly'),
+    entrada('/limites-efectivo', 0.85, 'monthly'),
+    entrada('/multas', 0.85, 'monthly'),
+    entrada('/requerimiento-sat', 0.9, 'monthly'),
+    entrada('/calendario-cumplimiento', 0.9, 'weekly'),
+    entrada('/exigibilidad', 0.9, 'weekly'),
+    entrada('/guia-aviso', 0.9, 'monthly'),
     entrada('/reforma-ley-antilavado-2026', 0.95, 'weekly'),
     entrada('/acuerdo-115-2026', 0.9, 'weekly'),
     entrada('/actualizaciones', 0.8, 'weekly'),
@@ -154,11 +134,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Sólo las actividades cuya regla ya pasó verificación editorial.
   const actividades = datos.ACTIVIDADES.map((a) =>
-    entrada(`/actividades-vulnerables/${a.slug}`, 0.8, 'monthly', modificadoEn(a)),
+    entrada(`/actividades-vulnerables/${a.slug}`, 0.8, 'monthly'),
   );
 
   const obligaciones = obligacionesPublicadas.map((o) =>
-    entrada(`/obligaciones/${o.slug}`, 0.75, 'monthly', modificadoEn(o)),
+    entrada(`/obligaciones/${o.slug}`, 0.75, 'monthly'),
   );
 
   // «Qué cambió» tiene una página por actividad, generadas con

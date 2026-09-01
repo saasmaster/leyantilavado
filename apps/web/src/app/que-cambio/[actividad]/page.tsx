@@ -17,7 +17,7 @@ import {
   describirUmbral,
 } from '@/components/contenido';
 import { jsonLdArticulo } from '@/components/contenido/JsonLd';
-import { REVISION_VIGENTE } from '@/content/autores';
+import { MODIFICADO_EN, PUBLICADO_DESDE, REVISION_VIGENTE } from '@/content/autores';
 import { INSTRUMENTOS } from '@/content/reforma';
 import type { CambioReforma } from '@/content/tipos';
 import {
@@ -95,8 +95,8 @@ export async function generateMetadata({
         : `La fracción ${actividad.fraccion} no tiene cambios de umbral documentados. Qué le aplica de la reforma 2025-2026 y con qué fundamento.`,
     ruta: `${BASE}/${slug}`,
     tipo: 'article',
-    publicadoEn: REVISION_VIGENTE,
-    actualizadoEn: REVISION_VIGENTE,
+    publicadoEn: PUBLICADO_DESDE,
+    actualizadoEn: MODIFICADO_EN,
   });
 }
 
@@ -140,8 +140,8 @@ export default async function PaginaCambiosActividad({
             titulo,
             descripcion,
             ruta,
-            publicadoEn: REVISION_VIGENTE,
-            actualizadoEn: REVISION_VIGENTE,
+            publicadoEn: PUBLICADO_DESDE,
+            actualizadoEn: MODIFICADO_EN,
             seccion: 'Marco normativo',
           }),
         ]}

@@ -17,7 +17,7 @@ import {
 import { ImagenEditorial } from '@/components/contenido/ImagenEditorial';
 import diagIdentificacionAviso from '../../../public/img/diagramas/identificacion-vs-aviso.webp';
 import { jsonLdArticulo } from '@/components/contenido/JsonLd';
-import { REVISION_VIGENTE } from '@/content/autores';
+import { MODIFICADO_EN, PUBLICADO_DESDE, REVISION_VIGENTE } from '@/content/autores';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
 import { BandaParalaje } from '@/components/contenido/BandaParalaje';
 import bandaObligaciones from '../../../public/img/bandas/obligaciones.webp';
@@ -30,8 +30,8 @@ export const metadata: Metadata = construirMetadata({
     'Catálogo de obligaciones de una actividad vulnerable: alta, identificación, expedientes, avisos, riesgos, manual, capacitación y auditoría.',
   ruta: RUTA,
   tipo: 'article',
-  publicadoEn: REVISION_VIGENTE,
-  actualizadoEn: REVISION_VIGENTE,
+  publicadoEn: PUBLICADO_DESDE,
+  actualizadoEn: MODIFICADO_EN,
 });
 
 const INDICE = [
@@ -60,8 +60,8 @@ export default function PaginaObligaciones() {
           titulo: 'Obligaciones de quien realiza una actividad vulnerable',
           descripcion: 'Catálogo de obligaciones con pasos accionables y evidencia esperada.',
           ruta: RUTA,
-          publicadoEn: REVISION_VIGENTE,
-          actualizadoEn: REVISION_VIGENTE,
+          publicadoEn: PUBLICADO_DESDE,
+          actualizadoEn: MODIFICADO_EN,
           seccion: 'Obligaciones',
         })}
       />

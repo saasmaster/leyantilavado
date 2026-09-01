@@ -16,7 +16,7 @@ import {
   Seccion,
 } from '@/components/contenido';
 import { jsonLdArticulo } from '@/components/contenido/JsonLd';
-import { REVISION_VIGENTE } from '@/content/autores';
+import { MODIFICADO_EN, PUBLICADO_DESDE, REVISION_VIGENTE } from '@/content/autores';
 import {
   CANALES_ALTERNOS,
   CAUSAS_ERROR,
@@ -50,8 +50,8 @@ export const metadata: Metadata = construirMetadata({
   descripcion: GUIA_AVISO.descripcionSEO,
   ruta: RUTA,
   tipo: 'article',
-  publicadoEn: REVISION_VIGENTE,
-  actualizadoEn: REVISION_VIGENTE,
+  publicadoEn: PUBLICADO_DESDE,
+  actualizadoEn: MODIFICADO_EN,
 });
 
 /**
@@ -172,8 +172,8 @@ export default function PaginaGuiaAviso() {
           titulo: GUIA_AVISO.tituloSEO,
           descripcion: GUIA_AVISO.descripcionSEO,
           ruta: RUTA,
-          publicadoEn: REVISION_VIGENTE,
-          actualizadoEn: REVISION_VIGENTE,
+          publicadoEn: PUBLICADO_DESDE,
+          actualizadoEn: MODIFICADO_EN,
           seccion: 'Avisos',
         })}
       />

@@ -20,7 +20,7 @@ import {
   describirUmbral,
 } from '@/components/contenido';
 import { jsonLdArticulo } from '@/components/contenido/JsonLd';
-import { REVISION_VIGENTE } from '@/content/autores';
+import { MODIFICADO_EN, PUBLICADO_DESDE, REVISION_VIGENTE } from '@/content/autores';
 import { CONTENIDO_ACTIVIDADES } from '@/content/actividades';
 import { construirMetadata, jsonLdFAQ, jsonLdMigaDePan } from '@/lib/sitio';
 import { OFICIOS_POR_ACTIVIDAD } from '@/content/oficios';
@@ -72,8 +72,8 @@ export async function generateMetadata({
     descripcion: encontrado.contenido.descripcionSEO,
     ruta: `${BASE}/${slug}`,
     tipo: 'article',
-    publicadoEn: REVISION_VIGENTE,
-    actualizadoEn: REVISION_VIGENTE,
+    publicadoEn: PUBLICADO_DESDE,
+    actualizadoEn: MODIFICADO_EN,
   });
 }
 
@@ -125,8 +125,8 @@ export default async function PaginaActividad({
           titulo: contenido.tituloSEO,
           descripcion: contenido.descripcionSEO,
           ruta,
-          publicadoEn: REVISION_VIGENTE,
-          actualizadoEn: REVISION_VIGENTE,
+          publicadoEn: PUBLICADO_DESDE,
+          actualizadoEn: MODIFICADO_EN,
           seccion: 'Actividades vulnerables',
         })}
       />

@@ -1,4 +1,4 @@
-export { ULTIMA_REVISION, ULTIMA_MODIFICACION } from './revision';
+export { ULTIMA_REVISION, ULTIMA_MODIFICACION, SIN_CAMBIOS_DESDE } from './revision';
 export { FUENTES, FUENTES_POR_ID } from './fuentes';
 export { VALORES_UMA, UMA_VIGENTE_MAS_RECIENTE } from './uma';
 export { ACTIVIDADES, ACTIVIDADES_POR_SLUG, ACTIVIDADES_PUBLICABLES } from './actividades';

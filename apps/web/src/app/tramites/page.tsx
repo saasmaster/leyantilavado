@@ -12,7 +12,7 @@ import {
   Seccion,
 } from '@/components/contenido';
 import { jsonLdArticulo } from '@/components/contenido/JsonLd';
-import { REVISION_VIGENTE } from '@/content/autores';
+import { MODIFICADO_EN, PUBLICADO_DESDE, REVISION_VIGENTE } from '@/content/autores';
 import {
   ETIQUETA_BLOQUE,
   ORDEN_BLOQUES,
@@ -29,8 +29,8 @@ export const metadata: Metadata = construirMetadata({
     'Alta, baja, modificación de datos y designación del representante en el Padrón de Actividades Vulnerables: requisitos, plazos y lo que el SAT no publica.',
   ruta: RUTA,
   tipo: 'article',
-  publicadoEn: REVISION_VIGENTE,
-  actualizadoEn: REVISION_VIGENTE,
+  publicadoEn: PUBLICADO_DESDE,
+  actualizadoEn: MODIFICADO_EN,
 });
 
 const INDICE = [
@@ -60,8 +60,8 @@ export default function PaginaTramites() {
           descripcion:
             'Guía operativa de los trámites del portal SPPLD: alta, modificación, baja, representante de cumplimiento y problemas de acceso.',
           ruta: RUTA,
-          publicadoEn: REVISION_VIGENTE,
-          actualizadoEn: REVISION_VIGENTE,
+          publicadoEn: PUBLICADO_DESDE,
+          actualizadoEn: MODIFICADO_EN,
           seccion: 'Trámites',
         })}
       />

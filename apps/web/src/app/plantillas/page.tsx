@@ -7,6 +7,7 @@ import { PLANTILLAS } from '@/content/plantillas';
 import { REVISION_VIGENTE } from '@/components/inicio/comun';
 import { construirMetadata } from '@/lib/sitio';
 import { JsonLd, jsonLdColeccion } from '@/components/contenido/JsonLd';
+import { MODIFICADO_EN, PUBLICADO_DESDE } from '@/content/autores';
 
 export const metadata: Metadata = construirMetadata({
   titulo: 'Plantillas de cumplimiento LFPIORPI',
@@ -14,8 +15,8 @@ export const metadata: Metadata = construirMetadata({
     'Manual de políticas, matriz de riesgos, expedientes de identificación y control de operaciones, con lo que tienes que ajustar en cada uno.',
   ruta: '/plantillas',
   tipo: 'article',
-  publicadoEn: REVISION_VIGENTE,
-  actualizadoEn: REVISION_VIGENTE,
+  publicadoEn: PUBLICADO_DESDE,
+  actualizadoEn: MODIFICADO_EN,
 });
 
 /**

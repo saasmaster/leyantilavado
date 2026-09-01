@@ -24,7 +24,7 @@ import {
   Seccion,
 } from '@/components/contenido';
 import { jsonLdArticulo } from '@/components/contenido/JsonLd';
-import { REVISION_VIGENTE } from '@/content/autores';
+import { MODIFICADO_EN, PUBLICADO_DESDE, REVISION_VIGENTE } from '@/content/autores';
 import { ETIQUETA_BLOQUE, TRAMITES, TRAMITES_POR_SLUG, type Tramite } from '@/content/tramites';
 import { SITIO, construirMetadata, jsonLdFAQ, jsonLdMigaDePan } from '@/lib/sitio';
 
@@ -96,8 +96,8 @@ export async function generateMetadata({
     descripcion: tramite.descripcionSEO,
     ruta: `${BASE}/${slug}`,
     tipo: 'article',
-    publicadoEn: REVISION_VIGENTE,
-    actualizadoEn: REVISION_VIGENTE,
+    publicadoEn: PUBLICADO_DESDE,
+    actualizadoEn: MODIFICADO_EN,
   });
 }
 
@@ -136,8 +136,8 @@ export default async function PaginaTramite({ params }: { params: Promise<{ tram
           titulo: tramite.tituloSEO,
           descripcion: tramite.descripcionSEO,
           ruta,
-          publicadoEn: REVISION_VIGENTE,
-          actualizadoEn: REVISION_VIGENTE,
+          publicadoEn: PUBLICADO_DESDE,
+          actualizadoEn: MODIFICADO_EN,
           seccion: 'Trámites',
         })}
       />

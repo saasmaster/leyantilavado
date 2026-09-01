@@ -1,5 +1,6 @@
 import { IMAGEN_SOCIAL, LOGO, SITIO, jsonParaScript } from '@/lib/sitio';
 import { EQUIPO_EDITORIAL, REVISION_VIGENTE } from '@/content/autores';
+import { modificadoDeRuta } from '@/lib/seo/modificacion';
 
 /**
  * Datos estructurados.
@@ -71,7 +72,9 @@ export function jsonLdArticulo({
     },
     isPartOf: { '@type': 'WebSite', '@id': `${SITIO.url}/#sitio` },
     datePublished: publicadoEn,
-    dateModified: actualizadoEn,
+    // La ruta manda sobre lo que pase la página: es la única forma de que
+    // este campo y el `lastmod` del sitemap no se contradigan.
+    dateModified: modificadoDeRuta(ruta),
     ...(seccion ? { articleSection: seccion } : {}),
     author: {
       '@type': 'Organization',

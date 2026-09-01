@@ -4,7 +4,7 @@ import { ArrowUpRight } from 'lucide-react';
 import { datos } from '@leyantilavado/rules-engine';
 import { Insignia, Nota, Tarjeta, TarjetaCuerpo } from '@leyantilavado/ui';
 import { EncabezadoPagina } from '@/components/inicio/comun';
-import { REVISION_VIGENTE } from '@/content/autores';
+import { MODIFICADO_EN, PUBLICADO_DESDE, REVISION_VIGENTE } from '@/content/autores';
 import { OFICIOS, type Oficio } from '@/content/oficios';
 import { construirMetadata, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
 
@@ -15,8 +15,8 @@ export const metadata: Metadata = construirMetadata({
   descripcion: `${OFICIOS.length} oficios con su fracción del artículo 17, sus umbrales y lo que cambió: notarías, inmobiliarias, joyerías, casas de empeño, despachos y más.`,
   ruta: RUTA,
   tipo: 'article',
-  publicadoEn: REVISION_VIGENTE,
-  actualizadoEn: REVISION_VIGENTE,
+  publicadoEn: PUBLICADO_DESDE,
+  actualizadoEn: MODIFICADO_EN,
 });
 
 const MIGA = [

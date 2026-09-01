@@ -17,7 +17,7 @@ import {
 } from '@/components/contenido';
 import { jsonLdArticulo } from '@/components/contenido/JsonLd';
 import { TarjetaEvaluacion } from '@/components/herramientas/TarjetaEvaluacion';
-import { REVISION_VIGENTE } from '@/content/autores';
+import { MODIFICADO_EN, PUBLICADO_DESDE, REVISION_VIGENTE } from '@/content/autores';
 import {
   ADVERTENCIA_ILUSTRATIVA,
   CASOS_POR_SLUG,
@@ -62,8 +62,8 @@ export async function generateMetadata({
     descripcion: caso.descripcionSEO,
     ruta: `${BASE}/${slug}`,
     tipo: 'article',
-    publicadoEn: REVISION_VIGENTE,
-    actualizadoEn: REVISION_VIGENTE,
+    publicadoEn: PUBLICADO_DESDE,
+    actualizadoEn: MODIFICADO_EN,
   });
 }
 
@@ -115,8 +115,8 @@ export default async function PaginaCasoPractico({
           titulo: caso.tituloSEO,
           descripcion: caso.descripcionSEO,
           ruta,
-          publicadoEn: REVISION_VIGENTE,
-          actualizadoEn: REVISION_VIGENTE,
+          publicadoEn: PUBLICADO_DESDE,
+          actualizadoEn: MODIFICADO_EN,
           seccion: 'Casos prácticos',
         })}
       />

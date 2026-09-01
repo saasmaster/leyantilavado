@@ -19,7 +19,7 @@ import {
 import { BandaParalaje } from '@/components/contenido/BandaParalaje';
 import bandaMultas from '../../../public/img/bandas/multas.webp';
 import { jsonLdArticulo } from '@/components/contenido/JsonLd';
-import { REVISION_VIGENTE } from '@/content/autores';
+import { MODIFICADO_EN, PUBLICADO_DESDE, REVISION_VIGENTE } from '@/content/autores';
 import {
   CONSECUENCIAS_NO_PECUNIARIAS,
   CRITERIOS_GRADUACION,
@@ -38,8 +38,8 @@ export const metadata: Metadata = construirMetadata({
     'Infracciones del art. 53 y rangos de multa del art. 54, la diferencia entre presentar tarde y no presentar, y la autocorrección del art. 55.',
   ruta: RUTA,
   tipo: 'article',
-  publicadoEn: REVISION_VIGENTE,
-  actualizadoEn: REVISION_VIGENTE,
+  publicadoEn: PUBLICADO_DESDE,
+  actualizadoEn: MODIFICADO_EN,
 });
 
 const INDICE = [
@@ -81,8 +81,8 @@ export default function PaginaMultas() {
           descripcion:
             'Conductas del art. 53, rangos del art. 54, autocorrección del art. 55 y régimen fiscal de beneficiario controlador.',
           ruta: RUTA,
-          publicadoEn: REVISION_VIGENTE,
-          actualizadoEn: REVISION_VIGENTE,
+          publicadoEn: PUBLICADO_DESDE,
+          actualizadoEn: MODIFICADO_EN,
           seccion: 'Sanciones',
         })}
       />

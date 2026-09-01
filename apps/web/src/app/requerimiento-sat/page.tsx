@@ -16,7 +16,7 @@ import {
   Seccion,
 } from '@/components/contenido';
 import { jsonLdArticulo } from '@/components/contenido/JsonLd';
-import { REVISION_VIGENTE } from '@/content/autores';
+import { MODIFICADO_EN, PUBLICADO_DESDE, REVISION_VIGENTE } from '@/content/autores';
 import {
   ART_55,
   CONSULTA_FUENTES,
@@ -45,8 +45,8 @@ export const metadata: Metadata = construirMetadata({
     'Carta invitación, requerimiento y visita no son lo mismo. Plazos con su artículo, la autocorrección del art. 55 y los medios de defensa.',
   ruta: RUTA,
   tipo: 'article',
-  publicadoEn: REVISION_VIGENTE,
-  actualizadoEn: REVISION_VIGENTE,
+  publicadoEn: PUBLICADO_DESDE,
+  actualizadoEn: MODIFICADO_EN,
 });
 
 const INDICE = [
@@ -129,8 +129,8 @@ export default function PaginaRequerimiento() {
           descripcion:
             'Cómo se diferencian, qué plazos corren en cada caso, cómo funciona la autocorrección del art. 55 de la LFPIORPI y qué medios de defensa existen.',
           ruta: RUTA,
-          publicadoEn: REVISION_VIGENTE,
-          actualizadoEn: REVISION_VIGENTE,
+          publicadoEn: PUBLICADO_DESDE,
+          actualizadoEn: MODIFICADO_EN,
           seccion: 'Sanciones',
         })}
       />
