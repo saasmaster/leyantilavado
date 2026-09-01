@@ -47,11 +47,20 @@ export function Hero() {
 
       <div className="contenedor-app grid gap-12 py-16 md:py-24 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:items-center">
         <div>
-          {/* La pastilla con «Marco legal revisado al …» se quitó de la
-              portada: la fecha de revisión sigue viva donde sirve —en la
-              tarjeta de datos, junto a la versión del corpus, y en cada tabla
-              con su sello de procedencia—, pero arriba del titular sólo
-              retrasaba la lectura de lo único que la portada tiene que decir. */}
+          {/* La pastilla con «Marco legal revisado al …» se quitó de aquí
+              porque arriba del titular sólo retrasaba la lectura de lo único
+              que la portada tiene que decir.
+
+              Al quitarla, la fecha de revisión desapareció de la portada
+              ENTERA —este comentario llegó a afirmar que seguía «en la tarjeta
+              de datos» cuando ya no estaba—, y la tarjeta se quedó terminando
+              en la versión del corpus, que numera el último cambio de DATO y
+              por tanto se queda quieta en una revisión sin cambios. Leída
+              sola, esa fecha parece un sitio desatendido. Pasó dos veces, la
+              segunda con el dueño del sitio.
+
+              Por eso la revisión vuelve abajo, en la tarjeta, pegada a la
+              versión: las dos fechas sólo se entienden juntas. */}
           <h1
             id="hero-titulo"
             className="text-[2.1rem] font-semibold leading-[1.12] text-[var(--color-tinta)] md:text-[3.1rem]"
@@ -141,10 +150,11 @@ export function Hero() {
                 </span>
               </dd>
             </div>
-            <div className="flex items-baseline justify-between gap-4 pt-3">
+            <div className="flex items-baseline justify-between gap-4 py-3">
               {/* «Último cambio de dato» no es adorno: sin él, esta fecha
-                  convive con la de revisión —tres días posterior— y se lee como
-                  un descuido. Fue la primera pregunta de quien lo vio. */}
+                  convive con la de revisión —posterior— y se lee como un
+                  descuido. Fue la primera pregunta de quien lo vio, las dos
+                  veces. */}
               <dt className="text-sm text-[var(--color-tinta-suave)]">
                 Versión del corpus legal
                 <span className="block text-xs text-[var(--color-tinta-tenue)]">
@@ -153,6 +163,21 @@ export function Hero() {
               </dt>
               <dd className="cifra text-sm font-medium text-[var(--color-tinta)]">
                 {VERSION_LEGAL}
+              </dd>
+            </div>
+            <div className="flex items-baseline justify-between gap-4 pt-3">
+              {/* La fila que responde la pregunta que deja la anterior: «vale,
+                  el dato no cambió, ¿pero cuándo lo miraste?». Va la última a
+                  propósito, para que la tarjeta cierre con la fecha más
+                  reciente y no con la más vieja. */}
+              <dt className="text-sm text-[var(--color-tinta-suave)]">
+                Última revisión de fuentes
+                <span className="block text-xs text-[var(--color-tinta-tenue)]">
+                  Se comprueban aunque no cambie nada
+                </span>
+              </dt>
+              <dd className="cifra text-sm font-medium text-[var(--color-tinta)]">
+                {formatearFechaLarga(datos.ULTIMA_REVISION)}
               </dd>
             </div>
           </dl>

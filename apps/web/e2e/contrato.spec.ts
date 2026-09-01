@@ -444,6 +444,36 @@ test.describe('SEO técnico', () => {
     expect(corto, 'el llms.txt debe apuntar al corpus completo').toContain('/llms-full.txt');
   });
 
+  /**
+   * La portada tiene que decir CUÁNDO se comprobaron las fuentes, no sólo la
+   * versión del corpus.
+   *
+   * Son dos preguntas distintas y la versión sólo responde una: numera el
+   * último cambio de DATO, así que en una revisión que no encuentra cambios se
+   * queda quieta, a propósito. Sola en la tarjeta, esa fecha quieta se lee como
+   * un sitio abandonado — pasó dos veces, la segunda con el dueño del sitio,
+   * después de que la pastilla del titular se quitara y la fecha de revisión
+   * desapareciera de la portada entera sin que nadie lo notara.
+   *
+   * Es un fallo mudo: no rompe el build, no rompe ningún tipo, y la página se
+   * ve perfecta. Por eso vive aquí.
+   */
+  test('la portada dice cuándo se revisaron las fuentes, no sólo la versión', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    const tarjeta = page.getByText('Datos base del cálculo').locator('..');
+
+    await expect(
+      tarjeta.getByText('Última revisión de fuentes'),
+      'la tarjeta de datos perdió la fecha de revisión',
+    ).toBeVisible();
+
+    // Y que sea una fecha de verdad, no una etiqueta vacía: el año en curso
+    // basta para distinguir «se renderizó» de «se renderizó un valor».
+    await expect(tarjeta).toContainText(/de 20\d\d/);
+  });
+
   test('el manifiesto de la PWA es válido', async ({ request }) => {
     const res = await request.get('/manifest.webmanifest');
     expect(res.status()).toBe(200);
