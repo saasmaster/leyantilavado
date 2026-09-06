@@ -196,10 +196,24 @@ export function Hero() {
 
         {/* ── El panel ──────────────────────────────────────────────────────
             Ningún número está escrito aquí: todos salen del motor jurídico. */}
-        <div className="tarjeta tarjeta-elevada relative overflow-clip bg-[var(--color-superficie)]">
+        {/*
+         * `section` con nombre accesible, no un `div` suelto.
+         *
+         * El panel es un bloque de datos autónomo: con `aria-labelledby` se
+         * convierte en una región navegable y quien usa lector de pantalla
+         * puede saltar a «Datos base del cálculo» en vez de atravesar el héroe
+         * entero. Antes era un contenedor anónimo.
+         */}
+        <section
+          aria-labelledby="panel-datos"
+          className="tarjeta tarjeta-elevada relative overflow-clip bg-[var(--color-superficie)]"
+        >
           {/* Cabecera: esto es una EDICIÓN del corpus, con su número. */}
           <div className="flex items-baseline justify-between gap-4 border-b border-[var(--color-borde)] px-6 py-3.5 md:px-7">
-            <p className="text-[0.82rem] font-semibold tracking-[0.01em] text-[var(--color-tinta)]">
+            <p
+              id="panel-datos"
+              className="text-[0.82rem] font-semibold tracking-[0.01em] text-[var(--color-tinta)]"
+            >
               Datos base del cálculo
             </p>
             <p className="cifra text-[0.78rem] text-[var(--color-tinta-tenue)]">
@@ -282,7 +296,7 @@ export function Hero() {
               se comprueban aunque no cambie nada
             </p>
           </div>
-        </div>
+        </section>
       </div>
     </section>
   );

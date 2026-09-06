@@ -462,7 +462,11 @@ test.describe('SEO técnico', () => {
     page,
   }) => {
     await page.goto('/');
-    const tarjeta = page.getByText('Datos base del cálculo').locator('..');
+    // Se localiza la REGIÓN, no el padre del rótulo. `locator('..')` ataba la
+    // prueba a la anidación exacta del marcado y se rompió en el primer
+    // rediseño, señalando un fallo que no existía: el dato seguía en la página,
+    // sólo que un nivel más arriba.
+    const tarjeta = page.getByRole('region', { name: /datos base del cálculo/i });
 
     // Se comprueba la FECHA, no la etiqueta: el rótulo puede reescribirse en
     // cualquier rediseño y la prueba seguiría teniendo que pasar. Lo que no
