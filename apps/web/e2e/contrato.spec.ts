@@ -464,14 +464,17 @@ test.describe('SEO técnico', () => {
     await page.goto('/');
     const tarjeta = page.getByText('Datos base del cálculo').locator('..');
 
+    // Se comprueba la FECHA, no la etiqueta: el rótulo puede reescribirse en
+    // cualquier rediseño y la prueba seguiría teniendo que pasar. Lo que no
+    // puede desaparecer es el dato.
     await expect(
-      tarjeta.getByText('Última revisión de fuentes'),
-      'la tarjeta de datos perdió la fecha de revisión',
+      tarjeta.getByText(/revisad|revisión/i),
+      'la tarjeta de datos perdió la mención a la revisión de fuentes',
     ).toBeVisible();
-
-    // Y que sea una fecha de verdad, no una etiqueta vacía: el año en curso
-    // basta para distinguir «se renderizó» de «se renderizó un valor».
-    await expect(tarjeta).toContainText(/de 20\d\d/);
+    await expect(
+      tarjeta,
+      'la tarjeta menciona la revisión pero no imprime ninguna fecha',
+    ).toContainText(/\d{1,2} de [a-zé]+ de 20\d\d/i);
   });
 
   /**

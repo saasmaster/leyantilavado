@@ -207,6 +207,19 @@
     border-radius: 6px;
   }
 
+  /*
+   * Barra de desplazamiento.
+   *
+   * Era la última superficie del navegador sin tematizar: el anillo de foco, la
+   * selección, las cifras tabulares y el subrayado ya salían de la paleta, y la
+   * barra seguía siendo la gris del sistema —un elemento de otro diseño pegado
+   * al borde de una página de 7 000 px—. `scrollbar-color` es una línea y se
+   * degrada sola donde no exista.
+   */
+  html {
+    scrollbar-color: var(--color-borde-fuerte) transparent;
+  }
+
   ::selection {
     background-color: color-mix(in srgb, var(--color-petroleo-vivo) 26%, transparent);
   }
