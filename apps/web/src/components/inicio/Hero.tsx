@@ -36,15 +36,29 @@ import { Boton } from '@leyantilavado/ui';
 const UMA = datos.UMA_VIGENTE_MAS_RECIENTE;
 
 /**
- * Lo que falta, contado y explicado.
+ * El hito que de verdad le corre a quien entra hoy.
  *
- * «20 de 22» y «36 reglas» invitaban a leer una contradicción donde había un
- * hecho: hay supuestos que la ley enuncia y para los que la autoridad todavía
- * no ha publicado umbral. Decir «verificado» y «sin publicar» por separado
- * cuenta lo mismo sin que parezca que el sitio se desmiente a sí mismo.
+ * ── Qué había aquí, y por qué se fue ───────────────────────────────────────
+ *
+ * Un marcador editorial: «20 actividades verificadas · 2 sin publicar» y «41
+ * reglas · 1 pendientes». Ya se había reescrito una vez, porque «20 de 22»
+ * parecía una contradicción; lo que nunca se preguntó es si esa métrica pinta
+ * algo en la portada.
+ *
+ * No pinta nada. «20» sobre qué, «41» sobre qué: son cuentas internas de la
+ * redacción, no información para quien llega. Y el efecto medible era el
+ * contrario del buscado: lo primero que leía un visitante nuevo sobre el
+ * pliegue era «sin publicar» y «pendientes», de modo que el bloque construido
+ * para demostrar rigor terminaba anunciando que el trabajo está a medias.
+ *
+ * La transparencia no se pierde: vive en /umbrales y en cada ficha de
+ * actividad, donde dice QUÉ fracción concreta no tiene cifra publicada y por
+ * qué. Ahí es accionable; aquí sólo era defensiva.
+ *
+ * En su lugar va el dato que le corre a todo el mundo ahora mismo, y sale del
+ * calendario ya verificado en vez de escribirse a mano.
  */
-const PENDIENTES_ACTIVIDADES = datos.ACTIVIDADES.length - datos.ACTIVIDADES_PUBLICABLES.length;
-const PENDIENTES_UMBRALES = datos.UMBRALES.length - datos.UMBRALES_PUBLICADOS.length;
+const VIGENCIA = datos.CALENDARIO.find((h) => h.id === 'vigencia-general');
 
 /**
  * Lo que el sitio calcula, en cuatro piezas.
@@ -60,33 +74,6 @@ const LO_QUE_CALCULA = [
   { que: 'Límites de efectivo', detalle: 'el art. 32, que es prohibición y no umbral' },
   { que: 'Fechas de aviso', detalle: 'el día 17 del mes siguiente, con sus hábiles' },
 ];
-
-/** Recuento con su parte pendiente, que se declara en vez de esconderse. */
-function Recuento({
-  etiqueta,
-  verificadas,
-  pendientes,
-  nota,
-}: {
-  etiqueta: string;
-  verificadas: number;
-  pendientes: number;
-  nota: string;
-}) {
-  return (
-    <div>
-      <dt className="text-[0.8rem] leading-snug text-[var(--color-tinta-tenue)]">{etiqueta}</dt>
-      <dd className="mt-1.5 flex items-baseline gap-1.5">
-        <span className="cifra text-[1.6rem] font-semibold leading-none text-[var(--color-tinta)]">
-          {verificadas}
-        </span>
-        <span className="text-[0.78rem] leading-tight text-[var(--color-tinta-tenue)]">
-          {pendientes} {nota}
-        </span>
-      </dd>
-    </div>
-  );
-}
 
 export function Hero() {
   return (
@@ -255,26 +242,44 @@ export function Hero() {
               Una operación anterior se mide con la UMA de su propio año.
             </p>
 
-            <dl className="mt-7 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-[var(--color-borde)] pt-6">
-              <Recuento
-                etiqueta="Actividades con umbral verificado"
-                verificadas={datos.ACTIVIDADES_PUBLICABLES.length}
-                pendientes={PENDIENTES_ACTIVIDADES}
-                nota="sin publicar"
-              />
-              <Recuento
-                etiqueta="Reglas de umbral verificadas"
-                verificadas={datos.UMBRALES_PUBLICADOS.length}
-                pendientes={PENDIENTES_UMBRALES}
-                nota="pendientes"
-              />
-            </dl>
-
-            <p className="mt-5 text-[0.82rem] leading-relaxed text-[var(--color-tinta-tenue)]">
-              Lo pendiente no es un hueco nuestro: son supuestos que la ley enuncia y para los que
-              la autoridad todavía no publica una cifra. Se listan igual, diciendo que no la
-              tienen, en lugar de rellenarlos con una estimación.
-            </p>
+            {/*
+             * La segunda lectura del panel: qué cambia, y cuándo.
+             *
+             * Con la UMA arriba, el panel dice el estado de la ley en el tiempo
+             * —lo que rige hoy y lo que llega— en vez de puntuarse a sí mismo.
+             */}
+            {VIGENCIA ? (
+              <div className="mt-7 border-t border-[var(--color-borde)] pt-6">
+                <p className="text-[0.8rem] text-[var(--color-tinta-tenue)]">Lo siguiente en el calendario</p>
+                <p className="mt-1.5 text-[0.98rem] font-medium leading-snug text-[var(--color-tinta)]">
+                  {VIGENCIA.titulo}
+                </p>
+                <p className="cifra mt-1 text-[0.9rem] text-[var(--color-petroleo-hondo)]">
+                  {formatearFechaLarga(VIGENCIA.fecha)}
+                </p>
+                <p className="mt-2.5 text-[0.83rem] leading-relaxed text-[var(--color-tinta-tenue)]">
+                  Ese día empieza el marco nuevo, pero no vence todo lo que contiene: los plazos
+                  del resto corren escalonados hasta 2029.
+                </p>
+                <Link
+                  href="/exigibilidad"
+                  /*
+                   * Sin modificador de opacidad sobre el valor arbitrario.
+                   *
+                   * `decoration-[var(--color-petroleo)]/35` parecía inofensivo y
+                   * rompía el color en modo oscuro: medido, el enlace computaba
+                   * #0a6f75 —el valor CLARO del token— sobre el panel oscuro,
+                   * 2.99:1, por debajo del mínimo de 4.5. Al aplicar el alfa,
+                   * Tailwind resuelve la variable contra `:root` y se salta la
+                   * redefinición del ámbito oscuro. El subrayado hereda de
+                   * `currentColor`, que sí sigue al texto.
+                   */
+                  className="mt-3 inline-block text-[0.85rem] font-medium text-[var(--color-petroleo)] underline decoration-1 underline-offset-4"
+                >
+                  Ver qué te es exigible y desde cuándo
+                </Link>
+              </div>
+            ) : null}
           </div>
 
           {/*
