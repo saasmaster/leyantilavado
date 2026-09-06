@@ -12,6 +12,26 @@ import type { EntradaActualizacion } from './tipos';
  */
 const ENTRADAS: readonly EntradaActualizacion[] = [
   {
+    id: 'revision-2026-09-05',
+    fecha: '2026-09-05',
+    tipo: 'sitio',
+    titulo: 'Revisión de fuentes: sin cambios, y tres meses para el 30 de noviembre',
+    resumen:
+      'Pasada sobre las fuentes oficiales: no hay instrumento nuevo desde el Acuerdo 115/2026 y ninguna cifra publicada cambia. Queda menos de un trimestre para que ese Acuerdo entre en vigor, así que esta entrada aprovecha para separar lo que de verdad es exigible ese día de lo que no lo será hasta 2027 o 2028.',
+    impacto: [
+      'El 30 de noviembre de 2026 entra en vigor el Acuerdo, pero no vence ese día todo lo que contiene. Es la confusión más común: el Acuerdo adiciona once capítulos con plazos escalonados, y sus propios transitorios reparten las obligaciones entre 2027 y 2029.',
+      'Lo que corre desde el 30 de noviembre es el marco: el manual de cumplimiento y el enfoque basado en riesgos quedan sujetos a las nuevas reglas. La metodología de riesgos alimentada con datos del año anterior, la clasificación de clientes, los expedientes y el beneficiario controlador tienen fecha propia, el 1 de marzo de 2027. Los mecanismos automatizados, el 1 de junio de 2027. La primera auditoría anual cubre el ejercicio 2028 y su dictamen se entrega en marzo de 2029.',
+      'El aviso de veinticuatro horas sigue SIN fecha, y no por falta de dato nuestro: su exigibilidad corre a partir de seis meses después de que la UIF publique la Resolución con los formatos oficiales, y esa Resolución no aparece publicada. Publicar una fecha aquí sería inventarla, así que aparece como pendiente en el calendario.',
+      'Dos fechas del calendario están calculadas a partir de plazos en meses y no de una fecha publicada —la actualización de proveedores de activos virtuales y las notificaciones electrónicas—. Salen marcadas como no confirmadas en la página, y conviene contrastarlas contra el transitorio antes de usarlas como límite operativo.',
+      'Ninguna cifra del sitio cambia con esta revisión. Los ocho documentos del portal del SAT se contrastaron contra la huella criptográfica que guardamos el 1 de septiembre y los ocho son idénticos: no es que sigan publicados, es que siguen diciendo lo mismo.',
+    ],
+    paginasAfectadas: [
+      { etiqueta: 'Calendario de cumplimiento', href: '/calendario-cumplimiento' },
+      { etiqueta: 'Qué es exigible y desde cuándo', href: '/exigibilidad' },
+      { etiqueta: 'Acuerdo 115/2026', href: '/acuerdo-115-2026' },
+    ],
+  },
+  {
     id: 'uma-historica-verificada',
     fecha: '2026-09-01',
     tipo: 'sitio',

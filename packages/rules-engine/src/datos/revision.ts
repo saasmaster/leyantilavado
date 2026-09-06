@@ -28,31 +28,31 @@
 /**
  * Fecha de la última pasada editorial sobre las fuentes oficiales.
  *
- * 1-sep-2026: sin cambios. Lo que se comprobó, y contra qué:
+ * 5-sep-2026: sin cambios. Contrastado, y con qué:
  *
  * - **Texto vigente.** La ficha de reformas de la Cámara de Diputados sigue
- *   dando el 16-07-2025 como última reforma de la LFPIORPI. No hay decreto
- *   posterior, así que el texto sobre el que descansa todo el corpus no se ha
- *   movido.
- * - **Instrumentos.** Ninguno nuevo desde el Acuerdo 115/2026 (DOF 7-ago-2026,
- *   en vigor el 30-nov-2026). El marco siguen siendo los mismos tres.
- * - **Tabla de umbrales del SAT.** Comparados los conjuntos COMPLETOS de
- *   valores en UMA, el nuestro y el suyo: coinciden exactamente —4, 210, 325,
- *   485, 645, 805, 1,285, 1,605, 2,410, 3,210, 4,000, 4,815, 6,420, 8,000 y
- *   8,025—, ninguno de más ni de menos. La UMA 2026 que publica el SAT
- *   (117.31 diarios) es la que usa el motor.
- * - **Resolución de formatos de la UIF.** Sigue sin aparecer publicada. Es la
- *   única pieza capaz de convertir un pendiente en un plazo cierto —los avisos
- *   de 24 horas—, y por eso se vuelve a mirar en cada pasada. Mientras no
- *   exista, `PENDIENTES_SIN_FECHA` sigue siendo la respuesta honesta.
+ *   dando el 16-07-2025. Sin decreto posterior.
+ * - **Instrumentos.** Ninguno nuevo desde el Acuerdo 115/2026 (DOF
+ *   7-ago-2026). Siguen siendo los mismos tres.
+ * - **Tabla de umbrales del SAT.** Byte a byte idéntica a la del 1-sep
+ *   (95 205 bytes), y sus cifras siguen coincidiendo con las del motor.
+ * - **Los ocho documentos del portal.** Primera pasada que usa la línea base
+ *   sha-256 que se dejó el 1-sep: los ocho reproducen su hash exacto. Ya no se
+ *   afirma «sigue publicado» sino «sigue diciendo lo mismo».
+ * - **Resolución de formatos de la UIF.** Sigue sin publicarse. El único
+ *   comunicado de la UIF que aparece sobre formatos de avisos es de mayo de
+ *   2021 —modificó el Anexo 11 de la fracción XI— y no tiene relación con los
+ *   avisos de 24 horas del Acuerdo 115/2026.
+ * - **LFPA y LFPCA.** 14-11-2025 y 09-06-2026, sin cambios. De ahí salen los
+ *   plazos de /requerimiento-sat.
  *
- * Ninguna `vigencia.desde` cae entre el 24-ago y el 1-sep, y la UMA se
- * actualiza en febrero. Ninguna cifra publicada cambia con esta fecha, y por
- * eso `ULTIMA_MODIFICACION` NO sube: véase la regla al principio del fichero.
+ * Ninguna `vigencia.desde` cae entre el 2 y el 5 de septiembre, y la UMA se
+ * actualiza en febrero: ninguna cifra publicada cambia con esta fecha, y por
+ * eso `ULTIMA_MODIFICACION` NO sube.
  *
- * Antes: 2026-08-23.
+ * Antes: 2026-09-01.
  */
-export const ULTIMA_REVISION = '2026-09-01';
+export const ULTIMA_REVISION = '2026-09-05';
 
 /**
  * Fecha en que cambió por última vez algún dato del corpus.
