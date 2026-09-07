@@ -533,6 +533,54 @@ test.describe('SEO técnico', () => {
     expect(contradictorias, contradictorias.join(', ')).toEqual([]);
   });
 
+  /**
+   * Universal Links de iOS.
+   *
+   * Mismo fallo mudo que `assetlinks.json` en Android, y ya ocurrió: el archivo
+   * daba 404, así que iOS no verificaba nada y los enlaces a
+   * leyantilavado.org/app abrían Safari en vez de la app —sin error en el
+   * teléfono ni en el sitio—. Apple además exige `application/json` y no sigue
+   * redirecciones, así que las dos cosas se comprueban aquí.
+   */
+  test('el sitio autoriza los Universal Links de la app de iOS', async ({ request }) => {
+    const res = await request.get('/.well-known/apple-app-site-association');
+    expect(res.status()).toBe(200);
+    expect(
+      res.headers()['content-type'],
+      'Apple descarta el archivo si no llega como application/json',
+    ).toContain('application/json');
+
+    const aasa = await res.json();
+    const detalles = aasa?.applinks?.details;
+    expect(Array.isArray(detalles) && detalles.length > 0, 'no declara ninguna app').toBe(true);
+
+    const [primero] = detalles;
+    // TeamID.bundleId — sin el Team ID delante, iOS no resuelve la app.
+    expect(primero.appID).toMatch(/^[A-Z0-9]{10}\.[a-z0-9.]+$/i);
+    expect(primero.paths).toContain('/app/*');
+  });
+
+  /**
+   * La landing de iOS NO puede vivir bajo `/app/`: ese prefijo es el espacio de
+   * enlaces profundos de las dos plataformas, así que un teléfono con la app
+   * instalada abriría la app en lugar de la página que invita a instalarla.
+   */
+  test('la landing de iOS vive fuera del espacio de enlaces profundos', async ({ request }) => {
+    const res = await request.get('/ios');
+    expect(res.status()).toBe(200);
+
+    const html = await res.text();
+    expect(html).toContain('rel="canonical"');
+    expect(html, 'la canónica de /ios apunta a otra ruta').toMatch(
+      /rel="canonical"[^>]*href="[^"]*\/ios"/,
+    );
+
+    // Y su política de privacidad, que App Store Connect exige y Apple abre a
+    // mano al revisar: si da 404, es rechazo.
+    const politica = await request.get('/legal/privacidad-ios');
+    expect(politica.status(), 'la política de privacidad de iOS no responde').toBe(200);
+  });
+
   test('el manifiesto de la PWA es válido', async ({ request }) => {
     const res = await request.get('/manifest.webmanifest');
     expect(res.status()).toBe(200);

@@ -72,6 +72,7 @@ export const NAVEGACION: { titulo: string; enlaces: EnlaceNav[] }[] = [
       // Ni la app ni la extensión son calculadoras del sitio, pero resuelven lo
       // mismo fuera de él. Van al final del grupo, junto a «Ver todas».
       { href: '/app', etiqueta: 'App para Android', descripcion: 'Lleva el expediente y los vencimientos en el teléfono' },
+      { href: '/ios', etiqueta: 'App para iPhone', descripcion: 'La misma app, con Face ID y compra única' },
       { href: '/extension', etiqueta: 'Extensión de Chrome', descripcion: 'Analiza una operación sin salir de donde estás' },
       { href: '/herramientas', etiqueta: 'Ver todas', descripcion: 'Catálogo completo' },
     ],

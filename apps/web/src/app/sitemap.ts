@@ -100,6 +100,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // La app declara App Links con `pathPrefix="/app"`, así que esta ruta es
     // además el destino de sus enlaces profundos.
     entrada('/app', 0.8, 'monthly'),
+    entrada('/ios', 0.8, 'monthly'),
     entrada('/extension', 0.8, 'monthly'),
     entrada('/cursos', 0.6, 'monthly'),
     entrada('/plantillas', 0.6, 'monthly'),
@@ -179,6 +180,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const legales = [
     '/legal/aviso-de-privacidad',
+    '/legal/privacidad-ios',
     '/legal/terminos',
     '/legal/cookies',
     '/legal/publicidad',
