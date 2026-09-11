@@ -12,6 +12,25 @@ import type { EntradaActualizacion } from './tipos';
  */
 const ENTRADAS: readonly EntradaActualizacion[] = [
   {
+    id: 'paquete-economico-2027',
+    fecha: '2026-09-08',
+    tipo: 'sitio',
+    titulo: 'Paquete Económico 2027: ninguna iniciativa reforma la Ley Antilavado',
+    resumen:
+      'El 8 de septiembre de 2026 se presentaron al Congreso las iniciativas del Paquete Económico 2027. Se revisaron las catorce: ninguna reforma la LFPIORPI, sus umbrales ni sus límites de efectivo. La más cercana, la Ley de Economía Digital, promueve los pagos electrónicos sin tocar la Ley Antilavado.',
+    impacto: [
+      'Ninguna cifra del sitio cambia. Los umbrales del artículo 17 y los límites de efectivo del artículo 32 siguen siendo los mismos.',
+      'La Ley de Economía Digital faculta a Hacienda para determinar sectores en los que el pago digital podría ser la única forma de pago. No nombra ninguno, no fija montos y declara que no excluye las leyes especiales. Si se aprueba y Hacienda designa sectores, convivirían con el artículo 32.',
+      'También se propone un estímulo para repatriar recursos de procedencia lícita al 7.5 %, que deben entrar por instituciones financieras reguladas. No modifica las obligaciones de prevención de lavado de esas instituciones.',
+      'Son iniciativas: el Congreso tiene hasta el 20 de octubre (Diputados) y el 31 de octubre (Senado) para la Ley de Ingresos.',
+    ],
+    paginasAfectadas: [
+      { etiqueta: 'Análisis: Ley de Economía Digital', href: '/analisis/ley-economia-digital-efectivo' },
+      { etiqueta: 'Límites de efectivo', href: '/limites-efectivo' },
+      { etiqueta: 'Todos los análisis', href: '/analisis' },
+    ],
+  },
+  {
     id: 'revision-2026-09-05',
     fecha: '2026-09-05',
     tipo: 'sitio',

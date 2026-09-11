@@ -5,6 +5,7 @@ import { CONTENIDO_ACTIVIDADES } from '../content/actividades';
 import { CONTENIDO_OBLIGACIONES } from '../content/obligaciones';
 import { OFICIOS } from '../content/oficios';
 import { TRAMITES } from '../content/tramites';
+import { ANALISIS } from '../content/analisis';
 
 /* ────────────────────────────────────────────────────────────────────────────
  * El largo de los textos de buscador se verifica, no se recorta.
@@ -43,6 +44,11 @@ const textos: readonly { fuente: string; titulo: string; descripcion: string }[]
     titulo: t.tituloSEO,
     descripcion: t.descripcionSEO,
   })),
+  ...ANALISIS.map((a) => ({
+    fuente: `análisis ${a.slug}`,
+    titulo: a.tituloSEO,
+    descripcion: a.descripcionSEO,
+  })),
 ];
 
 describe('textos de buscador', () => {
@@ -51,7 +57,11 @@ describe('textos de buscador', () => {
     // quedaría corto y las pruebas de largo pasarían sobre un conjunto vacío
     // sin que nada avisara. Al añadir una fuente hay que sumarla aquí.
     expect(textos.length).toBe(
-      datos.ACTIVIDADES.length + datos.OBLIGACIONES.length + OFICIOS.length + TRAMITES.length,
+      datos.ACTIVIDADES.length +
+        datos.OBLIGACIONES.length +
+        OFICIOS.length +
+        TRAMITES.length +
+        ANALISIS.length,
     );
   });
 

@@ -20,6 +20,7 @@ import { OFICIOS } from '@/content/oficios';
 import { TRAMITES } from '@/content/tramites';
 import { categoriasIndexables } from '@/lib/directorio/indexabilidad';
 import { modificadoDeRuta } from '@/lib/seo/modificacion';
+import { ANALISIS } from '@/content/analisis';
 
 /**
  * Sitemap generado desde el motor de reglas, no escrito a mano.
@@ -86,6 +87,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entrada('/reforma-ley-antilavado-2026', 0.95, 'weekly'),
     entrada('/acuerdo-115-2026', 0.9, 'weekly'),
     entrada('/actualizaciones', 0.8, 'weekly'),
+    entrada('/analisis', 0.8, 'weekly'),
+    ...ANALISIS.map((a) => entrada(`/analisis/${a.slug}`, 0.75, 'monthly')),
     entrada('/glosario', 0.7, 'monthly'),
     entrada('/preguntas-frecuentes', 0.85, 'monthly'),
     entrada('/herramientas', 0.9, 'monthly'),

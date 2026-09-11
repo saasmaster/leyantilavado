@@ -230,6 +230,39 @@
     font-feature-settings: 'tnum';
   }
 
+  /*
+   * Gráficas de los análisis. Validadas con la herramienta de visualización
+   * contra el marfil de cada modo, no elegidas a ojo:
+   *
+   * - El acento es el petróleo VIVO (#0e9089) y no el petróleo de texto
+   *   (#0a6f75): éste falla el piso de croma (0.082) y como marca se lee gris.
+   *   El vivo pasa banda, croma y contraste en claro Y en oscuro, así que es el
+   *   mismo hex en los dos modos —por eso va escrito y no como
+   *   `var(--color-petroleo-vivo)`, que en oscuro cambia a otro valor—.
+   * - El contexto es gris: las gráficas usan la forma de énfasis (una serie es
+   *   la historia, la otra el fondo). El ámbar se descartó porque en este sitio
+   *   es el tono de «atención», y un color de estado no hace de serie.
+   *   El gris es `tinta-suave`, no `tinta-tenue`: medido, el tenue se confundía
+   *   con el acento (ΔE 10.7 con visión normal, piso 15; 4.2 con protanopía en
+   *   oscuro). El suave separa en los dos modos —16.9 y 19.6— sin gritar más
+   *   que el acento, que es lo que haría la tinta casi negra.
+   * - Antes/después es una rampa de un solo tono, validada como ordinal: en
+   *   claro lo reciente es más oscuro; en oscuro, más claro.
+   */
+  .grafica {
+    --grafica-acento: #0e9089;
+    --grafica-contexto: var(--color-tinta-suave);
+    --grafica-antes: #0e9089;
+    --grafica-despues: #06545a;
+    --grafica-rejilla: var(--color-borde);
+    --grafica-cruz: var(--color-borde-fuerte);
+    --grafica-superficie: var(--color-marfil);
+  }
+
+  .oscuro .grafica {
+    --grafica-despues: #4ecdc6;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,

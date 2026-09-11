@@ -28,31 +28,27 @@
 /**
  * Fecha de la última pasada editorial sobre las fuentes oficiales.
  *
- * 5-sep-2026: sin cambios. Contrastado, y con qué:
+ * 11-sep-2026: sin cambios en el corpus. Lo nuevo es el Paquete Económico
+ * 2027, y se leyó entero antes de afirmar que no nos toca:
  *
- * - **Texto vigente.** La ficha de reformas de la Cámara de Diputados sigue
- *   dando el 16-07-2025. Sin decreto posterior.
- * - **Instrumentos.** Ninguno nuevo desde el Acuerdo 115/2026 (DOF
- *   7-ago-2026). Siguen siendo los mismos tres.
- * - **Tabla de umbrales del SAT.** Byte a byte idéntica a la del 1-sep
- *   (95 205 bytes), y sus cifras siguen coincidiendo con las del motor.
- * - **Los ocho documentos del portal.** Primera pasada que usa la línea base
- *   sha-256 que se dejó el 1-sep: los ocho reproducen su hash exacto. Ya no se
- *   afirma «sigue publicado» sino «sigue diciendo lo mismo».
- * - **Resolución de formatos de la UIF.** Sigue sin publicarse. El único
- *   comunicado de la UIF que aparece sobre formatos de avisos es de mayo de
- *   2021 —modificó el Anexo 11 de la fracción XI— y no tiene relación con los
- *   avisos de 24 horas del Acuerdo 115/2026.
- * - **LFPA y LFPCA.** 14-11-2025 y 09-06-2026, sin cambios. De ahí salen los
- *   plazos de /requerimiento-sat.
+ * - **Paquete Económico 2027** (Gaceta Parlamentaria, 8-sep-2026, anexos A a
+ *   N). Ninguna iniciativa reforma la LFPIORPI. La que más se le acerca, la
+ *   Ley de Economía Digital (Anexo G), no la menciona, no fija montos de
+ *   efectivo y deja a salvo las leyes especiales en su art. 3. Se analiza en
+ *   /analisis/ley-economia-digital-efectivo.
+ * - **Texto vigente.** La LFPIORPI sigue en su reforma del 16-07-2025.
+ * - **Tabla de umbrales del SAT.** Idéntica (95 205 bytes).
+ * - **Los ocho documentos del portal.** Reproducen su sha-256 de la línea
+ *   base del 1-sep.
+ * - **Resolución de formatos de la UIF.** Sigue sin publicarse: los avisos de
+ *   24 horas siguen sin fecha cierta.
+ * - **LFPA y LFPCA.** 14-11-2025 y 09-06-2026, sin cambios.
  *
- * Ninguna `vigencia.desde` cae entre el 2 y el 5 de septiembre, y la UMA se
- * actualiza en febrero: ninguna cifra publicada cambia con esta fecha, y por
- * eso `ULTIMA_MODIFICACION` NO sube.
+ * Ninguna cifra publicada cambia, y `ULTIMA_MODIFICACION` no sube.
  *
- * Antes: 2026-09-01.
+ * Antes: 2026-09-05.
  */
-export const ULTIMA_REVISION = '2026-09-05';
+export const ULTIMA_REVISION = '2026-09-11';
 
 /**
  * Fecha en que cambió por última vez algún dato del corpus.

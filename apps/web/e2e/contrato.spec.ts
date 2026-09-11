@@ -21,6 +21,10 @@ const RUTAS_PUBLICAS = [
   '/reforma-ley-antilavado-2026',
   '/acuerdo-115-2026',
   '/actualizaciones',
+  '/analisis',
+  '/analisis/resico-2027-paquete-economico',
+  '/analisis/iva-7-por-ciento-resico',
+  '/analisis/ley-economia-digital-efectivo',
   // Secciones nuevas: una página índice y una hija de cada ruta dinámica, que
   // es donde aparecen los fallos de `generateStaticParams` y de metadatos.
   '/app',
@@ -235,6 +239,29 @@ test.describe('Cabeceras de seguridad', () => {
     expect(h['referrer-policy']).toBe('strict-origin-when-cross-origin');
     expect(h['strict-transport-security']).toContain('max-age=');
   });
+});
+
+test.describe('Análisis', () => {
+  for (const slug of [
+    'resico-2027-paquete-economico',
+    'iva-7-por-ciento-resico',
+    'ley-economia-digital-efectivo',
+  ]) {
+    test(`${slug}: avisa que es propuesta y su gráfica trae tabla gemela`, async ({ page }) => {
+      await page.goto(`/analisis/${slug}`);
+
+      // Los tres analizan iniciativas. Sin este aviso arriba, la página se
+      // leería como si el cambio ya estuviera aprobado.
+      await expect(page.getByText('Todavía no es ley', { exact: true }).first()).toBeVisible();
+
+      const grafica = page.locator('figure.grafica svg[role="img"]').first();
+      await expect(grafica).toBeVisible();
+      await expect(grafica, 'la gráfica no se describe a sí misma').toHaveAttribute('aria-label', /\S/);
+
+      // La tabla gemela es la versión que funciona sin ver la gráfica.
+      await expect(page.locator('figure.grafica details table').first()).toBeAttached();
+    });
+  }
 });
 
 test.describe('SEO técnico', () => {

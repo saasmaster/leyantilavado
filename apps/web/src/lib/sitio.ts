@@ -84,6 +84,7 @@ export const NAVEGACION: { titulo: string; enlaces: EnlaceNav[] }[] = [
       { href: '/acuerdo-115-2026', etiqueta: 'Acuerdo 115/2026', descripcion: 'Publicado el 7 de agosto de 2026' },
       { href: '/calendario-cumplimiento', etiqueta: 'Calendario 2026-2029', descripcion: 'Fechas exigibles con cuenta regresiva' },
       { href: '/actualizaciones', etiqueta: 'Actualizaciones', descripcion: 'Bitácora de cambios normativos' },
+      { href: '/analisis', etiqueta: 'Análisis', descripcion: 'Reformas propuestas, leídas en su texto oficial' },
     ],
   },
   {

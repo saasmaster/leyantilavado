@@ -1,4 +1,5 @@
 import { datos } from '@leyantilavado/rules-engine';
+import { ANALISIS, ULTIMO_ANALISIS } from '@/content/analisis';
 
 /* ────────────────────────────────────────────────────────────────────────────
  * Una sola respuesta a «cuándo cambió esta página».
@@ -76,6 +77,11 @@ const POR_RUTA: Record<string, string> = {
   ...Object.fromEntries(
     obligacionesPublicadas.map((o) => [`/obligaciones/${o.slug}`, modificadoEn(o)]),
   ),
+  // Los análisis no dependen del corpus: su fecha es la de publicación. Sin
+  // esta entrada caerían en SIN_CAMBIOS_DESDE y declararían un `dateModified`
+  // ANTERIOR a su propio `datePublished`, que es una fecha imposible.
+  '/analisis': ULTIMO_ANALISIS,
+  ...Object.fromEntries(ANALISIS.map((a) => [`/analisis/${a.slug}`, a.publicadoEn])),
 };
 
 /** Cuándo cambió por última vez el contenido de esta ruta. */
