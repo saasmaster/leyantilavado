@@ -17,6 +17,9 @@ const RUTAS_PUBLICAS = [
   '/limites-efectivo',
   '/multas',
   '/glosario',
+  '/ley',
+  '/ley/articulo-18',
+  '/ley/articulo-51-ter',
   '/calendario-cumplimiento',
   '/reforma-ley-antilavado-2026',
   '/acuerdo-115-2026',
@@ -619,7 +622,7 @@ test.describe('SEO técnico', () => {
 
   test('cada página tiene canonical y descripción únicas', async ({ page }) => {
     const vistos = new Map<string, string>();
-    for (const ruta of ['/', '/umbrales', '/multas', '/glosario']) {
+    for (const ruta of ['/', '/umbrales', '/multas', '/glosario', '/ley', '/ley/articulo-18']) {
       await page.goto(ruta);
       const canonical = await page.locator('link[rel="canonical"]').getAttribute('href');
       const desc = await page.locator('meta[name="description"]').getAttribute('content');
