@@ -14,6 +14,7 @@ import {
 } from '@/content/casos-practicos';
 import { MODIFICADO_EN, PUBLICADO_DESDE, REVISION_VIGENTE } from '@/content/autores';
 import { construirMetadata, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
+import { jsonLdColeccion } from '@/components/contenido/JsonLd';
 
 /* Next sólo admite ciertos exports en un `page.tsx`, así que la ruta se repite
    como constante local en lugar de exportarse desde aquí. */
@@ -107,6 +108,27 @@ export default function PaginaCasosPracticos() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonParaScript(jsonLdMigaDePan(MIGA)) }}
+      />
+      {/*
+       * La portada del listado sólo declaraba su miga de pan: nada decía que es
+       * una colección de casos ni cuáles. Con `CollectionPage` + `ItemList`, un
+       * buscador (o un modelo) sabe qué hay dentro sin abrir las doce fichas.
+       */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonParaScript(
+            jsonLdColeccion({
+              nombre: 'Casos prácticos de la Ley Antilavado',
+              descripcion: `${CASOS_PRACTICOS.length} operaciones reales resueltas con el motor del sitio.`,
+              ruta: RUTA_CASOS,
+              elementos: CASOS_PRACTICOS.map((c) => ({
+                nombre: c.titulo,
+                url: `${RUTA_CASOS}/${c.slug}`,
+              })),
+            }),
+          ),
+        }}
       />
 
       <EncabezadoPagina

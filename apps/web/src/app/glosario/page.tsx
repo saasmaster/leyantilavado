@@ -17,7 +17,7 @@ import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
 const RUTA = '/glosario';
 
 export const metadata: Metadata = construirMetadata({
-  titulo: `Glosario de la Ley Antilavado: ${GLOSARIO_ORDENADO.length} términos explicados`,
+  titulo: `Glosario LFPIORPI: ${GLOSARIO_ORDENADO.length} términos de la Ley Antilavado`,
   descripcion:
     'PLD, EBR, PEP, beneficiario controlador, perfil transaccional y el resto del vocabulario de la LFPIORPI, en español claro y con su disposición.',
   ruta: RUTA,
@@ -66,9 +66,8 @@ export default function PaginaGlosario() {
       <Migas items={migas} />
 
       <CabeceraArticulo
-        titulo="Glosario de la Ley Antilavado"
+        titulo={`Glosario LFPIORPI: ${GLOSARIO_ORDENADO.length} términos de la Ley Antilavado`}
         etiquetas={[
-          { texto: `${GLOSARIO_ORDENADO.length} términos`, tono: 'marino' },
           { texto: `${conMatiz} con precisión de uso`, tono: 'petroleo' },
           { texto: `Vigente al ${REVISION_VIGENTE}`, tono: 'neutro' },
         ]}

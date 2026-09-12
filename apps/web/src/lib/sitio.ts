@@ -8,7 +8,11 @@ export const SITIO = {
   nombre: 'LeyAntilavado.org',
   subtitulo: 'Centro independiente de información y herramientas sobre la LFPIORPI',
   descripcion:
-    'Consulta la Ley Antilavado en México: actividades vulnerables, umbrales en UMA, obligaciones, límites de efectivo, multas y los cambios vigentes en 2026.',
+    // Era una enumeración de secciones —lo que el sitio TIENE—. Ahora dice lo
+    // que hace y por qué es distinto: la UMA de la fecha de la operación, no la
+    // de hoy, y el artículo detrás de cada número. La palabra clave sigue al
+    // inicio, que es donde el buscador la resalta.
+    'Ley Antilavado México: calcula umbrales, acumulación de seis meses y límites de efectivo con la UMA de la fecha de tu operación. Cada cifra, con su artículo.',
   url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://leyantilavado.org',
   locale: 'es_MX',
   /**
@@ -316,7 +320,9 @@ export function construirMetadata({
       card: 'summary_large_image',
       title: tituloCompleto,
       description: descripcionCorta,
-      images: [imagenSocialDe(ruta, tituloCompleto).url],
+      // Con `alt`, no sólo la URL: quien usa lector de pantalla en X o LinkedIn
+      // oye de qué es la tarjeta en vez de oír «imagen».
+      images: [{ ...imagenSocialDe(ruta, tituloCompleto), alt: tituloCompleto }],
     },
   };
 }
