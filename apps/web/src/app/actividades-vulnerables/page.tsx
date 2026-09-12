@@ -287,6 +287,7 @@ export default function PaginaActividades() {
           {
             titulo: 'Contenido relacionado',
             enlaces: [
+              { href: '/ley/articulo-17', etiqueta: 'Artículo 17 de la LFPIORPI', descripcion: 'El texto vigente de la lista' },
               { href: '/umbrales', etiqueta: 'Tabla completa de umbrales' },
               { href: '/obligaciones', etiqueta: 'Todas las obligaciones' },
               { href: '/limites-efectivo', etiqueta: 'Límites de efectivo del art. 32' },

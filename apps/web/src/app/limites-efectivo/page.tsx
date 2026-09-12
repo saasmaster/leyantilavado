@@ -388,6 +388,7 @@ export default function PaginaLimitesEfectivo() {
           {
             titulo: 'Contenido relacionado',
             enlaces: [
+              { href: '/ley/articulo-32', etiqueta: 'Artículo 32 de la LFPIORPI', descripcion: 'La prohibición, en su texto vigente' },
               { href: '/umbrales', etiqueta: 'Umbrales del art. 17' },
               { href: '/actividades-vulnerables', etiqueta: 'Actividades vulnerables' },
               { href: '/multas', etiqueta: 'Infracciones y multas' },

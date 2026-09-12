@@ -70,6 +70,7 @@ export const GLOSARIO: readonly TerminoGlosario[] = [
   },
   {
     slug: 'actividad-vulnerable',
+    fraccionArt3: 'I',
     termino: 'Actividad vulnerable',
     definicion:
       'Actividad económica lícita que la ley lista en su art. 17 porque, por su naturaleza, puede usarse para introducir recursos de origen ilícito. Realizarla genera obligaciones de identificación, expediente, conservación y aviso.',
@@ -91,6 +92,7 @@ export const GLOSARIO: readonly TerminoGlosario[] = [
   },
   {
     slug: 'aviso',
+    fraccionArt3: 'II',
     termino: 'Aviso',
     definicion:
       'Reporte que el sujeto obligado envía a la Secretaría de Hacienda, por conducto del SAT, cuando un acto u operación alcanza el umbral de aviso de su actividad. Contiene los datos de quien realiza la actividad, del cliente y, en su caso, del beneficiario controlador, y la descripción de la operación.',
@@ -135,6 +137,7 @@ export const GLOSARIO: readonly TerminoGlosario[] = [
   },
   {
     slug: 'uma',
+    fraccionArt3: 'XIII Bis',
     termino: 'UMA',
     alterno: 'Unidad de Medida y Actualización',
     definicion:
@@ -168,6 +171,7 @@ export const GLOSARIO: readonly TerminoGlosario[] = [
   },
   {
     slug: 'beneficiario-controlador',
+    fraccionArt3: 'III',
     termino: 'Beneficiario controlador',
     definicion:
       'Persona física —o grupo de personas físicas— que en última instancia se beneficia de la operación o controla efectivamente al cliente, aunque no aparezca en la escritura ni en el registro de accionistas.',
@@ -238,6 +242,7 @@ export const GLOSARIO: readonly TerminoGlosario[] = [
   },
   {
     slug: 'ebr',
+    fraccionArt3: 'XII Ter',
     termino: 'EBR',
     alterno: 'Enfoque basado en riesgos',
     definicion:
@@ -324,6 +329,7 @@ export const GLOSARIO: readonly TerminoGlosario[] = [
   },
   {
     slug: 'pep',
+    fraccionArt3: 'IX Bis',
     termino: 'PEP',
     alterno: 'Persona políticamente expuesta',
     definicion:
@@ -395,6 +401,7 @@ export const GLOSARIO: readonly TerminoGlosario[] = [
   },
   {
     slug: 'representante-encargado-de-cumplimiento',
+    fraccionArt3: 'XII Bis',
     termino: 'Representante encargado del cumplimiento',
     definicion:
       'Persona designada ante la Secretaría por las personas morales y por quienes actúan a través de fideicomisos u otras figuras jurídicas, encargada de atender los requerimientos en materia PLD.',
@@ -492,6 +499,7 @@ export const GLOSARIO: readonly TerminoGlosario[] = [
   },
   {
     slug: 'fe-publica',
+    fraccionArt3: 'VII',
     termino: 'Fe pública',
     definicion:
       'Función de notarios y corredores públicos —y de ciertos servidores públicos y personas facilitadoras— que otorga certeza jurídica a los actos que autorizan.',
@@ -503,6 +511,7 @@ export const GLOSARIO: readonly TerminoGlosario[] = [
   },
   {
     slug: 'cliente-o-usuario',
+    fraccionArt3: 'III Bis',
     termino: 'Cliente o usuario',
     definicion:
       'Persona que celebra actos u operaciones con quien realiza la actividad vulnerable. La distinción importa porque define de quién se integra expediente y a nombre de quién se presenta el aviso.',

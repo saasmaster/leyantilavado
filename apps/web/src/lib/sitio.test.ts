@@ -6,6 +6,7 @@ import { CONTENIDO_OBLIGACIONES } from '../content/obligaciones';
 import { OFICIOS } from '../content/oficios';
 import { TRAMITES } from '../content/tramites';
 import { ANALISIS } from '../content/analisis';
+import { ARTICULOS } from '../content/ley';
 
 /* ────────────────────────────────────────────────────────────────────────────
  * El largo de los textos de buscador se verifica, no se recorta.
@@ -49,6 +50,11 @@ const textos: readonly { fuente: string; titulo: string; descripcion: string }[]
     titulo: a.tituloSEO,
     descripcion: a.descripcionSEO,
   })),
+  ...ARTICULOS.map((a) => ({
+    fuente: `ley ${a.slug}`,
+    titulo: a.tituloSEO,
+    descripcion: a.descripcionSEO,
+  })),
 ];
 
 describe('textos de buscador', () => {
@@ -61,7 +67,8 @@ describe('textos de buscador', () => {
         datos.OBLIGACIONES.length +
         OFICIOS.length +
         TRAMITES.length +
-        ANALISIS.length,
+        ANALISIS.length +
+        ARTICULOS.length,
     );
   });
 

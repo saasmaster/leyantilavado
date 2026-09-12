@@ -19,7 +19,7 @@ import {
 } from '@/components/contenido';
 
 const RUTA = '/acuerdo-115-2026';
-const TITULO = 'Acuerdo 115/2026: qué es y qué te obliga a hacer';
+const TITULO = 'Reglas de Carácter General LFPIORPI: Acuerdo 115/2026';
 const DESCRIPCION =
   'Acuerdo de la SHCP que modifica las Reglas de Carácter General de la LFPIORPI. Publicado el 7 de agosto de 2026 y en vigor el 30 de noviembre.';
 

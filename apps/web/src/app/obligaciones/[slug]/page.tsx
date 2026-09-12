@@ -296,6 +296,10 @@ export default async function PaginaObligacion({
             titulo: 'Contenido relacionado',
             enlaces: [
               { href: BASE, etiqueta: 'Todas las obligaciones' },
+              { href: '/ley/articulo-18', etiqueta: 'Artículo 18 de la LFPIORPI' },
+              ...(slug === 'personas-politicamente-expuestas'
+                ? [{ href: '/ley/articulo-51-ter', etiqueta: 'Artículo 51 Ter de la LFPIORPI' }]
+                : []),
               { href: '/actividades-vulnerables', etiqueta: 'Actividades vulnerables' },
               { href: '/acuerdo-115-2026', etiqueta: 'Acuerdo 115/2026' },
             ],

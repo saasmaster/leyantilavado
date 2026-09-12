@@ -466,6 +466,8 @@ export default function PaginaMultas() {
           {
             titulo: 'Contenido relacionado',
             enlaces: [
+              { href: '/ley/articulo-53', etiqueta: 'Artículo 53 de la LFPIORPI', descripcion: 'Qué conductas se sancionan' },
+              { href: '/ley/articulo-54', etiqueta: 'Artículo 54 de la LFPIORPI', descripcion: 'Los tres rangos de multa' },
               { href: '/obligaciones', etiqueta: 'Las obligaciones que se sancionan' },
               { href: '/limites-efectivo', etiqueta: 'Límites de efectivo del art. 32' },
               { href: '/umbrales', etiqueta: 'Tabla de umbrales' },

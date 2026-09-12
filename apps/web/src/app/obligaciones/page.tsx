@@ -221,6 +221,7 @@ export default function PaginaObligaciones() {
           {
             titulo: 'Contenido relacionado',
             enlaces: [
+              { href: '/ley/articulo-18', etiqueta: 'Artículo 18 de la LFPIORPI', descripcion: 'Las doce fracciones, en su texto vigente' },
               { href: '/actividades-vulnerables', etiqueta: 'Actividades vulnerables' },
               { href: '/umbrales', etiqueta: 'Tabla de umbrales' },
               { href: '/multas', etiqueta: 'Infracciones y multas' },

@@ -28,7 +28,7 @@ const ANIO_MAS_RECIENTE = ANIOS_UMA_DISPONIBLES[0] ?? 2026;
 const ANIO_MAS_ANTIGUO = ANIOS_UMA_DISPONIBLES[ANIOS_UMA_DISPONIBLES.length - 1] ?? 2016;
 
 export const metadata: Metadata = construirMetadata({
-  titulo: `Umbrales de la Ley Antilavado en UMA y pesos ${ANIO_MAS_RECIENTE}`,
+  titulo: `Umbrales de actividades vulnerables ${ANIO_MAS_RECIENTE}: tabla LFPIORPI`,
   descripcion: `Las ${datos.UMBRALES.length} reglas de umbral del art. 17, con identificación y aviso por actividad, conversión a pesos y el comparador exacto que usa la ley.`,
   ruta: RUTA,
   tipo: 'article',
@@ -139,7 +139,7 @@ export default function PaginaUmbrales() {
           { texto: `UMA ${ANIO_MAS_ANTIGUO}-${ANIO_MAS_RECIENTE}`, tono: 'petroleo' },
           { texto: `Vigente al ${REVISION_VIGENTE}`, tono: 'neutro' },
         ]}
-        respuestaDirecta="Cada actividad vulnerable tiene dos umbrales: uno de identificación y otro de aviso, expresados en veces el valor diario de la UMA. Esta tabla los muestra todos, los convierte a pesos con la UMA del año que elijas y conserva el detalle que las tablas estáticas pierden: el comparador exacto, la periodicidad y los supuestos de las reglas que no son un número."
+        respuestaDirecta="Cada actividad vulnerable del artículo 17 de la LFPIORPI tiene dos umbrales: uno de identificación y otro de aviso, expresados en veces el valor diario de la UMA. Esta tabla los muestra todos, los convierte a pesos con la UMA del año que elijas y conserva el detalle que las tablas estáticas pierden: el comparador exacto, la periodicidad y los supuestos de las reglas que no son un número."
         entradilla="Es la tabla que usamos internamente para alimentar las calculadoras del sitio. No hay dos versiones: lo que ves aquí es lo que calcula el motor."
       />
 
@@ -293,6 +293,7 @@ export default function PaginaUmbrales() {
           {
             titulo: 'Contenido relacionado',
             enlaces: [
+              { href: '/ley/articulo-17', etiqueta: 'Artículo 17 de la LFPIORPI', descripcion: 'De donde salen estos umbrales' },
               { href: '/actividades-vulnerables', etiqueta: 'Las actividades explicadas' },
               { href: '/limites-efectivo', etiqueta: 'Límites de efectivo del art. 32' },
               { href: '/multas', etiqueta: 'Infracciones y multas' },

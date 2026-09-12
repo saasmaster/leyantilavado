@@ -119,6 +119,12 @@ export interface TerminoGlosario {
   relacionados: readonly string[];
   /** Ruta interna donde el término se explica a fondo. */
   verTambien?: { etiqueta: string; href: string };
+  /**
+   * Fracción del art. 3 de la LFPIORPI que define el término, cuando la ley lo
+   * define. Se renderiza el texto vigente desde el corpus extraído; aquí sólo
+   * va la referencia, nunca el texto.
+   */
+  fraccionArt3?: string;
 }
 
 export type TipoActualizacion =

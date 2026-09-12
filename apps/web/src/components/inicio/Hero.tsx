@@ -130,7 +130,7 @@ export function Hero() {
           </h1>
 
           <p className="prosa mt-5 max-w-[46ch] text-[1.15rem] leading-relaxed text-[var(--color-tinta-suave)]">
-            Averigua qué te obliga la Ley Antilavado, con la cifra correcta y la fuente a la vista.
+            Averigua qué te obliga la Ley Antilavado (LFPIORPI), con la cifra correcta y la fuente a la vista.
           </p>
 
           {/*

@@ -51,6 +51,7 @@ export const NAVEGACION: { titulo: string; enlaces: EnlaceNav[] }[] = [
       { href: '/limites-efectivo', etiqueta: 'Límites de efectivo', descripcion: 'Las prohibiciones del art. 32' },
       { href: '/multas', etiqueta: 'Multas y sanciones', descripcion: 'Rangos del art. 54 y autocorrección' },
       { href: '/requerimiento-sat', etiqueta: 'Me llegó un requerimiento', descripcion: 'Los plazos reales y cómo regularizar' },
+      { href: '/ley', etiqueta: 'LFPIORPI artículo por artículo', descripcion: 'Texto vigente, con lo que tocó la reforma' },
       { href: '/glosario', etiqueta: 'Glosario', descripcion: 'PLD, EBR, PEP, beneficiario controlador' },
       { href: '/exigibilidad', etiqueta: '¿Ya me es exigible?', descripcion: 'Qué corre hoy y qué llega en 2027 y 2028' },
       { href: '/tramites', etiqueta: 'Trámites del portal', descripcion: 'Alta, baja, modificación y representante' },
@@ -255,7 +256,10 @@ const conAnio = (texto: string): string => texto.replaceAll('{año}', ANIO_VIGEN
 function componerTitulo(titulo: string, ruta: string): string {
   // La portada es el término más buscado del sitio y su título era el nombre
   // de la marca seguido de dos siglas. La marca ya sale encima, en el dominio.
-  if (ruta === '/') return conAnio('Ley Antilavado México {año}: umbrales y obligaciones');
+  // La sigla entra entre paréntesis: quien busca «LFPIORPI» y quien busca «Ley
+  // Antilavado» buscan lo mismo, y el título tiene que responder a los dos. Sale
+  // «México» para caber en 60: la sigla ya es inequívocamente mexicana.
+  if (ruta === '/') return conAnio('Ley Antilavado {año} (LFPIORPI): umbrales y obligaciones');
 
   const conMarca = `${titulo} | ${SITIO.nombre}`;
   return conMarca.length <= LARGO_TITULO ? conMarca : titulo;

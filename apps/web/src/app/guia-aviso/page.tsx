@@ -646,6 +646,7 @@ export default function PaginaGuiaAviso() {
           {
             titulo: 'Obligaciones relacionadas',
             enlaces: [
+              { href: '/ley/articulo-23', etiqueta: 'Artículo 23 de la LFPIORPI', descripcion: 'El plazo del día 17, en su texto vigente' },
               { href: '/obligaciones/avisos', etiqueta: 'Presentación de avisos' },
               { href: '/obligaciones/informes-en-ceros', etiqueta: 'Informes en ceros' },
               { href: '/obligaciones/operaciones-inusuales', etiqueta: 'Aviso de 24 horas' },

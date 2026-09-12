@@ -3,6 +3,7 @@ import { FRASE_ACTIVIDADES_LARGA, FRASE_EFECTIVO, FRASE_UMBRALES } from '@/conte
 import { REVISION_VIGENTE } from '../../content/autores';
 import { SITIO, NAVEGACION } from '../sitio';
 import { RASTREADORES_IA } from './rastreadores-ia';
+import { ARTICULOS, PRECEPTOS } from '../../content/ley';
 
 /**
  * Construye el `llms.txt` de la raíz.
@@ -120,6 +121,11 @@ export function construirLlmsTxt(): string {
         '/calendario-cumplimiento',
         `las ${datos.CALENDARIO.length} fechas exigibles con su disposición.`,
       ),
+      enlace(
+        'LFPIORPI artículo por artículo',
+        '/ley',
+        `índice de los ${PRECEPTOS.length} preceptos, con el texto vigente extraído del documento oficial de la Cámara de Diputados; ${ARTICULOS.length} artículos con explicación propia.`,
+      ),
       enlace('Glosario', '/glosario', 'PLD, EBR, PEP, beneficiario controlador y el resto del vocabulario, cada término con su definición.'),
       enlace('Preguntas frecuentes', '/preguntas-frecuentes', 'las dudas que más se repiten, cada una con el artículo a la vista.'),
     ],
@@ -208,7 +214,7 @@ export function construirLlmsTxt(): string {
     [
       `- [Mapa del sitio](${u('/sitemap.xml')}): todas las URL públicas con su fecha de última modificación.`,
       `- [robots.txt](${u('/robots.txt')}): reglas de rastreo, con entrada propia para ${RASTREADORES_IA.length} rastreadores de modelos de lenguaje.`,
-      '- Datos estructurados JSON-LD en cada página: `Article`, `FAQPage` (sólo preguntas visibles), `BreadcrumbList`, `Organization`, `Dataset` en las tablas y `DefinedTermSet` en el glosario.',
+      '- Datos estructurados JSON-LD en cada página: `Article`, `FAQPage` (sólo preguntas visibles), `BreadcrumbList`, `Organization`, `Dataset` en las tablas, `DefinedTermSet` en el glosario y `Legislation` en cada artículo de la ley.',
     ],
   );
 

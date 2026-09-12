@@ -45,7 +45,7 @@ export const SANCIONES: readonly ReglaSancion[] = [
     articulo: '54',
     fraccion: 'I',
     supuesto:
-      'No cumplir con las obligaciones de identificar al cliente o usuario, integrar el expediente o conservar la información (art. 53, fracción II).',
+      'Incumplir cualquiera de las obligaciones del art. 18: identificación, expediente, conservación, alta en el padrón, avisos, enfoque basado en riesgos, manual de políticas internas, capacitación anual, mecanismos automatizados y auditoría (art. 53, fracción II).',
     minUMA: 200,
     maxUMA: 2000,
     gravedad: 'alta',
@@ -58,7 +58,7 @@ export const SANCIONES: readonly ReglaSancion[] = [
     articulo: '54',
     fraccion: 'I',
     supuesto:
-      'Presentar los avisos de forma extemporánea, incompleta o sin cumplir los requisitos aplicables (art. 53, fracción III).',
+      'Presentar los avisos fuera del plazo del art. 23 (art. 53, fracción III).',
     minUMA: 200,
     maxUMA: 2000,
     gravedad: 'alta',
@@ -72,7 +72,8 @@ export const SANCIONES: readonly ReglaSancion[] = [
     id: 'art54-I--53-IV',
     articulo: '54',
     fraccion: 'I',
-    supuesto: 'Incumplir cualquiera de las demás obligaciones de la ley (art. 53, fracción IV).',
+    supuesto:
+      'Presentar los avisos sin reunir los requisitos del art. 24 (art. 53, fracción IV).',
     minUMA: 200,
     maxUMA: 2000,
     gravedad: 'media',
@@ -85,7 +86,7 @@ export const SANCIONES: readonly ReglaSancion[] = [
     articulo: '54',
     fraccion: 'II',
     supuesto:
-      'Incumplir las obligaciones previstas en los arts. 33, 33 Bis y 33 Ter, relativas al uso de la información y al régimen del representante encargado del cumplimiento (art. 53, fracción V).',
+      'Incumplir las obligaciones de los arts. 33, 33 Bis y 33 Ter: identificar la forma de pago en los instrumentos que hacen constar operaciones del art. 32, y determinar, conservar y registrar al beneficiario controlador de las sociedades mercantiles (art. 53, fracción V).',
     minUMA: 2000,
     maxUMA: 10000,
     gravedad: 'alta',

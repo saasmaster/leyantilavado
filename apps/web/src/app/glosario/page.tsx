@@ -12,6 +12,7 @@ import {
 import { jsonLdArticulo, jsonLdConjuntoTerminos } from '@/components/contenido/JsonLd';
 import { MODIFICADO_EN, PUBLICADO_DESDE, REVISION_VIGENTE } from '@/content/autores';
 import { GLOSARIO_ORDENADO, GLOSARIO_POR_SLUG, INICIALES_GLOSARIO, inicialDe } from '@/content/glosario';
+import { definicionLegal } from '@/content/ley';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
 
 const RUTA = '/glosario';
@@ -125,6 +126,22 @@ export default function PaginaGlosario() {
                         <span className="font-semibold">Precisión: </span>
                         {t.matiz}
                       </p>
+                    )}
+
+                    {t.fraccionArt3 && (
+                      <details className="rounded-[var(--radius-card)] border border-[var(--color-borde)] bg-[var(--color-marfil-hondo)] px-4 py-3 text-sm">
+                        <summary className="cursor-pointer font-medium text-[var(--color-petroleo-hondo)]">
+                          Definición legal · art. 3, fracción {t.fraccionArt3}, LFPIORPI
+                        </summary>
+                        <blockquote className="mt-3 space-y-2 leading-relaxed text-[var(--color-tinta)]">
+                          {definicionLegal(t.fraccionArt3).map((p) => (
+                            <p key={p}>{p}</p>
+                          ))}
+                        </blockquote>
+                        <Link href="/ley" className="mt-3 inline-block text-xs underline underline-offset-2">
+                          La ley artículo por artículo
+                        </Link>
+                      </details>
                     )}
 
                     <p className="text-xs text-[var(--color-tinta-tenue)]">{t.disposicion}</p>

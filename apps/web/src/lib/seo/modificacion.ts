@@ -1,5 +1,6 @@
 import { datos } from '@leyantilavado/rules-engine';
 import { ANALISIS, ULTIMO_ANALISIS } from '@/content/analisis';
+import { ARTICULOS, LEY_PUBLICADA_EN } from '@/content/ley';
 
 /* ────────────────────────────────────────────────────────────────────────────
  * Una sola respuesta a «cuándo cambió esta página».
@@ -82,6 +83,10 @@ const POR_RUTA: Record<string, string> = {
   // ANTERIOR a su propio `datePublished`, que es una fecha imposible.
   '/analisis': ULTIMO_ANALISIS,
   ...Object.fromEntries(ANALISIS.map((a) => [`/analisis/${a.slug}`, a.publicadoEn])),
+  // Misma razón que los análisis: sin esta entrada, la capa /ley heredaría
+  // SIN_CAMBIOS_DESDE y su `dateModified` quedaría antes de su publicación.
+  '/ley': LEY_PUBLICADA_EN,
+  ...Object.fromEntries(ARTICULOS.map((a) => [`/ley/${a.slug}`, LEY_PUBLICADA_EN])),
 };
 
 /** Cuándo cambió por última vez el contenido de esta ruta. */
