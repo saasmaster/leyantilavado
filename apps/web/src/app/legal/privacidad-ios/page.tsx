@@ -4,7 +4,6 @@ import { Nota } from '@leyantilavado/ui';
 import { formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { construirMetadata, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
 import { EncabezadoPagina } from '@/components/inicio/comun';
-import { REVISION_VIGENTE } from '@/content/autores';
 import { PAQUETE } from '@/content/ios';
 
 const MIGA = [
@@ -24,14 +23,22 @@ const MIGA = [
  * costó una tirada: los dos enlaces legales del muro de pago apuntaban a rutas
  * que no existen.
  *
- * Además hay tres cosas que sólo pasan en iOS y que una política honesta tiene
- * que nombrar: la biometría del sistema, la compra por App Store y la
- * restauración de compras. Ninguna existe en la versión de Android.
+ * La 1.0 de iOS (16 sep 2026) es gratuita y más corta que la de Android: no
+ * vende nada, no tiene bloqueo biométrico, no exporta y no enlaza al sitio.
+ * Esta política describe ESA app; si PRO vuelve a iOS, hay que regresar las
+ * secciones de compras, biometría y exportación.
  *
  * Lo que NO se hace es duplicar el texto y dejar que diverja en silencio, que
  * es el fallo que este proyecto ya cometió entre el sitio y la app. Cuando una
  * afirmación es común, se redacta igual a propósito.
  */
+
+/**
+ * Cuándo cambió ESTE documento. No es REVISION_VIGENTE: esa fecha se mueve con
+ * cada pasada al corpus legal, y moverla aquí le diría a quien lee que su
+ * política de privacidad cambió cuando no cambió nada.
+ */
+const PRIVACIDAD_ACTUALIZADA = '2026-09-16';
 
 export const metadata: Metadata = construirMetadata({
   titulo: 'Privacidad de Ley AntiLavado MX para iPhone',
@@ -52,7 +59,7 @@ export default function PrivacidadIOS() {
         miga={MIGA}
         titulo="Política de privacidad de Ley AntiLavado MX para iPhone"
         entradilla={`Aplica a la aplicación de iOS «Ley AntiLavado MX», identificada en el App Store como ${PAQUETE}. No cubre este sitio web, que tiene su propio aviso de privacidad, ni la versión de Android, que tiene la suya.`}
-        actualizado={formatearFechaLarga(REVISION_VIGENTE)}
+        actualizado={formatearFechaLarga(PRIVACIDAD_ACTUALIZADA)}
       />
 
       <div className="contenedor-app py-12 md:py-16">
@@ -64,7 +71,8 @@ export default function PrivacidadIOS() {
             </strong>
           </p>
           <p>
-            No te pide una cuenta, ni un correo, ni un teléfono. No lleva publicidad ni analítica.
+            Es gratuita, no tiene compras dentro de la app y no se conecta a internet. No te pide
+            una cuenta, ni un correo, ni un teléfono. No lleva publicidad ni analítica.
             Todo lo que capturas —negocios, clientes, operaciones y montos— se guarda cifrado en tu
             propio iPhone o iPad y sólo tú tienes acceso. Nosotros no podemos verlo.
           </p>
@@ -112,12 +120,15 @@ export default function PrivacidadIOS() {
           </p>
           <ul>
             <li>
-              <strong>Perfiles de negocio:</strong> nombre, tipo de persona y actividades
-              vulnerables que seleccionaste.
+              <strong>Perfiles de negocio:</strong> nombre, tipo de persona, estado, las actividades
+              vulnerables que seleccionaste y, si los capturas, el responsable de cumplimiento y tu
+              fecha de alta en el portal del SAT.
             </li>
             <li>
               <strong>Clientes y operaciones:</strong> lo que tú captures para poder acumular y
-              evaluar montos.
+              evaluar montos. A los clientes la app los registra con un <strong>alias</strong> que
+              eliges tú, más su nivel de riesgo y si son persona políticamente expuesta; no pide su
+              nombre legal, RFC ni identificación.
             </li>
             <li>
               <strong>Obligaciones y recordatorios:</strong> las fechas que la app calcula a partir
@@ -128,11 +139,11 @@ export default function PrivacidadIOS() {
             </li>
           </ul>
           <p>
-            Esa base de datos va <strong>cifrada</strong>. Y la app comprueba que el cifrado esté
-            realmente activo antes de abrirla: si no lo está, se niega a continuar en vez de seguir
-            funcionando y llamarse «cifrada». Es una distinción que importa, porque el motor de
-            base de datos ignora en silencio las instrucciones de cifrado que no reconoce, de modo
-            que sin esa comprobación la palabra podría ser falsa sin que nadie lo notara.
+            Esa base de datos va <strong>cifrada</strong>, y la app comprueba al abrirla que el
+            cifrado esté realmente activo en vez de darlo por hecho. Si en algún dispositivo no lo
+            estuviera, la app sigue funcionando pero <strong>te lo dice</strong> en Más →
+            Privacidad y seguridad, para que decidas si continúas. No te muestra «cifrada» sobre una
+            base que no lo está.
           </p>
           <p>
             Nada de esto viaja a ningún servidor nuestro, entre otras cosas porque{' '}
@@ -142,20 +153,24 @@ export default function PrivacidadIOS() {
           <h2>4. Permisos y funciones del sistema que usa</h2>
           <ul>
             <li>
-              <strong>Face ID o Touch ID (opcional).</strong> Si activas el bloqueo, la app le pide
-              a iOS que confirme que eres tú antes de abrir el expediente. La app{' '}
-              <strong>no recibe ni guarda</strong> tu rostro ni tu huella: esos datos nunca salen
-              del hardware seguro de Apple y la app sólo obtiene un sí o un no.
-            </li>
-            <li>
               <strong>Notificaciones (opcional).</strong> Se programan{' '}
               <strong>en el propio dispositivo</strong> a partir de las fechas que tú capturaste. No
               hay notificaciones remotas: no existe un servidor que pudiera enviarlas, y la app no
-              registra un token de notificaciones push.
+              registra un token de notificaciones push. El aviso muestra el nombre del plazo y los
+              días que faltan; lo que se ve con el teléfono bloqueado depende de tus ajustes de
+              notificaciones de iOS.
             </li>
             <li>
-              <strong>Compartir.</strong> Sólo se activa cuando tú exportas algo, y el destino lo
-              eliges tú en la hoja del sistema.
+              <strong>Llavero de iOS.</strong> Ahí se guarda la llave que cifra la base de datos,
+              marcada para <strong>este dispositivo únicamente</strong>: no se sincroniza con el
+              Llavero de iCloud ni viaja en los respaldos.
+            </li>
+            <li>
+              <strong>Enlaces externos.</strong> La app sólo abre fuentes oficiales de gobierno —la
+              Cámara de Diputados (texto de la ley), el Diario Oficial de la Federación, el INEGI,
+              el portal SPPLD del SAT y la página de la UIF en gob.mx—, en el navegador y
+              únicamente cuando tú tocas el enlace. Al abrirlos, esos sitios reciben lo que recibe
+              cualquier visita, bajo sus propias políticas.
             </li>
           </ul>
           <p>
@@ -163,34 +178,18 @@ export default function PrivacidadIOS() {
             aparecerá pidiéndotelos.
           </p>
 
-          <h2>5. Compras dentro de la app</h2>
+          <h2>5. Compras dentro de la app: no hay</h2>
           <p>
-            La app incluye una versión <strong>PRO</strong> de <strong>pago único</strong>: no es
-            una suscripción y no se renueva automáticamente. La compra la procesa{' '}
-            <strong>Apple</strong> con tu Apple ID.
-          </p>
-          <p>
-            Nosotros <strong>no vemos ni recibimos</strong> tus datos de pago. La app no conoce tu
-            tarjeta, tu correo de Apple ID ni tu identidad; sólo consulta al sistema si esta
-            instalación tiene la compra activa.
-          </p>
-          <p>
-            La restauración de compras <strong>sólo se ejecuta cuando tú la pides</strong> desde el
-            botón correspondiente, porque consulta a Apple y puede pedirte tu contraseña. La app no
-            la lanza al arrancar ni al volver del segundo plano.
-          </p>
-          <p>
-            El tratamiento que Apple da a los datos de la transacción se rige por la política de
-            privacidad de Apple, no por ésta.
+            La app es <strong>gratuita</strong>. No incluye compras dentro de la app, suscripciones
+            ni funciones bloqueadas, y no se conecta con el sistema de pagos de Apple. No
+            procesamos pagos ni recibimos datos de pago de ningún tipo.
           </p>
 
-          <h2>6. Actualización de las reglas jurídicas</h2>
+          <h2>6. Conexiones de red: ninguna</h2>
           <p>
-            La app trae las reglas de la LFPIORPI incluidas en el propio binario y funciona sin
-            conexión. Puede descargar un paquete normativo actualizado{' '}
-            <strong>sólo si tú lo pides y sólo si diste tu consentimiento</strong> en los ajustes.
-            Esa descarga pide reglas y no envía nada tuyo: no lleva tus operaciones, tus clientes ni
-            un identificador de tu instalación.
+            Esta versión <strong>no se conecta a internet</strong>. Las reglas de la LFPIORPI y los
+            valores de la UMA vienen incluidos en la propia app y funcionan sin conexión. Cuando
+            cambian, llegan con una actualización normal de la app en el App Store.
           </p>
 
           <h2>7. Lo que la app nunca hace</h2>
@@ -203,25 +202,29 @@ export default function PrivacidadIOS() {
             <li>No lleva analítica, ni SDK de publicidad, ni rastreadores de terceros.</li>
           </ul>
 
-          <h2>8. Cómo exportar o eliminar tus datos</h2>
+          <h2>8. Cómo eliminar tus datos</h2>
           <p>
             Como todo vive en tu dispositivo, el control es tuyo y no hace falta pedirnos nada:
           </p>
           <ul>
             <li>
-              <strong>Exportar:</strong> la app genera un CSV de tus operaciones y un respaldo
-              cifrado con una frase que eliges tú. Si pierdes esa frase,{' '}
-              <strong>el respaldo no se puede recuperar</strong> — tampoco por nosotros.
+              <strong>Desde la app:</strong> Más → Respaldo y datos → «Eliminar todos mis datos»
+              cancela los recordatorios programados, borra todo lo que la app guarda —negocios,
+              clientes, operaciones, calendario, auditorías y ajustes— y destruye la llave de
+              cifrado.
             </li>
             <li>
-              <strong>Eliminar:</strong> borrar la app de tu dispositivo elimina su base de datos.
-              No queda una copia en ningún otro sitio.
+              <strong>Borrando la app:</strong> eliminar la app de tu dispositivo elimina su base de
+              datos. No queda una copia en ningún otro sitio.
             </li>
           </ul>
           <p>
-            Si tienes activada la copia de seguridad de iCloud, ten en cuenta que el respaldo del
-            dispositivo puede incluir los datos de la app. Eso lo gestiona Apple bajo tu cuenta y
-            sus condiciones; se puede excluir desde los ajustes de iCloud del sistema.
+            <strong>Sobre la copia de seguridad de iCloud:</strong> si la tienes activada, el
+            respaldo del dispositivo puede incluir el archivo de la base de datos, pero va cifrado
+            y <strong>la llave no viaja con él</strong>, porque está marcada para este dispositivo
+            únicamente. Ese archivo no se puede abrir en otro iPhone o iPad, ni por Apple ni por
+            nosotros. Si prefieres que ni siquiera se copie, puedes excluir la app en Ajustes →
+            tu nombre → iCloud → Administrar almacenamiento → Respaldos.
           </p>
 
           <h2>9. Conservación</h2>
@@ -230,9 +233,11 @@ export default function PrivacidadIOS() {
             el tiempo que tú decidas.
           </p>
           <p>
-            Ojo con no confundirlo: la LFPIORPI te obliga a <strong>ti</strong> a conservar tus
-            expedientes por al menos diez años. Esa obligación es tuya y no la cubre esta app: si
-            borras la app, borras tu registro.
+            Ojo con no confundirlo: la LFPIORPI te obliga a <strong>ti</strong> a conservar la
+            información y documentación de tus operaciones por al menos diez años (artículo 18,
+            fracción IV). Esa obligación es tuya y no la cubre esta app: si borras la app o cambias
+            de dispositivo, tu registro no te acompaña, porque la llave se queda en el dispositivo
+            anterior. Conserva tu expediente por otros medios.
           </p>
 
           <h2>10. Menores</h2>
@@ -253,8 +258,9 @@ export default function PrivacidadIOS() {
 
           <h2>12. Cambios a esta política</h2>
           <p>
-            Si cambia, se publica aquí con su fecha. Los cambios que afecten al tratamiento de datos
-            se anunciarán además dentro de la propia app antes de aplicarse.
+            Si cambia, se publica aquí con su fecha. Si una versión futura de la app llegara a
+            tratar datos de otra forma —por ejemplo, conectándose a internet—, esta política se
+            actualizará antes de que esa versión se publique en el App Store.
           </p>
         </div>
 
