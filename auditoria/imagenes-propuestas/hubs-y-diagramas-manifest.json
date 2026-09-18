@@ -1,0 +1,51 @@
+{
+  "hubs": [
+    {
+      "filename": "hubs/hubs-umbrales.jpg",
+      "ruta_destino": "/umbrales",
+      "aspecto": "1200x630 (16:9, recorte social)",
+      "alt": "Fondo fotográfico para la tarjeta social de la página de umbrales de la Ley Antilavado. Imagen sin texto: el título y la cifra los compone el sitio en tiempo de build a partir de los datos del motor de reglas."
+    },
+    {
+      "filename": "hubs/hubs-obligaciones.jpg",
+      "ruta_destino": "/obligaciones",
+      "aspecto": "1200x630 (16:9, recorte social)",
+      "alt": "Fondo fotográfico para la tarjeta social de la página de obligaciones del artículo 18 de la LFPIORPI. Sin texto."
+    },
+    {
+      "filename": "hubs/hubs-multas.jpg",
+      "ruta_destino": "/multas",
+      "aspecto": "1200x630 (16:9, recorte social)",
+      "alt": "Fondo fotográfico abstracto para la tarjeta social de la página de multas y sanciones de la Ley Antilavado. Sin texto ni objetos reconocibles."
+    },
+    {
+      "filename": "hubs/hubs-limites-efectivo.jpg",
+      "ruta_destino": "/limites-efectivo",
+      "aspecto": "1200x630 (16:9, recorte social)",
+      "alt": "Fondo fotográfico para la tarjeta social de la página de límites de efectivo del artículo 32 de la LFPIORPI. Sin texto, las cifras no son legibles."
+    },
+    {
+      "filename": "hubs/hubs-calendario.jpg",
+      "ruta_destino": "/calendario-cumplimiento",
+      "aspecto": "1200x630 (16:9, recorte social)",
+      "alt": "Fondo fotográfico para la tarjeta social del calendario de cumplimiento 2026-2029. Sin texto ni fechas visibles."
+    }
+  ],
+  "diagramas": [
+    {
+      "filename": "diagramas/diagrama-acumulacion-6-meses.jpg",
+      "aspecto": "1600x900 (16:9)",
+      "alt": "Diagrama de acumulación de seis meses: una línea horizontal dividida en seis meses muestra cómo las operaciones del mismo cliente se suman y eventualmente cruzan el umbral de aviso del artículo 17 de la LFPIORPI."
+    },
+    {
+      "filename": "diagramas/diagrama-identificacion-vs-aviso.jpg",
+      "aspecto": "1600x900 (16:9)",
+      "alt": "Diagrama comparativo entre identificación y aviso: dos columnas explican que el umbral de identificación siempre es igual o más bajo que el de aviso, y que el aviso exige además haber identificado al cliente."
+    },
+    {
+      "filename": "diagramas/diagrama-identificacion-vs-limite-efectivo.jpg",
+      "aspecto": "1600x900 (16:9)",
+      "alt": "Diagrama de decisión que distingue las obligaciones de identificación del artículo 17 (actividades vulnerables) de las prohibiciones al pago en efectivo del artículo 32 de la LFPIORPI: son independientes."
+    }
+  ]
+}
