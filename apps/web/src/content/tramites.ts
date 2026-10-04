@@ -399,6 +399,11 @@ export const TRAMITES: readonly Tramite[] = [
     ],
     faq: [
       {
+        pregunta: '¿Cambia el formato del alta en 2027?',
+        respuesta:
+          'Sí. La Resolución que reforma el formato de alta y registro se publicó en el Diario Oficial de la Federación el 24 de septiembre de 2026 y entra en vigor el 1 de febrero de 2027; para las personas facilitadoras, el 1 de junio de 2027. Su tercer transitorio trae una carga para quien ya está en el padrón: si te diste de alta antes del 1 de febrero de 2027 como agencia aduanal, como quien promueve el despacho de mercancías sin agente aduanal, o actuando por medio de un fideicomiso u otra figura jurídica, debes darte de baja y de inmediato darte de alta de nuevo, identificando el carácter con el que realizas tus actos u operaciones.',
+      },
+      {
         pregunta: '¿Puedo darme de alta si mi e.firma o mi contraseña no están vigentes?',
         respuesta:
           'No. El SAT responde en la ficha 85869 que «tienen que estar vigentes para poder ingresar al Portal de Prevención de Lavado de Dinero». Primero renuevas el certificado y después haces el alta.',

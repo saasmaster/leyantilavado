@@ -94,14 +94,20 @@ export interface PreguntaGuia {
  *   inst_excel2.pdf         be6ee60d3680   6 552 296
  *   inst_modificatorio.pdf  c5d1c86f5546   1 581 465
  *   inst_baja.pdf           35b3941213e0   1 567 486
- *   sppld.html              131122f9caa4      26 304
- *   tecnica.html            54cda020b107      24 261
- *   preguntas.html          880a3e5fb397     303 971
+ *   sppld.html              69fbe66111a5      26 519
+ *   tecnica.html            3f04e72b0cd4      24 476
+ *   preguntas.html          6efdccac23ad     304 188
  *   sppld/ (aplicativo)     e19a65848288         481
  *
- * Las dos páginas HTML del SAT llevan marco de gob.mx: un cambio de hash puede
- * ser el pie de página del portal y no el contenido. Cambió el hash, se lee el
+ * Las páginas HTML del SAT llevan marco de gob.mx: un cambio de hash puede ser
+ * el pie de página del portal y no el contenido. Cambió el hash, se lee el
  * documento; no se deduce nada del número solo.
+ *
+ * 4-oct-2026: las tres páginas HTML cambiaron de hash (antes 131122f9caa4,
+ * 54cda020b107 y 880a3e5fb397). Se compararon byte a byte contra copias
+ * archivadas que reproducen esa línea base: lo único distinto es la entrada
+ * de menú «Facilitadores» y un comentario HTML al pie. El contenido es el
+ * mismo. Los cuatro PDF y el aplicativo reproducen su hash.
  */
 export const FUENTES_GUIA: readonly FuenteGuia[] = [
   {
@@ -109,7 +115,7 @@ export const FUENTES_GUIA: readonly FuenteGuia[] = [
     nombre: 'Instructivo Excel — cómo generar el archivo XML de Avisos',
     emisor: 'SHCP / SAT — Portal de Prevención de Lavado de Dinero',
     url: 'https://www.pld.hacienda.gob.mx/work/models/PLD/documentos/inst_excel.pdf',
-    consultadaEl: '2026-09-01',
+    consultadaEl: '2026-10-04',
     nota:
       'Once pasos ilustrados con capturas de pantalla. Es el documento que el portal enlaza desde la sección «Sistema del Portal en Internet [SPPLD]».',
   },
@@ -118,7 +124,7 @@ export const FUENTES_GUIA: readonly FuenteGuia[] = [
     nombre: 'Instructivo Excel (variante inst_excel2.pdf)',
     emisor: 'SHCP / SAT — Portal de Prevención de Lavado de Dinero',
     url: 'https://www.pld.hacienda.gob.mx/work/models/PLD/documentos/inst_excel2.pdf',
-    consultadaEl: '2026-09-01',
+    consultadaEl: '2026-10-04',
     nota:
       'Mismo contenido que inst_excel.pdf salvo por una línea: esta variante NO incluye la advertencia del tamaño máximo de 2 MB del XML. Si trabajas con una copia descargada hace tiempo, revisa cuál de las dos tienes.',
   },
@@ -127,21 +133,21 @@ export const FUENTES_GUIA: readonly FuenteGuia[] = [
     nombre: '¿Cómo presentar un Aviso Modificatorio?',
     emisor: 'SHCP / SAT — Portal de Prevención de Lavado de Dinero',
     url: 'https://www.pld.hacienda.gob.mx/work/models/PLD/documentos/inst_modificatorio.pdf',
-    consultadaEl: '2026-09-01',
+    consultadaEl: '2026-10-04',
   },
   {
     id: 'inst-baja',
     nombre: '¿Cómo dar de Baja una Actividad Vulnerable?',
     emisor: 'SHCP / SAT — Portal de Prevención de Lavado de Dinero',
     url: 'https://www.pld.hacienda.gob.mx/work/models/PLD/documentos/inst_baja.pdf',
-    consultadaEl: '2026-09-01',
+    consultadaEl: '2026-10-04',
   },
   {
     id: 'sppld-sistema',
     nombre: 'Sistema del Portal en Internet [SPPLD]',
     emisor: 'SAT',
     url: 'https://sppld.sat.gob.mx/pld/interiores/sppld.html',
-    consultadaEl: '2026-09-01',
+    consultadaEl: '2026-10-04',
     nota:
       'Describe las dos vías de presentación —captura en línea y envío masivo— y los requisitos de navegador.',
   },
@@ -150,14 +156,14 @@ export const FUENTES_GUIA: readonly FuenteGuia[] = [
     nombre: 'Recomendaciones técnicas del portal',
     emisor: 'SAT',
     url: 'https://sppld.sat.gob.mx/pld/interiores/tecnica.html',
-    consultadaEl: '2026-09-01',
+    consultadaEl: '2026-10-04',
   },
   {
     id: 'sppld-preguntas',
     nombre: 'Preguntas frecuentes y criterios',
     emisor: 'SAT',
     url: 'https://sppld.sat.gob.mx/pld/interiores/preguntas.html',
-    consultadaEl: '2026-09-01',
+    consultadaEl: '2026-10-04',
     nota:
       'La propia página advierte que sus respuestas «tienen carácter orientativo e informativo y en ningún caso constituyen un acto de autoridad o una interpretación».',
   },
@@ -166,7 +172,7 @@ export const FUENTES_GUIA: readonly FuenteGuia[] = [
     nombre: 'Acceso al Sistema del Portal en Internet [SPPLD]',
     emisor: 'SAT',
     url: 'https://sppld.sat.gob.mx/sppld/',
-    consultadaEl: '2026-09-01',
+    consultadaEl: '2026-10-04',
     nota: 'Aplicativo autenticado. Las plantillas .xlsm se descargan desde dentro, no desde el sitio público.',
   },
 ];
@@ -280,7 +286,7 @@ export const PASOS_FLUJO: readonly PasoGuia[] = [
     id: 'llenar',
     titulo: 'Llenar la plantilla conforme a la Resolución de formatos oficiales',
     detalle: [
-      'La plantilla no es el formato: es la herramienta que captura el formato. El contenido obligatorio lo fija la Resolución por la que se expiden los formatos oficiales de los Avisos e Informes, publicada en el DOF el 30 de agosto de 2013 y reformada el 24 de julio de 2014.',
+      'La plantilla no es el formato: es la herramienta que captura el formato. El contenido obligatorio lo fija la Resolución por la que se expiden los formatos oficiales de los Avisos e Informes, publicada en el DOF el 30 de agosto de 2013 y modificada en 2014, 2015, 2016, 2019 y 2021. Su reforma más reciente salió en el DOF el 24 de septiembre de 2026 y trae formatos nuevos, obligatorios desde el 1 de junio de 2027: hasta ese día rigen los actuales.',
       'El propio instructivo liga el llenado con la validación posterior: los datos obligatorios que se dejan vacíos son la causa de error que la autoridad menciona por su nombre.',
     ],
     literal:
@@ -397,7 +403,7 @@ export const CAUSAS_ERROR: readonly CausaErrorValidacion[] = [
     sintoma:
       'Los datos parecen completos y la validación sigue rechazándolos, o el portal rechaza un XML que Excel sí generó.',
     causa:
-      'El contenido no corresponde al formato oficial vigente. El formato lo fija la Resolución publicada en el DOF el 30 de agosto de 2013 y reformada el 24 de julio de 2014, no la costumbre de la empresa.',
+      'El contenido no corresponde al formato oficial vigente. El formato lo fija la Resolución publicada en el DOF el 30 de agosto de 2013 y sus modificaciones —la última, del 24 de septiembre de 2026, con formatos nuevos que serán obligatorios desde el 1 de junio de 2027—, no la costumbre de la empresa.',
     queHacer:
       'Volver a descargar la plantilla desde el portal —no reutilizar la del año pasado— y contrastar los catálogos de la plantilla nueva contra los datos que estás capturando.',
     fuenteId: 'sppld-preguntas',
@@ -442,11 +448,11 @@ export const HUECOS_DECLARADOS: readonly HuecoDeclarado[] = [
   },
   {
     id: 'esquema-xml',
-    titulo: 'Los esquemas del XML no están publicados en el sitio público',
+    titulo: 'Los esquemas del formato nuevo están enlazados, pero todavía no se pueden descargar',
     queNoEstaPublicado:
-      'Las plantillas .xlsm y sus estructuras viven dentro del aplicativo autenticado. En el sitio público del portal no hay XSD, ni diccionario de campos, ni ejemplos de XML válidos que podamos citar.',
+      'El esquema XSD y el ejemplo de XML del formato vigente sí son públicos: cada página de actividad del portal los enlaza. Lo que falta es lo nuevo. Tras la Resolución del 24 de septiembre de 2026 esas páginas enlazan también los esquemas del formato que regirá desde el 1 de junio de 2027, y al 4 de octubre de 2026 esos archivos responden «no encontrado». Lo mismo pasa con el esquema, el ejemplo y la plantilla de personas facilitadoras; su instructivo y su guía sí están.',
     queHacerMientrasTanto:
-      'Genera el XML siempre con la plantilla oficial descargada de tu sesión. Construirlo a mano o con un generador de terceros es apostar contra un esquema que no puedes leer.',
+      'Para lo que presentas hoy, genera el XML con la plantilla oficial y, si quieres validarlo, usa el XSD vigente de tu actividad. Para el formato nuevo no construyas nada sobre el texto del DOF solo: espera a que el portal publique sus esquemas.',
   },
   {
     id: 'aviso-extemporaneo',
@@ -460,17 +466,9 @@ export const HUECOS_DECLARADOS: readonly HuecoDeclarado[] = [
     id: 'plazo-modificatorio',
     titulo: 'El plazo para modificar no está en el instructivo',
     queNoEstaPublicado:
-      'El instructivo del aviso modificatorio explica el procedimiento —folio, estatus aceptado— pero no menciona plazo ni número de correcciones permitidas. Ese límite proviene de las reglas de carácter general y en nuestra ficha todavía no lleva cita de artículo verificada.',
+      'El instructivo del aviso modificatorio explica el procedimiento —folio, estatus aceptado— pero no menciona plazo ni número de correcciones permitidas. El límite lo fija el artículo 8 de la Resolución de formatos: en su texto reformado (DOF 24-09-2026) el aviso puede modificarse una sola vez, dentro de los 30 días naturales siguientes a la fecha del acuse electrónico. No hemos contrastado la redacción anterior de ese artículo, que es la que rige hasta el 1 de junio de 2027.',
     queHacerMientrasTanto:
-      'Trata la corrección como algo urgente y única: revisa antes de enviar, no después. Y confirma el plazo aplicable contra las reglas vigentes antes de apoyarte en él.',
-  },
-  {
-    id: 'resolucion-formatos-24h',
-    titulo: 'La Resolución de formatos que activa el aviso de 24 horas no aparece publicada',
-    queNoEstaPublicado:
-      'El aviso de veinticuatro horas existe en la norma, pero su envío está diferido hasta seis meses después de que entre en vigor la Resolución que actualice los formatos oficiales identificándolo expresamente. Esa Resolución no aparece publicada a la fecha de nuestra última revisión.',
-    queHacerMientrasTanto:
-      'Ten el procedimiento interno de detección, escalamiento y decisión funcionando: lo diferido es el envío por el formato oficial, no el deber de vigilar. Y desconfía de cualquier fecha concreta que veas circular.',
+      'Trata la corrección como algo urgente y única: revisa antes de enviar, no después. Si corriges un aviso enviado con el formato anterior, podrás usar ese mismo formato sólo hasta el 30 de junio de 2027.',
   },
 ];
 

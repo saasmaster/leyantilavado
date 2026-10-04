@@ -151,7 +151,7 @@ export default function Pagina() {
         {
           pregunta: '¿Y los avisos de operaciones inusuales en 24 horas?',
           respuesta:
-            'Aparecen aparte, sin fecha. La obligación existe en la norma, pero su exigibilidad corre a partir de seis meses después de que la UIF publique la resolución con los formatos oficiales, y esa resolución no aparece publicada. No le ponemos cuenta regresiva porque sería inventarla.',
+            'Aparecen en el plan con su fecha: 1 de junio de 2027. Estuvieron aparte y sin fecha mientras la UIF no publicó la resolución con los formatos oficiales; se publicó en el DOF el 24 de septiembre de 2026 y su quinto transitorio fija ese día.',
         },
         {
           pregunta: '¿Terminar todos los hitos significa que estoy en cumplimiento?',

@@ -11,7 +11,9 @@ const P = (disposicion: string, fuentes = ['lfpiorpi-vigente']): Procedencia => 
   disposicion,
   verificacion: 'oficial_verificado',
   ultimaRevision: ULTIMA_REVISION,
-  ultimaModificacion: SIN_CAMBIOS_DESDE,
+  // 12-sep-2026: se corrigieron contra el texto vigente los supuestos de las
+  // fracciones II a V del art. 53. La fecha se quedó sin mover entonces.
+  ultimaModificacion: '2026-09-12',
   notaEditorial:
     'Contrastado contra el texto de la LFPIORPI publicado por la Cámara de Diputados (DOF 16-07-2025).',
 });

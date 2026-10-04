@@ -34,6 +34,33 @@ export const FUENTES: readonly FuenteOficial[] = [
     fechaPublicacion: '2026-08-07',
   },
   {
+    id: 'dof-resolucion-formatos-avisos-2026',
+    nombre: 'Resolución que modifica los formatos oficiales de los Avisos e Informes',
+    emisor: 'DOF',
+    url: 'https://dof.gob.mx/nota_detalle.php?codigo=5799445&fecha=24/09/2026',
+    descripcion:
+      'Resolución de la Unidad de Inteligencia Financiera publicada en el Diario Oficial de la Federación el 24 de septiembre de 2026. Reforma los Anexos 1 a 16 y adiciona el 12-C (personas facilitadoras) y el 14-A. Sus transitorios fijan el 1 de junio de 2027 para los formatos nuevos y para el aviso de 24 horas.',
+    fechaPublicacion: '2026-09-24',
+  },
+  {
+    id: 'dof-resolucion-alta-registro-2026',
+    nombre: 'Resolución que modifica el formato oficial para el alta y registro',
+    emisor: 'DOF',
+    url: 'https://dof.gob.mx/nota_detalle.php?codigo=5799444&fecha=24/09/2026',
+    descripcion:
+      'Resolución de la Unidad de Inteligencia Financiera publicada en el Diario Oficial de la Federación el 24 de septiembre de 2026. Reforma los Anexos A y B del alta y registro. En vigor el 1 de febrero de 2027; para las personas facilitadoras, el 1 de junio de 2027.',
+    fechaPublicacion: '2026-09-24',
+  },
+  {
+    id: 'sat-facilitadores',
+    nombre: 'Personas facilitadoras — Portal de Prevención de Lavado de Dinero',
+    emisor: 'SAT',
+    url: 'https://sppld.sat.gob.mx/pld/interiores/facilitadores.html',
+    descripcion:
+      'Página del portal para la actividad del art. 17, fracción XII, Apartado D, con su guía «¿Qué debo saber?», instructivo, esquema XSD y plantillas. Publicada tras la Resolución de formatos del 24 de septiembre de 2026.',
+    fechaPublicacion: '2026-09-24',
+  },
+  {
     id: 'sat-marco-normativo',
     nombre: 'Marco normativo PLD — SAT',
     emisor: 'SAT',

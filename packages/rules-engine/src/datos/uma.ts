@@ -1,5 +1,5 @@
 import { pesosACentavos, type Procedencia, type ValorUMA } from '@leyantilavado/types';
-import { ULTIMA_MODIFICACION, ULTIMA_REVISION } from './revision';
+import { ULTIMA_REVISION } from './revision';
 
 const PROCEDENCIA_UMA = (anio: number, verificado: boolean): Procedencia => ({
   fuentes: ['inegi-uma'],
@@ -10,7 +10,12 @@ const PROCEDENCIA_UMA = (anio: number, verificado: boolean): Procedencia => ({
   // aviso de «pendiente de contraste». Declararlo aquí y no en `revision.ts`
   // es lo que impide que las 136 URL se anuncien como modificadas por un
   // cambio que sólo afecta a las que muestran la UMA.
-  ultimaModificacion: ULTIMA_MODIFICACION,
+  //
+  // Es un literal y no `ULTIMA_MODIFICACION` a propósito: esa constante es la
+  // del corpus y sube con cualquier dataset. Mientras este fichero la usó, el
+  // conversor de UMA se anunció como modificado el 4-oct-2026 por un cambio
+  // del calendario. La fecha de un dataset es la de SU último cambio.
+  ultimaModificacion: '2026-09-01',
   notaEditorial: verificado
     ? undefined
     : 'Valor histórico pendiente de contraste directo contra el comunicado del INEGI del año correspondiente.',

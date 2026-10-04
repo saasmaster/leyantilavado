@@ -221,17 +221,19 @@ export default function Acuerdo115() {
           </p>
         )}
 
-        <Nota tono="riesgo" titulo="Los avisos de 24 horas no tienen fecha cierta" className="mt-6">
+        <Nota tono="info" titulo="Los avisos de 24 horas ya tienen fecha: 1 de junio de 2027" className="mt-6">
           <p>
             El acuerdo prevé avisos en 24 horas por operaciones inusuales, que proceden aunque no se
-            alcance el umbral e incluso cuando la operación no llegó a celebrarse. Pero su
-            exigibilidad corre a partir de <strong>seis meses después</strong> de que la UIF publique
-            una Resolución con los formatos oficiales, y esa Resolución no aparece publicada a la
-            fecha de nuestra última revisión.
+            alcance el umbral e incluso cuando la operación no llegó a celebrarse. Su exigibilidad
+            corría a partir de <strong>seis meses después</strong> de que entrara en vigor una
+            Resolución de la UIF con los formatos oficiales.
           </p>
           <p>
-            Por eso no le ponemos fecha en el calendario. Si ves una fuente que da una fecha
-            concreta para esta obligación, verifica que cite la Resolución publicada.
+            Esa Resolución se publicó en el Diario Oficial de la Federación el{' '}
+            <strong>24 de septiembre de 2026</strong>. Para este efecto entra en vigor el 1 de
+            diciembre de 2026, y su quinto transitorio lo dice expresamente: a partir del 1 de junio
+            de 2027 estos avisos se presentan con los formatos nuevos. Hasta entonces este sitio no
+            le ponía fecha, porque no la había.
           </p>
         </Nota>
 

@@ -203,8 +203,8 @@ export function CalendarioCumplimiento({
       ) : (
         <div className="contenedor-app py-10">
           <p className="rounded-[var(--radius-card)] border border-dashed border-[var(--color-borde-fuerte)] p-6 text-center text-sm text-[var(--color-tinta-suave)]">
-            Esa obligación no tiene fechas con día cierto en el calendario. Revisa abajo los
-            pendientes sin fecha.
+            Esa obligación no tiene fechas con día cierto en el calendario.
+            {pendientesVisibles.length > 0 ? ' Revisa abajo los pendientes sin fecha.' : ''}
           </p>
         </div>
       )}

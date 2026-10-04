@@ -110,9 +110,13 @@ export default function MetodologiaEditorial() {
           <p>
             En ese caso <strong>no inventamos la cifra y tampoco la escondemos</strong>: la
             interfaz muestra el hueco en rojo y explica qué falta. Hoy hay{' '}
-            {datos.ACTIVIDADES.length - datos.ACTIVIDADES_PUBLICABLES.length} apartados del
-            artículo 17 en esa situación, y una obligación completa —los avisos de 24 horas— cuya
-            fecha de exigibilidad depende de una resolución que aún no se publica.
+            {datos.ACTIVIDADES.length - datos.ACTIVIDADES_PUBLICABLES.length}{' '}
+            {datos.ACTIVIDADES.length - datos.ACTIVIDADES_PUBLICABLES.length === 1
+              ? 'apartado del artículo 17 en esa situación.'
+              : 'apartados del artículo 17 en esa situación.'}{' '}
+            Los huecos se cierran cuando la fuente aparece, no antes: los avisos de 24 horas
+            estuvieron sin fecha hasta que la Resolución de formatos se publicó en el DOF el 24 de
+            septiembre de 2026, y sólo entonces entraron al calendario.
           </p>
           <p>
             Un hueco declarado es información útil: te dice que ahí necesitas asesoría, no que

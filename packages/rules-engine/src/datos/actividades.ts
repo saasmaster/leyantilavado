@@ -250,12 +250,27 @@ export const ACTIVIDADES: readonly Actividad[] = [
     nombre: 'Personas facilitadoras públicas y privadas',
     nombreCorto: 'Personas facilitadoras',
     descripcion:
-      'Apartado adicionado por la reforma publicada el 16 de julio de 2025. Alcanza a las personas facilitadoras previstas en la Ley General de Mecanismos Alternativos de Solución de Controversias y remite a los supuestos del Apartado A en los términos que la propia ley señala.',
+      'Apartado adicionado por la reforma publicada el 16 de julio de 2025. Alcanza a las personas facilitadoras previstas en la Ley General de Mecanismos Alternativos de Solución de Controversias y remite a los supuestos del Apartado A en los términos que la propia ley señala. La autoridad lo aplica a la transmisión o constitución de derechos reales sobre inmuebles, y su alta y registro corre desde el 1 de junio de 2027.',
     ejemplosSujetos: [
       'Personas facilitadoras públicas de centros de justicia alternativa',
       'Personas facilitadoras privadas certificadas',
     ],
-    procedencia: P('Art. 17, fracción XII, Apartado D (adicionado DOF 16-07-2025)', true),
+    // Dejó de ser «sin confirmar» el 4-oct-2026: el SAT publicó su página y su
+    // guía para este apartado, y la UIF su formato (Anexo 12-C, DOF 24-09-2026).
+    procedencia: {
+      fuentes: [
+        'lfpiorpi-vigente',
+        'sat-facilitadores',
+        'dof-resolucion-formatos-avisos-2026',
+        'dof-resolucion-alta-registro-2026',
+      ],
+      disposicion: 'Art. 17, fracción XII, Apartado D (adicionado DOF 16-07-2025)',
+      verificacion: 'oficial_verificado',
+      ultimaRevision: ULTIMA_REVISION,
+      ultimaModificacion: '2026-10-04',
+      notaEditorial:
+        'Contrastado contra el texto vigente de la LFPIORPI, la guía del SAT para personas facilitadoras y la Resolución de formatos publicada en el DOF el 24 de septiembre de 2026. La ley remite al Apartado A completo; la autoridad sólo contempla inmuebles. Se publican las dos lecturas.',
+    },
   },
   {
     slug: 'donativos',

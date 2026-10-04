@@ -219,7 +219,11 @@ const RESPUESTA_DIRECTA = [
   `${YA_CORREN} de las ${FILAS.length} obligaciones del catálogo no las escalona el Acuerdo 115/2026 y ya corren, porque su fundamento es la ley vigente y no un transitorio.`,
   `Las demás entran por escalones: ${ESCALONES.map((h) => formatearFechaCorta(h.fecha)).join(', ')}.`,
   `De esas fechas, ${CON_FECHA_PUBLICADA} ${plural(CON_FECHA_PUBLICADA, 'está publicada', 'están publicadas')} en el instrumento y ${CON_FECHA_CALCULADA} ${plural(CON_FECHA_CALCULADA, 'sale', 'salen')} de convertir un plazo en meses, así que hay que confirmarla antes de usarla como fecha límite.`,
-  `${SIN_FECHA} ${plural(SIN_FECHA, 'obligación sigue', 'obligaciones siguen')} sin fecha cierta.`,
+  // Con cero, «0 obligaciones siguen sin fecha» se lee como un error. Se dice
+  // lo que pasó: la única que estaba sin fecha ya la tiene, y de dónde salió.
+  SIN_FECHA > 0
+    ? `${SIN_FECHA} ${plural(SIN_FECHA, 'obligación sigue', 'obligaciones siguen')} sin fecha cierta.`
+    : 'Ninguna queda sin fecha: el aviso de 24 horas, que lo estuvo hasta septiembre de 2026, tiene ya la suya en la Resolución de formatos publicada en el DOF.',
 ].join(' ');
 
 const INDICE = [

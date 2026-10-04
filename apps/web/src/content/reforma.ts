@@ -120,7 +120,7 @@ export const CAMBIOS_ANTES_DESPUES: readonly CambioReforma[] = [
     supuesto: 'Personas facilitadoras públicas y privadas',
     antesTexto: 'No figuraban en el catálogo del art. 17',
     despuesTexto:
-      'Apartado XII-D adicionado, con remisión a los supuestos del apartado A en los términos que la ley señala. La autoridad aún no publica umbrales propios.',
+      'Apartado XII-D adicionado, con remisión a los supuestos del apartado A en los términos que la ley señala. La autoridad lo aplica a la transmisión o constitución de derechos reales sobre inmuebles, con aviso desde 8 000 UMA, y fijó su alta y registro a partir del 1 de junio de 2027.',
     disposicion: 'Art. 17, fracción XII, Apartado D (adicionado)',
     endurece: true,
   },
@@ -170,7 +170,7 @@ export const CAMBIOS_ANTES_DESPUES: readonly CambioReforma[] = [
       'Se desdobla en tres supuestos con plazo de veinticuatro horas y se aclara que procede aunque no se alcance el umbral y aunque la operación nunca se haya celebrado.',
     disposicion: 'Art. 18, fracción VI; art. 7 Bis del Reglamento; arts. 26 Bis a 27 de las Reglas',
     endurece: true,
-    nota: 'Su envío está diferido hasta que se publiquen los formatos oficiales que lo identifiquen.',
+    nota: 'Se presentan a partir del 1 de junio de 2027, conforme al quinto transitorio de la Resolución de formatos publicada en el DOF el 24 de septiembre de 2026.',
   },
   {
     clave: 'supervision-sat',

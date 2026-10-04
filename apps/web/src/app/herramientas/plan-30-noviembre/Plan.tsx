@@ -368,36 +368,38 @@ export function Plan() {
             </ol>
           </section>
 
-          <section aria-labelledby="sin-fecha">
-            <h2 id="sin-fecha" className="text-xl font-semibold text-[var(--color-tinta)]">
-              Te toca, pero todavía no hay fecha
-            </h2>
-            <ol className="mt-4 flex flex-col gap-4">
-              {datos.PENDIENTES_SIN_FECHA.map((p) => (
-                <li key={p.id}>
-                  <Tarjeta className="border-dashed">
-                    <TarjetaCuerpo className="flex flex-col gap-2">
-                      <Insignia tono="neutro">Sin fecha cierta</Insignia>
-                      <h3 className="text-lg font-semibold text-[var(--color-tinta)]">{p.titulo}</h3>
-                      <p className="text-sm leading-relaxed text-[var(--color-tinta-suave)]">
-                        {p.descripcion}
-                      </p>
-                      <ul className="flex flex-col gap-2">
-                        {obligacionesDe(p.obligaciones).map((o) => (
-                          <li key={o.slug}>
-                            <TarjetaObligacion obligacion={o} compacta />
-                          </li>
-                        ))}
-                      </ul>
-                      <p className="border-t border-[var(--color-borde)] pt-3 text-xs text-[var(--color-tinta-tenue)]">
-                        Fundamento: {p.procedencia.disposicion}.
-                      </p>
-                    </TarjetaCuerpo>
-                  </Tarjeta>
-                </li>
-              ))}
-            </ol>
-          </section>
+          {datos.PENDIENTES_SIN_FECHA.length > 0 && (
+            <section aria-labelledby="sin-fecha">
+              <h2 id="sin-fecha" className="text-xl font-semibold text-[var(--color-tinta)]">
+                Te toca, pero todavía no hay fecha
+              </h2>
+              <ol className="mt-4 flex flex-col gap-4">
+                {datos.PENDIENTES_SIN_FECHA.map((p) => (
+                  <li key={p.id}>
+                    <Tarjeta className="border-dashed">
+                      <TarjetaCuerpo className="flex flex-col gap-2">
+                        <Insignia tono="neutro">Sin fecha cierta</Insignia>
+                        <h3 className="text-lg font-semibold text-[var(--color-tinta)]">{p.titulo}</h3>
+                        <p className="text-sm leading-relaxed text-[var(--color-tinta-suave)]">
+                          {p.descripcion}
+                        </p>
+                        <ul className="flex flex-col gap-2">
+                          {obligacionesDe(p.obligaciones).map((o) => (
+                            <li key={o.slug}>
+                              <TarjetaObligacion obligacion={o} compacta />
+                            </li>
+                          ))}
+                        </ul>
+                        <p className="border-t border-[var(--color-borde)] pt-3 text-xs text-[var(--color-tinta-tenue)]">
+                          Fundamento: {p.procedencia.disposicion}.
+                        </p>
+                      </TarjetaCuerpo>
+                    </Tarjeta>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
 
           <Nota tono="info" titulo="Lo que este plan no dice">
             <p>

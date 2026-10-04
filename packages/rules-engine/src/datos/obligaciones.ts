@@ -1,5 +1,5 @@
 import type { CategoriaObligacion, Obligacion, Procedencia } from '@leyantilavado/types';
-import { ULTIMA_MODIFICACION, ULTIMA_REVISION } from './revision';
+import { ULTIMA_REVISION } from './revision';
 
 const P = (
   disposicion: string,
@@ -10,7 +10,11 @@ const P = (
   disposicion,
   verificacion: 'fuente_secundaria',
   ultimaRevision: ULTIMA_REVISION,
-  ultimaModificacion: ULTIMA_MODIFICACION,
+  // 14-ago-2026: último cambio real de este catálogo (dos `disposicion`
+  // corregidas). Seguía a `ULTIMA_MODIFICACION`, la constante del corpus, y por
+  // eso las 19 fichas se anunciaron como modificadas el 1-sep (UMA) y otra vez
+  // el 4-oct (calendario) sin que cambiara una letra de ellas.
+  ultimaModificacion: '2026-08-14',
   notaEditorial: `${alcance} Mapeo de alcance propuesto por la redacción, sin revisión jurídica firmada. El resto de la ficha sigue pendiente de contraste literal contra el texto vigente y el Acuerdo 115/2026.`,
 });
 

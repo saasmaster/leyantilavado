@@ -24,7 +24,7 @@ import bandaCalendario from '../../../public/img/bandas/calendario.webp';
 const RUTA = '/calendario-cumplimiento';
 const TITULO = 'Calendario de cumplimiento 2026-2029';
 const DESCRIPCION =
-  'Cada fecha exigible del Acuerdo 115/2026 con cuenta regresiva en vivo: metodología de riesgos, mecanismos automatizados, capacitación y auditoría.';
+  'Cada fecha exigible del Acuerdo 115/2026 y de los formatos de la UIF, con cuenta regresiva: riesgos, aviso de 24 horas, capacitación y auditoría.';
 
 export const metadata: Metadata = construirMetadata({
   titulo: TITULO,
@@ -113,7 +113,7 @@ export default function Calendario() {
             ? ([{ texto: `${ESTIMADOS} estimadas`, tono: 'ambar' }] as const)
             : []),
         ]}
-        respuestaDirecta="El Acuerdo 115/2026 entra en vigor el 30 de noviembre de 2026 y escalona el resto: metodología de riesgos, manual y expedientes el 1 de marzo de 2027; mecanismos automatizados el 1 de junio de 2027; el ejercicio 2027 como primer periodo de capacitación; el 2028 como primero de auditoría, con dictamen a más tardar el último día hábil de marzo de 2029."
+        respuestaDirecta="El Acuerdo 115/2026 entra en vigor el 30 de noviembre de 2026 y escalona el resto: metodología de riesgos, manual y expedientes el 1 de marzo de 2027; mecanismos automatizados el 1 de junio de 2027; el ejercicio 2027 como primer periodo de capacitación; el 2028 como primero de auditoría, con dictamen a más tardar el último día hábil de marzo de 2029. Las resoluciones de formatos de la UIF (DOF 24-09-2026) añaden tres fechas: nuevo formato de alta y registro el 1 de febrero de 2027; aviso de 24 horas y formatos nuevos de avisos e informes el 1 de junio de 2027; y fin de los formatos anteriores el 30 de junio de 2027."
         entradilla={DESCRIPCION}
       />
 

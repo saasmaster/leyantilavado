@@ -12,6 +12,32 @@ import type { EntradaActualizacion } from './tipos';
  */
 const ENTRADAS: readonly EntradaActualizacion[] = [
   {
+    id: 'resoluciones-formatos-2026',
+    fecha: '2026-09-24',
+    tipo: 'reglas',
+    titulo: 'La UIF publica los formatos nuevos: el aviso de 24 horas ya tiene fecha',
+    resumen:
+      'El 24 de septiembre de 2026 se publicaron en el Diario Oficial de la Federación dos resoluciones de la Unidad de Inteligencia Financiera: la que reforma los formatos oficiales de Avisos e Informes y la que reforma el formato de alta y registro. Eran la pieza que faltaba para ponerle fecha al aviso de veinticuatro horas, que este sitio mantenía como pendiente sin fecha. La fecha es el 1 de junio de 2027.',
+    impacto: [
+      'Aviso de 24 horas: se presenta a partir del 1 de junio de 2027. El quinto transitorio de la Resolución dice que, para efectos del Acuerdo 115/2026, ésta entra en vigor el 1 de diciembre de 2026, y que desde el 1 de junio de 2027 los avisos de los artículos 26 Bis, 26 Bis 1, 26 Bis 2 y 27 de las Reglas se presentan con los formatos nuevos.',
+      'Formatos nuevos para todos: desde el 1 de junio de 2027 los avisos e informes —incluido el informe en ceros, con su propio Anexo 14— se envían con los formatos nuevos, aunque la operación o el periodo sean anteriores. Hasta ese día siguen rigiendo los actuales.',
+      'Avisos modificatorios: los de avisos enviados con el formato anterior pueden seguir usándolo hasta el 30 de junio de 2027. El 1 de julio de 2027 los formatos anteriores dejan de estar disponibles.',
+      'Alta y registro: el formato reformado entra en vigor el 1 de febrero de 2027. Quien ya estaba dado de alta como agencia aduanal, como quien despacha mercancías sin agente, o actuando por medio de un fideicomiso u otra figura jurídica, debe darse de baja y de alta de nuevo identificando el carácter con el que actúa.',
+      'Personas facilitadoras: tienen formato propio de avisos (Anexo 12-C) y su alta corre desde el 1 de junio de 2027. El portal del SAT abrió una sección para ellas, y su guía fija el aviso de inmuebles en 8 000 UMA, la misma cifra que este sitio ya publicaba por remisión al apartado A. La guía y el formato sólo contemplan inmuebles; la ley remite al apartado A completo. Mostramos las dos lecturas.',
+      'Ningún umbral cambia. La tabla de umbrales del SAT se comparó byte a byte contra su versión anterior: lo único nuevo en esa página es la entrada de menú «Facilitadores».',
+      'Una corrección nuestra: la guía del aviso decía que el portal no publicaba el esquema XSD ni ejemplos de XML. Era falso —cada página de actividad los enlaza— y ya está corregido. Lo que hoy no se puede descargar son los esquemas del formato nuevo: el portal los enlaza, pero al 4 de octubre de 2026 responden «no encontrado».',
+    ],
+    fuenteId: 'dof-resolucion-formatos-avisos-2026',
+    paginasAfectadas: [
+      { etiqueta: 'Calendario de cumplimiento', href: '/calendario-cumplimiento' },
+      { etiqueta: 'Qué es exigible y desde cuándo', href: '/exigibilidad' },
+      { etiqueta: 'Aviso de 24 horas', href: '/obligaciones/operaciones-inusuales' },
+      { etiqueta: 'Cómo presentar un aviso', href: '/guia-aviso' },
+      { etiqueta: 'Personas facilitadoras', href: '/actividades-vulnerables/personas-facilitadoras' },
+      { etiqueta: 'Acuerdo 115/2026', href: '/acuerdo-115-2026' },
+    ],
+  },
+  {
     id: 'paquete-economico-2027',
     fecha: '2026-09-08',
     tipo: 'sitio',

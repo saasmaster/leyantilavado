@@ -1,6 +1,9 @@
 import type { HitoCalendario, Procedencia } from '@leyantilavado/types';
 import { SIN_CAMBIOS_DESDE, ULTIMA_REVISION } from './revision';
 
+/** Día en que entraron al calendario las fechas de las resoluciones del 24-09-2026. */
+const RESOLUCIONES_INCORPORADAS = '2026-10-04';
+
 const P = (disposicion: string, verificado = true): Procedencia => ({
   fuentes: ['dof-acuerdo-115-2026'],
   disposicion,
@@ -13,12 +16,38 @@ const P = (disposicion: string, verificado = true): Procedencia => ({
 });
 
 /**
+ * Procedencia de las fechas que salen de las dos resoluciones de formatos de
+ * la UIF (DOF 24-09-2026). Llevan su propia fecha de modificación para que el
+ * sitemap anuncie como cambiadas las páginas del calendario y no el sitio.
+ */
+const R = (
+  fuente: 'dof-resolucion-formatos-avisos-2026' | 'dof-resolucion-alta-registro-2026',
+  disposicion: string,
+): Procedencia => ({
+  fuentes: [fuente],
+  disposicion,
+  verificacion: 'oficial_verificado',
+  ultimaRevision: ULTIMA_REVISION,
+  ultimaModificacion: RESOLUCIONES_INCORPORADAS,
+  notaEditorial:
+    'Fecha tomada de los artículos transitorios de la Resolución publicada en el DOF el 24 de septiembre de 2026.',
+});
+
+/**
  * Calendario de implementación.
  *
  * Regla firme: las fechas se guardan NOMINALES. No se recorren por fines de
  * semana ni días inhábiles salvo que la propia norma diga "día hábil" —
  * en ese caso queda registrado en `descripcion` que el cálculo depende del
  * calendario oficial de días inhábiles.
+ */
+/*
+ * `obligaciones` NO es «temas relacionados»: /exigibilidad toma el primer hito
+ * que nombra una obligación como el día en que ésta se vuelve exigible. Por eso
+ * los hitos de formato —1-dic-2026, 1-feb-2027, 30-jun-2027— van con la lista
+ * vacía: el alta y los avisos ordinarios ya corren por ley, y enlazarlos aquí
+ * le diría al lector que no le obligan hasta 2027. Sólo el aviso de 24 horas
+ * nace de verdad en su hito.
  */
 export const CALENDARIO: readonly HitoCalendario[] = [
   {
@@ -33,6 +62,20 @@ export const CALENDARIO: readonly HitoCalendario[] = [
     estado: 'publicado',
   },
   {
+    id: 'formatos-computo-24h',
+    fecha: '2026-12-01',
+    titulo: 'Arranca el cómputo del aviso de 24 horas',
+    descripcion:
+      'Para efectos del quinto transitorio del Acuerdo 115/2026, la Resolución de formatos de Avisos e Informes entra en vigor este día. De aquí se cuentan los seis meses que difieren el aviso de 24 horas, y la propia Resolución fija el resultado: 1 de junio de 2027.',
+    obligaciones: [],
+    confirmadoOficialmente: true,
+    procedencia: R(
+      'dof-resolucion-formatos-avisos-2026',
+      'Quinto Transitorio, Resolución de formatos de Avisos e Informes (DOF 24-09-2026)',
+    ),
+    estado: 'publicado',
+  },
+  {
     id: 'capacitacion-2027',
     fecha: '2027-01-01',
     fechaFin: '2027-12-31',
@@ -42,6 +85,20 @@ export const CALENDARIO: readonly HitoCalendario[] = [
     obligaciones: ['capacitacion'],
     confirmadoOficialmente: true,
     procedencia: P('Artículos Transitorios, Acuerdo 115/2026'),
+    estado: 'publicado',
+  },
+  {
+    id: 'alta-registro-formato-2027',
+    fecha: '2027-02-01',
+    titulo: 'Nuevo formato de alta y registro',
+    descripcion:
+      'Entra en vigor la Resolución que reforma el formato de alta y registro (Anexos A y B). Quien se dio de alta antes de esta fecha como agencia aduanal, como quien promueve el despacho sin agente aduanal, o actuando por medio de un fideicomiso u otra figura jurídica, debe darse de baja y de inmediato darse de alta de nuevo, identificando el carácter con el que realiza sus actos u operaciones. Para las personas facilitadoras esta Resolución entra en vigor el 1 de junio de 2027.',
+    obligaciones: [],
+    confirmadoOficialmente: true,
+    procedencia: R(
+      'dof-resolucion-alta-registro-2026',
+      'Transitorios Primero a Tercero, Resolución del formato de alta y registro (DOF 24-09-2026)',
+    ),
     estado: 'publicado',
   },
   {
@@ -82,6 +139,34 @@ export const CALENDARIO: readonly HitoCalendario[] = [
     obligaciones: ['mecanismos-automatizados'],
     confirmadoOficialmente: true,
     procedencia: P('Artículos Transitorios, Acuerdo 115/2026'),
+    estado: 'publicado',
+  },
+  {
+    id: 'avisos-24h',
+    fecha: '2027-06-01',
+    titulo: 'Aviso de 24 horas y formatos nuevos de avisos e informes',
+    descripcion:
+      'A partir de este día los avisos de 24 horas (arts. 26 Bis, 26 Bis 1, 26 Bis 2 y 27 de las Reglas) se presentan con los formatos electrónicos nuevos, y todos los avisos e informes —también el informe en ceros— deben enviarse con ellos, aunque la operación o el periodo sean anteriores. Es también la fecha desde la que las personas facilitadoras hacen su alta y registro.',
+    obligaciones: ['operaciones-inusuales'],
+    confirmadoOficialmente: true,
+    procedencia: R(
+      'dof-resolucion-formatos-avisos-2026',
+      'Transitorios Primero, Segundo y Quinto, Resolución de formatos de Avisos e Informes (DOF 24-09-2026)',
+    ),
+    estado: 'publicado',
+  },
+  {
+    id: 'formatos-anteriores-fin',
+    fecha: '2027-06-30',
+    titulo: 'Último día para modificatorios con el formato anterior',
+    descripcion:
+      'Los avisos enviados con los formatos vigentes antes del 1 de junio de 2027 pueden corregirse con esos mismos formatos hasta este día, siempre dentro de los 30 días naturales que da el artículo 8 de la Resolución. Desde el 1 de julio de 2027 los formatos anteriores dejan de estar disponibles.',
+    obligaciones: [],
+    confirmadoOficialmente: true,
+    procedencia: R(
+      'dof-resolucion-formatos-avisos-2026',
+      'Transitorios Tercero y Cuarto, Resolución de formatos de Avisos e Informes (DOF 24-09-2026)',
+    ),
     estado: 'publicado',
   },
   {
@@ -131,24 +216,27 @@ export const CALENDARIO: readonly HitoCalendario[] = [
   },
 ];
 
+/** Una obligación prevista en la norma cuya fecha depende de un acto que no se ha publicado. */
+export interface PendienteSinFecha {
+  id: string;
+  titulo: string;
+  descripcion: string;
+  obligaciones: readonly string[];
+  procedencia: Procedencia;
+  ultimaRevision: string;
+  ultimaModificacion: string;
+}
+
 /**
- * Avisos de 24 horas: existen en la norma (arts. 26 Bis, 26 Bis 1, 26 Bis 2 y
- * 27) y proceden aunque no se alcance el umbral e incluso cuando la operación
- * no llegó a celebrarse. PERO su exigibilidad está diferida hasta seis meses
- * después de que la UIF publique una Resolución de formatos que, a la fecha de
- * la última revisión, no aparece publicada.
+ * Obligaciones sin fecha cierta. Hoy no hay ninguna.
  *
- * Por eso NO tiene fecha en el calendario: publicar una sería inventarla.
+ * Aquí vivió el aviso de 24 horas mientras la Resolución de formatos de la UIF
+ * no estaba publicada: ponerle fecha habría sido inventarla. La Resolución
+ * salió en el DOF el 24 de septiembre de 2026 y fija el 1 de junio de 2027,
+ * así que pasó al calendario como el hito `avisos-24h`.
+ *
+ * La lista se conserva —vacía y con tipo propio— porque la categoría sigue
+ * siendo real: el día que otra obligación dependa de un acto sin publicar,
+ * entra aquí en lugar de recibir una fecha estimada.
  */
-export const PENDIENTES_SIN_FECHA = [
-  {
-    id: 'avisos-24h',
-    titulo: 'Avisos de operaciones inusuales en 24 horas',
-    descripcion:
-      'La obligación está prevista en la norma, pero su exigibilidad corre a partir de seis meses después de que la UIF publique la Resolución con los formatos oficiales. Esa Resolución no aparece publicada a la fecha de la última revisión, por lo que no existe una fecha cierta.',
-    obligaciones: ['operaciones-inusuales'],
-    procedencia: P('Arts. 26 Bis, 26 Bis 1, 26 Bis 2 y 27, Acuerdo 115/2026'),
-    ultimaRevision: ULTIMA_REVISION,
-  ultimaModificacion: SIN_CAMBIOS_DESDE,
-  },
-] as const;
+export const PENDIENTES_SIN_FECHA: readonly PendienteSinFecha[] = [];

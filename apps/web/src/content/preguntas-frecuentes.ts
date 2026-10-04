@@ -379,11 +379,12 @@ export const CATEGORIAS_FAQ: CategoriaFAQ[] = [
         id: 'operaciones-24-horas',
         pregunta: '¿Ya tengo que presentar avisos de operaciones inusuales en 24 horas?',
         respuesta: [
-          'Todavía no hay una fecha cierta. La obligación existe en la norma y procede incluso cuando no se alcanza el umbral, e incluso cuando la operación no llegó a celebrarse.',
-          'Pero su exigibilidad corre a partir de seis meses después de que la UIF publique una Resolución con los formatos oficiales, y esa Resolución no aparece publicada a la fecha de nuestra última revisión.',
-          'Por eso no le ponemos cuenta regresiva en el calendario: sería inventar la fecha.',
+          'Todavía no: se presentan a partir del 1 de junio de 2027. La obligación existe en la norma y procede incluso cuando no se alcanza el umbral, e incluso cuando la operación no llegó a celebrarse.',
+          'Su exigibilidad corría a partir de seis meses después de que entrara en vigor una Resolución de la UIF con los formatos oficiales. Esa Resolución se publicó en el Diario Oficial de la Federación el 24 de septiembre de 2026 y, para este efecto, entra en vigor el 1 de diciembre de 2026.',
+          'Hasta septiembre de 2026 este sitio decía que no había fecha cierta, porque no la había. Ahora la fija el quinto transitorio de la Resolución, y está en el calendario.',
         ],
-        fundamento: 'Arts. 26 Bis, 26 Bis 1, 26 Bis 2 y 27 del Acuerdo 115/2026',
+        fundamento:
+          'Arts. 26 Bis, 26 Bis 1, 26 Bis 2 y 27 de las Reglas (Acuerdo 115/2026) y Quinto Transitorio de la Resolución de formatos (DOF 24-09-2026)',
         verMas: { href: '/calendario-cumplimiento', etiqueta: 'Ver el calendario' },
       },
     ],

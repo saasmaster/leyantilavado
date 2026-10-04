@@ -367,7 +367,7 @@ const CONTENIDOS: readonly ContenidoObligacion[] = [
       {
         pregunta: '¿Ya es exigible este aviso?',
         respuesta:
-          'Su envío quedó diferido hasta seis meses después de que entre en vigor la resolución que actualice los formatos oficiales identificando expresamente este tipo de aviso. Esa resolución no aparece publicada a la fecha de nuestra última revisión, por lo que no hay una fecha cierta.',
+          'A partir del 1 de junio de 2027. Su envío estaba diferido hasta seis meses después de que entrara en vigor la resolución que actualizara los formatos oficiales identificando este tipo de aviso. Esa resolución se publicó en el Diario Oficial de la Federación el 24 de septiembre de 2026: para este efecto entra en vigor el 1 de diciembre de 2026, y su quinto transitorio dice expresamente que desde el 1 de junio de 2027 estos avisos se presentan con los formatos nuevos.',
       },
       {
         pregunta: '¿Debo avisar si el cliente aparece en una lista oficial?',

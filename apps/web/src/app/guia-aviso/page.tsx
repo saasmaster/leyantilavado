@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { AlertTriangle, ExternalLink, FileWarning, Quote } from 'lucide-react';
-import { datos } from '@leyantilavado/rules-engine';
+import { datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { Insignia, Nota, SelloProcedencia, Tarjeta, TarjetaCuerpo } from '@leyantilavado/ui';
 import {
   AvisoLegal,
@@ -43,7 +43,8 @@ const RUTA = '/guia-aviso';
 const OB_AVISOS = datos.OBLIGACIONES_POR_SLUG['avisos'];
 const OB_CEROS = datos.OBLIGACIONES_POR_SLUG['informes-en-ceros'];
 const OB_24H = datos.OBLIGACIONES_POR_SLUG['operaciones-inusuales'];
-const PENDIENTE_24H = datos.PENDIENTES_SIN_FECHA.find((p) => p.id === 'avisos-24h');
+/** El aviso de 24 horas dejó de ser un pendiente sin fecha el 4-oct-2026: ahora es un hito. */
+const HITO_24H = datos.CALENDARIO.find((h) => h.id === 'avisos-24h');
 
 export const metadata: Metadata = construirMetadata({
   titulo: GUIA_AVISO.tituloSEO,
@@ -413,30 +414,31 @@ export default function PaginaGuiaAviso() {
       <Seccion
         id="veinticuatro-horas"
         titulo="El aviso de 24 horas"
-        descripcion="Existe en la norma. Su envío depende de una Resolución que no aparece publicada."
+        descripcion="Existe en la norma y ya tiene fecha: se presenta a partir del 1 de junio de 2027."
       >
         {OB_24H && (
           <p className="prosa leading-relaxed text-[var(--color-tinta-suave)]">{OB_24H.resumen}</p>
         )}
 
-        {PENDIENTE_24H && (
-          <div className="mt-5 rounded-[var(--radius-card)] border border-dashed border-[var(--color-ambar)] bg-[var(--color-ambar-tenue)] p-4">
-            <Insignia tono="ambar">Sin fecha cierta</Insignia>
-            <p className="mt-2 font-medium text-[var(--color-tinta)]">{PENDIENTE_24H.titulo}</p>
+        {HITO_24H && (
+          <div className="mt-5 rounded-[var(--radius-card)] border border-[color-mix(in_srgb,var(--color-petroleo)_30%,transparent)] bg-[var(--color-petroleo-tenue)] p-4">
+            <Insignia tono="petroleo">{formatearFechaLarga(HITO_24H.fecha)}</Insignia>
+            <p className="mt-2 font-medium text-[var(--color-tinta)]">{HITO_24H.titulo}</p>
             <p className="mt-1 leading-relaxed text-[var(--color-tinta-suave)]">
-              {PENDIENTE_24H.descripcion}
+              {HITO_24H.descripcion}
             </p>
             <p className="mt-2 text-xs text-[var(--color-tinta-tenue)]">
-              {PENDIENTE_24H.procedencia.disposicion}
+              {HITO_24H.procedencia.disposicion}
             </p>
           </div>
         )}
 
         <p className="prosa mt-5 leading-relaxed text-[var(--color-tinta-suave)]">
           En términos de esta guía, la consecuencia es concreta: la plantilla oficial que hoy se
-          descarga del portal responde a los formatos publicados en 2013 y reformados en 2014, que
-          no identifican ese tipo de aviso. Mientras la Resolución no se publique, no hay archivo
-          que generar ni sección donde cargarlo.
+          descarga del portal responde a los formatos vigentes, que no identifican ese tipo de
+          aviso. Los formatos que sí lo identifican se publicaron en el DOF el 24 de septiembre de
+          2026 y se usan desde el 1 de junio de 2027; hasta entonces no hay archivo que generar ni
+          sección donde cargarlo.
         </p>
         <p className="prosa mt-2 leading-relaxed text-[var(--color-tinta-suave)]">
           Lo que sí debe existir desde hoy es el procedimiento interno: quién detecta, a quién

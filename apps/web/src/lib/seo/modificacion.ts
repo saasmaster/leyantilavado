@@ -1,6 +1,10 @@
 import { datos } from '@leyantilavado/rules-engine';
 import { ANALISIS, ULTIMO_ANALISIS } from '@/content/analisis';
 import { ARTICULOS, LEY_PUBLICADA_EN } from '@/content/ley';
+import { ACTIVIDADES_CON_PAGINA } from '@/content/cambios-por-actividad';
+
+/** Día en que el contenido de las páginas listadas al final de `POR_RUTA` cambió. */
+const CAMBIO_RESOLUCIONES_UIF = '2026-10-04';
 
 /* ────────────────────────────────────────────────────────────────────────────
  * Una sola respuesta a «cuándo cambió esta página».
@@ -87,6 +91,38 @@ const POR_RUTA: Record<string, string> = {
   // SIN_CAMBIOS_DESDE y su `dateModified` quedaría antes de su publicación.
   '/ley': LEY_PUBLICADA_EN,
   ...Object.fromEntries(ARTICULOS.map((a) => [`/ley/${a.slug}`, LEY_PUBLICADA_EN])),
+
+  /*
+   * 4-oct-2026. Dos cambios de contenido que no viven en un dataset del motor
+   * y por eso no mueven su fecha solos:
+   *
+   * - Las resoluciones de formatos de la UIF (DOF 24-09-2026) cambiaron lo que
+   *   estas páginas DICEN sobre el aviso de 24 horas, los formatos y las
+   *   personas facilitadoras. El calendario, los umbrales del Apartado D y la
+   *   ficha de facilitadoras sí llevan la fecha en su procedencia y no
+   *   necesitan estar aquí.
+   * - `/que-cambio` pasó de 22 páginas a 4 y las que quedan se reescribieron.
+   *
+   * Van al final a propósito: pisan la fecha del dataset para las rutas que
+   * además dependen de uno (`/guia-aviso`, la obligación del aviso de 24 h).
+   */
+  ...Object.fromEntries(
+    [
+      '/',
+      '/acuerdo-115-2026',
+      '/preguntas-frecuentes',
+      '/guia-aviso',
+      '/obligaciones/operaciones-inusuales',
+      '/reforma-ley-antilavado-2026',
+      '/metodologia-editorial',
+      '/herramientas/plan-30-noviembre',
+      '/fuentes-oficiales',
+      '/actualizaciones',
+      '/tramites/alta-y-registro',
+      '/que-cambio',
+      ...ACTIVIDADES_CON_PAGINA.map((a) => `/que-cambio/${a.slug}`),
+    ].map((ruta) => [ruta, CAMBIO_RESOLUCIONES_UIF]),
+  ),
 };
 
 /** Cuándo cambió por última vez el contenido de esta ruta. */

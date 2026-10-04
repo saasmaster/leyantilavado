@@ -1155,9 +1155,9 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
     slug: 'personas-facilitadoras',
     tituloSEO: 'Personas facilitadoras: apartado D (art. 17-XII D)',
     descripcionSEO:
-      'La reforma de julio de 2025 incorporó a las personas facilitadoras de mecanismos alternativos. Qué dice la ley y qué falta todavía por publicar.',
+      'Personas facilitadoras de mecanismos alternativos en la Ley Antilavado: aviso desde 8 000 UMA en inmuebles y alta en el padrón desde el 1 de junio de 2027.',
     respuestaDirecta:
-      'El apartado D se adicionó por la reforma publicada el 16 de julio de 2025 y alcanza a las personas facilitadoras públicas y privadas previstas en la Ley General de Mecanismos Alternativos de Solución de Controversias. La ley remite a los supuestos del apartado A "en los términos que se señalan", pero la tabla oficial de umbrales no desglosa este apartado, así que no publicamos cifras propias.',
+      'El apartado D alcanza a las personas facilitadoras públicas y privadas previstas en la Ley General de Mecanismos Alternativos de Solución de Controversias. La autoridad lo aplica a la transmisión o constitución de derechos reales sobre inmuebles: el aviso procede cuando el valor más alto entre precio pactado, valor catastral, valor comercial y monto garantizado es igual o superior a 8 000 veces la UMA. Su alta y registro en el portal del SAT corre a partir del 1 de junio de 2027.',
     alcanza: [
       'Personas facilitadoras públicas adscritas a centros de justicia alternativa',
       'Personas facilitadoras privadas certificadas conforme a la Ley General de Mecanismos Alternativos de Solución de Controversias',
@@ -1166,42 +1166,48 @@ const CONTENIDOS: readonly ContenidoActividad[] = [
       'Los mediadores que no tienen la calidad de persona facilitadora en los términos de esa ley general.',
       'Los notarios y corredores, que van por sus propios apartados.',
       'El abogado que asesora a una parte en el procedimiento, cuyo análisis va por la fracción XI si encaja en su catálogo.',
+      'Las garantías que se constituyan a favor de instituciones del sistema financiero u organismos públicos de vivienda, que la guía del SAT deja a salvo.',
     ],
     puntosClave: [
       'Es un apartado nuevo: antes de la reforma de 2025 estas personas no figuraban en el catálogo del art. 17.',
-      'La remisión al apartado A es expresa, pero la propia ley la condiciona a "los términos que se señalan", lo que exige un desarrollo que aún no vemos publicado.',
+      'El alta y registro en el portal corre desde el 1 de junio de 2027: así lo fija el segundo transitorio de la Resolución del formato de alta y registro, publicada en el DOF el 24 de septiembre de 2026.',
+      'Los avisos se presentan a más tardar el día 17 del mes siguiente al de la operación, con un formato propio: el Anexo 12-C de la Resolución de formatos de Avisos e Informes.',
+      'El primer periodo anual de capacitación es 2027 completo, y el primer periodo de auditoría, 2028 completo, según la guía del SAT para esta actividad.',
+      'La ley remite al apartado A entero; la autoridad sólo contempla inmuebles. Poderes irrevocables, actos societarios, fideicomisos y mutuos no aparecen ni en la guía del SAT ni en el formato oficial. Las dos fuentes no coinciden y aquí se muestran ambas.',
       'La reforma al Reglamento de 2026 las incorporó a la definición de personas depositarias de fe pública.',
-      'Los convenios que resultan de un mecanismo alternativo pueden documentar actos que sí están en el apartado A, como transmisiones de derechos sobre inmuebles.',
-      'Mientras no haya umbral oficial, lo defendible es documentar el análisis y conservar la información de cada asunto.',
     ],
-    obligacionesDestacadas: ['identificacion-cliente', 'expedientes', 'conservacion-diez-anios'],
-    sinUmbralPublicado:
-      'La remisión al apartado A existe en el texto de la ley, pero la autoridad no ha publicado los umbrales concretos que aplican a este apartado. En lugar de copiar las cifras de notarios, dejamos el hueco visible y lo señalamos.',
+    obligacionesDestacadas: [
+      'alta-sppld',
+      'identificacion-cliente',
+      'expedientes',
+      'avisos',
+      'conservacion-diez-anios',
+    ],
     faq: [
       {
-        pregunta: '¿Una persona facilitadora es sujeto obligado desde 2025?',
+        pregunta: '¿Desde cuándo debe darse de alta una persona facilitadora?',
         respuesta:
-          'El apartado que la incorpora está en vigor desde el 17 de julio de 2025. Lo que falta es el desarrollo de los umbrales aplicables, que la ley remite a los supuestos del apartado A en los términos que ella misma señala.',
+          'A partir del 1 de junio de 2027. El apartado que la incorpora está en vigor desde el 17 de julio de 2025, pero el formato de alta y registro para estas personas entra en vigor en esa fecha, conforme al segundo transitorio de la Resolución publicada en el DOF el 24 de septiembre de 2026. La guía del SAT para la actividad dice lo mismo.',
       },
       {
-        pregunta: '¿Entonces aplico los umbrales de los notarios?',
+        pregunta: '¿Cuál es el umbral de aviso en inmuebles?',
         respuesta:
-          'La remisión al apartado A apunta en esa dirección, pero no la confirmamos como dato verificado porque la tabla oficial no lo desglosa. Es exactamente el tipo de decisión que debe tomar un profesional sobre tu caso, con constancia escrita del criterio.',
+          'Ocho mil veces el valor diario de la UMA, medido sobre el más alto entre el precio pactado, el valor catastral, el valor comercial del inmueble y, en su caso, el monto garantizado por suerte principal. Es la cifra del apartado A, inciso a), al que la ley remite, y la que publica la guía del SAT para personas facilitadoras.',
       },
       {
-        pregunta: '¿Qué actos de un mecanismo alternativo podrían quedar dentro?',
+        pregunta: '¿Y los demás actos del apartado A: poderes, sociedades, fideicomisos, mutuos?',
         respuesta:
-          'Aquellos que coinciden con los supuestos del apartado A: transmisión o constitución de derechos reales sobre inmuebles, poderes irrevocables, actos societarios, fideicomisos y mutuos con acreedor fuera del sistema financiero.',
+          'Ahí las fuentes oficiales no coinciden. El texto de la ley remite al apartado A «en los términos que se señalan», sin excluir ningún inciso. Pero la guía del SAT describe el apartado D sólo como transmisión o constitución de derechos reales sobre inmuebles, y el formato oficial de avisos para estas personas (Anexo 12-C) sólo trae campos de inmuebles, a diferencia del de notarios. Mostramos los umbrales del apartado A para esos actos y señalamos la discrepancia: es una decisión que debe tomar un profesional sobre tu caso, con constancia escrita del criterio.',
       },
       {
-        pregunta: '¿Debo darme de alta en el padrón?',
+        pregunta: '¿Con qué formato se presentan los avisos?',
         respuesta:
-          'El alta corresponde a quien realiza una actividad vulnerable. Si tu función encaja en el apartado D, esa es la pregunta central y conviene resolverla con asesoría, dejando constancia del análisis y de su fecha.',
+          'Con el Anexo 12-C de la Resolución de formatos de Avisos e Informes, adicionado por la reforma publicada en el DOF el 24 de septiembre de 2026. El portal del SAT ya tiene una sección «Facilitadores» con el instructivo, el esquema XSD, un ejemplo de XML y la plantilla de Excel.',
       },
       {
-        pregunta: '¿Actualizarán esta página cuando haya umbrales?',
+        pregunta: '¿Qué cambió en esta página?',
         respuesta:
-          'Sí. El cambio aparecerá en la bitácora de actualizaciones con la fecha de publicación oficial, y esta página dejará de mostrar el aviso de dato pendiente.',
+          'Hasta septiembre de 2026 decía que la autoridad no había publicado umbrales para este apartado, y era cierto. El 24 de septiembre de 2026 la UIF publicó los formatos y el SAT su guía. El cambio está registrado en la bitácora de actualizaciones con su fecha.',
       },
     ],
   },

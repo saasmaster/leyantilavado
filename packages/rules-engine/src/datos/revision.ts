@@ -28,7 +28,44 @@
 /**
  * Fecha de la última pasada editorial sobre las fuentes oficiales.
  *
- * 11-sep-2026: sin cambios en el corpus. Lo nuevo es el Paquete Económico
+ * 4-oct-2026: HAY cambios. La UIF publicó en el DOF del 24 de septiembre de
+ * 2026 las dos resoluciones de formatos que el sitio daba por pendientes, y
+ * con ellas el aviso de 24 horas deja de estar «sin fecha cierta»:
+ *
+ * - **Resolución de formatos de Avisos e Informes** (DOF 24-09-2026, código
+ *   5799445). Transitorios leídos en el propio DOF: en vigor el 1 de junio de
+ *   2027 (Primero); desde ese día los avisos e informes se envían con los
+ *   formatos nuevos (Segundo); los modificatorios de avisos enviados con el
+ *   formato anterior pueden seguir usándolo hasta el 30 de junio de 2027
+ *   (Tercero) y el 1 de julio dejan de estar disponibles (Cuarto); y, para
+ *   efectos del quinto transitorio del Acuerdo 115/2026, la Resolución entra
+ *   en vigor el 1 de diciembre de 2026, «por lo que a partir del primero de
+ *   junio de dos mil veintisiete» los avisos de los arts. 26 Bis, 26 Bis 1,
+ *   26 Bis 2 y 27 de las Reglas se presentan con los formatos nuevos (Quinto).
+ * - **Resolución del formato de alta y registro** (DOF 24-09-2026, código
+ *   5799444). En vigor el 1 de febrero de 2027; para las personas
+ *   facilitadoras, el 1 de junio de 2027. Quien se dio de alta antes del 1 de
+ *   febrero como agencia aduanal, como quien despacha sin agente, o actuando
+ *   por medio de fideicomiso u otra figura jurídica, debe darse de baja y de
+ *   alta de nuevo identificando el carácter con que actúa (Tercero).
+ * - **Portal del SAT.** Tres páginas y la tabla de umbrales cambiaron de
+ *   hash. Se compararon byte a byte contra copias archivadas que reproducen la
+ *   línea base: lo único nuevo es la entrada de menú «Facilitadores» y un
+ *   comentario HTML. La tabla de umbrales NO cambió.
+ * - **Página nueva «Facilitadores»** y su guía (act_fac.pdf): fija el aviso
+ *   de inmuebles en 8 000 UMA —la cifra que el motor ya tomaba por remisión al
+ *   Apartado A— y sólo contempla derechos reales sobre inmuebles. La ley
+ *   remite al Apartado A completo. Se publican las dos lecturas.
+ * - **Texto vigente.** LFPIORPI.doc reproduce su sha-256 del 12-sep
+ *   (49f53d224796a121): reforma DOF 16-07-2025. Reglamento 27-03-2026, LFPA
+ *   14-11-2025 y LFPCA 09-06-2026, sin cambios.
+ * - **Los cuatro instructivos en PDF y el aplicativo.** Mismo sha-256.
+ * - **Paquete Económico 2027.** Sigue siendo iniciativa: Diputados tiene
+ *   hasta el 20 de octubre. Los análisis no cambian.
+ *
+ * Cambia el calendario y cambian notas publicadas: `ULTIMA_MODIFICACION` sube.
+ *
+ * Antes: 2026-09-11, sin cambios en el corpus. Lo nuevo es el Paquete Económico
  * 2027, y se leyó entero antes de afirmar que no nos toca:
  *
  * - **Paquete Económico 2027** (Gaceta Parlamentaria, 8-sep-2026, anexos A a
@@ -48,12 +85,22 @@
  *
  * Antes: 2026-09-05.
  */
-export const ULTIMA_REVISION = '2026-09-11';
+export const ULTIMA_REVISION = '2026-10-04';
 
 /**
  * Fecha en que cambió por última vez algún dato del corpus.
  *
- * 2026-08-24: dos supuestos que se publicaban SIN respuesta pasaron a tenerla,
+ * 2026-10-04: el calendario gana cuatro fechas tomadas de las dos
+ * resoluciones del DOF del 24-09-2026, y el aviso de 24 horas pasa de
+ * «pendiente sin fecha» a hito con fecha (1 de junio de 2027). Las notas de
+ * los cinco supuestos de personas facilitadoras cambian para recoger la guía
+ * del SAT. Ningún umbral cambia de valor.
+ *
+ * Los datasets que no se tocaron conservan su propia fecha: sólo
+ * `calendario.ts`, los supuestos del Apartado D en `umbrales.ts` y la ficha de
+ * personas facilitadoras en `actividades.ts` llevan ésta.
+ *
+ * Antes: 2026-09-01 (serie de la UMA verificada). Antes, 2026-08-24: dos supuestos que se publicaban SIN respuesta pasaron a tenerla,
  * contrastados contra el texto vigente (DOF 16-07-2025). Los dos cambian lo que
  * devuelven las herramientas, que es exactamente lo que esta fecha existe para
  * señalar:
@@ -78,7 +125,7 @@ export const ULTIMA_REVISION = '2026-09-11';
  * modificadas porque cambió una cita en uno solo — que es exactamente el ruido
  * que este campo existe para evitar.
  */
-export const ULTIMA_MODIFICACION = '2026-09-01';
+export const ULTIMA_MODIFICACION = '2026-10-04';
 
 /*
  * 2026-09-01: la serie histórica de la UMA 2016–2025 pasó de

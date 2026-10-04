@@ -8,12 +8,17 @@ import type {
   ReglaUmbral,
 } from '@leyantilavado/types';
 
-const P = (disposicion: string, nota?: string): Procedencia => ({
-  fuentes: ['lfpiorpi-vigente', 'sat-umbrales'],
+const P = (
+  disposicion: string,
+  nota?: string,
+  cambio?: { modificado: string; fuentes: string[] },
+): Procedencia => ({
+  fuentes: cambio?.fuentes ?? ['lfpiorpi-vigente', 'sat-umbrales'],
   disposicion,
   verificacion: 'oficial_verificado',
   ultimaRevision: ULTIMA_REVISION,
-  ultimaModificacion: SIN_CAMBIOS_DESDE,
+  // Cada supuesto conserva la fecha en que cambió ÉL, no la del corpus.
+  ultimaModificacion: cambio?.modificado ?? SIN_CAMBIOS_DESDE,
   notaEditorial:
     nota ??
     'Contrastado contra la tabla oficial de umbrales del SAT y el texto vigente de la LFPIORPI (última reforma DOF 16-07-2025).',
@@ -106,10 +111,42 @@ interface Def {
   disposicion: string;
   nota?: string;
   revisar?: string;
+  /** Cuándo cambió este supuesto y con qué fuentes, si no es la línea base. */
+  cambio?: { modificado: string; fuentes: string[] };
 }
 
-const NOTA_APARTADO_D =
-  'El Apartado D remite a los supuestos del Apartado A «en los términos que se señalan», así que el umbral es el mismo que para notarios. La tabla de umbrales del SAT todavía no desglosa este apartado.';
+/**
+ * Apartado D, a partir del 4-oct-2026.
+ *
+ * Hay dos lecturas oficiales y no coinciden en el alcance:
+ *
+ * - La LEY remite al Apartado A entero: «las previstas en el apartado A de esta
+ *   fracción, en los términos que se señalan».
+ * - La AUTORIDAD sólo contempla inmuebles. Lo dicen tres documentos suyos: el
+ *   considerando de la Resolución de formatos (DOF 24-09-2026), su Anexo 12-C
+ *   —que sólo trae campos de derechos reales sobre inmuebles, frente al 12-A
+ *   de notarios, que trae poderes, sociedades, fideicomisos y mutuos— y la
+ *   guía del portal del SAT.
+ *
+ * Se sigue el precedente del art. 32, fr. VIII: se mantiene publicada la
+ * lectura más amplia, que es la que no deja a nadie fuera, y se dice la
+ * discrepancia. Ninguna cifra cambia: en inmuebles las dos lecturas dan 8 000.
+ */
+const NOTA_APARTADO_D_INMUEBLES =
+  'El Apartado D remite a los supuestos del Apartado A «en los términos que se señalan». La guía del SAT para personas facilitadoras confirma este supuesto y su umbral de aviso: 8 000 veces el valor diario de la UMA sobre el valor más alto entre precio pactado, valor catastral, valor comercial y monto garantizado. Su alta y registro corre desde el 1 de junio de 2027.';
+
+const NOTA_APARTADO_D_OTROS =
+  'La ley remite al Apartado A completo «en los términos que se señalan», y por eso este supuesto se publica con el umbral de notarios. Pero la autoridad sólo contempla inmuebles para las personas facilitadoras: ni la guía del SAT ni el formato oficial de avisos (Anexo 12-C, DOF 24-09-2026) prevén este acto. Las dos fuentes oficiales no coinciden; mostramos la lectura más amplia y la discrepancia. Exige revisión profesional antes de decidir.';
+
+/** Fuentes y fecha del cambio de nota de los supuestos del Apartado D. */
+const CAMBIO_APARTADO_D = {
+  modificado: '2026-10-04',
+  fuentes: [
+    'lfpiorpi-vigente',
+    'sat-facilitadores',
+    'dof-resolucion-formatos-avisos-2026',
+  ],
+};
 
 const DEFINICIONES: Def[] = [
   // ── I. Juegos con apuesta, concursos y sorteos ──────────────────────────
@@ -359,7 +396,8 @@ const DEFINICIONES: Def[] = [
   //
   // Literal: respecto de las personas facilitadoras aplican «las previstas en
   // el apartado A de esta fracción, en los términos que se señalan». Es una
-  // remisión expresa, así que los umbrales son los del Apartado A.
+  // remisión expresa, así que los umbrales son los del Apartado A. Desde el
+  // 4-oct-2026 las notas recogen que la autoridad sólo contempla inmuebles.
   // MISMO CONTENIDO que la app Flutter: si cambia uno, cambia el otro.
   {
     actividad: 'personas-facilitadoras',
@@ -370,7 +408,8 @@ const DEFINICIONES: Def[] = [
       'La base es el valor más alto entre el precio pactado, el valor catastral, el valor comercial y el monto garantizado por suerte principal.',
     ),
     disposicion: 'Art. 17, fracción XII, Apartado D (remite al Apartado A, inciso a)',
-    nota: NOTA_APARTADO_D,
+    nota: NOTA_APARTADO_D_INMUEBLES,
+    cambio: CAMBIO_APARTADO_D,
   },
   {
     actividad: 'personas-facilitadoras',
@@ -379,7 +418,8 @@ const DEFINICIONES: Def[] = [
     aviso: siempre(),
     acumulacion: SIN_ACUM,
     disposicion: 'Art. 17, fracción XII, Apartado D (remite al Apartado A, inciso b)',
-    nota: NOTA_APARTADO_D,
+    nota: NOTA_APARTADO_D_OTROS,
+    cambio: CAMBIO_APARTADO_D,
   },
   {
     actividad: 'personas-facilitadoras',
@@ -388,7 +428,8 @@ const DEFINICIONES: Def[] = [
     aviso: siempre(),
     acumulacion: SIN_ACUM,
     disposicion: 'Art. 17, fracción XII, Apartado D (remite al Apartado A, inciso c)',
-    nota: NOTA_APARTADO_D,
+    nota: NOTA_APARTADO_D_OTROS,
+    cambio: CAMBIO_APARTADO_D,
   },
   {
     actividad: 'personas-facilitadoras',
@@ -396,7 +437,8 @@ const DEFINICIONES: Def[] = [
     identificacion: siempre(),
     aviso: uma(4000),
     disposicion: 'Art. 17, fracción XII, Apartado D (remite al Apartado A, inciso d)',
-    nota: NOTA_APARTADO_D,
+    nota: NOTA_APARTADO_D_OTROS,
+    cambio: CAMBIO_APARTADO_D,
   },
   {
     actividad: 'personas-facilitadoras',
@@ -405,7 +447,8 @@ const DEFINICIONES: Def[] = [
     aviso: siempre(),
     acumulacion: SIN_ACUM,
     disposicion: 'Art. 17, fracción XII, Apartado D (remite al Apartado A, inciso e)',
-    nota: NOTA_APARTADO_D,
+    nota: NOTA_APARTADO_D_OTROS,
+    cambio: CAMBIO_APARTADO_D,
   },
 
   // ── XIII. Donativos ─────────────────────────────────────────────────────
@@ -500,7 +543,7 @@ export const UMBRALES: readonly ReglaUmbral[] = DEFINICIONES.map((d) => ({
   periodicidad: d.periodicidad ?? 'operacion',
   acumulacion: d.acumulacion ?? (d.subtipo ? ACUM_6M_SUBTIPO : ACUM_6M),
   vigencia: { desde: '2025-07-17', hasta: null },
-  procedencia: d.revisar ? P_REVISAR(d.disposicion, d.revisar) : P(d.disposicion, d.nota),
+  procedencia: d.revisar ? P_REVISAR(d.disposicion, d.revisar) : P(d.disposicion, d.nota, d.cambio),
   estado: (d.revisar ? 'borrador' : 'publicado') as ReglaUmbral['estado'],
 }));
 
