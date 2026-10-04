@@ -198,3 +198,63 @@ export function bloquesDeActividad(slug: ActividadSlug): readonly BloqueAtribuid
     return [{ bloque, justificacion: acotado.justificacion }];
   });
 }
+
+/* ── Qué actividad merece página propia ───────────────────────────────────── */
+
+/**
+ * Cuántas actividades comparte cada cambio atribuido.
+ *
+ * Los dos cambios del art. 32 —metales preciosos y consignación— se reparten a
+ * las once actividades con regla de efectivo, con el MISMO texto en todas. Una
+ * página por actividad cuyo único contenido propio es ese par no dice nada que
+ * no digan las otras diez: medido sobre el HTML servido, las 22 páginas de
+ * `/que-cambio/` compartían el 69 % de su texto —92 % el peor par— y 18 de
+ * ellas tenían menos del 5 % de contenido que no estuviera en las otras 21.
+ *
+ * Esa forma —muchas URL generadas que repiten un mismo artículo— es la que la
+ * política de spam de Google llama «scaled content abuse» (revisada el 28 de
+ * agosto de 2026): «muchas páginas generadas con el propósito principal de
+ * manipular el posicionamiento y no de ayudar a quien las lee». El método de
+ * redacción no es lo que la define; el resultado sí.
+ */
+const ACTIVIDADES_POR_CLAVE = new Map<string, number>();
+for (const alcance of ALCANCES) {
+  if (alcance.actividades === 'todas') continue;
+  ACTIVIDADES_POR_CLAVE.set(alcance.clave, alcance.actividades.length);
+}
+
+/**
+ * Un cambio distingue a una actividad cuando alcanza a pocas.
+ *
+ * El umbral se compara contra el total del catálogo en vez de ser un número
+ * suelto: lo que importa no es «tres», es que el cambio NO sea de reparto
+ * amplio. Si mañana una reforma reparte un cambio a dos actividades, las
+ * distingue; si lo reparte a la mitad del catálogo, no.
+ */
+const REPARTO_AMPLIO = datos.ACTIVIDADES.length / 4;
+
+const distingue = (clave: string): boolean =>
+  (ACTIVIDADES_POR_CLAVE.get(clave) ?? 0) <= REPARTO_AMPLIO;
+
+/**
+ * ¿Esta actividad tiene algo que sólo se puede contar en su propia página?
+ *
+ * Dos vías: un cambio de la reforma de reparto estrecho, o un capítulo del
+ * Acuerdo 115/2026 dirigido a su sector. Las demás se explican enteras en el
+ * índice, que ya enumera sus cambios y los transversales.
+ */
+export function merecePaginaPropia(slug: ActividadSlug): boolean {
+  if (cambiosPropios(slug).some(({ cambio }) => distingue(cambio.clave))) return true;
+  return Object.values(BLOQUES_ACOTADOS).some((b) => b.actividades.includes(slug));
+}
+
+/** Actividades con página propia en `/que-cambio/<slug>`. */
+export const ACTIVIDADES_CON_PAGINA = datos.ACTIVIDADES.filter((a) => merecePaginaPropia(a.slug));
+
+/**
+ * Actividades que se explican dentro del índice.
+ *
+ * Sus URL anteriores no desaparecen: `next.config.mjs` las redirige con 301 al
+ * índice, porque estaban indexadas y un 404 tira la señal en lugar de moverla.
+ */
+export const ACTIVIDADES_SIN_PAGINA = datos.ACTIVIDADES.filter((a) => !merecePaginaPropia(a.slug));

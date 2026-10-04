@@ -22,6 +22,7 @@ import { categoriasIndexables } from '@/lib/directorio/indexabilidad';
 import { modificadoDeRuta } from '@/lib/seo/modificacion';
 import { ANALISIS } from '@/content/analisis';
 import { ARTICULOS } from '@/content/ley';
+import { ACTIVIDADES_CON_PAGINA } from '@/content/cambios-por-actividad';
 
 /**
  * Sitemap generado desde el motor de reglas, no escrito a mano.
@@ -155,7 +156,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // existen, o anunciaría URL que devuelven 404.
   const queCambio = [
     entrada('/que-cambio', 0.85, 'monthly'),
-    ...datos.ACTIVIDADES.map((a) => entrada(`/que-cambio/${a.slug}`, 0.7, 'monthly')),
+    // Sólo las que tienen contenido propio: las otras 18 son 301 al índice.
+    ...ACTIVIDADES_CON_PAGINA.map((a) => entrada(`/que-cambio/${a.slug}`, 0.7, 'monthly')),
   ];
 
   // Los casos prácticos también son estáticos con `dynamicParams = false`:

@@ -21,6 +21,7 @@ import { MODIFICADO_EN, PUBLICADO_DESDE, REVISION_VIGENTE } from '@/content/auto
 import { INSTRUMENTOS } from '@/content/reforma';
 import type { CambioReforma } from '@/content/tipos';
 import {
+  ACTIVIDADES_CON_PAGINA,
   CAMBIOS_TRANSVERSALES,
   bloquesDeActividad,
   cambiosPropios,
@@ -38,7 +39,7 @@ const BASE = '/que-cambio';
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return datos.ACTIVIDADES.map((a) => ({ actividad: a.slug }));
+  return ACTIVIDADES_CON_PAGINA.map((a) => ({ actividad: a.slug }));
 }
 
 const ACUERDO = INSTRUMENTOS.find((i) => i.clave === 'acuerdo-115-2026');

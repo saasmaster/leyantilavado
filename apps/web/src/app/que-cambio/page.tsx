@@ -18,6 +18,7 @@ import { CAMBIOS_ANTES_DESPUES } from '@/content/reforma';
 import {
   ACTIVIDADES_CON_CAMBIO_PROPIO,
   ACTIVIDADES_SIN_CAMBIO_PROPIO,
+  merecePaginaPropia,
   CAMBIOS_TRANSVERSALES,
   CLAVES_DESCONOCIDAS,
   CLAVES_SIN_ALCANCE,
@@ -149,12 +150,16 @@ export default function PaginaQueCambio() {
                     </div>
 
                     <h3 className="text-lg font-semibold">
-                      <Link
-                        href={`${RUTA}/${a.slug}`}
-                        className="underline decoration-transparent underline-offset-4 transition-colors hover:decoration-[var(--color-petroleo)]"
-                      >
-                        {a.nombre}
-                      </Link>
+                      {merecePaginaPropia(a.slug) ? (
+                        <Link
+                          href={`${RUTA}/${a.slug}`}
+                          className="underline decoration-transparent underline-offset-4 transition-colors hover:decoration-[var(--color-petroleo)]"
+                        >
+                          {a.nombre}
+                        </Link>
+                      ) : (
+                        a.nombre
+                      )}
                     </h3>
 
                     <ul className="flex flex-col gap-2 text-sm text-[var(--color-tinta-suave)]">
@@ -168,14 +173,16 @@ export default function PaginaQueCambio() {
                       ))}
                     </ul>
 
-                    <p className="mt-auto pt-1">
-                      <Link
-                        href={`${RUTA}/${a.slug}`}
-                        className="text-sm font-medium text-[var(--color-petroleo-hondo)] underline underline-offset-2"
-                      >
-                        Ver qué cambió para {a.nombreCorto.toLowerCase()}
-                      </Link>
-                    </p>
+                    {merecePaginaPropia(a.slug) && (
+                      <p className="mt-auto pt-1">
+                        <Link
+                          href={`${RUTA}/${a.slug}`}
+                          className="text-sm font-medium text-[var(--color-petroleo-hondo)] underline underline-offset-2"
+                        >
+                          Ver qué cambió para {a.nombreCorto.toLowerCase()}
+                        </Link>
+                      </p>
+                    )}
                   </TarjetaCuerpo>
                 </Tarjeta>
               </li>
@@ -199,12 +206,16 @@ export default function PaginaQueCambio() {
                     <Insignia tono="neutro">Sin cambio de umbral documentado</Insignia>
                   </div>
                   <h3 className="text-base font-semibold">
-                    <Link
-                      href={`${RUTA}/${a.slug}`}
-                      className="underline decoration-transparent underline-offset-4 transition-colors hover:decoration-[var(--color-petroleo)]"
-                    >
-                      {a.nombre}
-                    </Link>
+                    {merecePaginaPropia(a.slug) ? (
+                      <Link
+                        href={`${RUTA}/${a.slug}`}
+                        className="underline decoration-transparent underline-offset-4 transition-colors hover:decoration-[var(--color-petroleo)]"
+                      >
+                        {a.nombre}
+                      </Link>
+                    ) : (
+                      a.nombre
+                    )}
                   </h3>
                   <p className="mt-auto text-sm text-[var(--color-tinta-suave)]">
                     Le aplican los {CAMBIOS_TRANSVERSALES.length} cambios de todo sujeto obligado.
