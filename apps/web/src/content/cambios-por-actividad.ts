@@ -233,7 +233,8 @@ for (const alcance of ALCANCES) {
  */
 const REPARTO_AMPLIO = datos.ACTIVIDADES.length / 4;
 
-const distingue = (clave: string): boolean =>
+/** ¿Este cambio es de reparto estrecho, o lo comparten muchas actividades? */
+export const distingue = (clave: string): boolean =>
   (ACTIVIDADES_POR_CLAVE.get(clave) ?? 0) <= REPARTO_AMPLIO;
 
 /**

@@ -25,6 +25,7 @@ import {
   CAMBIOS_TRANSVERSALES,
   bloquesDeActividad,
   cambiosPropios,
+  distingue,
 } from '@/content/cambios-por-actividad';
 import { construirMetadata, jsonLdMigaDePan } from '@/lib/sitio';
 
@@ -112,6 +113,9 @@ export default async function PaginaCambiosActividad({
 
   const ruta = `${BASE}/${slug}`;
   const propios = cambiosPropios(actividad.slug);
+  // Sólo lo de reparto estrecho se cuenta entero; lo demás se nombra y se enlaza.
+  const exclusivos = propios.filter(({ cambio }) => distingue(cambio.clave));
+  const compartidos = propios.filter(({ cambio }) => !distingue(cambio.clave));
   const bloques = bloquesDeActividad(actividad.slug);
 
   const migas = [
@@ -204,7 +208,7 @@ export default async function PaginaCambiosActividad({
         ) : (
           <>
             <ul className="flex flex-col gap-5">
-              {propios.map(({ cambio, justificacion }) => (
+              {exclusivos.map(({ cambio, justificacion }) => (
                 <li
                   key={cambio.clave}
                   className="rounded-[var(--radius-card)] border border-[var(--color-borde)] p-5"
@@ -249,6 +253,42 @@ export default async function PaginaCambiosActividad({
               ))}
             </ul>
 
+            {/*
+             * Los cambios del art. 32 alcanzan a once actividades con el mismo
+             * texto. Aquí va su nombre y dónde leerlos; el detalle completo en
+             * cada página era lo que las hacía iguales entre sí.
+             */}
+            {compartidos.length > 0 && (
+              <div className="mt-6">
+                <p className="text-sm font-semibold text-[var(--color-tinta)]">
+                  También te alcanzan, junto con las demás actividades con límite de efectivo:
+                </p>
+                <ul className="mt-2 flex flex-col divide-y divide-[var(--color-borde)] border-y border-[var(--color-borde)]">
+                  {compartidos.map(({ cambio }) => (
+                    <li key={cambio.clave} className="flex flex-col gap-0.5 py-3 sm:flex-row sm:items-baseline sm:gap-3">
+                      <span className="font-medium text-[var(--color-tinta)]">{cambio.supuesto}</span>
+                      <span className="text-xs text-[var(--color-tinta-tenue)]">{cambio.disposicion}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-3 text-sm">
+                  <Link
+                    href="/reforma-ley-antilavado-2026#antes-despues"
+                    className="font-medium text-[var(--color-petroleo-hondo)] underline underline-offset-2"
+                  >
+                    Su antes y su ahora
+                  </Link>
+                  {' · '}
+                  <Link
+                    href="/ley/articulo-32"
+                    className="font-medium text-[var(--color-petroleo-hondo)] underline underline-offset-2"
+                  >
+                    el artículo 32, en su texto vigente
+                  </Link>
+                </p>
+              </div>
+            )}
+
             <Nota tono="atencion" className="mt-6" titulo="Sobre la columna «antes»">
               <p>
                 Es la única cifra del sitio escrita a mano en lugar de leerse del motor, porque
@@ -266,101 +306,98 @@ export default async function PaginaCambiosActividad({
       </Seccion>
 
       {/* ── Cambios transversales ────────────────────────────────────────── */}
+      {/*
+       * Aquí estaba la lista completa, con su antes y su ahora, repetida en
+       * cada actividad. Es el mismo texto en todas y ya vive en el índice:
+       * copiarlo hacía que estas páginas compartieran más de la mitad de su
+       * contenido entre sí. Queda el nombre de cada cambio —para saber qué
+       * hay— y el detalle se lee donde está una sola vez.
+       */}
       <Seccion
         id="para-todos"
         titulo="Cambios que aplican a todos"
         descripcion="No dependen de la fracción: obligan a cualquiera que realice una actividad vulnerable."
       >
-        <ul className="flex flex-col gap-4">
+        <ul className="flex flex-col divide-y divide-[var(--color-borde)] border-y border-[var(--color-borde)]">
           {CAMBIOS_TRANSVERSALES.map(({ cambio }) => (
-            <li
-              key={cambio.clave}
-              className="rounded-[var(--radius-card)] border border-[var(--color-borde)] p-5"
-            >
-              <h3 className="font-semibold text-[var(--color-tinta)]">{cambio.supuesto}</h3>
-              <p className="mt-1 text-xs text-[var(--color-tinta-tenue)]">{cambio.disposicion}</p>
-              <dl className="mt-3 grid gap-3 sm:grid-cols-2">
-                <div>
-                  <dt className="text-xs font-medium uppercase tracking-wide text-[var(--color-tinta-tenue)]">
-                    Antes
-                  </dt>
-                  <dd className="mt-1 text-sm text-[var(--color-tinta-suave)]">
-                    {cambio.antesTexto ?? 'No documentado'}
-                  </dd>
-                </div>
-                <div>
-                  <dt className="text-xs font-medium uppercase tracking-wide text-[var(--color-tinta-tenue)]">
-                    Ahora
-                  </dt>
-                  <dd className="mt-1 text-sm text-[var(--color-tinta)]">
-                    {cambio.despuesTexto ?? 'No documentado'}
-                  </dd>
-                </div>
-              </dl>
-              {cambio.nota && (
-                <p className="mt-3 text-sm text-[var(--color-tinta-suave)]">{cambio.nota}</p>
-              )}
+            <li key={cambio.clave} className="flex flex-col gap-0.5 py-3 sm:flex-row sm:items-baseline sm:gap-3">
+              <span className="font-medium text-[var(--color-tinta)]">{cambio.supuesto}</span>
+              <span className="text-xs text-[var(--color-tinta-tenue)]">{cambio.disposicion}</span>
             </li>
           ))}
         </ul>
+        <p className="mt-4 text-sm">
+          <Link
+            href={`${BASE}#para-todos`}
+            className="font-medium text-[var(--color-petroleo-hondo)] underline underline-offset-2"
+          >
+            Ver el antes y el ahora de cada uno
+          </Link>
+        </p>
       </Seccion>
 
       {/* ── Obligaciones nuevas ──────────────────────────────────────────── */}
+      {/*
+       * Se muestran enteros sólo los capítulos del Acuerdo dirigidos a este
+       * sector. Los generales obligan a todos por igual y están explicados en
+       * la página del Acuerdo; repetirlos aquí era el mismo problema.
+       */}
       <Seccion
         id="obligaciones-nuevas"
         titulo="Obligaciones nuevas que te tocan"
         descripcion="El Acuerdo 115/2026 no movió umbrales: añadió régimen de organización interna."
       >
-        <ul className="grid gap-4 md:grid-cols-2">
-          {bloques.map(({ bloque, justificacion }) => {
-            const obligacion = bloque.obligacionSlug
-              ? datos.OBLIGACIONES_POR_SLUG[bloque.obligacionSlug]
-              : undefined;
-            return (
-              <li
-                key={bloque.clave}
-                className="rounded-[var(--radius-card)] border border-[var(--color-borde)] p-5"
-              >
-                <div className="flex flex-wrap items-center gap-2">
-                  <Insignia tono="marino">{bloque.capitulo}</Insignia>
-                  {justificacion && <Insignia tono="ambar">Dirigido a tu sector</Insignia>}
-                </div>
-                <h3 className="mt-3 font-semibold text-[var(--color-tinta)]">{bloque.titulo}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-[var(--color-tinta-suave)]">
-                  {bloque.queObliga}
-                </p>
-                {justificacion && (
-                  <p className="mt-2 text-xs text-[var(--color-tinta-tenue)]">{justificacion}</p>
-                )}
-                {obligacion && (
-                  <p className="mt-3 text-sm">
-                    <Link
-                      href={`/obligaciones/${obligacion.slug}`}
-                      className="text-[var(--color-petroleo-hondo)] underline underline-offset-2"
-                    >
-                      {obligacion.titulo}
-                    </Link>
-                    <span className="mt-1 block text-xs text-[var(--color-tinta-tenue)]">
-                      {obligacion.procedencia.disposicion}
-                    </span>
-                  </p>
-                )}
-              </li>
-            );
-          })}
-        </ul>
-
-        {ACUERDO && (
-          <Nota tono="info" className="mt-6" titulo="Desde cuándo son exigibles">
-            <p>
-              El Acuerdo se publicó el {formatearFechaLarga(ACUERDO.publicacion)} y entra en vigor
-              el {formatearFechaLarga(ACUERDO.entradaEnVigor)}, con plazos escalonados por bloque.
-              Las obligaciones que la ley adicionó al art. 18 quedaron diferidas a esos plazos, así
-              que la fecha en que te toca cada una no es la misma para todas:{' '}
-              <Link href="/calendario-cumplimiento">revísalas en el calendario</Link>.
-            </p>
-          </Nota>
+        {bloques.some((b) => b.justificacion) && (
+          <ul className="mb-6 grid gap-4 md:grid-cols-2">
+            {bloques
+              .filter((b) => b.justificacion)
+              .map(({ bloque, justificacion }) => {
+                const obligacion = bloque.obligacionSlug
+                  ? datos.OBLIGACIONES_POR_SLUG[bloque.obligacionSlug]
+                  : undefined;
+                return (
+                  <li
+                    key={bloque.clave}
+                    className="rounded-[var(--radius-card)] border border-[var(--color-borde)] p-5"
+                  >
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Insignia tono="marino">{bloque.capitulo}</Insignia>
+                      <Insignia tono="ambar">Dirigido a tu sector</Insignia>
+                    </div>
+                    <h3 className="mt-3 font-semibold text-[var(--color-tinta)]">{bloque.titulo}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-[var(--color-tinta-suave)]">
+                      {bloque.queObliga}
+                    </p>
+                    <p className="mt-2 text-xs text-[var(--color-tinta-tenue)]">{justificacion}</p>
+                    {obligacion && (
+                      <p className="mt-3 text-sm">
+                        <Link
+                          href={`/obligaciones/${obligacion.slug}`}
+                          className="text-[var(--color-petroleo-hondo)] underline underline-offset-2"
+                        >
+                          {obligacion.titulo}
+                        </Link>
+                      </p>
+                    )}
+                  </li>
+                );
+              })}
+          </ul>
         )}
+
+        <p className="prosa leading-relaxed">
+          {bloques.some((b) => b.justificacion) ? 'Además te' : 'Te'} aplican los{' '}
+          {bloques.filter((b) => !b.justificacion).length} bloques generales del Acuerdo, que obligan
+          a cualquier sujeto obligado sea cual sea su fracción.{' '}
+          <Link href="/acuerdo-115-2026#que-anade">Qué exige cada bloque</Link>
+          {ACUERDO && (
+            <>
+              {' '}
+              · en vigor el {formatearFechaLarga(ACUERDO.entradaEnVigor)}, con plazos escalonados que
+              están en el <Link href="/calendario-cumplimiento">calendario</Link>.
+            </>
+          )}
+        </p>
       </Seccion>
 
       <EnlacesRelacionados
