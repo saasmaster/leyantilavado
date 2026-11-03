@@ -132,6 +132,7 @@ const POR_RUTA: Record<string, string> = {
       ...ANALISIS.map((a) => `/analisis/${a.slug}`),
       '/actualizaciones',
       '/fuentes-oficiales',
+      '/metodologia-editorial',
     ].map((ruta) => [ruta, CAMBIO_VOTACIONES]),
   ),
 };

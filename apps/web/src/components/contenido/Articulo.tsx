@@ -203,16 +203,14 @@ export function FirmaEditorial({ firma = FIRMA_POR_DEFECTO }: { firma?: FirmaCon
         </ul>
       )}
 
-      <details className="mt-4">
-        <summary className="cursor-pointer text-sm font-medium text-[var(--color-petroleo-hondo)] underline underline-offset-2">
+      <p className="mt-4 text-sm">
+        <Link
+          href={firma.autor.url ?? "/metodologia-editorial"}
+          className="font-medium text-[var(--color-petroleo-hondo)] underline underline-offset-2"
+        >
           Metodología editorial
-        </summary>
-        <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-[var(--color-tinta-suave)]">
-          {firma.autor.metodologia.map((m) => (
-            <li key={m}>{m}</li>
-          ))}
-        </ul>
-      </details>
+        </Link>
+      </p>
 
       <dl className="mt-4 flex flex-wrap gap-x-8 gap-y-1 text-xs text-[var(--color-tinta-tenue)]">
         <div className="flex gap-1.5">

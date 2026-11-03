@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { VERSION_LEGAL, datos, formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { Insignia, Nota, TablaEnvoltura } from '@leyantilavado/ui';
 import { construirMetadata, jsonLdMigaDePan, jsonParaScript } from '@/lib/sitio';
+import { EQUIPO_EDITORIAL } from '@/content/autores';
 import { EncabezadoPagina, REVISION_VIGENTE, NIVELES_VERIFICACION } from '@/components/inicio/comun';
 
 const MIGA = [
@@ -185,6 +186,13 @@ export default function MetodologiaEditorial() {
             contrastó, y eso es lo que aparece en el sello de procedencia de cada conclusión.
           </p>
         </Nota>
+
+        <h2 className="mt-10 text-xl font-semibold">Las seis reglas de redacción</h2>
+        <ul className="mt-3 list-disc space-y-2 pl-5 text-[var(--color-tinta-suave)]">
+          {EQUIPO_EDITORIAL.metodologia.map((m) => (
+            <li key={m}>{m}</li>
+          ))}
+        </ul>
       </div>
     </>
   );
