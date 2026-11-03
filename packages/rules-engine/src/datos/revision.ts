@@ -28,6 +28,29 @@
 /**
  * Fecha de la última pasada editorial sobre las fuentes oficiales.
  *
+ * 3-nov-2026: HAY novedades, pero ninguna toca un dato del motor.
+ *
+ * - **Comunicado No. 80 de la SHCP** (2-oct-2026, leído en gob.mx): la UIF
+ *   informa que en 2026 no habrá proceso de certificación y que la
+ *   convocatoria será para 2027, publicada en sus canales y en el DOF y con
+ *   «un periodo suficiente» de preparación. Aún no hay convocatoria.
+ * - **Paquete Económico 2027.** Ya lo votó el Congreso, y todavía no es ley:
+ *   al 3-nov el DOF (revisado hasta el 31-oct) no trae ninguno de los decretos.
+ *   Economía Digital: Diputados 6-oct, Senado 20-oct. Ley de Ingresos: Senado
+ *   27-oct sin cambios. LISR: Diputados 14-oct; el Senado la aprobó con un
+ *   cambio ajeno al RESICO (automotriz y gasolineras) y volvió a Diputados.
+ *   Fechas y votos tomados de la prensa; falta el texto final. Ninguna reforma
+ *   toca la LFPIORPI.
+ * - **Texto vigente.** LFPIORPI.doc reproduce su sha-256 (49f53d224796a121,
+ *   reforma DOF 16-07-2025). El Reglamento sigue en su versión del 27-03-2026.
+ * - **Portal del SAT.** La tabla de umbrales es idéntica a la del 22-oct
+ *   archivada, y respecto del 20-sep sólo difieren el menú «Facilitadores» y
+ *   un comentario, ya conocidos. Los cuatro PDF reproducen su sha-256.
+ *
+ * Ninguna cifra cambia: `ULTIMA_MODIFICACION` no sube.
+ *
+ * Antes: 2026-10-04.
+ *
  * 4-oct-2026: HAY cambios. La UIF publicó en el DOF del 24 de septiembre de
  * 2026 las dos resoluciones de formatos que el sitio daba por pendientes, y
  * con ellas el aviso de 24 horas deja de estar «sin fecha cierta»:
@@ -85,7 +108,7 @@
  *
  * Antes: 2026-09-05.
  */
-export const ULTIMA_REVISION = '2026-10-04';
+export const ULTIMA_REVISION = '2026-11-03';
 
 /**
  * Fecha en que cambió por última vez algún dato del corpus.

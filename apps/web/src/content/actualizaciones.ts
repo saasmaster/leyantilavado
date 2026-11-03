@@ -12,6 +12,42 @@ import type { EntradaActualizacion } from './tipos';
  */
 const ENTRADAS: readonly EntradaActualizacion[] = [
   {
+    id: 'paquete-economico-2027-votado',
+    fecha: '2026-10-27',
+    tipo: 'sitio',
+    titulo: 'El Congreso votó el Paquete Económico 2027: sigue sin tocar la Ley Antilavado',
+    resumen:
+      'Entre el 6 y el 27 de octubre de 2026 el Congreso votó la Ley de Economía Digital, la Ley de Ingresos 2027 y la reforma a la LISR. Ninguna reforma la LFPIORPI, y al 31 de octubre ningún decreto estaba en el DOF, así que rige la ley actual.',
+    impacto: [
+      'Ley de Economía Digital: Diputados el 6 de octubre y Senado el 20; pasó al Ejecutivo. Mantiene la facultad de Hacienda de fijar sectores donde el pago digital sea la única vía (según la prensa; el texto final no está publicado). Los límites de efectivo del artículo 32 no cambian.',
+      'Ley de Ingresos 2027: el Senado la aprobó el 27 de octubre sin cambios y pasó al Ejecutivo. Ahí está la opción del IVA del 7 % para RESICO.',
+      'Reforma a la LISR: Diputados la aprobó el 14 de octubre con el límite del RESICO en 5 y 50 millones; el Senado la aprobó el 27 con un cambio para la industria automotriz y las gasolineras, ajeno al RESICO, y volvió a Diputados.',
+      'Las fechas y los votos son los de la prensa. Los análisis siguen leyendo el texto de la iniciativa y se contrastarán con el decreto cuando se publique en el DOF.',
+      'Ninguna cifra del sitio cambia.',
+    ],
+    paginasAfectadas: [
+      { etiqueta: 'Todos los análisis', href: '/analisis' },
+      { etiqueta: 'RESICO 2027', href: '/analisis/resico-2027-paquete-economico' },
+      { etiqueta: 'IVA del 7 % para RESICO', href: '/analisis/iva-7-por-ciento-resico' },
+      { etiqueta: 'Ley de Economía Digital', href: '/analisis/ley-economia-digital-efectivo' },
+    ],
+  },
+  {
+    id: 'certificacion-uif-2027',
+    fecha: '2026-10-02',
+    tipo: 'sitio',
+    titulo: 'La UIF aplaza la certificación a 2027',
+    resumen:
+      'El Comunicado No. 80 de la SHCP informa que, por la actualización del marco normativo, en 2026 no habrá proceso de certificación en materia de prevención de operaciones con recursos de procedencia ilícita. La convocatoria será para 2027.',
+    impacto: [
+      'Durante 2026 no hay convocatoria ni examen de certificación.',
+      'La convocatoria, las bases, los requisitos, las etapas y los plazos se publicarán en los canales de la UIF y en el DOF, con un periodo suficiente para conocer el temario y los materiales. Todavía no hay convocatoria.',
+      'Este sitio no certifica a nadie: la certificación es un trámite de la autoridad.',
+    ],
+    fuenteId: 'shcp-comunicado-80-2026',
+    paginasAfectadas: [{ etiqueta: 'Calendario de cumplimiento', href: '/calendario-cumplimiento' }],
+  },
+  {
     id: 'resoluciones-formatos-2026',
     fecha: '2026-09-24',
     tipo: 'reglas',

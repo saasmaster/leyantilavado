@@ -65,6 +65,18 @@ export const CALENDARIO_LEGISLATIVO = {
   vigorPropuesto: '2027-01-01',
 } as const;
 
+/**
+ * Votaciones del Congreso, al 3 de noviembre de 2026. Fechas tomadas de la
+ * prensa: ninguno de los decretos estaba en el DOF (revisado hasta el 31 de
+ * octubre), así que no hay texto final contra el cual contrastar. Se
+ * actualizan al publicarse.
+ */
+export const VOTACIONES = {
+  economiaDigital: { diputados: '2026-10-06', senado: '2026-10-20' },
+  leyIngresos: { senado: '2026-10-27' },
+  lisr: { diputados: '2026-10-14', senado: '2026-10-27' },
+} as const;
+
 /* ── RESICO: vigente y propuesto ──────────────────────────────────────────── */
 
 /**
@@ -283,7 +295,7 @@ const F = {
 
 const PUBLICADO = '2026-09-11';
 
-const INICIATIVA = { texto: 'Iniciativa: todavía no es ley', tono: 'ambar' } as const;
+const INICIATIVA = { texto: 'Iniciativa votada: aún no es ley', tono: 'ambar' } as const;
 const GACETA_8 = { texto: 'Gaceta Parlamentaria, 8 sep 2026', tono: 'marino' } as const;
 
 export const ANALISIS: readonly Analisis[] = [
@@ -296,11 +308,11 @@ export const ANALISIS: readonly Analisis[] = [
     publicadoEn: PUBLICADO,
     etiquetas: [INICIATIVA, GACETA_8, { texto: 'Vigor propuesto: 1 ene 2027', tono: 'neutro' }],
     respuestaDirecta:
-      'Todavía es una propuesta. La iniciativa presentada el 8 de septiembre de 2026 sube el límite del RESICO de 3.5 a 5 millones de pesos para personas físicas y de 35 a 50 millones para personas morales, vuelve opcional el régimen para las morales, permite regresar a quien lo perdió por incumplir y deja las tasas igual, de 1 % a 2.5 %. Si el Congreso la aprueba, aplicaría desde el 1 de enero de 2027. No cambia nada de la Ley Antilavado.',
+      'Todavía no es ley: Diputados la aprobó el 14 de octubre y el Senado la devolvió con un cambio ajeno al RESICO, así que falta una última votación y su publicación en el DOF. La iniciativa presentada el 8 de septiembre de 2026 sube el límite del RESICO de 3.5 a 5 millones de pesos para personas físicas y de 35 a 50 millones para personas morales, vuelve opcional el régimen para las morales, permite regresar a quien lo perdió por incumplir y deja las tasas igual, de 1 % a 2.5 %. Si se publica, aplicaría desde el 1 de enero de 2027. No cambia nada de la Ley Antilavado.',
     entradilla:
       'Qué es el Régimen Simplificado de Confianza hoy, qué cambiaría con la reforma presentada al Congreso y qué no se mueve, citado artículo por artículo.',
     indice: [
-      { id: 'estado', titulo: 'Primero: todavía es una propuesta' },
+      { id: 'estado', titulo: 'Primero: en qué va' },
       { id: 'hoy', titulo: 'Cómo funciona el RESICO hoy' },
       { id: 'cambios', titulo: 'Qué cambiaría' },
       { id: 'igual', titulo: 'Lo que sigue igual' },
@@ -338,7 +350,7 @@ export const ANALISIS: readonly Analisis[] = [
     publicadoEn: PUBLICADO,
     etiquetas: [INICIATIVA, { texto: 'LIF 2027, art. 25, fr. XVIII', tono: 'marino' }, { texto: 'Opcional y anual', tono: 'neutro' }],
     respuestaDirecta:
-      'Es una opción que viene en la iniciativa de Ley de Ingresos 2027, no en la Ley del IVA: quien tribute en RESICO podría pagar cada mes el 7 % de lo que efectivamente cobró, en lugar de restar el IVA de sus compras. A tus clientes les sigues cobrando el IVA normal. Te conviene si tus compras con IVA pesan menos del 56.25 % de tus ventas; si pesan más, pagarías de más. Una vez elegida, no se cambia en el año. Todavía no es ley.',
+      'Es una opción de la Ley de Ingresos 2027, no de la Ley del IVA (el Congreso la votó sin cambios el 27 de octubre; falta su publicación en el DOF): quien tribute en RESICO podría pagar cada mes el 7 % de lo que efectivamente cobró, en lugar de restar el IVA de sus compras. A tus clientes les sigues cobrando el IVA normal. Te conviene si tus compras con IVA pesan menos del 56.25 % de tus ventas; si pesan más, pagarías de más. Una vez elegida, no se cambia en el año. Todavía no es ley: falta el DOF.',
     entradilla:
       'La mecánica exacta de la fracción XVIII, la cuenta para saber si te conviene y tres situaciones en las que la respuesta no es la que parece.',
     indice: [
@@ -379,7 +391,7 @@ export const ANALISIS: readonly Analisis[] = [
     publicadoEn: PUBLICADO,
     etiquetas: [INICIATIVA, GACETA_8, { texto: 'No reforma la LFPIORPI', tono: 'verde' }],
     respuestaDirecta:
-      'No prohíbe el efectivo en general ni fija un monto. La iniciativa dice que los negocios «podrán» aceptar pagos digitales y faculta a Hacienda para determinar sectores estratégicos y actividades relevantes en los que el pago digital podrá ser la única forma de pago; no nombra ninguno. No menciona la Ley Antilavado: los límites de efectivo del artículo 32 y las obligaciones de identificar y avisar siguen exactamente igual.',
+      'No prohíbe el efectivo en general ni fija un monto. El Congreso ya la votó (Senado, 20 de octubre) y falta su publicación; lo que sigue describe la iniciativa, y el texto final se contrastará al publicarse. La iniciativa dice que los negocios «podrán» aceptar pagos digitales y faculta a Hacienda para determinar sectores estratégicos y actividades relevantes en los que el pago digital podrá ser la única forma de pago; no nombra ninguno. No menciona la Ley Antilavado: los límites de efectivo del artículo 32 y las obligaciones de identificar y avisar siguen exactamente igual.',
     entradilla:
       'Lo que la iniciativa dice artículo por artículo, frente a lo que se ha publicado de ella, y cómo convive con las reglas de efectivo que ya existen.',
     indice: [

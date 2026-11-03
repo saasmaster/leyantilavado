@@ -4,6 +4,7 @@ import { Nota, TablaEnvoltura } from '@leyantilavado/ui';
 import { Seccion } from '@/components/contenido';
 import {
   CALENDARIO_LEGISLATIVO,
+  VOTACIONES,
   RESICO,
   millones,
   pesos,
@@ -23,7 +24,7 @@ export function CuerpoResico2027() {
 
   return (
     <>
-      <Seccion id="estado" titulo="Primero: todavía es una propuesta">
+      <Seccion id="estado" titulo="Primero: en qué va">
         <div className="prosa">
           <p>
             El {formatearFechaLarga(CALENDARIO_LEGISLATIVO.presentacion)} el Ejecutivo entregó a la
@@ -34,12 +35,14 @@ export function CuerpoResico2027() {
             <Link href="/analisis/iva-7-por-ciento-resico">su propio análisis</Link>.
           </p>
           <p>
-            Una iniciativa no obliga a nadie. El Congreso puede aprobarla tal cual, modificarla o
-            rechazarla. El calendario lo fija la Ley Federal de Presupuesto y Responsabilidad
-            Hacendaria (art. 42): la Ley de Ingresos se aprueba en Diputados a más tardar el{' '}
-            {formatearFechaLarga(CALENDARIO_LEGISLATIVO.diputados)} y en el Senado a más tardar el{' '}
-            {formatearFechaLarga(CALENDARIO_LEGISLATIVO.senado)}. La reforma a la LISR propone entrar
-            en vigor el {formatearFechaLarga(CALENDARIO_LEGISLATIVO.vigorPropuesto)}.
+            Desde entonces hubo votos. Diputados aprobó la reforma a la LISR el{' '}
+            {formatearFechaLarga(VOTACIONES.lisr.diputados)}; el Senado la aprobó el{' '}
+            {formatearFechaLarga(VOTACIONES.lisr.senado)} con un cambio que, según la prensa, exime a
+            la industria automotriz y a las gasolineras de los límites a las deducciones y no toca el
+            RESICO, y por eso volvió a Diputados, que aún no la vota de nuevo. Fechas y votos son los
+            de la prensa: el decreto no estaba en el DOF al 31 de octubre y el texto final se
+            contrastará cuando se publique. Se propone que entre en vigor el{' '}
+            {formatearFechaLarga(CALENDARIO_LEGISLATIVO.vigorPropuesto)}.
           </p>
         </div>
         <Nota tono="atencion" titulo="Mientras no se publique en el DOF, rige la ley actual" className="mt-5">

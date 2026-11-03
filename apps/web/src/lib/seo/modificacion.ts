@@ -5,6 +5,8 @@ import { ACTIVIDADES_CON_PAGINA } from '@/content/cambios-por-actividad';
 
 /** Día en que el contenido de las páginas listadas al final de `POR_RUTA` cambió. */
 const CAMBIO_RESOLUCIONES_UIF = '2026-10-04';
+/** 3-nov-2026: estado de la votación del Paquete Económico y comunicado 80 de la UIF. */
+const CAMBIO_VOTACIONES = '2026-11-03';
 
 /* ────────────────────────────────────────────────────────────────────────────
  * Una sola respuesta a «cuándo cambió esta página».
@@ -122,6 +124,15 @@ const POR_RUTA: Record<string, string> = {
       '/que-cambio',
       ...ACTIVIDADES_CON_PAGINA.map((a) => `/que-cambio/${a.slug}`),
     ].map((ruta) => [ruta, CAMBIO_RESOLUCIONES_UIF]),
+  ),
+  // Van después: pisan la fecha de 4-oct para las rutas que cambiaron de nuevo.
+  ...Object.fromEntries(
+    [
+      '/analisis',
+      ...ANALISIS.map((a) => `/analisis/${a.slug}`),
+      '/actualizaciones',
+      '/fuentes-oficiales',
+    ].map((ruta) => [ruta, CAMBIO_VOTACIONES]),
   ),
 };
 

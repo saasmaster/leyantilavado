@@ -108,6 +108,8 @@ export interface PreguntaGuia {
  * archivadas que reproducen esa línea base: lo único distinto es la entrada
  * de menú «Facilitadores» y un comentario HTML al pie. El contenido es el
  * mismo. Los cuatro PDF y el aplicativo reproducen su hash.
+ *
+ * 3-nov-2026: los cuatro PDF reproducen su hash otra vez.
  */
 export const FUENTES_GUIA: readonly FuenteGuia[] = [
   {
@@ -115,7 +117,7 @@ export const FUENTES_GUIA: readonly FuenteGuia[] = [
     nombre: 'Instructivo Excel — cómo generar el archivo XML de Avisos',
     emisor: 'SHCP / SAT — Portal de Prevención de Lavado de Dinero',
     url: 'https://www.pld.hacienda.gob.mx/work/models/PLD/documentos/inst_excel.pdf',
-    consultadaEl: '2026-10-04',
+    consultadaEl: '2026-11-03',
     nota:
       'Once pasos ilustrados con capturas de pantalla. Es el documento que el portal enlaza desde la sección «Sistema del Portal en Internet [SPPLD]».',
   },
@@ -124,7 +126,7 @@ export const FUENTES_GUIA: readonly FuenteGuia[] = [
     nombre: 'Instructivo Excel (variante inst_excel2.pdf)',
     emisor: 'SHCP / SAT — Portal de Prevención de Lavado de Dinero',
     url: 'https://www.pld.hacienda.gob.mx/work/models/PLD/documentos/inst_excel2.pdf',
-    consultadaEl: '2026-10-04',
+    consultadaEl: '2026-11-03',
     nota:
       'Mismo contenido que inst_excel.pdf salvo por una línea: esta variante NO incluye la advertencia del tamaño máximo de 2 MB del XML. Si trabajas con una copia descargada hace tiempo, revisa cuál de las dos tienes.',
   },
@@ -133,14 +135,14 @@ export const FUENTES_GUIA: readonly FuenteGuia[] = [
     nombre: '¿Cómo presentar un Aviso Modificatorio?',
     emisor: 'SHCP / SAT — Portal de Prevención de Lavado de Dinero',
     url: 'https://www.pld.hacienda.gob.mx/work/models/PLD/documentos/inst_modificatorio.pdf',
-    consultadaEl: '2026-10-04',
+    consultadaEl: '2026-11-03',
   },
   {
     id: 'inst-baja',
     nombre: '¿Cómo dar de Baja una Actividad Vulnerable?',
     emisor: 'SHCP / SAT — Portal de Prevención de Lavado de Dinero',
     url: 'https://www.pld.hacienda.gob.mx/work/models/PLD/documentos/inst_baja.pdf',
-    consultadaEl: '2026-10-04',
+    consultadaEl: '2026-11-03',
   },
   {
     id: 'sppld-sistema',

@@ -85,6 +85,15 @@ export const FUENTES: readonly FuenteOficial[] = [
       'Portal donde los sujetos obligados se dan de alta, presentan avisos e informes en ceros.',
   },
   {
+    id: 'shcp-comunicado-80-2026',
+    nombre: 'Comunicado No. 80 — Certificación en materia de prevención de operaciones con recursos de procedencia ilícita',
+    emisor: 'SHCP',
+    url: 'https://www.gob.mx/shcp/prensa/comunicado-no-80',
+    descripcion:
+      'Comunicado de la SHCP del 2 de octubre de 2026: la UIF informa que en 2026 no habrá proceso de certificación y que la convocatoria será para 2027.',
+    fechaPublicacion: '2026-10-02',
+  },
+  {
     id: 'inegi-uma',
     nombre: 'Unidad de Medida y Actualización (UMA) — INEGI',
     emisor: 'INEGI',

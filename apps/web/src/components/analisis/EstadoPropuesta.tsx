@@ -1,6 +1,6 @@
 import { formatearFechaLarga } from '@leyantilavado/rules-engine';
 import { Nota } from '@leyantilavado/ui';
-import { CALENDARIO_LEGISLATIVO } from '@/content/analisis';
+import { CALENDARIO_LEGISLATIVO, VOTACIONES } from '@/content/analisis';
 
 /**
  * Aviso de estado de los análisis: todavía no es ley.
@@ -20,16 +20,29 @@ export function EstadoPropuesta({ className = 'mb-10' }: { className?: string })
   return (
     <Nota tono="atencion" titulo="Todavía no es ley" className={className}>
       <p>
-        Lo que se analiza aquí está en iniciativas que el Ejecutivo presentó al Congreso el{' '}
-        {formatearFechaLarga(CALENDARIO_LEGISLATIVO.presentacion)}. Pueden aprobarse como están,
-        modificarse o no aprobarse, y mientras no se publiquen en el Diario Oficial de la Federación{' '}
+        Lo que se analiza aquí nació en iniciativas que el Ejecutivo presentó al Congreso el{' '}
+        {formatearFechaLarga(CALENDARIO_LEGISLATIVO.presentacion)}. El Congreso ya las votó, pero
+        ninguna se había publicado en el Diario Oficial de la Federación, y mientras no se publiquen{' '}
         <strong>rige la ley actual</strong>.
       </p>
+      <ul className="mt-2 list-disc space-y-1 pl-5">
+        <li>
+          Ley de Economía Digital: Diputados el {formatearFechaLarga(VOTACIONES.economiaDigital.diputados)}{' '}
+          y Senado el {formatearFechaLarga(VOTACIONES.economiaDigital.senado)}; pasó al Ejecutivo.
+        </li>
+        <li>
+          Ley de Ingresos 2027 (donde está el IVA del 7 %): Senado el{' '}
+          {formatearFechaLarga(VOTACIONES.leyIngresos.senado)}, sin cambios; pasó al Ejecutivo.
+        </li>
+        <li>
+          Reforma a la LISR (RESICO): Diputados el {formatearFechaLarga(VOTACIONES.lisr.diputados)}; el
+          Senado la aprobó el {formatearFechaLarga(VOTACIONES.lisr.senado)} con un cambio ajeno al
+          RESICO y volvió a Diputados.
+        </li>
+      </ul>
       <p className="mt-2">
-        De lo que aquí se analiza, sólo la Ley de Ingresos tiene plazo legal para votarse: a más tardar
-        el {formatearFechaLarga(CALENDARIO_LEGISLATIVO.diputados)} en la Cámara de Diputados y el{' '}
-        {formatearFechaLarga(CALENDARIO_LEGISLATIVO.senado)} en el Senado. Cuando se voten, estos
-        análisis se actualizarán con lo que quede aprobado.
+        Fechas y votos de la prensa; los análisis leen el texto de la iniciativa y se contrastarán con
+        el decreto cuando aparezca en el DOF. Ninguna reforma toca la Ley Antilavado.
       </p>
     </Nota>
   );
