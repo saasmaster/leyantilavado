@@ -241,9 +241,11 @@ export function FirmaEditorial({ firma = FIRMA_POR_DEFECTO }: { firma?: FirmaCon
 export function AvisoLegal() {
   return (
     <Nota tono="atencion" titulo="Aviso legal" className="mt-8">
-      {AVISO_LEGAL_TEXTO.map((t) => (
-        <p key={t}>{t}</p>
-      ))}
+      <p>{AVISO_LEGAL_TEXTO[0]}</p>
+      <p>
+        Proyecto privado e independiente, sin afiliación a ninguna autoridad.{' '}
+        <Link href="/legal/terminos">Términos de uso</Link>.
+      </p>
     </Nota>
   );
 }

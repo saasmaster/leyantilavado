@@ -82,7 +82,7 @@ export const ETIQUETA_TIPO_CLIENTE: Record<TipoCliente, string> = {
  * despacho, y conviene que el lector la vea antes que la conclusión.
  */
 export const ADVERTENCIA_ILUSTRATIVA =
-  'Los hechos de este caso son inventados. Sirven para enseñar cómo se aplica la regla a una operación concreta, no para resolver la tuya: dos operaciones que se parecen en el monto pueden separarse por el subtipo, por la fecha o por el historial del cliente.';
+  'Los hechos de este caso son inventados: enseñan cómo se aplica la regla, no resuelven tu operación.';
 
 export const CASOS_PRACTICOS: readonly CasoPractico[] = [
   /* ── Fedatarios ─────────────────────────────────────────────────────────── */

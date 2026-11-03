@@ -150,7 +150,6 @@ export default async function PaginaCasoPractico({
       <Seccion
         id="operacion"
         titulo="La operación, en datos"
-        descripcion="Lo que se captura es esto y nada más. Todo lo demás lo deduce el motor."
       >
         <Tarjeta>
           <TarjetaCuerpo>
@@ -229,15 +228,13 @@ export default async function PaginaCasoPractico({
       <Seccion
         id="resultado"
         titulo="Qué dice la regla"
-        descripcion="Calculado con el motor del sitio, con la UMA vigente en la fecha de la operación y la disposición aplicable a la vista."
       >
-        <TarjetaEvaluacion resultado={resultado} />
+        <TarjetaEvaluacion resultado={resultado} sinResumenObligaciones />
       </Seccion>
 
       <Seccion
         id="lectura"
         titulo="Cómo leer este caso"
-        descripcion="Lo que el motor no puede deducir de los datos y sí cambia la lectura."
       >
         <ListaConVinetas items={caso.notas} />
       </Seccion>
@@ -245,7 +242,6 @@ export default async function PaginaCasoPractico({
       <Seccion
         id="siguiente"
         titulo="Qué hacer después"
-        descripcion="En este orden. La conclusión sin los pasos no sirve de nada."
       >
         <ol className="flex flex-col gap-3">
           {caso.siguientesPasos.map((paso, i) => (

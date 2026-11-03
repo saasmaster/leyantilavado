@@ -20,7 +20,7 @@ export const EQUIPO_EDITORIAL: Autor = {
   rol: 'Investigación normativa y redacción',
   credenciales: [],
   descripcion:
-    'Equipo que investiga, redacta y mantiene el contenido de LeyAntilavado.org. No somos un despacho ni una autoridad: somos un proyecto editorial independiente que explica la LFPIORPI en español claro y cita siempre la disposición de la que sale cada afirmación.',
+    'Proyecto editorial independiente que explica la LFPIORPI en español claro y cita la disposición de cada afirmación. No somos un despacho ni una autoridad.',
   metodologia: [
     'Cada cifra legal del sitio sale del motor de reglas, no de un texto escrito a mano. Si la ley cambia, cambia el dato en un solo lugar y con él todas las páginas.',
     'Cada afirmación jurídica lleva artículo y fracción. Si una afirmación no puede anclarse a una disposición, no se publica.',

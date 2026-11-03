@@ -76,9 +76,12 @@ function FilaUmbral({ etiqueta, valor }: { etiqueta: string; valor: EvaluacionUm
 export function TarjetaEvaluacion({
   resultado,
   compacta,
+  sinResumenObligaciones,
 }: {
   resultado: ResultadoEvaluacion;
   compacta?: boolean;
+  /** Los casos prácticos listan las mismas obligaciones: sin resumen, para no repetir el texto en cada página. */
+  sinResumenObligaciones?: boolean;
 }) {
   const { identificacion, aviso, efectivo, acumulacion } = resultado;
 
@@ -166,7 +169,7 @@ export function TarjetaEvaluacion({
                   >
                     {o?.titulo ?? slug}
                   </Link>
-                  {o?.resumen ? <span> — {o.resumen}</span> : null}
+                  {o?.resumen && !sinResumenObligaciones ? <span> — {o.resumen}</span> : null}
                 </li>
               );
             })}
