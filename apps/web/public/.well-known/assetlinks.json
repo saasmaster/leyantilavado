@@ -5,6 +5,9 @@
       "namespace": "android_app",
       "package_name": "org.leyantilavado.mx",
       "sha256_cert_fingerprints": [
+        "28:39:B7:03:62:0E:2B:6D:56:B6:9A:CB:0C:20:E7:CA:66:CC:B1:06:83:E5:AD:D0:F6:C2:0B:0A:CD:71:04:7B",
+        "DA:6F:4F:A9:F9:A1:73:35:14:2C:E3:45:4D:3D:14:54:90:50:24:FB:24:34:5A:01:B5:B5:2A:C8:7F:B3:C0:77",
+        "FA:CB:7C:0E:E7:B3:E5:39:44:45:57:21:DA:A4:8D:7C:D4:51:E1:36:6C:A0:25:B8:BE:3E:BB:D8:47:3F:0B:BA",
         "F6:46:3F:D5:F4:6A:83:62:F8:28:75:61:C0:7C:BF:37:E6:22:0D:84:68:1E:8C:19:59:98:46:D4:FD:47:E0:63"
       ]
     }

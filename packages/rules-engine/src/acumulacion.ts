@@ -11,6 +11,24 @@ import {
 import { assertFechaISO, restarMeses } from './fechas';
 import { convertirUMA } from './uma';
 
+/**
+ * Supuesto de un umbral variable que corresponde a la operación.
+ *
+ * Espejo exacto de `supuestoDeOperacion` en la app Flutter
+ * (`lib/rules/engine/acumulacion.dart`). Si se agrega una actividad con umbral
+ * variable, hay que agregarla en los dos lados o las conclusiones divergen.
+ */
+export function supuestoDeOperacion(op: Operacion): string | null {
+  if (op.supuestoVariable) return op.supuestoVariable;
+  if (op.actividad === 'servicios-profesionales' && op.enRepresentacionDelCliente != null) {
+    return op.enRepresentacionDelCliente ? 'en-representacion' : 'solo-asesoria';
+  }
+  if (op.actividad === 'traslado-custodia-valores' && op.montoIndeterminable != null) {
+    return op.montoIndeterminable ? 'monto-indeterminable' : 'monto-determinable';
+  }
+  return null;
+}
+
 interface Args {
   operacionActual: Operacion;
   historial: readonly Operacion[];
@@ -37,7 +55,16 @@ export function evaluarAcumulacion({
   const ventanaMeses = regla.acumulacion.ventanaMeses;
   const desde = restarMeses(hasta, ventanaMeses);
 
+  // Umbral variable (p. ej. traslado de valores): el monto sale del supuesto de
+  // la operación evaluada, y sólo se suman las del mismo supuesto. Sumar un
+  // traslado con monto indeterminable a uno determinable mezclaría dos reglas
+  // distintas y daría una conclusión que no corresponde a ninguna de las dos.
+  // MISMO CONTENIDO que la app Flutter: si cambia uno, cambia el otro.
+  const variable = regla.aviso.tipo === 'variable';
+  const supuesto = variable ? supuestoDeOperacion(operacionActual) : null;
+
   const mismoGrupo = (o: Operacion): boolean => {
+    if (variable && supuestoDeOperacion(o) !== supuesto) return false;
     if (regla.acumulacion.agrupaPor.includes('cliente')) {
       // Sin identificador de cliente no se puede acumular con honestidad.
       if (!operacionActual.clienteId || o.clienteId !== operacionActual.clienteId) return false;
@@ -62,17 +89,25 @@ export function evaluarAcumulacion({
     .sort((a, b) => (a.fecha === b.fecha ? a.id.localeCompare(b.id) : a.fecha < b.fecha ? -1 : 1));
 
   // Umbral de aviso: sólo tiene sentido acumular contra un número.
+  // Con umbral variable, el spec contra el que se compara es el del supuesto.
+  const avisoSpec =
+    regla.aviso.tipo === 'variable'
+      ? (regla.aviso.supuestos.find((s) => s.clave === supuesto)?.umbral ?? null)
+      : regla.aviso;
+
   const umbralAviso: ConversionUMA | null =
-    regla.aviso.tipo === 'uma'
-      ? convertirUMA(regla.aviso.uma, hasta)
-      : regla.aviso.tipo === 'monto_o_comision'
-        ? convertirUMA(regla.aviso.umaMonto, hasta)
-        : null;
+    avisoSpec === null
+      ? null
+      : avisoSpec.tipo === 'uma'
+        ? convertirUMA(avisoSpec.uma, hasta)
+        : avisoSpec.tipo === 'monto_o_comision'
+          ? convertirUMA(avisoSpec.umaMonto, hasta)
+          : null;
 
   const umbralIdent =
     regla.identificacion.tipo === 'uma' ? convertirUMA(regla.identificacion.uma, hasta) : null;
 
-  const estricto = regla.aviso.tipo === 'uma' && regla.aviso.comparador === 'mayor';
+  const estricto = avisoSpec !== null && avisoSpec.tipo === 'uma' && avisoSpec.comparador === 'mayor';
 
   let corrido: Centavos = centavos(0);
   let fechaDisparo: string | null = null;

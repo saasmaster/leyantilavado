@@ -415,10 +415,19 @@ test.describe('SEO técnico', () => {
     expect(android, 'falta la declaración de la app Android').toBeDefined();
     expect(android.target.package_name).toBe('org.leyantilavado.mx');
     expect(android.relation).toContain('delegate_permission/common.handle_all_urls');
+    // No basta con que HAYA una huella: durante meses hubo exactamente una, la
+    // del certificado de SUBIDA, y con Firma de apps de Google Play el APK que
+    // llega al teléfono va firmado por Google, no por nosotros. Android compara
+    // contra el certificado instalado, así que la verificación falló todo ese
+    // tiempo y esta prueba pasó verde. La huella de firma de apps es la única
+    // que decide, y por eso se exige por valor.
+    const firmaDeApps =
+      '28:39:B7:03:62:0E:2B:6D:56:B6:9A:CB:0C:20:E7:CA:66:CC:B1:06:83:E5:AD:D0:F6:C2:0B:0A:CD:71:04:7B';
     expect(
-      android.target.sha256_cert_fingerprints.length,
-      'sin huella no se verifica nada',
-    ).toBeGreaterThan(0);
+      android.target.sha256_cert_fingerprints.map((h: string) => h.toUpperCase()),
+      'falta la huella del certificado de FIRMA DE APPS (Play Console → Firma de apps); '
+        + 'con sólo la de subida, Android no verifica nada',
+    ).toContain(firmaDeApps);
   });
 
   test('la landing de la app se ofrece con su ficha real', async ({ page }) => {
